@@ -2,73 +2,31 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from tethys_sdk.gizmos import Button
 
-@login_required()
+from oauthlib.oauth2 import TokenExpiredError
+from hs_restclient import HydroShare, HydroShareAuthOAuth2
+
+
+# @TODO: Move these to settings that can be configured for the application
+
+hs_client_id = 'EoHBKou1Sdcp69Y06zocwGA9BTKxAEQfEtt6EJ2i'
+hs_client_secret = 'p31Osu284qCx2YJDf3tVIAkKTfoSPw0MccDPJ4p3MqfUm6lgPMS8tadKqjiLXqs\
+moJixaPIeeYQkVOJkKhIfPlqArsPAp3h24eJvZnGxfwjmcNUREFSy5JUSePn6IOCM'
+
+
 def home(request):
-    """
-    Controller for the app home page.
-    """
-    save_button = Button(
-        display_text='',
-        name='save-button',
-        icon='glyphicon glyphicon-floppy-disk',
-        style='success',
-        attributes={
-            'data-toggle':'tooltip',
-            'data-placement':'top',
-            'title':'Save'
-        }
-    )
 
-    edit_button = Button(
-        display_text='',
-        name='edit-button',
-        icon='glyphicon glyphicon-edit',
-        style='warning',
-        attributes={
-            'data-toggle':'tooltip',
-            'data-placement':'top',
-            'title':'Edit'
-        }
-    )
+    auth = HydroShareAuthOAuth2(hs_client_id, hs_client_secret, username='rfun', password='bridgefour')
+    hs = HydroShare(auth=auth)
+    try:
+        for resource in hs.resources(group=120):
+            metadata = resource.scimeta.custom
+            print(metadata)
+    except TokenExpiredError as e:
+        print(e)
+        hs = HydroShare(auth=auth)
+        for resource in hs.resources():
+            print(resource)
 
-    remove_button = Button(
-        display_text='',
-        name='remove-button',
-        icon='glyphicon glyphicon-remove',
-        style='danger',
-        attributes={
-            'data-toggle':'tooltip',
-            'data-placement':'top',
-            'title':'Remove'
-        }
-    )
-
-    previous_button = Button(
-        display_text='Previous',
-        name='previous-button',
-        attributes={
-            'data-toggle':'tooltip',
-            'data-placement':'top',
-            'title':'Previous'
-        }
-    )
-
-    next_button = Button(
-        display_text='Next',
-        name='next-button',
-        attributes={
-            'data-toggle':'tooltip',
-            'data-placement':'top',
-            'title':'Next'
-        }
-    )
-
-    context = {
-        'save_button': save_button,
-        'edit_button': edit_button,
-        'remove_button': remove_button,
-        'previous_button': previous_button,
-        'next_button': next_button
-    }
+    context = {}
 
     return render(request, 'warehouse/home.html', context)
