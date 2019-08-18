@@ -29,6 +29,11 @@ class Warehouse(TethysAppBase):
                 url='warehouse',
                 controller='warehouse.controllers.home'
             ),
+            UrlMap(
+                name='install',
+                url='warehouse/install',
+                controller='warehouse.controllers.install'
+            ),
         )
 
         return url_maps
