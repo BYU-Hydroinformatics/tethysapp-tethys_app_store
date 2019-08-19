@@ -18,7 +18,7 @@
     {% if resources %}
       <div id="app-list" class="isotopeContainer">
         {% for resource in resources %}
-          <a class="app-container isotopeSelector" href="{% url 'warehouse:install' %}?id={{ resource.id }}">
+          <a class="app-container isotopeSelector" id="app_button" data-install-url="{% url 'warehouse:install' %}?id={{ resource.id }}">
             <div class="app-icon">
               <img {% if resource.metadata.icon %}src="{% static resource.metadata.icon %}"{% else %}src="{% static 'tethys_apps/images/default_app_icon.gif' %}"{% endif %} />
             </div>
@@ -42,10 +42,14 @@
   </div>
 {% endblock %}
 
-{# Use the after_app_content block for modals #}
+
 {% block after_app_content %}
- 
+{% gizmo install_message_box %}
+ <div id="loaderImage" hidden>
+  <img width="100px" src="{% static 'warehouse/images/loader.gif' %}"/>
+</div>
 {% endblock %}
+
 
 {% block app_actions %}
  

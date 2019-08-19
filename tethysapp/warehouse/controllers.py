@@ -2,18 +2,25 @@
 from django.shortcuts import render
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
-from tethys_sdk.gizmos import Button
+
+
+from tethys_sdk.gizmos import (Button, MessageBox)
 
 from oauthlib.oauth2 import TokenExpiredError
 from hs_restclient import HydroShare, HydroShareAuthOAuth2
+from channels.generic.websocket import AsyncWebsocketConsumer
+from channels.layers import get_channel_layer
 
 import yaml
 import os
 import xmltodict
 import requests
-
+import json
+import asyncio
+import threading
 
 import xml.etree.ElementTree as ET
+
 
 from .app import Warehouse as app
 from .install_commands import *
@@ -27,6 +34,22 @@ moJixaPIeeYQkVOJkKhIfPlqArsPAp3h24eJvZnGxfwjmcNUREFSy5JUSePn6IOCM'
 GROUP_ID = 120
 
 ALL_RESOURCES = []
+
+
+class notificationsConsumer(AsyncWebsocketConsumer):
+    async def connect(self):
+        await self.accept()
+        await self.channel_layer.group_add("notifications", self.channel_name)
+        print(f"Added {self.channel_name} channel to notifications")
+
+    async def disconnect(self, close_code):
+        await self.channel_layer.group_discard("notifications", self.channel_name)
+        print(f"Removed {self.channel_name} channel from notifications")
+
+    async def install_notifications(self, event):
+        message = event['message']
+        await self.send(text_data=json.dumps({'message': message, }))
+        print(f"Got message {event} at {self.channel_name}")
 
 
 def parse_scimeta(url):
@@ -113,16 +136,20 @@ def home(request):
     if len(ALL_RESOURCES) == 0:
         fetch_resources()
 
-    context = {'resources': ALL_RESOURCES}
+    message_box = MessageBox(name='notification',
+                             title='Application Install Status',
+                             dismiss_button='Nevermind',
+                             affirmative_button='Refresh',
+                             affirmative_attributes='onClick=window.location.href=window.location.href;')
+
+    context = {'resources': ALL_RESOURCES, "install_message_box": message_box}
     return render(request, 'warehouse/home.html', context)
 
 
 def install(request):
 
     app_id = request.GET.get('id')
-
     resource = get_resource(app_id)
-
-    begin_install(resource)
-
+    thread = threading.Thread(target=begin_install, args=(resource, get_channel_layer()))
+    thread.start()
     return JsonResponse(resource)

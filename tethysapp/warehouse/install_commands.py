@@ -21,10 +21,22 @@
 import git
 import os
 import yaml
+import time
 
 from subprocess import call, Popen, PIPE, STDOUT
 from conda.cli.python_api import run_command as conda_run, Commands
+from asgiref.sync import async_to_sync
+
 from .app import Warehouse as app
+
+
+def send_notif(msg, channel_layer):
+    async_to_sync(channel_layer.group_send)(
+        "notifications", {
+            "type": "install_notifications",
+            "message": msg
+        }
+    )
 
 
 def handle_property_not_present(property):
@@ -33,12 +45,13 @@ def handle_property_not_present(property):
     pass
 
 
-def get_repo(app_name, repo_link, branch="master"):
+def get_repo(app_name, repo_link, channel_layer, branch="master",):
 
                 # TODO
                 # What Happens when git pull fails or one of the other operations in here?
+    send_notif("Pulling GIT Repo", channel_layer)
 
-    dir_path = os.path.join(app.get_app_workspace().path, app_name)
+    dir_path = os.path.join(app.get_app_workspace().path, 'apps', app_name)
     print(dir_path)
     if os.path.isdir(dir_path):
         print("Path already exists, could be an update operation?. Skipping Git checkout, just do a pull")
@@ -58,6 +71,8 @@ def get_repo(app_name, repo_link, branch="master"):
                 os.chmod(os.path.join(root, momo), 0o755)
             for momo in files:
                 os.chmod(os.path.join(root, momo), 0o755)
+
+    send_notif("GIT Repo Pull Complete", channel_layer)
 
     return dir_path
 
@@ -117,8 +132,8 @@ def install_pip_deps(pip_config):
     }
 
 
-def run_install(install_path):
-    return_msgs = []
+def run_install(install_path, channel_layer):
+    send_notif("Running dependency installation", channel_layer)
 
     try:
         with open(install_path) as f:
@@ -135,6 +150,8 @@ def run_install(install_path):
         app_name = init_options['name']
 
     if "conda" not in init_options:
+        send_notif("No Conda Dependencies found. Skipped Conda Installation.", channel_layer)
+
         conda_install_result = {
             'status': True,
             'msg': "No Conda Dependencies found. Skipped Conda Installation. "
@@ -148,18 +165,38 @@ def run_install(install_path):
                 'msg': "Skipping dependency installation, Skip option found."
             }
         else:
+            send_notif("Installing conda dependencies", channel_layer)
             conda_install_result = install_conda_deps(conda_config)
+            send_notif("Conda dependecies installation complete", channel_layer)
 
     if 'pip' in init_options:
         pip_config = init_options['pip']
+        send_notif("Installing pip dependencies", channel_layer)
         pip_install_result = install_pip_deps(pip_config)
+        send_notif("Pip dependency installation complete", channel_layer)
     else:
+        send_notif("No Pip Dependencies found. Skipped Pip Installation.", channel_layer)
         pip_install_result = {
             'status': True,
             'msg': "No Pip Dependencies found. Skipped Pip Installation. "
         }
 
     result_install = conda_install_result['status'] and pip_install_result['status']
+    send_notif("Dependency install complete", channel_layer)
+    send_notif("Starting Python application setup (setup.py)", channel_layer)
+
+    if 'setup_path' in init_options:
+        setup_path = init_options['setup_path']
+    else:
+        setup_path = "setup.py"
+
+    call_cwd_path = os.path.dirname(install_path)
+
+    call(['python', setup_path, 'develop'], cwd=call_cwd_path, stderr=STDOUT)
+    call(['tethys', 'db', 'sync'])
+
+    send_notif("Python application setup complete", channel_layer)
+
     return {
         'status': result_install,
         'msg': 'Install App and Deps Successful',
@@ -168,10 +205,24 @@ def run_install(install_path):
     }
 
 
-def begin_install(install_metadata):
+def begin_install(install_metadata, channel_layer):
 
-    app_path = get_repo(install_metadata['metadata']['app-name'], install_metadata['metadata']['github-url'])
+    send_notif("Starting installation of app: " + install_metadata['metadata']['app-name'], channel_layer)
+
+    try:
+        app_path = get_repo(install_metadata['metadata']['app-name'],
+                            install_metadata['metadata']['github-url'], channel_layer)
+    except Exception as e:
+        send_notif("Error while pulling git Repo. Please check logs for details", channel_layer)
+
+    send_notif("Validating downloaded repo", channel_layer)
+
     validation = validate_app(app_path)
-    install_status = run_install(validation['path'])
-    print(install_status)
-# print(install_metadata)
+
+    try:
+        install_status = run_install(validation['path'], channel_layer)
+    except Exception as e:
+        send_notif("Install ran into an error. Please check logs for details", channel_layer)
+
+    if install_status['status']:
+        send_notif("install_complete", channel_layer)

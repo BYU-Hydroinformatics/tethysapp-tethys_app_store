@@ -34,6 +34,12 @@ class Warehouse(TethysAppBase):
                 url='warehouse/install',
                 controller='warehouse.controllers.install'
             ),
+            UrlMap(
+                name='install_notifications',
+                url='warehouse/install/notifications',
+                controller='warehouse.controllers.notificationsConsumer',
+                protocol='websocket'
+            )
         )
 
         return url_maps
