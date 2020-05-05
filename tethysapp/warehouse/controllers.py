@@ -1,8 +1,6 @@
-
 from django.shortcuts import render
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
-
 
 from tethys_sdk.gizmos import (Button, MessageBox)
 
@@ -11,6 +9,8 @@ from hs_restclient import HydroShare, HydroShareAuthOAuth2
 from channels.generic.websocket import AsyncWebsocketConsumer
 from channels.layers import get_channel_layer
 
+from conda.cli.python_api import Commands, run_command
+
 import yaml
 import os
 import xmltodict
@@ -18,9 +18,11 @@ import requests
 import json
 import asyncio
 import threading
+import re
+import conda.cli.python_api
 
+from packaging import version
 import xml.etree.ElementTree as ET
-
 
 from .app import Warehouse as app
 from .install_commands import *
@@ -34,6 +36,8 @@ moJixaPIeeYQkVOJkKhIfPlqArsPAp3h24eJvZnGxfwjmcNUREFSy5JUSePn6IOCM'
 GROUP_ID = 120
 
 ALL_RESOURCES = []
+
+CHANNEL_NAME = 'geoglows'
 
 
 class notificationsConsumer(AsyncWebsocketConsumer):
@@ -57,6 +61,8 @@ def parse_scimeta(url):
     scimeta = xmltodict.parse(r.content)
     extended_metadata = scimeta['rdf:RDF']['rdf:Description'][0]['hsterms:extendedMetadata']
     final_metadata = {}
+    final_metadata['app_tags'] = list(map(lambda x: re.sub(r"\s+", '-', x),
+                                          scimeta['rdf:RDF']['rdf:Description'][0]['dc:subject']))
     for metadata in extended_metadata:
         metadata = metadata['rdf:Description']
         final_metadata[metadata['hsterms:key']] = metadata['hsterms:value']
@@ -65,6 +71,7 @@ def parse_scimeta(url):
 
 
 def parse_resource(hs_resource):
+    print(hs_resource['science_metadata_url'])
     return {'title': hs_resource['resource_title'],
             'id': hs_resource['resource_id'],
             'description': hs_resource['abstract'],
@@ -75,55 +82,47 @@ def parse_resource(hs_resource):
 
 
 def fetch_resources():
-
     global ALL_RESOURCES
 
-    # Commenting out the real hydroshare Fetch until the data model is created properly in the code
-    # Once done here, reflect it on the actual resource
-    # Doing this speeds up local dev
+    # Fields that are required
+    # resource_metadata_template = {
+    #     'name': "App Name",
+    #     'description': "Description",
+    #     'metadata': {
+    #         'app_tags': ['App-Category-1'],
+    #         'icon': "Icon location",
+    #         'versions':['0.0.0']
+    #     }
+    # }
 
-    resource_metadata = [{'title': 'Warehouse App 1 - Test',
-                          'id': '1604fb12cced4f79bb6ceaf1a2c98090',
-                          'description': 'Test Resource for Tethys App Warehouse.',
-                          'date_created': '05-20-2019',
-                          'date_last_updated': '07-17-2019',
-                          'metadata': {'tethys-app': 'true',
-                                       'test-metadata': '4443',
-                                       'tethys-version': '2.0',
-                                       'github-url': 'https://github.com/rfun/warehouse-test.git',
-                                       'app-name': 'warehouse_test'}},
-                         {'title': 'Warehouse App 2 - Test',
-                          'id': 'b1bffcb8b48e447aa1cc240ac0824583',
-                          'description': 'Test Resource for Tethys App Warehouse.',
-                          'date_created': '05-21-2019', 'date_last_updated': '05-21-2019',
-                          'metadata': {'tethys-app': 'true',
-                                       'test-metadata': '4443',
-                                       'tethys-version': '2.0',
-                                       'github-url': 'https://github.com/BYU-Hydroinformatics/warehouse.git'}}]
+    # Look for packages:
+    # conda search - c geoglows - -override-channels - i
+    (conda_search_result, err, code) = run_command(Commands.SEARCH,
+                                                   ["-c", CHANNEL_NAME, "--override-channels", "-i", "--json"])
+    conda_search_result = json.loads(conda_search_result)
 
-    # auth = HydroShareAuthOAuth2(hs_client_id, hs_client_secret, username='rfun', password='bridgefour')
-    # hs = HydroShare(auth=auth)
-    # try:
-    #     temp_resources = hs.resources(group=GROUP_ID)
-    # except TokenExpiredError as e:
-    #     hs = HydroShare(auth=auth)
-    #     temp_resources = hs.resources(group=GROUP_ID)
-
-    # resource_metadata = []
-
-    # for resource in temp_resources:
-    #     resource_metadata.append(parse_resource(resource))
+    resource_metadata = []
+    for conda_package in conda_search_result:
+        newPackage = {
+            'name': conda_package,
+            'metadata': {
+                'versions': [],
+                'channel': CHANNEL_NAME
+            }
+        }
+        for conda_version in conda_search_result[conda_package]:
+            newPackage.get("metadata").get("versions").append(conda_version.get('version'))
+        resource_metadata.append(newPackage)
 
     ALL_RESOURCES = resource_metadata
 
 
-def get_resource(resource_id):
-
+def get_resource(resource_name):
     # First see if resources are initialized
     if len(ALL_RESOURCES) == 0:
         fetch_resources()
 
-    resource = [x for x in ALL_RESOURCES if x['id'] == resource_id]
+    resource = [x for x in ALL_RESOURCES if x['name'] == resource_name]
 
     if len(resource) > 0:
         return resource[0]
@@ -132,9 +131,10 @@ def get_resource(resource_id):
 
 
 def home(request):
-
     if len(ALL_RESOURCES) == 0:
         fetch_resources()
+
+    # print(ALL_RESOURCES)
 
     message_box = MessageBox(name='notification',
                              title='Application Install Status',
@@ -142,13 +142,24 @@ def home(request):
                              affirmative_button='Refresh',
                              affirmative_attributes='onClick=window.location.href=window.location.href;')
 
-    context = {'resources': ALL_RESOURCES, "install_message_box": message_box}
+    tag_list = []
+
+    # for resource in ALL_RESOURCES:
+    #     resource['tag_class'] = ""
+    #     if len(resource['metadata']['app_tags']) > 0:
+    #         resource['tag_class'] = ' '.join(resource['metadata']['app_tags'])
+    #         tag_list = tag_list + resource['metadata']['app_tags']
+
+    # tag_list = list(set(tag_list))
+
+    context = {'resources': ALL_RESOURCES,
+               "install_message_box": message_box,
+               "tags": tag_list}
     return render(request, 'warehouse/home.html', context)
 
 
 def install(request):
-
-    app_id = request.GET.get('id')
+    app_id = request.GET.get('name')
     resource = get_resource(app_id)
     thread = threading.Thread(target=begin_install, args=(resource, get_channel_layer()))
     thread.start()
