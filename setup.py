@@ -1,4 +1,3 @@
-
 from setuptools import setup, find_namespace_packages
 from tethys_apps.app_installation import find_resource_files
 
@@ -12,7 +11,6 @@ resource_files += find_resource_files('tethysapp/' + app_package + '/public', 't
 
 # -- Python Dependencies -- #
 dependencies = ['hs_restclient', 'xmltodict']
-
 
 setup(
     name=release_package,

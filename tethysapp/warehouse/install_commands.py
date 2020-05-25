@@ -1,34 +1,122 @@
-# {'title': 'Warehouse App 1 - Test', 'id': '1604fb12cced4f79bb6ceaf1a2c98090',
-#  'description': 'Test Resource for Tethys App Warehouse.',
-#  'date_created': '05-20-2019',
-#     'date_last_updated': '07-17-2019',
-#     'metadata': {'tethys-app': 'true', 'test-metadata': '4443',
-#                  'tethys-version': '2.0',
-#                  'github-url': 'https://github.com/rfun/warehouse-test.git'}}
-
-# Download github code
-
-# Look for install.yaml
-
-# if none found then show error
-
-# if found, install dependencies, install app
-
-# services check
-
-# custom settings check
-
 import os
 import yaml
 import time
-
+import json
+import importlib
+import pkgutil
+import inspect
 
 from subprocess import call, STDOUT
 from conda.cli.python_api import run_command as conda_run, Commands
 from asgiref.sync import async_to_sync
 from pathlib import Path
+from argparse import Namespace
+from subprocess import (call)
+
+from distutils.sysconfig import get_python_lib
+from django.core.exceptions import ObjectDoesNotExist
+from tethys_apps.base import TethysAppBase
+from tethys_apps.models import CustomSetting, TethysApp
+from tethys_apps.utilities import (get_app_settings, link_service_to_app_setting)
+from tethys_cli.install_commands import (get_service_type_from_setting, get_setting_type_from_setting)
+from tethys_cli.services_commands import services_list_command
 
 from .app import Warehouse as app
+
+
+async def configureServices(services_data, channel_layer):
+    print(services_data)
+
+    try:
+        link_service_to_app_setting(services_data['service_type'],
+                                    services_data['service_id'],
+                                    services_data['app_name'],
+                                    services_data['setting_type'],
+                                    services_data['service_name'])
+    except Exception as e:
+        print(e)
+        print("Error while linking service")
+        return
+
+    get_data_json = {
+        "data": {"serviceName": services_data['service_name']},
+        "jsHelperFunction": "serviceConfigComplete"
+    }
+    await channel_layer.group_send(
+        "notifications",
+        {
+            "type": "install_notifications",
+            "message": get_data_json
+        }
+    )
+
+
+async def setCustomSettings(custom_settings_data, channel_layer):
+
+    current_app = get_app_instance_from_path([custom_settings_data['app_py_path']])
+
+    if "skip" in custom_settings_data:
+        if(custom_settings_data["skip"]):
+            print("Skip/NoneFound option called.")
+
+            msg = "Custom Setting Configuration Skipped"
+            if "noneFound" in custom_settings_data:
+                if custom_settings_data["noneFound"]:
+                    msg = "No Custom Settings Found to process."
+
+            await channel_layer.group_send(
+                "notifications",
+                {
+                    "type": "install_notifications",
+                    "message": msg
+                }
+            )
+            await process_settings(current_app, custom_settings_data['app_py_path'], channel_layer)
+            return
+
+    current_app_name = getattr(current_app, "name")
+    custom_settings = getattr(current_app, "custom_settings")
+
+    try:
+        current_app_tethysapp_instance = TethysApp.objects.get(name=current_app_name)
+    except ObjectDoesNotExist:
+        print("Couldn't find app instance to get the ID to connect the settings to")
+        await channel_layer.group_send(
+            "notifications",
+            {
+                "type": "install_notifications",
+                "message": "Error Setting up custom settings. Check logs for more details"
+            }
+        )
+        return
+
+    for setting in custom_settings():
+        setting_name = getattr(setting, "name")
+        actual_setting = CustomSetting.objects.get(name=setting_name, tethys_app=current_app_tethysapp_instance.id)
+        if(setting_name in custom_settings_data['settings']):
+            actual_setting.value = custom_settings_data['settings'][setting_name]
+            actual_setting.clean()
+            actual_setting.save()
+
+    await channel_layer.group_send(
+        "notifications",
+        {
+            "type": "install_notifications",
+            "message": "Custom Settings configured."
+        }
+    )
+    get_data_json = {
+        "data": {},
+        "jsHelperFunction": "customSettingConfigComplete"
+    }
+    await channel_layer.group_send(
+        "notifications",
+        {
+            "type": "install_notifications",
+            "message": get_data_json
+        }
+    )
+    await process_settings(current_app, custom_settings_data['app_py_path'], channel_layer)
 
 
 def send_notification(msg, channel_layer):
@@ -40,14 +128,98 @@ def send_notification(msg, channel_layer):
     )
 
 
-def process_custom_settings(custom_settings):
-    for setting in custom_settings():
-        setting.value = "Test Value"
-        setting.save()
-        print(setting)
+def get_app_instance_from_path(paths):
+    app_instance = None
+    for _, modname, ispkg in pkgutil.iter_modules(paths):
+        if ispkg:
+            app_module = __import__('tethysapp.{}'.format(modname) + ".app", fromlist=[''])
+            for name, obj in inspect.getmembers(app_module):
+                # Retrieve the members of the app_module and iterate through
+                # them to find the the class that inherits from AppBase.
+                try:
+                    # issubclass() will fail if obj is not a class
+                    if (issubclass(obj, TethysAppBase)) and (obj is not TethysAppBase):
+                        # Assign a handle to the class
+                        AppClass = getattr(app_module, name)
+                        # Instantiate app
+                        app_instance = AppClass()
+                        app_instance.sync_with_tethys_db()
+                        # We found the app class so we're done
+                        break
+                except TypeError:
+                    continue
+    return app_instance
 
 
-def detect_app_dependencies(repo_location):
+def get_service_options(service_type):
+    # # List existing services
+    args = Namespace()
+
+    for conf in ['spatial', 'persistent', 'wps', 'dataset']:
+        setattr(args, conf, False)
+
+    setattr(args, service_type, True)
+
+    existing_services_list = services_list_command(args)[0]
+    existing_services = []
+
+    if(len(existing_services_list)):
+        for service in existing_services_list:
+            existing_services.append({
+                "name": service.name,
+                "id": service.id
+            })
+    return existing_services
+
+
+async def process_settings(app_instance, app_py_path, channel_layer):
+    app_settings = get_app_settings(app_instance.package)
+
+    # In the case the app isn't installed, has no settings, or it is an extension,
+    # skip configuring services/settings
+    if not app_settings:
+        await channel_layer.group_send(
+            "notifications",
+            {
+                "type": "install_notifications",
+                "message": "No Services found to configure."
+            }
+        )
+
+        return
+    unlinked_settings = app_settings['unlinked_settings']
+
+    services = []
+
+    for setting in unlinked_settings:
+        service_type = get_service_type_from_setting(setting)
+        newSetting = {
+            "name": setting.name,
+            "required": setting.required,
+            "description": setting.description,
+            "service_type": service_type,
+            "setting_type": get_setting_type_from_setting(setting),
+            "options": get_service_options(service_type)
+        }
+        services.append(newSetting)
+
+    get_data_json = {
+        "data": services,
+        "returnMethod": "configureServices",
+        "jsHelperFunction": "processServices",
+        "app_py_path": app_py_path,
+        "current_app_name": app_instance.package
+    }
+    await channel_layer.group_send(
+        "notifications",
+        {
+            "type": "install_notifications",
+            "message": get_data_json
+        }
+    )
+
+
+def detect_app_dependencies(install_metadata, app_version, channel_layer):
     """
     Method goes through the app.xml and determines the following:
     1.) Any services required
@@ -55,34 +227,92 @@ def detect_app_dependencies(repo_location):
     3.) Geoserver Requirement?
     4.) Custom Settings required for installation?
     """
-    app_py_possible_files = Path(repo_location).glob('**/app.py')
-    app_py_file_location = app_py_possible_files.__next__()
 
-    import importlib.util
-    spec = importlib.util.spec_from_file_location("current_app", app_py_file_location)
-    current_app = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(current_app)
-    current_app = getattr(current_app, 'WarehouseTest')()
-    object_methods = [method_name for method_name in dir(current_app)
-                      if callable(getattr(current_app, method_name)) and "TethysAppBase" not in str(getattr(current_app, method_name))]
+    # Get Conda Packages location
+
+    # Tried using conda_prefix from env as well as conda_info but both of them are not reliable
+    # Best method is to import the module and try and get the location from that path
+    # @TODO : Ensure that this works through multiple runs
+    import tethysapp
+
+    # After install we need to update the sys.path variable so we can see the new apps that are installed.
+    # We need to do a reload here of the sys.path and then reload the the tethysapp
+    # https://stackoverflow.com/questions/25384922/how-to-refresh-sys-path
+    import site
+    importlib.reload(site)
+    importlib.reload(tethysapp)
+
+    paths = list(tethysapp.__path__)
+    print("Current paths", paths)
+    paths = list(filter(lambda x: install_metadata['name'] in x, paths))
+
+    if len(paths) < 1:
+        print("Can't find the installed app location.")
+        return
+
+    app_instance = get_app_instance_from_path(paths)
+    custom_settings_json = []
+
+    if getattr(app_instance, "custom_settings"):
+        send_notification("Processing App's Custom Settings....", channel_layer)
+        custom_settings = getattr(app_instance, "custom_settings")
+        for setting in custom_settings():
+            setting = {"name": getattr(setting, "name"),
+                       "description": getattr(setting, "description"),
+                       "default": getattr(setting, "default"),
+                       }
+            custom_settings_json.append(setting)
+
+    get_data_json = {
+        "data": custom_settings_json,
+        "returnMethod": "setCustomSettings",
+        "jsHelperFunction": "processCustomSettings",
+        "app_py_path": str(paths[0])
+    }
+    send_notification(get_data_json, channel_layer)
+
+    # else:
+    #     get_data_json = {
+    #         "returnMethod": "setCustomSettings",
+    #         "jsHelperFunction": "processCustomSettings",
+    #         "app_py_path": str(paths[0])
+    #     }
+    #     send_notification(get_data_json, channel_layer)
+    # process_settings(app_instance, str(paths[0]), channel_layer)
+    # send_notification("No Custom Settings found in the App to Process.", channel_layer)
+
+    # # First let's try the environment variables
+    # if "CONDA_PREFIX" in os.environ:
+    #     conda_pkgs_location = os.path.join(os.environ["CONDA_PREFIX"], "pkgs")
+    # else:
+    #     # Try and get it from conda info
+    #     (conda_info_result, err, code) = conda_run(Commands.INFO, ["--json"])
+    #     # print(conda_info_result, err, code)
+    #     try:
+    #         conda_info_result = json.loads(conda_info_result)
+    #     except Exception as e:
+    #         print("Error while parsing info result")
+    #         print(conda_info_result)
+    #         print(e)
+    #         # Need to throw an error here
+    #         return
+
+    #     conda_pkgs_location = conda_info_result['pkgs_dirs'][0]
+
+    # download_url = install_metadata['metadata']['versionURLs'][install_metadata['metadata']
+    #                                                            ['versions'].index(app_version)]
+    # downloaded_file_name = '.'.join(download_url.split("/")[-1].split('.')[:-2])
+    # repo_location = os.path.join(conda_pkgs_location, downloaded_file_name)
+    # print(repo_location)
+
+    # print(dir(current_app))
+    # object_methods = [method_name for method_name in dir(current_app)
+    #                   if callable(getattr(current_app, method_name)) and "TethysAppBase" not in str(getattr(current_app, method_name))]
 
     # Object methods only contains items in the app.py now.
 
-    if 'custom_settings' in object_methods:
-        process_custom_settings(getattr(current_app, 'custom_settings'))
-
-    # print(object_methods)
-
-    # print(.__class__.__bases__[0].__name__)
-    # print(getattr(current_app, 'custom_settings'))
-
-    # print(object_methods)
-    # print(dir(current_app))
-
-    #     print(filename)
-    #
-    # print(repo_location)
-    # app_py_path = os.path.join(app.get_app_workspace().path, 'apps', app_name)
+    # if 'custom_settings' in object_methods:
+    #     process_custom_settings(getattr(current_app, 'custom_settings'))
 
     return
 
@@ -139,7 +369,7 @@ def validate_app(path):
     return validation
 
 
-def conda_install(app_metadata, channel_layer):
+def conda_install(app_metadata, app_version, channel_layer):
 
     result = {
         'status': True,
@@ -150,12 +380,17 @@ def conda_install(app_metadata, channel_layer):
 
     start_time = time.time()
     latest_version = app_metadata['metadata']['versions'][-1]
-    app_name = app_metadata['name'] + "=" + latest_version
-    run_command = ["-c", app_metadata['metadata']['channel'], app_name, '--json', '--debug']
+    if not app_version:
+        app_version = latest_version
+
+    app_name = app_metadata['name'] + "=" + app_version
+    run_command = ["-c", app_metadata['metadata']['channel'], "-c", "conda-forge", app_name, '--json']
+    # print(run_command)
     [resp, err, code] = conda_run(Commands.INSTALL, *run_command, use_exception_handler=False)
+    call(['tethys', 'db', 'sync'])
     if code != 0:
         result['status'] = False
-        result['msg'] = 'Warning: Dependencies installation ran into an error. Please try again or a manual install'
+        result['msg'] = 'Warning: Conda installation ran into an error. Please try again or a manual install'
     else:
         result['msg'] = 'Conda Install Successful'
         send_notification("Conda install completed in %.2f seconds." % (time.time() - start_time), channel_layer)
@@ -202,100 +437,35 @@ def install_pip_deps(pip_config):
 
 
 def run_install(install_path, channel_layer):
-    send_notification("Running dependency installation", channel_layer)
 
-    try:
-        with open(install_path) as f:
-            init_options = yaml.safe_load(f)
-
-    except Exception as e:
-        return {
-            'status': False,
-            'error': e,
-            'msg': 'An unexpected error occurred reading the file. Please try again.'
-        }
-
-    if "name" in init_options:
-        app_name = init_options['name']
-
-    if "conda" not in init_options:
-        send_notification("No Conda Dependencies found. Skipped Conda Installation.", channel_layer)
-
-        conda_install_result = {
-            'status': True,
-            'msg': "No Conda Dependencies found. Skipped Conda Installation. "
-        }
-    else:
-        conda_config = init_options['conda']
-        if "skip" in conda_config:
-            skip = conda_config['skip']
-            conda_install_result = {
-                'status': True,
-                'msg': "Skipping dependency installation, Skip option found."
-            }
-        else:
-            send_notification("Installing conda dependencies", channel_layer)
-            conda_install_result = install_conda_deps(conda_config)
-            send_notification("Conda dependecies installation complete", channel_layer)
-
-    if 'pip' in init_options:
-        pip_config = init_options['pip']
-        send_notification("Installing pip dependencies", channel_layer)
-        pip_install_result = install_pip_deps(pip_config)
-        send_notification("Pip dependency installation complete", channel_layer)
-    else:
-        send_notification("No Pip Dependencies found. Skipped Pip Installation.", channel_layer)
-        pip_install_result = {
-            'status': True,
-            'msg': "No Pip Dependencies found. Skipped Pip Installation. "
-        }
-
-    result_install = conda_install_result['status'] and pip_install_result['status']
-    send_notification("Dependency install complete", channel_layer)
-    send_notification("Starting Python application setup (setup.py)", channel_layer)
-
-    if 'setup_path' in init_options:
-        setup_path = init_options['setup_path']
-    else:
-        setup_path = "setup.py"
-
-    call_cwd_path = os.path.dirname(install_path)
-
-    call(['python', setup_path, 'develop'], cwd=call_cwd_path, stderr=STDOUT)
     call(['tethys', 'db', 'sync'])
-
     send_notification("Python application setup complete", channel_layer)
 
     return {
-        'status': result_install,
+        'status': True,
         'msg': 'Install App and Deps Successful',
         'conda_result': conda_install_result,
         'pip_result': pip_install_result
     }
 
 
-def begin_install(install_metadata, channel_layer):
+def begin_install(install_metadata, app_version, channel_layer):
     send_notification("Starting installation of app: " + install_metadata['name'], channel_layer)
-    send_notification("Installing latest version", channel_layer)
+    send_notification("Installing Version: " + app_version, channel_layer)
 
     try:
-        app_path = conda_install(install_metadata, channel_layer)
+        app_path = conda_install(install_metadata, app_version, channel_layer)
     except Exception as e:
         print(e)
         send_notification("Error while Installing Conda package. Please check logs for details", channel_layer)
         return
 
-    # try:
-    #     app_deps = detect_app_dependencies(app_path)
-    # except Exception as e:
-    #     print(e)
-    #     send_notification("Error while pulling git Repo. Please check logs for details", channel_layer)
-    #     return
-
-    # send_notification("Validating downloaded repo", channel_layer)
-    #
-    # validation = validate_app(app_path)
-    #
+    try:
+        detect_app_dependencies(install_metadata, app_version, channel_layer)
+    except Exception as e:
+        print(e)
+        send_notification("Error while checking package for services", channel_layer)
+        return
     # try:
     #     install_status = run_install(validation['path'], channel_layer)
     # except Exception as e:

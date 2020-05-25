@@ -20,7 +20,7 @@ import asyncio
 import threading
 import re
 import conda.cli.python_api
-
+import sys
 from packaging import version
 import xml.etree.ElementTree as ET
 
@@ -37,7 +37,7 @@ GROUP_ID = 120
 
 ALL_RESOURCES = []
 
-CHANNEL_NAME = 'geoglows'
+CHANNEL_NAME = 'rfun'
 
 
 class notificationsConsumer(AsyncWebsocketConsumer):
@@ -55,6 +55,14 @@ class notificationsConsumer(AsyncWebsocketConsumer):
         await self.send(text_data=json.dumps({'message': message, }))
         print(f"Got message {event} at {self.channel_name}")
 
+    async def receive(self, text_data):
+        # print(f"Received message {text_data} at {self.channel_name}")
+        text_data_json = json.loads(text_data)
+        if "type" in text_data_json:
+            await getattr(sys.modules[__name__], text_data_json['type'])(text_data_json['data'], self.channel_layer)
+        else:
+            print("Can't redirect incoming message.")
+
 
 def parse_scimeta(url):
     r = requests.get(url)
@@ -66,7 +74,6 @@ def parse_scimeta(url):
     for metadata in extended_metadata:
         metadata = metadata['rdf:Description']
         final_metadata[metadata['hsterms:key']] = metadata['hsterms:value']
-
     return final_metadata
 
 
@@ -107,11 +114,13 @@ def fetch_resources():
             'name': conda_package,
             'metadata': {
                 'versions': [],
+                'versionURLs': [],
                 'channel': CHANNEL_NAME
             }
         }
         for conda_version in conda_search_result[conda_package]:
             newPackage.get("metadata").get("versions").append(conda_version.get('version'))
+            newPackage.get("metadata").get("versionURLs").append(conda_version.get('url'))
         resource_metadata.append(newPackage)
 
     ALL_RESOURCES = resource_metadata
@@ -136,14 +145,20 @@ def home(request):
 
     # print(ALL_RESOURCES)
 
-    message_box = MessageBox(name='notification',
-                             title='Application Install Status',
-                             dismiss_button='Nevermind',
-                             affirmative_button='Refresh',
-                             affirmative_attributes='onClick=window.location.href=window.location.href;')
+    # message_box = MessageBox(name='notification',
+    #                          title='Application Install Status',
+    #                          dismiss_button='Nevermind',
+    #                          affirmative_button='Refresh',
+    #                          affirmative_attributes='onClick=window.location.href=window.location.href;')
 
     tag_list = []
 
+    # from distutils.sysconfig import get_python_lib
+    # print(get_python_lib())
+
+    # (conda_info_result, err, code) = run_command(Commands.INFO, ["--json"])
+    # conda_info_result = json.loads(conda_info_result)
+    # print(conda_info_result)
     # for resource in ALL_RESOURCES:
     #     resource['tag_class'] = ""
     #     if len(resource['metadata']['app_tags']) > 0:
@@ -153,14 +168,16 @@ def home(request):
     # tag_list = list(set(tag_list))
 
     context = {'resources': ALL_RESOURCES,
-               "install_message_box": message_box,
+               'resourcesJson': json.dumps(ALL_RESOURCES),
+               # "install_message_box": message_box,
                "tags": tag_list}
     return render(request, 'warehouse/home.html', context)
 
 
 def install(request):
     app_id = request.GET.get('name')
+    app_version = request.GET.get('version')
     resource = get_resource(app_id)
-    thread = threading.Thread(target=begin_install, args=(resource, get_channel_layer()))
+    thread = threading.Thread(target=begin_install, args=(resource, app_version, get_channel_layer()))
     thread.start()
     return JsonResponse(resource)

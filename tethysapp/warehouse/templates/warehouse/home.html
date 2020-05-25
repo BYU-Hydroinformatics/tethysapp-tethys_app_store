@@ -7,6 +7,11 @@
 <link href="{% static 'tethys_apps/css/app_library.css' %}" rel="stylesheet"/>
 {% endblock %}
 
+{% block import_gizmos %}
+    {% import_gizmo_dependency select_input %}
+{% endblock %}
+
+
 {% block header_buttons %}
 <div class="header-button glyphicon-button" data-toggle="tooltip" data-placement="bottom" title="Help">
     <a data-toggle="modal" data-target="#help-modal"><span class="glyphicon glyphicon-question-sign"></span></a>
@@ -34,7 +39,7 @@
     </div>
     <div id="app-list" class="isotopeContainer">
         {% for resource in resources %}
-        <a class="app-container isotopeSelector {{resource.tag_class}}" id="app_button"
+        <a class="app-container isotopeSelector {{resource.tag_class}}" id="app_button" data-app-name="{{ resource.name }}"
            data-install-url="{% url 'warehouse:install' %}?name={{ resource.name }}">
             <div class="app-icon">
                 <img {% if resource.metadata.icon %}
@@ -64,10 +69,10 @@
 
 
 {% block after_app_content %}
-{% gizmo install_message_box %}
-<div id="loaderImage" hidden>
-    <img width="100px" src="{% static 'warehouse/images/loader.gif' %}"/>
-</div>
+{% include "warehouse/modals/mainProcess.html" %}
+{% include "warehouse/modals/customSettings.html" %}
+{% include "warehouse/modals/services.html" %}
+
 {% endblock %}
 
 
@@ -77,6 +82,9 @@
 
 {% block scripts %}
 {{ block.super }}
+<script>
+const resources = JSON.parse('{{ resourcesJson | escapejs }}');
+</script>
 <script src="{% static 'tethys_apps/vendor/imagesloaded.min.js' %}" type="text/javascript"></script>
 <script src="{% static 'tethys_apps/vendor/masonry.min.js' %}" type="text/javascript"></script>
 <script src="{% static 'tethys_apps/js/app_library.js' %}" type="text/javascript"></script>
