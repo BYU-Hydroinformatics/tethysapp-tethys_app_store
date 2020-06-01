@@ -1,7 +1,9 @@
 // Some Constant Vars being used across the script
 // Probably need a better way to manage this state though
+// @TODO : Fix This global variable
 var notifCount = 0
-
+var currentServicesList = []
+var notification_ws
 // End Vars
 const settingsHelper = {
     processCustomSettings: (settingsData, n_content, completeMessage, ws) => {
@@ -100,9 +102,12 @@ const settingsHelper = {
         // Check if there are any services to configure. Otherwise move on to next step
         if (servicesData) {
             if (servicesData.length > 0) {
-                console.log(servicesData)
+                currentServicesList = servicesData
                 $("#services-modal").modal("show")
                 $("#services-container").prepend(`<div>
+                    <input id="servicesToConfigureCount" hidden value="${
+                        servicesData.length
+                    }" />
                     <p>We found ${servicesData.length} service configuration${
                     servicesData.length > 1 ? "s" : ""
                 }    
@@ -132,7 +137,9 @@ const settingsHelper = {
                             })
                         )
                     })
-                    // $(`#${service.name}_createNew`).click(function() {})
+                    $(`#${service.name}_createNew`).click(() =>
+                        createNewService(service.service_type)
+                    )
                 })
             } else {
                 sendNotification("No Services found to process", n_content)
@@ -151,9 +158,9 @@ const settingsHelper = {
         let serviceName = data.serviceName
         $(`#${serviceName}_loaderImage`).hide()
         $(`#${serviceName}_successMessage`).show(400)
+        $(`#${serviceName}_optionsContainer`).hide()
 
         // Check if there are more services to configure, else enable finish button
-
         if (parseInt($(`#servicesToConfigureCount`).val()) == 1) {
             // We are done
             $(`#finishServicesButton`).prop("disabled", false)
@@ -163,6 +170,19 @@ const settingsHelper = {
                 parseInt($(`#servicesToConfigureCount`).val()) - 1
             )
         }
+    },
+    updateServiceListing: (data, n_content, completeMessage, ws) => {
+        let filteredServices = currentServicesList.filter(
+            (service) => service.service_type == data.settingType
+        )
+        filteredServices.forEach((service) => {
+            if (data.newOptions.length > 0) {
+                $(`#${service.name}_optionsList`).replaceWith(
+                    htmlHelpers.getServicesHTML(data.newOptions, service.name)
+                )
+                $(`#${service.name}_useExisting`).removeAttr("disabled")
+            }
+        })
     }
 }
 
@@ -220,11 +240,33 @@ const startInstall = (appInstallURL) => {
     })
 }
 
+const createNewService = (settingType) => {
+    let url = `/admin/tethys_services/spatialdatasetservice/add/?_to_field=id&_popup=1&type=${settingType}`
+    let newWindow = window.open(
+        url,
+        "_blank",
+        "location=yes,height=570,width=600,scrollbars=yes,status=yes"
+    )
+}
+
+// This function is called when add new service window is closed by Django
+function dismissAddRelatedObjectPopup(win, newId, newRepr) {
+    win.close()
+    notification_ws.send(
+        JSON.stringify({
+            data: {
+                settingType: getParameterByName("type", win.location.href)
+            },
+            type: `getServiceList`
+        })
+    )
+}
+
 $(document).ready(function() {
     let n_div = $("#notification")
     let n_content = $("#notification .lead")
     hideLoader()
-    let notification_ws = new WebSocket(
+    notification_ws = new WebSocket(
         "ws://" + window.location.host + "/warehouse/install/notifications/ws/"
     )
 
@@ -256,7 +298,7 @@ $(document).ready(function() {
                     notification_ws
                 )
             } else {
-                console.log("Undefined jsHelperFunctoin in JSON WebSocket call")
+                console.log("Undefined jsHelperFunction in JSON WebSocket call")
             }
         }
     }

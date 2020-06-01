@@ -171,8 +171,6 @@ async def process_settings(app_instance, app_py_path, channel_layer):
 
 
 async def configureServices(services_data, channel_layer):
-    print(services_data)
-
     try:
         link_service_to_app_setting(services_data['service_type'],
                                     services_data['service_id'],
@@ -187,6 +185,21 @@ async def configureServices(services_data, channel_layer):
     get_data_json = {
         "data": {"serviceName": services_data['service_name']},
         "jsHelperFunction": "serviceConfigComplete"
+    }
+    await channel_layer.group_send(
+        "notifications",
+        {
+            "type": "install_notifications",
+            "message": get_data_json
+        }
+    )
+
+
+async def getServiceList(data, channel_layer):
+    get_data_json = {
+        "data": {"settingType": data['settingType'],
+                 "newOptions": get_service_options(data['settingType'])},
+        "jsHelperFunction": "updateServiceListing"
     }
     await channel_layer.group_send(
         "notifications",

@@ -74,8 +74,9 @@ def home(request):
     if len(ALL_RESOURCES) == 0:
         fetch_resources()
 
-    tag_list = []
-
+    tag_list = {}
+    tag_list['test'] = 'temp'
+    print(tag_list)
     # for resource in ALL_RESOURCES:
     #     resource['tag_class'] = ""
     #     if len(resource['metadata']['app_tags']) > 0:
