@@ -112,12 +112,12 @@ def begin_install(install_metadata, app_version, channel_layer):
     send_notification("Starting installation of app: " + install_metadata['name'], channel_layer)
     send_notification("Installing Version: " + app_version, channel_layer)
 
-    # try:
-    #     app_path = conda_install(install_metadata, app_version, channel_layer)
-    # except Exception as e:
-    #     print(e)
-    #     send_notification("Error while Installing Conda package. Please check logs for details", channel_layer)
-    #     return
+    try:
+        app_path = conda_install(install_metadata, app_version, channel_layer)
+    except Exception as e:
+        print(e)
+        send_notification("Error while Installing Conda package. Please check logs for details", channel_layer)
+        return
 
     try:
         detect_app_dependencies(install_metadata, app_version, channel_layer)
