@@ -1,12 +1,13 @@
 // Some Constant Vars being used across the script
 // Probably need a better way to manage this state though
 // @TODO : Fix This global variable
-var notifCount = 0
 var currentServicesList = []
-var notification_ws
+var installRunning = false
+var installData = {}
 // End Vars
 const settingsHelper = {
     processCustomSettings: (settingsData, n_content, completeMessage, ws) => {
+        resetInstallStatus()
         if (settingsData) {
             if (settingsData.length > 0) {
                 $("#skipConfigButton").click(function() {
@@ -186,17 +187,6 @@ const settingsHelper = {
     }
 }
 
-const sendNotification = (message, n_content) => {
-    notifCount = notifCount + 1
-    let new_element = `<div style="display: none;" id="install_notif_${notifCount}">${message}</div>`
-    if (message == "install_complete") {
-        hideLoader()
-        new_element = `<div style="display: none;" id="install_notif_${notifCount}">Install Complete. Please restart your Tethys instance for changes to take effect. </div>`
-    }
-    n_content.append(new_element)
-    $(`#install_notif_${notifCount}`).show("fast")
-}
-
 // Converts the list of versions into an HTML dropdown for selection
 const getVersionsHTML = (selectedApp, allResources) => {
     let app = allResources.filter((resource) => resource.name == selectedApp)
@@ -220,21 +210,12 @@ const getVersionsHTML = (selectedApp, allResources) => {
     }
 }
 
-const hideLoader = () => {
-    $("#notification .modal-footer")
-        .find("img")
-        .hide()
-}
-
-const showLoader = () => {
-    $("#notification .modal-footer")
-        .find("img")
-        .show()
-}
-
 const startInstall = (appInstallURL) => {
     showLoader()
-    let installURL = `${appInstallURL}&version=${$("#versions").select2("data")[0].text}`
+    let version = $("#versions").select2("data")[0].text
+    let installURL = `${appInstallURL}&version=${version}`
+    installRunning = true
+    installData["version"] = version
     $.get(installURL, function(data) {
         // console.log(data)
     })
@@ -266,8 +247,9 @@ $(document).ready(function() {
     let n_div = $("#notification")
     let n_content = $("#notification .lead")
     hideLoader()
-    notification_ws = new WebSocket(
-        "ws://" + window.location.host + "/warehouse/install/notifications/ws/"
+    startWS(
+        "ws://" + window.location.host + "/warehouse/install/notifications/ws/",
+        n_content
     )
 
     $("#app_button").click(function() {
@@ -275,31 +257,10 @@ $(document).ready(function() {
         n_div.modal()
         notifCount = 0
         // Setup Versions
+        installData["name"] = $(this).data("app-name")
         let versionHTML = getVersionsHTML($(this).data("app-name"), resources)
         n_content.append(htmlHelpers.versions($(this).data("install-url")))
         n_content.find("#selectVersion").append(versionHTML)
         $("#versions").select2()
     })
-
-    notification_ws.onmessage = function(e) {
-        let data = JSON.parse(e.data)
-        if (typeof data.message == "string") {
-            // It's normal string
-            sendNotification(data.message, n_content)
-            return false
-        } else {
-            // Found an object?
-            // Check if we have a function to call
-            if ("jsHelperFunction" in data.message) {
-                settingsHelper[data.message["jsHelperFunction"]](
-                    data.message.data,
-                    n_content,
-                    data.message,
-                    notification_ws
-                )
-            } else {
-                console.log("Undefined jsHelperFunction in JSON WebSocket call")
-            }
-        }
-    }
 })

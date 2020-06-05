@@ -69,15 +69,22 @@
 
 
 {% block after_app_content %}
+<div id="overlay"></div>
 {% include "warehouse/modals/mainProcess.html" %}
 {% include "warehouse/modals/customSettings.html" %}
 {% include "warehouse/modals/services.html" %}
+{% include "warehouse/modals/serverOffline.html" %}
 
 {% endblock %}
 
 
 {% block app_actions %}
-
+<button id="serverStatusOnline" class="btn-success over-overlay" disabled hidden>
+    Server Status: Online
+</button>
+<button id="serverStatusOffline" class="btn-danger over-overlay" disabled hidden>
+    Server Status: Offline.
+</button>
 {% endblock %}
 
 {% block scripts %}

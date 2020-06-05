@@ -10,7 +10,7 @@ resource_files = find_resource_files('tethysapp/' + app_package + '/templates', 
 resource_files += find_resource_files('tethysapp/' + app_package + '/public', 'tethysapp/' + app_package)
 
 # -- Python Dependencies -- #
-dependencies = ['hs_restclient', 'xmltodict']
+dependencies = []
 
 setup(
     name=release_package,

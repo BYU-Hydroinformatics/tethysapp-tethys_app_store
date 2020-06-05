@@ -1,14 +1,15 @@
-import pkgutil
-import inspect
+import json
 
 from argparse import Namespace
 from django.core.exceptions import ObjectDoesNotExist
 
-from tethys_apps.base import TethysAppBase
-from tethys_apps.models import CustomSetting
+from tethys_apps.models import CustomSetting, TethysApp
 from tethys_apps.utilities import (get_app_settings, link_service_to_app_setting)
 from tethys_cli.install_commands import (get_service_type_from_setting, get_setting_type_from_setting)
 from tethys_cli.services_commands import services_list_command
+from .begin_install import detect_app_dependencies_async
+from conda.cli.python_api import run_command as conda_run, Commands
+from .helpers import *
 
 
 def get_service_options(service_type):
@@ -32,27 +33,38 @@ def get_service_options(service_type):
     return existing_services
 
 
-def get_app_instance_from_path(paths):
-    app_instance = None
-    for _, modname, ispkg in pkgutil.iter_modules(paths):
-        if ispkg:
-            app_module = __import__('tethysapp.{}'.format(modname) + ".app", fromlist=[''])
-            for name, obj in inspect.getmembers(app_module):
-                # Retrieve the members of the app_module and iterate through
-                # them to find the the class that inherits from AppBase.
-                try:
-                    # issubclass() will fail if obj is not a class
-                    if (issubclass(obj, TethysAppBase)) and (obj is not TethysAppBase):
-                        # Assign a handle to the class
-                        AppClass = getattr(app_module, name)
-                        # Instantiate app
-                        app_instance = AppClass()
-                        app_instance.sync_with_tethys_db()
-                        # We found the app class so we're done
-                        break
-                except TypeError:
-                    continue
-    return app_instance
+async def continueAfterInstall(installData, channel_layer):
+
+    # Check if app is installed
+    [resp, err, code] = conda_run(Commands.LIST, [installData['name'], "--json"])
+    # print(resp, err, code)
+    if code != 0:
+        # In here maybe we just try re running the install
+        print("ERROR: Couldn't get list of installed apps to verify if the conda install was successfull")
+    else:
+        conda_search_result = json.loads(resp)
+        # Check if matching version found
+        for package in conda_search_result:
+            print(package)
+            if package["version"] == installData['version']:
+                await channel_layer.group_send(
+                    "notifications",
+                    {
+                        "type": "install_notifications",
+                        "message": "Conda install completed"
+                    }
+                )
+                await detect_app_dependencies_async(installData['name'], installData['version'], channel_layer)
+                break
+            else:
+                await channel_layer.group_send(
+                    "notifications",
+                    {
+                        "type": "install_notifications",
+                        "message": "Server error while processing this installation. Please check your logs"
+                    }
+                )
+                print("ERROR: ContinueAfterInstall: Correct version is not installed of this package.")
 
 
 async def setCustomSettings(custom_settings_data, channel_layer):
