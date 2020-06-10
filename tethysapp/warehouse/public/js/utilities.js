@@ -4,7 +4,12 @@
 
 var notification_ws
 var notifCount = 0
-
+const serviceLookup = {
+	spatial: "spatialdatasetservice",
+	dataset: "datasetservice",
+	wps: "webprocessingservice",
+	persistent: "persistentstoreservice"
+}
 function resetInstallStatus() {
 	if (installData) {
 		installData = {}
@@ -63,7 +68,9 @@ const sendNotification = (message, n_content) => {
 	let new_element = `<div style="display: none;" id="install_notif_${notifCount}">${message}</div>`
 	if (message == "install_complete") {
 		hideLoader()
-		new_element = `<div style="display: none;" id="install_notif_${notifCount}">Install Complete. Please restart your Tethys instance for changes to take effect. </div>`
+		new_element = `<div style="display: none;" id="install_notif_${notifCount}">Install Complete</div>`
+		$("#goToAppButton").show()
+		$("#doneInstallButton").show()
 	}
 	n_content.append(new_element)
 	$(`#install_notif_${notifCount}`).show("fast")

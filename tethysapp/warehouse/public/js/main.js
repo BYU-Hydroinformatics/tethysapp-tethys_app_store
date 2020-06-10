@@ -21,6 +21,7 @@ const settingsHelper = {
                         })
                     )
                 })
+                $("#custom-settings-container").empty()
 
                 $("#custom-settings-modal").modal("show")
                 $("#custom-settings-container").prepend(`<div>
@@ -30,6 +31,7 @@ const settingsHelper = {
                     </p>
                     </div>
                     `)
+                $("#custom-settings-container").append("<form></form>")
                 let formDataElement = $("#custom-settings-container").children("form")
                 settingsData.forEach((setting) => {
                     let defaultValue = setting.default ? setting.default : ""
@@ -222,7 +224,8 @@ const startInstall = (appInstallURL) => {
 }
 
 const createNewService = (settingType) => {
-    let url = `/admin/tethys_services/spatialdatasetservice/add/?_to_field=id&_popup=1&type=${settingType}`
+    let serviceURLPart = serviceLookup[settingType]
+    let url = `/admin/tethys_services/${serviceURLPart}/add/?_to_field=id&_popup=1&type=${settingType}`
     let newWindow = window.open(
         url,
         "_blank",
@@ -252,7 +255,7 @@ $(document).ready(function() {
         n_content
     )
 
-    $("#app_button").click(function() {
+    $('a[id^="app_button_"]').click(function() {
         n_content.empty()
         n_div.modal()
         notifCount = 0
@@ -262,5 +265,11 @@ $(document).ready(function() {
         n_content.append(htmlHelpers.versions($(this).data("install-url")))
         n_content.find("#selectVersion").append(versionHTML)
         $("#versions").select2()
+    })
+
+    $("#skipServicesButton").click(() => {
+        // Service Configuration skipped.
+        sendNotification("Services Setup Skipped", n_content)
+        sendNotification("install_complete", n_content)
     })
 })

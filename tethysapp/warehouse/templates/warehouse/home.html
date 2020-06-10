@@ -39,7 +39,7 @@
     </div>
     <div id="app-list" class="isotopeContainer">
         {% for resource in resources %}
-        <a class="app-container isotopeSelector {{resource.tag_class}}" id="app_button" data-app-name="{{ resource.name }}"
+        <a class="app-container isotopeSelector {{resource.tag_class}}" id="app_button_{{resource.name}}" data-app-name="{{ resource.name }}"
            data-install-url="{% url 'warehouse:install' %}?name={{ resource.name }}">
             <div class="app-icon">
                 <img {% if resource.metadata.icon %}

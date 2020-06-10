@@ -1,6 +1,10 @@
 import pkgutil
 import inspect
+import sys
+import importlib
+
 from tethys_apps.base import TethysAppBase
+from django.conf import settings
 
 
 def get_app_instance_from_path(paths):
@@ -24,3 +28,10 @@ def get_app_instance_from_path(paths):
                 except TypeError:
                     continue
     return app_instance
+
+
+def reload_urlconf(urlconf=None):
+    if urlconf is None:
+        urlconf = settings.ROOT_URLCONF
+    if urlconf in sys.modules:
+        importlib.reload(sys.modules[urlconf])

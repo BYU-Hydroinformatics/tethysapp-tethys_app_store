@@ -2,6 +2,7 @@ import json
 
 from argparse import Namespace
 from django.core.exceptions import ObjectDoesNotExist
+from django.core.cache import cache
 
 from tethys_apps.models import CustomSetting, TethysApp
 from tethys_apps.utilities import (get_app_settings, link_service_to_app_setting)
@@ -54,6 +55,7 @@ async def continueAfterInstall(installData, channel_layer):
                         "message": "Conda install completed"
                     }
                 )
+                cache.clear()
                 await detect_app_dependencies_async(installData['name'], installData['version'], channel_layer)
                 break
             else:
