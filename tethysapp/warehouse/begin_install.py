@@ -6,6 +6,7 @@ import importlib
 import sys
 import subprocess
 
+from django.core.cache import cache
 from conda.cli.python_api import run_command as conda_run, Commands
 from asgiref.sync import async_to_sync
 from subprocess import call
@@ -52,6 +53,9 @@ def detect_app_dependencies(install_metadata, app_version, channel_layer):
     # @TODO : Ensure that this works through multiple runs
     import tethysapp
 
+    call(['tethys', 'db', 'sync'])
+    cache.clear()
+
     # After install we need to update the sys.path variable so we can see the new apps that are installed.
     # We need to do a reload here of the sys.path and then reload the the tethysapp
     # https://stackoverflow.com/questions/25384922/how-to-refresh-sys-path
@@ -72,7 +76,7 @@ def detect_app_dependencies(install_metadata, app_version, channel_layer):
     if getattr(app_instance, "custom_settings"):
         send_notification("Processing App's Custom Settings....", channel_layer)
         custom_settings = getattr(app_instance, "custom_settings")
-        for setting in custom_settings():
+        for setting in custom_settings() or []:
             setting = {"name": getattr(setting, "name"),
                        "description": getattr(setting, "description"),
                        "default": getattr(setting, "default"),
@@ -133,7 +137,7 @@ async def detect_app_dependencies_async(app_name, app_version, channel_layer):
         )
 
         custom_settings = getattr(app_instance, "custom_settings")
-        for setting in custom_settings():
+        for setting in custom_settings() or []:
             setting = {"name": getattr(setting, "name"),
                        "description": getattr(setting, "description"),
                        "default": getattr(setting, "default"),

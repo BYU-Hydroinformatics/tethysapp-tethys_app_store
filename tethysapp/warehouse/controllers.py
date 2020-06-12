@@ -15,6 +15,7 @@ from .app import Warehouse as app
 from .begin_install import begin_install
 from .notifications import *
 
+
 ALL_RESOURCES = []
 CHANNEL_NAME = 'rfun'
 
@@ -72,6 +73,7 @@ def get_resource(resource_name):
 
 @login_required()
 def home(request):
+
     if len(ALL_RESOURCES) == 0:
         fetch_resources()
 

@@ -68,7 +68,7 @@ const sendNotification = (message, n_content) => {
 	let new_element = `<div style="display: none;" id="install_notif_${notifCount}">${message}</div>`
 	if (message == "install_complete") {
 		hideLoader()
-		new_element = `<div style="display: none;" id="install_notif_${notifCount}">Install Complete</div>`
+		new_element = `<div style="display: none;" id="install_notif_${notifCount}">Install Complete. You might need to restart your Tethys portal.</div>`
 		$("#goToAppButton").show()
 		$("#doneInstallButton").show()
 	}

@@ -46,7 +46,6 @@ async def continueAfterInstall(installData, channel_layer):
         conda_search_result = json.loads(resp)
         # Check if matching version found
         for package in conda_search_result:
-            print(package)
             if package["version"] == installData['version']:
                 await channel_layer.group_send(
                     "notifications",
@@ -82,13 +81,13 @@ async def setCustomSettings(custom_settings_data, channel_layer):
                 if custom_settings_data["noneFound"]:
                     msg = "No Custom Settings Found to process."
 
-            await channel_layer.group_send(
-                "notifications",
-                {
-                    "type": "install_notifications",
-                    "message": msg
-                }
-            )
+            # await channel_layer.group_send(
+            #     "notifications",
+            #     {
+            #         "type": "install_notifications",
+            #         "message": msg
+            #     }
+            # )
             await process_settings(current_app, custom_settings_data['app_py_path'], channel_layer)
             return
 
