@@ -55,7 +55,7 @@ def detect_app_dependencies(install_metadata, app_version, channel_layer):
 
     call(['tethys', 'db', 'sync'])
     cache.clear()
-
+    # clear_url_caches()
     # After install we need to update the sys.path variable so we can see the new apps that are installed.
     # We need to do a reload here of the sys.path and then reload the the tethysapp
     # https://stackoverflow.com/questions/25384922/how-to-refresh-sys-path

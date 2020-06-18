@@ -11,6 +11,7 @@ from tethys_cli.services_commands import services_list_command
 from .begin_install import detect_app_dependencies_async
 from conda.cli.python_api import run_command as conda_run, Commands
 from .helpers import *
+import os
 
 
 def get_service_options(service_type):
@@ -54,7 +55,6 @@ async def continueAfterInstall(installData, channel_layer):
                         "message": "Conda install completed"
                     }
                 )
-                cache.clear()
                 await detect_app_dependencies_async(installData['name'], installData['version'], channel_layer)
                 break
             else:
