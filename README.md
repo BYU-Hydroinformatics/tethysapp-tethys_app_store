@@ -4,7 +4,8 @@
 
 To help out with testing this application on your local installation, please follow these instructions:
 
--   Please feel free to take any notes or screenshots during the below process that might help me identify issues.
+-   Please feel free to take any notes or screenshots during the below process that might help me identify issues. You may also submit a copy of the logs you see in your terminal in the google form while reporting.
+-   Feel free to reach out to me on Slack if you have any questions.
 -   Ensure you have Tethys 3 installed. [Click Here](http://docs.tethysplatform.org/en/stable/installation.html) for installation docs.
 -   If you have a locally installed version of `snow-inspector`, remove any existing installation of the app `snow-inspector`
     -   `tethys list` will show you the list of your locally installed applications
