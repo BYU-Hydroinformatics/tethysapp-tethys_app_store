@@ -5,6 +5,7 @@
 {% block styles %}
 {{ block.super }}
 <link href="{% static 'tethys_apps/css/app_library.css' %}" rel="stylesheet"/>
+<link href="https://unpkg.com/bootstrap-table@1.16.0/dist/bootstrap-table.min.css" rel="stylesheet">
 {% endblock %}
 
 {% block import_gizmos %}
@@ -19,7 +20,38 @@
 {% endblock %}
 
 {% block app_content %}
-<div class="app-library-wrapper clearfix">
+<div class="card card-default main-app-list">
+    <div class="card-header">Available Tethys Applications</div>
+    <div class="card-body">
+        <div id="toolbar">
+        </div>
+        <table data-toggle="table" data-search="true" data-show-search-clear-button="true" data-toolbar="#toolbar" data-show-columns="true" id="mainAppsTable" data-show-toggle="true" data-detail-view="true" data-detail-formatter="detailFormatter">
+            <thead>
+                <tr>
+                    <th>Tethys App Name</th>
+                    <th>Latest Version</th>
+                    <th>Developer</th>
+                    <th data-field="operate" data-formatter="operateFormatter" data-events="operateEvents">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for resource in resources %}
+                <tr>
+                    <td data-install-url="{% url 'warehouse:install' %}?name={{ resource.name }}" data-app-id="{{ forloop.counter0 }}">{{ resource.name }}</td>
+                    <td>{{ resource.metadata.versions|last }}</td>
+                    <td>{{ resource.metadata.author }}</td>
+                    <td>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="card-footer ">
+    </div>
+</div>
+
+<!-- <div class="app-library-wrapper clearfix">
     {% if resources %}
     <div class="container" align="center">
         <div class="row">
@@ -64,7 +96,7 @@
     {% else %}
     <h2 class="no-apps-loaded-message">There are no apps available on the application store</h2>
     {% endif %}
-</div>
+</div> -->
 {% endblock %}
 
 
@@ -91,7 +123,9 @@
 {{ block.super }}
 <script>
 const resources = JSON.parse('{{ resourcesJson | escapejs }}');
+const installURL = "{% url 'warehouse:install' %}";
 </script>
+<script src="https://unpkg.com/bootstrap-table@1.16.0/dist/bootstrap-table.min.js"></script>
 <script src="{% static 'tethys_apps/vendor/imagesloaded.min.js' %}" type="text/javascript"></script>
 <script src="{% static 'tethys_apps/vendor/masonry.min.js' %}" type="text/javascript"></script>
 <script src="{% static 'tethys_apps/js/app_library.js' %}" type="text/javascript"></script>

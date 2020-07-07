@@ -8,6 +8,13 @@ from django.conf import settings
 from django.urls.base import clear_url_caches
 
 
+def add_if_exists(a, b, keys):
+    for key in keys:
+        if key in a:
+            b[key] = a[key]
+    return b
+
+
 def get_app_instance_from_path(paths):
     app_instance = None
     for _, modname, ispkg in pkgutil.iter_modules(paths):

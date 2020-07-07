@@ -17,3 +17,12 @@
 	max-height: calc(100vh - 350px);
 	overflow-y: auto;
 }
+
+.main-app-list {
+	width: 70%;
+	margin-left: 15%;
+}
+
+.button-spaced {
+	margin-right: 10px;
+}

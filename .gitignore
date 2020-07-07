@@ -8,3 +8,4 @@
 *.sqlite
 *.DS_Store
 dist/
+tethysapp/warehouse/workspaces/app_workspace/apps/

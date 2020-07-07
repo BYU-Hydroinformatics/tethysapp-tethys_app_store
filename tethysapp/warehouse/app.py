@@ -11,7 +11,7 @@ class Warehouse(TethysAppBase):
     icon = 'warehouse/images/icon.gif'
     package = 'warehouse'
     root_url = 'warehouse'
-    color = '#c0392b'
+    color = '#2b7ac0'
     description = 'Place a brief description of your app here.'
     tags = ''
     enable_feedback = False

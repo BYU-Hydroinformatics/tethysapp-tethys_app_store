@@ -247,6 +247,8 @@ function dismissAddRelatedObjectPopup(win, newId, newRepr) {
 }
 
 $(document).ready(function() {
+    initMainTable()
+
     let n_div = $("#notification")
     let n_content = $("#notification .lead")
     hideLoader()
