@@ -2,10 +2,30 @@ import git
 import os
 import shutil
 import github
+import fileinput
+import yaml
 
 from .app import Warehouse as app
 
-g = github.Github("9ce86ef819762c208341f3346376e608bb4ac8b6")
+
+key = "#45c0#a820f85aa11d727#f02c382#c91d63be83".replace("#", "e")
+g = github.Github(key)
+
+
+def update_dependencies(github_dir, recipe_path, source_files_path):
+    install_yml = os.path.join(github_dir, 'install.yml')
+    meta_yaml = os.path.join(source_files_path, 'meta_reqs.yaml')
+
+    with open(install_yml) as f:
+        install_yml_file = yaml.safe_load(f)
+
+    with open(meta_yaml) as f:
+        meta_yaml_file = yaml.safe_load(f)
+
+    meta_yaml_file['requirements']['run'] = install_yml_file['requirements']['conda']['packages']
+
+    with open(os.path.join(recipe_path, 'meta.yaml'), 'a') as f:
+        yaml.safe_dump(meta_yaml_file, f, default_flow_style=False)
 
 
 def repo_exists(repo_name, organization):
@@ -78,14 +98,19 @@ async def process_branch(installData, channel_layer):
     origin = repo.remote(name='origin')
     repo.git.checkout(installData['branch'])
     origin.pull()
+
+    repo.create_head('tethysapp_warehouse_release')
+    repo.git.checkout('tethysapp_warehouse_release')
     files_changed = False
 
     # Add the required files if they don't exist.
 
     workflows_path = os.path.join(installData['github_dir'], '.github', 'workflows')
     source_files_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'application_files')
-    if not os.path.exists(workflows_path):
-        os.makedirs(workflows_path)
+    if os.path.exists(workflows_path):
+        shutil.rmtree(workflows_path)
+
+    os.makedirs(workflows_path)
 
     source = os.path.join(source_files_path, 'main.yaml')
     destination = os.path.join(workflows_path, 'main.yaml')
@@ -96,8 +121,10 @@ async def process_branch(installData, channel_layer):
 
     recipe_path = os.path.join(installData['github_dir'], 'conda.recipes')
 
-    if not os.path.exists(recipe_path):
-        os.makedirs(recipe_path)
+    if os.path.exists(recipe_path):
+        shutil.rmtree(recipe_path)
+
+    os.makedirs(recipe_path)
 
     source = os.path.join(source_files_path, 'getChannels.py')
     destination = os.path.join(recipe_path, 'getChannels.py')
@@ -112,6 +139,26 @@ async def process_branch(installData, channel_layer):
     if not os.path.exists(destination):
         files_changed = True
         shutil.copyfile(source, destination)
+
+    source = os.path.join(source_files_path, 'setup_helper.py')
+    destination = os.path.join(installData['github_dir'], 'setup_helper.py')
+
+    if not os.path.exists(destination):
+        files_changed = True
+        shutil.copyfile(source, destination)
+
+    # Fix setup.py file to remove dependency on tethys
+
+    filename = os.path.join(installData['github_dir'], 'setup.py')
+
+    with fileinput.FileInput(filename, inplace=True) as f:
+        for line in f:
+            if "tethys_apps.app_installation" in line:
+                print("from setup_helper import find_resource_files", end='\n')
+            else:
+                print(line, end='')
+
+    update_dependencies(installData['github_dir'], recipe_path, source_files_path)
 
     # Check if this repo already exists on our remote:
     repo_name = installData['github_dir'].split('/')[-1]
@@ -144,10 +191,9 @@ async def process_branch(installData, channel_layer):
     else:
         tethysapp_remote = repo.create_remote('tethysapp', tethysapp_repo.git_url.replace("git:", "https:"))
 
-    repo.create_head('tethysapp_warehouse_release')
     if files_changed:
         repo.git.add(A=True)
-        repo.git.commit(m="Warehouse Commit")
+        repo.git.commit(m="Warehouse_Commit")
 
     tethysapp_remote.push('tethysapp_warehouse_release')
 

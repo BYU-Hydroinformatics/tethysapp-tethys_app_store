@@ -9,7 +9,7 @@ const addModalHelper = {
 		if (!("branches" in branchesData)) {
 			sendNotification(
 				"Error while checking the repo for branches. Please ensure the repo is public.",
-				content
+				$("#branchesList")
 			)
 			return
 		}
@@ -19,7 +19,7 @@ const addModalHelper = {
 				`One branch found. Continuing packaging with ${
 					branchesData["branches"][0]
 				} branch.`,
-				content
+				$("#branchesList")
 			)
 			$("#loaderEllipsis").show()
 			$("#processBranchButton").prop("disabled", true)

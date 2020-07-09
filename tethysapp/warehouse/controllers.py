@@ -22,7 +22,7 @@ from .notifications import *
 from .helpers import add_if_exists
 
 ALL_RESOURCES = []
-CHANNEL_NAME = 'rfun'
+CHANNEL_NAME = 'tethysapp'
 
 
 def fetch_resources(app_workspace):
