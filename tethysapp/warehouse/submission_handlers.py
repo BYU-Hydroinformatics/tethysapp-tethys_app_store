@@ -185,11 +185,15 @@ async def process_branch(installData, channel_layer):
         private=False,
     )
 
+    remote_url = tethysapp_repo.git_url.replace("git://", "https://" + key + ":x-oauth-basic@")
+    print(remote_url)
+
     if 'tethysapp' in repo.remotes:
         print("Remote already exists")
         tethysapp_remote = repo.remotes.tethysapp
+        tethysapp_remote.set_url(remote_url)
     else:
-        tethysapp_remote = repo.create_remote('tethysapp', tethysapp_repo.git_url.replace("git:", "https:"))
+        tethysapp_remote = repo.create_remote('tethysapp', remote_url)
 
     if files_changed:
         repo.git.add(A=True)
