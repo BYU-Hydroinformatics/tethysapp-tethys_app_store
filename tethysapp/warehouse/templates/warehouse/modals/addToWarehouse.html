@@ -1,0 +1,40 @@
+{% load staticfiles %}
+<div class="modal fade" id="add-app-modal" style="z-index:2000; margin-top:10%;" tabindex="-1" role="dialog" aria-labelledby="add-app-modal-label">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h5 class="modal-title" id="add-app-modal-label">Submit your application to the Warehouse</h5>
+            </div>
+            <div class="modal-body" id="add-app-container">
+                <div>
+                    <p>
+                        Click Here to get instructions on how to prepare your app for submission to the app warehouse.</p>
+                    <p> Please enter the GitHub URL of your application Repo.</p>
+                </div>
+                <div class="form-group">
+                    <label for="githubURL">GitHub URL</label>
+                    <input type="text" class="form-control" id="githubURL" placeholder="GitHub Repository URL" value="https://github.com/rfun/tethysapp-servicetest.git">
+                </div>
+                <button class="btn btn-primary pull-right" id="fetchRepoButton" onClick="getRepoForAdd()"> Fetch Repository </button>
+                <div id="branchesList"></div>
+                <button class="btn btn-primary pull-right" style="display:none;" id="processBranchButton"> Submit </button>
+                <div id="successMessage" style="display:none;margin-top:10px;" class="p-3 mb-2 bg-success text-white">
+                    <p>Your Tethys Application has been successfully queued for processing.You will be notified via email when you application is available on the Tethys App Warehouse.
+                </p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div id="loadingTextAppSubmit"></div>
+                <div id="loaderEllipsis" class="lds-ellipsis pull-right">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+                <button class="btn btn-danger pull-left" style="margin-top:10px;" data-dismiss="modal" aria-hidden="true" id="cancelAddButton"> Cancel </button>
+                <button class="btn btn-success pull-right" style="margin-top:10px;display:none;" data-dismiss="modal" aria-hidden="true" id="doneAddButton"> Done </button>
+            </div>
+        </div>
+    </div>
+</div>

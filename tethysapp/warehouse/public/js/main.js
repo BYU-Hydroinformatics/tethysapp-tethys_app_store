@@ -246,6 +246,28 @@ function dismissAddRelatedObjectPopup(win, newId, newRepr) {
     )
 }
 
+const getRepoForAdd = () => {
+    let githubURL = $("#githubURL").val()
+    if (githubURL) {
+        // Disable UI Elements and showloading
+        $("#loaderEllipsis").show()
+        $("#fetchRepoButton").prop("disabled", true)
+        $("#githubURL").prop("disabled", true)
+        $("#loadingTextAppSubmit").text("Please wait. Fetching GitHub Repo")
+
+        notification_ws.send(
+            JSON.stringify({
+                data: {
+                    url: githubURL
+                },
+                type: `pull_git_repo`
+            })
+        )
+    } else {
+        //@TODO: Show error here that url is missing.
+    }
+}
+
 $(document).ready(function() {
     initMainTable()
 

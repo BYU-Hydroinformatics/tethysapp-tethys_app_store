@@ -1,5 +1,6 @@
 from channels.generic.websocket import AsyncWebsocketConsumer
 from .installation_handlers import *
+from .submission_handlers import *
 
 import json
 import sys

@@ -17,6 +17,9 @@
 <div class="header-button glyphicon-button" data-toggle="tooltip" data-placement="bottom" title="Help">
     <a data-toggle="modal" data-target="#help-modal"><span class="glyphicon glyphicon-question-sign"></span></a>
 </div>
+<div class="header-button glyphicon-button" data-toggle="tooltip" data-placement="bottom" title="Add App">
+    <a data-toggle="modal" data-target="#add-app-modal"><span class="glyphicon glyphicon-plus-sign"></span></a>
+</div>
 {% endblock %}
 
 {% block app_content %}
@@ -106,7 +109,7 @@
 {% include "warehouse/modals/customSettings.html" %}
 {% include "warehouse/modals/services.html" %}
 {% include "warehouse/modals/serverOffline.html" %}
-
+{% include "warehouse/modals/addToWarehouse.html" %}
 {% endblock %}
 
 

@@ -67,3 +67,17 @@ htmlHelpers.getServiceCard = (settingName, service) => {
                 </div>
             </div>`
 }
+
+htmlHelpers.getBranches = (branches) => {
+    let sel = `<select  class="form-control"  name="add_branch" id="add_branch">`
+    let options_str = ""
+
+    branches.forEach(
+        (branch) => (options_str += `<option value='${branch}'>${branch}</option>`)
+    )
+
+    sel = `${sel}${options_str}</select>`
+
+    return `<div class="form-group">
+    <label for="add_branch">Please select the branch you would like to use:</label>${sel}</div>`
+}

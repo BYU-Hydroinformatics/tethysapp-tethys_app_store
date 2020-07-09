@@ -51,14 +51,15 @@ function getParameterByName(name, url) {
 	return decodeURIComponent(results[2].replace(/\+/g, " "))
 }
 
-const hideLoader = () => {
-	$("#notification .modal-footer")
+const hideLoader = (modal = "notification") => {
+	$(`#${modal} .modal-footer`)
 		.find("img")
 		.hide()
 }
 
-const showLoader = () => {
-	$("#notification .modal-footer")
+const showLoader = (modal = "notification") => {
+	console.log(modal)
+	$(`#${modal} .modal-footer`)
 		.find("img")
 		.show()
 }
@@ -92,10 +93,18 @@ function startWS(websocketServerLocation, n_content) {
 		} else {
 			// Found an object?
 			// Check if we have a function to call
+			let helper = settingsHelper
+			let content = n_content
+			if ("helper" in data.message) {
+				if (data.message["helper"] == "addModalHelper") {
+					helper = addModalHelper
+					content = $("#statusMessagesAdd")
+				}
+			}
 			if ("jsHelperFunction" in data.message) {
-				settingsHelper[data.message["jsHelperFunction"]](
+				helper[data.message["jsHelperFunction"]](
 					data.message.data,
-					n_content,
+					content,
 					data.message,
 					notification_ws
 				)
