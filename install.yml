@@ -8,7 +8,7 @@ requirements:
       - conda-forge
     packages:
       - pygithub
-      - git
+      - gitpython
   pip:
 post:
   - setup_tethys_channel.sh
