@@ -126,7 +126,8 @@ def get_resource(resource_name):
 @app_workspace
 def home(request, app_workspace):
 
-    if len(ALL_RESOURCES) == 0:
+    require_refresh = request.GET.get('refresh', '') == "true"
+    if len(ALL_RESOURCES) == 0 or require_refresh:
         fetch_resources(app_workspace)
 
     tag_list = []

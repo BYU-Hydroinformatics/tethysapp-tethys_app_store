@@ -8,5 +8,6 @@
 *.sqlite
 *.DS_Store
 dist/
+build/
 tethysapp/warehouse/workspaces/app_workspace/apps/
 tethysapp/warehouse/workspaces/app_workspace/gitsubmission/

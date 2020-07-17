@@ -133,7 +133,7 @@ async def process_branch(installData, channel_layer):
         files_changed = True
         shutil.copyfile(source, destination)
 
-    source = os.path.join(source_files_path, 'meta.yaml')
+    source = os.path.join(source_files_path, 'meta_template.yaml')
     destination = os.path.join(recipe_path, 'meta.yaml')
 
     if not os.path.exists(destination):

@@ -1,4 +1,0 @@
-tethys:
-  version: 2.0
-source:
-  github: https://github.com/BYU-Hydroinformatics/warehouse.git

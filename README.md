@@ -1,5 +1,14 @@
 # Tethys Application Warehouse
 
+## Installation
+
+```sh
+# If you haven't set this already
+tethys settings --set CHANNEL_LAYERS.default.BACKEND channels.layers.InMemoryChannelLayer
+
+conda install -c tethysapp warehouse
+```
+
 ## Testing
 
 To help out with testing this application on your local installation, please follow these instructions:

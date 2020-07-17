@@ -20,6 +20,9 @@
 <div class="header-button glyphicon-button" data-toggle="tooltip" data-placement="bottom" title="Add App">
     <a data-toggle="modal" data-target="#add-app-modal"><span class="glyphicon glyphicon-plus-sign"></span></a>
 </div>
+<div class="header-button glyphicon-button" data-toggle="tooltip" data-placement="bottom" title="Refresh Apps">
+    <a href="{% url 'warehouse:home' %}?refresh=true"><span class="glyphicon glyphicon-refresh"></span></a>
+</div>
 {% endblock %}
 
 {% block app_content %}

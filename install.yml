@@ -1,14 +1,12 @@
-version: 1.0
+version: 0.1
 name: warehouse
 
 requirements:
-  skip: false
   conda:
     channels:
       - conda-forge
     packages:
       - pygithub
       - gitpython
-  pip:
 post:
   - setup_tethys_channel.sh

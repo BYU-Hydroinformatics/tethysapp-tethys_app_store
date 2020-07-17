@@ -65,6 +65,7 @@ def detect_app_dependencies(install_metadata, app_version, channel_layer):
 
     # paths = list()
     paths = list(filter(lambda x: install_metadata['name'] in x, tethysapp.__path__))
+    # @TODO : Throw an error here that can be communicated back to the user for a re attempt?
 
     if len(paths) < 1:
         print("Can't find the installed app location.")
@@ -176,7 +177,7 @@ def conda_install(app_metadata, app_version, channel_layer):
 
     # Try running the conda install as a subprocess to get more visibility into the running process
     dir_path = os.path.dirname(os.path.realpath(__file__))
-    script_path = os.path.join(dir_path, "conda_install.sh")
+    script_path = os.path.join(dir_path, "scripts", "conda_install.sh")
 
     app_name = app_metadata['name'] + "=" + app_version
     install_command = [script_path, app_name, app_metadata['metadata']['channel']]
