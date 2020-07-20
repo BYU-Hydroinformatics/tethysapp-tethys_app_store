@@ -1,4 +1,5 @@
 from tethys_sdk.base import TethysAppBase, url_map_maker
+from tethys_sdk.app_settings import CustomSetting
 
 
 class Warehouse(TethysAppBase):
@@ -43,3 +44,17 @@ class Warehouse(TethysAppBase):
         )
 
         return url_maps
+
+    def custom_settings(self):
+
+        custom_settings = (
+            CustomSetting(
+                name='sudo_server_pass',
+                type=CustomSetting.TYPE_STRING
+                description='Sudo password for server',
+                required=False
+            )
+
+        )
+
+        return custom_settings

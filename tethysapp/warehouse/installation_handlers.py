@@ -35,6 +35,12 @@ def get_service_options(service_type):
     return existing_services
 
 
+async def restart_server(data, channel_layer):
+    sudoPassword = app.get_custom_setting('sudo_server_pass')
+    command = 'supervisorctl restart all'
+    p = os.system('echo %s|sudo -S %s' % (sudoPassword, command))
+
+
 async def continueAfterInstall(installData, channel_layer):
 
     # Check if app is installed

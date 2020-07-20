@@ -23,6 +23,9 @@
 <div class="header-button glyphicon-button" data-toggle="tooltip" data-placement="bottom" title="Refresh Apps">
     <a href="{% url 'warehouse:home' %}?refresh=true"><span class="glyphicon glyphicon-refresh"></span></a>
 </div>
+<div class="header-button glyphicon-button" data-toggle="tooltip" data-placement="bottom" title="Refresh Server">
+    <a id="serverRefresh"><span class="glyphicon glyphicon-off"></span></a>
+</div>
 {% endblock %}
 
 {% block app_content %}

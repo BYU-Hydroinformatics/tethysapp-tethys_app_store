@@ -270,6 +270,8 @@ const getRepoForAdd = () => {
 
 $(document).ready(function() {
     initMainTable()
+    // Hide the nav
+    $('#app-content-wrapper').toggleClass('show-nav');
 
     let n_div = $("#notification")
     let n_content = $("#notification .lead")
@@ -278,6 +280,15 @@ $(document).ready(function() {
         "ws://" + window.location.host + "/warehouse/install/notifications/ws/",
         n_content
     )
+    $("#serverRefresh").click(function(){
+        notification_ws.send(
+            JSON.stringify({
+                data: {
+                },
+                type: `restart_server`
+            })
+        )
+    })
 
     $('a[id^="app_button_"]').click(function() {
         n_content.empty()
