@@ -2,10 +2,13 @@ import pkgutil
 import inspect
 import sys
 import importlib
+import logging
 
 from tethys_apps.base import TethysAppBase
 from django.conf import settings
 from django.urls.base import clear_url_caches
+
+logger = logging.getLogger(f'tethys.apps.{__name__}')
 
 
 def add_if_exists(a, b, keys):

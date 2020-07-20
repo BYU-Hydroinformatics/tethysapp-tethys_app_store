@@ -68,7 +68,7 @@ def detect_app_dependencies(install_metadata, app_version, channel_layer):
     # @TODO : Throw an error here that can be communicated back to the user for a re attempt?
 
     if len(paths) < 1:
-        print("Can't find the installed app location.")
+        logger.error("Can't find the installed app location.")
         return
 
     app_instance = get_app_instance_from_path(paths)
@@ -121,7 +121,7 @@ async def detect_app_dependencies_async(app_name, app_version, channel_layer):
     paths = list(filter(lambda x: app_name in x, tethysapp.__path__))
 
     if len(paths) < 1:
-        print("Can't find the installed app location.")
+        logger.error("Can't find the installed app location.")
         return
 
     app_instance = get_app_instance_from_path(paths)
@@ -191,7 +191,7 @@ def conda_install(app_metadata, app_version, channel_layer):
         if output:
             # Checkpoints for the output
             str_output = str(output.strip())
-            print(str_output)
+            logger.info(str_output)
 
             if(check_all_present(str_output, ['Collecting package metadata', 'done'])):
                 send_notification("Package Metadata Collection: Done", channel_layer)
@@ -235,13 +235,13 @@ def begin_install(install_metadata, app_version, channel_layer):
     try:
         app_path = conda_install(install_metadata, app_version, channel_layer)
     except Exception as e:
-        print(e)
+        logger.error(e)
         send_notification("Error while Installing Conda package. Please check logs for details", channel_layer)
         return
 
     try:
         detect_app_dependencies(install_metadata, app_version, channel_layer)
     except Exception as e:
-        print(e)
+        logger.error(e)
         send_notification("Error while checking package for services", channel_layer)
         return

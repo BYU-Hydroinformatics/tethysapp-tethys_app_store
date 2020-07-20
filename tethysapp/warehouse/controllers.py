@@ -19,7 +19,7 @@ import yaml
 from .app import Warehouse as app
 from .begin_install import begin_install
 from .notifications import *
-from .helpers import add_if_exists
+from .helpers import add_if_exists, logger
 
 ALL_RESOURCES = []
 CHANNEL_NAME = 'tethysapp'
@@ -79,7 +79,7 @@ def process_resources(resources, app_workspace):
         extract_path = os.path.join(workspace_folder, file_name[-1])
         output_path = os.path.join(workspace_folder, folder_name)
         if not os.path.exists(download_path):
-            print("Downloading: " + file_name[-1])
+            logger.info("Downloading: " + file_name[-1])
             urllib.request.urlretrieve(latest_version_url, download_path)
 
             if os.path.exists(output_path):
@@ -103,16 +103,16 @@ def process_resources(resources, app_workspace):
                         'author_email', 'keywords'])
 
         except Exception as e:
-            print("sadsdf")
-            print(e)
+            logger.info("Error happened while downloading package for metadata")
+            logger.error(e)
 
     return resources
 
 
-def get_resource(resource_name):
+def get_resource(resource_name, app_workspace):
     # First see if resources are initialized
     if len(ALL_RESOURCES) == 0:
-        fetch_resources()
+        fetch_resources(app_workspace)
 
     resource = [x for x in ALL_RESOURCES if x['name'] == resource_name]
 
@@ -146,10 +146,11 @@ def home(request, app_workspace):
     return render(request, 'warehouse/home.html', context)
 
 
-def install(request):
+@app_workspace
+def install(request, app_workspace):
     app_id = request.GET.get('name')
     app_version = request.GET.get('version')
-    resource = get_resource(app_id)
+    resource = get_resource(app_id, app_workspace)
     thread = threading.Thread(target=begin_install, args=(resource, app_version, get_channel_layer()))
     thread.start()
     return JsonResponse(resource)

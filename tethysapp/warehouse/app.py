@@ -46,15 +46,13 @@ class Warehouse(TethysAppBase):
         return url_maps
 
     def custom_settings(self):
-
-        custom_settings = (
+        return (
             CustomSetting(
                 name='sudo_server_pass',
-                type=CustomSetting.TYPE_STRING
+                type=CustomSetting.TYPE_STRING,
                 description='Sudo password for server',
                 required=False
             )
-
         )
 
         return custom_settings

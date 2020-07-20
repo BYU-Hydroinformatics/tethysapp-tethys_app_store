@@ -32,11 +32,11 @@ def repo_exists(repo_name, organization):
 
     try:
         repo = organization.get_repo(repo_name)
-        print("Repo Exists. Will HAve to delete")
+        logger.info("Repo Exists. Will HAve to delete")
         return True
     except Exception as e:
-        print(e)
-        print("Repo doesn't exist")
+        logger.error(e)
+        logger.error("Repo doesn't exist")
         return False
 
 
@@ -186,10 +186,9 @@ async def process_branch(installData, channel_layer):
     )
 
     remote_url = tethysapp_repo.git_url.replace("git://", "https://" + key + ":x-oauth-basic@")
-    print(remote_url)
 
     if 'tethysapp' in repo.remotes:
-        print("Remote already exists")
+        logger.info("Remote already exists")
         tethysapp_remote = repo.remotes.tethysapp
         tethysapp_remote.set_url(remote_url)
     else:

@@ -12,6 +12,8 @@ from .begin_install import detect_app_dependencies_async
 from conda.cli.python_api import run_command as conda_run, Commands
 from .helpers import *
 import os
+from .app import Warehouse as app
+import subprocess
 
 
 def get_service_options(service_type):
@@ -36,6 +38,11 @@ def get_service_options(service_type):
 
 
 async def restart_server(data, channel_layer):
+    process = subprocess.Popen(['tethys', 'manage', 'collectall', '--noinput'], stdout=subprocess.PIPE)
+    output, error = process.communicate()
+    logger.info(output)
+    logger.error(error)
+
     sudoPassword = app.get_custom_setting('sudo_server_pass')
     command = 'supervisorctl restart all'
     p = os.system('echo %s|sudo -S %s' % (sudoPassword, command))
@@ -45,10 +52,10 @@ async def continueAfterInstall(installData, channel_layer):
 
     # Check if app is installed
     [resp, err, code] = conda_run(Commands.LIST, [installData['name'], "--json"])
-    # print(resp, err, code)
+    # logger.info(resp, err, code)
     if code != 0:
         # In here maybe we just try re running the install
-        print("ERROR: Couldn't get list of installed apps to verify if the conda install was successfull")
+        logger.error("ERROR: Couldn't get list of installed apps to verify if the conda install was successfull")
     else:
         conda_search_result = json.loads(resp)
         # Check if matching version found
@@ -71,7 +78,7 @@ async def continueAfterInstall(installData, channel_layer):
                         "message": "Server error while processing this installation. Please check your logs"
                     }
                 )
-                print("ERROR: ContinueAfterInstall: Correct version is not installed of this package.")
+                logger.error("ERROR: ContinueAfterInstall: Correct version is not installed of this package.")
 
 
 async def setCustomSettings(custom_settings_data, channel_layer):
@@ -80,7 +87,7 @@ async def setCustomSettings(custom_settings_data, channel_layer):
 
     if "skip" in custom_settings_data:
         if(custom_settings_data["skip"]):
-            print("Skip/NoneFound option called.")
+            logger.error("Skip/NoneFound option called.")
 
             msg = "Custom Setting Configuration Skipped"
             if "noneFound" in custom_settings_data:
@@ -103,7 +110,7 @@ async def setCustomSettings(custom_settings_data, channel_layer):
     try:
         current_app_tethysapp_instance = TethysApp.objects.get(name=current_app_name)
     except ObjectDoesNotExist:
-        print("Couldn't find app instance to get the ID to connect the settings to")
+        logger.error("Couldn't find app instance to get the ID to connect the settings to")
         await channel_layer.group_send(
             "notifications",
             {
@@ -197,8 +204,8 @@ async def configureServices(services_data, channel_layer):
                                     services_data['setting_type'],
                                     services_data['service_name'])
     except Exception as e:
-        print(e)
-        print("Error while linking service")
+        logger.error(e)
+        logger.error("Error while linking service")
         return
 
     get_data_json = {

@@ -276,11 +276,16 @@ $(document).ready(function() {
     let n_div = $("#notification")
     let n_content = $("#notification .lead")
     hideLoader()
+    let protocol = "ws"
+    if (location.protocol === 'https:') {
+        protocol = "wss"
+    }
     startWS(
-        "ws://" + window.location.host + "/warehouse/install/notifications/ws/",
+        `${protocol}://` + window.location.host + "/warehouse/install/notifications/ws/",
         n_content
     )
     $("#serverRefresh").click(function(){
+        setServerOffline()
         notification_ws.send(
             JSON.stringify({
                 data: {
