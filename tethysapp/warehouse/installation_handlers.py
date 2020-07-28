@@ -4,14 +4,18 @@ from argparse import Namespace
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.cache import cache
 
+import tethys_apps
+
+from django.utils.autoreload import trigger_reload
 from tethys_apps.models import CustomSetting, TethysApp
 from tethys_apps.utilities import (get_app_settings, link_service_to_app_setting)
 from tethys_cli.install_commands import (get_service_type_from_setting, get_setting_type_from_setting)
 from tethys_cli.services_commands import services_list_command
-from .begin_install import detect_app_dependencies_async
+from .begin_install import detect_app_dependencies
 from conda.cli.python_api import run_command as conda_run, Commands
 from .helpers import *
 import os
+import sys
 from .app import Warehouse as app
 import subprocess
 
@@ -37,18 +41,29 @@ def get_service_options(service_type):
     return existing_services
 
 
-async def restart_server(data, channel_layer):
-    process = subprocess.Popen(['tethys', 'manage', 'collectall', '--noinput'], stdout=subprocess.PIPE)
-    output, error = process.communicate()
-    logger.info(output)
-    logger.error(error)
+def restart_server(data, channel_layer):
+    # process = subprocess.Popen(['tethys', 'manage', 'collectall', '--noinput'], stdout=subprocess.PIPE)
+    # output, error = process.communicate()
+    # logger.info(output)
+    # logger.error(error)
 
-    sudoPassword = app.get_custom_setting('sudo_server_pass')
-    command = 'supervisorctl restart all'
-    p = os.system('echo %s|sudo -S %s' % (sudoPassword, command))
+    #
+
+    if 'runserver' in sys.argv:
+        logger.info("Dev Mode. Attempting to restart by changing file")
+        dir_path = os.path.dirname(os.path.realpath(__file__))
+        file_path = os.path.join(dir_path, 'model.py')
+        with open(file_path, "w") as f:
+            f.write("import os")
+    else:
+        # Server Mode. Attempt to restart SuperVisorCTL
+        # @TODO: Check if running within docker container and run without sudo
+        sudoPassword = app.get_custom_setting('sudo_server_pass')
+        command = 'supervisorctl restart all'
+        p = os.system('echo %s|sudo -S %s' % (sudoPassword, command))
 
 
-async def continueAfterInstall(installData, channel_layer):
+def continueAfterInstall(installData, channel_layer):
 
     # Check if app is installed
     [resp, err, code] = conda_run(Commands.LIST, [installData['name'], "--json"])
@@ -61,27 +76,17 @@ async def continueAfterInstall(installData, channel_layer):
         # Check if matching version found
         for package in conda_search_result:
             if package["version"] == installData['version']:
-                await channel_layer.group_send(
-                    "notifications",
-                    {
-                        "type": "install_notifications",
-                        "message": "Conda install completed"
-                    }
-                )
-                await detect_app_dependencies_async(installData['name'], installData['version'], channel_layer)
+                send_notification("Conda install completed", channel_layer)
+                detect_app_dependencies(installData['name'], installData['version'], channel_layer)
                 break
             else:
-                await channel_layer.group_send(
-                    "notifications",
-                    {
-                        "type": "install_notifications",
-                        "message": "Server error while processing this installation. Please check your logs"
-                    }
-                )
+                send_notification(
+                    "Server error while processing this installation. Please check your logs", channel_layer)
+
                 logger.error("ERROR: ContinueAfterInstall: Correct version is not installed of this package.")
 
 
-async def setCustomSettings(custom_settings_data, channel_layer):
+def set_custom_settings(custom_settings_data, channel_layer):
 
     current_app = get_app_instance_from_path([custom_settings_data['app_py_path']])
 
@@ -93,15 +98,8 @@ async def setCustomSettings(custom_settings_data, channel_layer):
             if "noneFound" in custom_settings_data:
                 if custom_settings_data["noneFound"]:
                     msg = "No Custom Settings Found to process."
-
-            # await channel_layer.group_send(
-            #     "notifications",
-            #     {
-            #         "type": "install_notifications",
-            #         "message": msg
-            #     }
-            # )
-            await process_settings(current_app, custom_settings_data['app_py_path'], channel_layer)
+            send_notification(msg, channel_layer)
+            process_settings(current_app, custom_settings_data['app_py_path'], channel_layer)
             return
 
     current_app_name = getattr(current_app, "name")
@@ -111,13 +109,7 @@ async def setCustomSettings(custom_settings_data, channel_layer):
         current_app_tethysapp_instance = TethysApp.objects.get(name=current_app_name)
     except ObjectDoesNotExist:
         logger.error("Couldn't find app instance to get the ID to connect the settings to")
-        await channel_layer.group_send(
-            "notifications",
-            {
-                "type": "install_notifications",
-                "message": "Error Setting up custom settings. Check logs for more details"
-            }
-        )
+        send_notification("Error Setting up custom settings. Check logs for more details", channel_layer)
         return
 
     for setting in custom_settings():
@@ -128,41 +120,23 @@ async def setCustomSettings(custom_settings_data, channel_layer):
             actual_setting.clean()
             actual_setting.save()
 
-    await channel_layer.group_send(
-        "notifications",
-        {
-            "type": "install_notifications",
-            "message": "Custom Settings configured."
-        }
-    )
-    get_data_json = {
+    send_notification("Custom Settings configured.", channel_layer)
+
+    send_notification({
         "data": {},
         "jsHelperFunction": "customSettingConfigComplete"
-    }
-    await channel_layer.group_send(
-        "notifications",
-        {
-            "type": "install_notifications",
-            "message": get_data_json
-        }
-    )
-    await process_settings(current_app, custom_settings_data['app_py_path'], channel_layer)
+    }, channel_layer)
+
+    process_settings(current_app, custom_settings_data['app_py_path'], channel_layer)
 
 
-async def process_settings(app_instance, app_py_path, channel_layer):
+def process_settings(app_instance, app_py_path, channel_layer):
     app_settings = get_app_settings(app_instance.package)
 
     # In the case the app isn't installed, has no settings, or it is an extension,
     # skip configuring services/settings
     if not app_settings:
-        await channel_layer.group_send(
-            "notifications",
-            {
-                "type": "install_notifications",
-                "message": "No Services found to configure."
-            }
-        )
-
+        send_notification("No Services found to configure.", channel_layer)
         return
     unlinked_settings = app_settings['unlinked_settings']
 
@@ -182,21 +156,15 @@ async def process_settings(app_instance, app_py_path, channel_layer):
 
     get_data_json = {
         "data": services,
-        "returnMethod": "configureServices",
+        "returnMethod": "configure_services",
         "jsHelperFunction": "processServices",
         "app_py_path": app_py_path,
         "current_app_name": app_instance.package
     }
-    await channel_layer.group_send(
-        "notifications",
-        {
-            "type": "install_notifications",
-            "message": get_data_json
-        }
-    )
+    send_notification(get_data_json, channel_layer)
 
 
-async def configureServices(services_data, channel_layer):
+def configure_services(services_data, channel_layer):
     try:
         link_service_to_app_setting(services_data['service_type'],
                                     services_data['service_id'],
@@ -212,25 +180,13 @@ async def configureServices(services_data, channel_layer):
         "data": {"serviceName": services_data['service_name']},
         "jsHelperFunction": "serviceConfigComplete"
     }
-    await channel_layer.group_send(
-        "notifications",
-        {
-            "type": "install_notifications",
-            "message": get_data_json
-        }
-    )
+    send_notification(get_data_json, channel_layer)
 
 
-async def getServiceList(data, channel_layer):
+def getServiceList(data, channel_layer):
     get_data_json = {
         "data": {"settingType": data['settingType'],
                  "newOptions": get_service_options(data['settingType'])},
         "jsHelperFunction": "updateServiceListing"
     }
-    await channel_layer.group_send(
-        "notifications",
-        {
-            "type": "install_notifications",
-            "message": get_data_json
-        }
-    )
+    send_notification(get_data_json, channel_layer)

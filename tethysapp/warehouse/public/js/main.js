@@ -212,15 +212,21 @@ const getVersionsHTML = (selectedApp, allResources) => {
     }
 }
 
-const startInstall = (appInstallURL) => {
+const startInstall = (appName) => {
     showLoader()
     let version = $("#versions").select2("data")[0].text
-    let installURL = `${appInstallURL}&version=${version}`
     installRunning = true
     installData["version"] = version
-    $.get(installURL, function(data) {
-        // console.log(data)
-    })
+
+    notification_ws.send(
+        JSON.stringify({
+            data: {
+                name: appName,
+                version
+            },
+            type: `begin_install`
+        })
+    )
 }
 
 const createNewService = (settingType) => {
@@ -271,25 +277,24 @@ const getRepoForAdd = () => {
 $(document).ready(function() {
     initMainTable()
     // Hide the nav
-    $('#app-content-wrapper').toggleClass('show-nav');
+    $("#app-content-wrapper").toggleClass("show-nav")
 
     let n_div = $("#notification")
     let n_content = $("#notification .lead")
     hideLoader()
     let protocol = "ws"
-    if (location.protocol === 'https:') {
+    if (location.protocol === "https:") {
         protocol = "wss"
     }
     startWS(
         `${protocol}://` + window.location.host + "/warehouse/install/notifications/ws/",
         n_content
     )
-    $("#serverRefresh").click(function(){
+    $("#serverRefresh").click(function() {
         setServerOffline()
         notification_ws.send(
             JSON.stringify({
-                data: {
-                },
+                data: {},
                 type: `restart_server`
             })
         )
@@ -300,9 +305,10 @@ $(document).ready(function() {
         n_div.modal()
         notifCount = 0
         // Setup Versions
+
         installData["name"] = $(this).data("app-name")
         let versionHTML = getVersionsHTML($(this).data("app-name"), resources)
-        n_content.append(htmlHelpers.versions($(this).data("install-url")))
+        n_content.append(htmlHelpers.versions($(this).data("app-name")))
         n_content.find("#selectVersion").append(versionHTML)
         $("#versions").select2()
     })

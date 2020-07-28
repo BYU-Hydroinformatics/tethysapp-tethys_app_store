@@ -46,6 +46,31 @@ function operateFormatter(value, row, index) {
   ].join("")
 }
 
+function operateFormatter2(value, row, index) {
+  if (index == 0) {
+    return [
+      '<a class="install button-spaced" href="javascript:void(0)" title="Uninstall">',
+      `<button type="button" class="btn btn-info btn-warning btn-xs">Uninstall</button>`,
+      "</a>",
+      '<a class="install button-spaced" href="javascript:void(0)" title="Configure">',
+      `<button type="button" class="btn btn-info btn-default btn-xs">Configure</button>`,
+      "</a>"
+    ].join("")
+  } else {
+    return [
+      '<a class="install button-spaced" href="javascript:void(0)" title="Uninstall">',
+      `<button type="button" class="btn btn-info btn-warning btn-xs">Uninstall</button>`,
+      "</a>",
+      '<a class="install button-spaced" href="javascript:void(0)" title="Configure">',
+      `<button type="button" class="btn btn-info btn-default btn-xs">Configure</button>`,
+      "</a>",
+      '<a class="github button-spaced" href="javascript:void(0)" title="Update">',
+      `<button type="button" class="btn btn-primary btn-success btn-xs">Update</button>`,
+      "</a>"
+    ].join("")
+  }
+}
+
 window.operateEvents = {
   "click .install": function(e, value, row, index) {
     let n_div = $("#notification")
@@ -54,11 +79,12 @@ window.operateEvents = {
     n_div.modal()
     notifCount = 0
     // Setup Versions
+
     let appName = getResourceValue("name", index)
+    $("#installingAppName").text(appName)
     installData["name"] = appName
     let versionHTML = getVersionsHTML(appName, resources)
-    let appInstallURL = `${installURL}?name=${appName}`
-    n_content.append(htmlHelpers.versions(appInstallURL))
+    n_content.append(htmlHelpers.versions(appName))
     n_content.find("#selectVersion").append(versionHTML)
     $("#versions").select2()
   },

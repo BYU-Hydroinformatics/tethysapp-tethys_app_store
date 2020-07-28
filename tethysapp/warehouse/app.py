@@ -7,16 +7,16 @@ class Warehouse(TethysAppBase):
     Tethys app class for Warehouse.
     """
 
-    name = 'Warehouse'
+    name = 'Tethys App Warehouse'
     index = 'warehouse:home'
-    icon = 'warehouse/images/icon.gif'
+    icon = 'warehouse/images/appicon.png'
     package = 'warehouse'
     root_url = 'warehouse'
     color = '#2b7ac0'
-    description = 'Place a brief description of your app here.'
-    tags = ''
-    enable_feedback = False
-    feedback_emails = []
+    description = 'The Tethys App Warehouse enables you to discover, install, manage and configure Tethys Applications for your Tethys portal.'
+    tags = 'Tethys,Warehouse,Conda,Github'
+    enable_feedback = True
+    feedback_emails = ["rohitkh@byu.edu"]
 
     def url_maps(self):
         """
@@ -29,11 +29,6 @@ class Warehouse(TethysAppBase):
                 name='home',
                 url='warehouse',
                 controller='warehouse.controllers.home'
-            ),
-            UrlMap(
-                name='install',
-                url='warehouse/install',
-                controller='warehouse.controllers.install'
             ),
             UrlMap(
                 name='install_notifications',
@@ -52,7 +47,7 @@ class Warehouse(TethysAppBase):
                 type=CustomSetting.TYPE_STRING,
                 description='Sudo password for server',
                 required=False
-            )
+            ),
         )
 
         return custom_settings

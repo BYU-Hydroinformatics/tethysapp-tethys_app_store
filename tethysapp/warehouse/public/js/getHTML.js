@@ -2,10 +2,10 @@
 
 const htmlHelpers = {}
 
-htmlHelpers.versions = (installURL) => {
+htmlHelpers.versions = (appName) => {
     return `<div>Which version would you like to install: 
                     <div id="selectVersion" style="display: inline-block;"></div>
-                    <a class="btn btn-primary" onclick="startInstall('${installURL}')"> Go </a>
+                    <a class="btn btn-primary" onclick="startInstall('${appName}')"> Go </a>
                 </div>`
 }
 

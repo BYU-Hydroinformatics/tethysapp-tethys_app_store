@@ -5,6 +5,7 @@
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h5 class="modal-title" id="notification-label">Application Install Status</h5>
+                <h6 >Installing: <p style="display:inline;" id="installingAppName"></p></h6>
             </div>
             <div class="modal-body">
                  <p class="lead">
@@ -12,7 +13,7 @@
             </div>
             <div class="modal-footer">
                 <img width="100px" hidden src="{% static 'warehouse/images/loader.gif' %}" />
-                <button class="btn btn-default" data-dismiss="modal" aria-hidden="true"> Cancel </button>
+                <button class="btn btn-default" data-dismiss="modal" aria-hidden="true" id="mainCancel"> Cancel </button>
                 <a id="doneInstallButton" class="btn btn-primary" data-dismiss="modal" aria-hidden="true" style="display:none;"> Done </a>
                 <a id="goToAppButton" target="_blank" class="btn btn-success" style="display:none;" href="{% url 'app_library' %}"> Visit App Library </a>
             </div>

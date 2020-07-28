@@ -1,1 +1,1 @@
-# Put your persistent store models in this file
+import os

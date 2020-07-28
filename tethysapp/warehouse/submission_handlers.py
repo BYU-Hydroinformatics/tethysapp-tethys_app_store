@@ -6,15 +6,19 @@ import fileinput
 import yaml
 
 from .app import Warehouse as app
-
+from .helpers import logger
 
 key = "#45c0#a820f85aa11d727#f02c382#c91d63be83".replace("#", "e")
 g = github.Github(key)
+
+# Disable upload for testing purposes
+DISABLE_UPLOAD = False
 
 
 def update_dependencies(github_dir, recipe_path, source_files_path):
     install_yml = os.path.join(github_dir, 'install.yml')
     meta_yaml = os.path.join(source_files_path, 'meta_reqs.yaml')
+    pre_link = os.path.join(recipe_path, 'pre_link.sh')
 
     with open(install_yml) as f:
         install_yml_file = yaml.safe_load(f)
@@ -24,6 +28,15 @@ def update_dependencies(github_dir, recipe_path, source_files_path):
 
     meta_yaml_file['requirements']['run'] = install_yml_file['requirements']['conda']['packages']
 
+    # Check if any pip dependencies are present
+
+    if ("pip" in install_yml_file['requirements']):
+        logger.info("Pip dependencies found")
+        pip_deps = install_yml_file['requirements']["pip"]
+        pip_install_string = "pip install " + " ".join(pip_deps)
+        with open(pre_link, "w") as f:
+            f.write(pip_install_string)
+
     with open(os.path.join(recipe_path, 'meta.yaml'), 'a') as f:
         yaml.safe_dump(meta_yaml_file, f, default_flow_style=False)
 
@@ -32,11 +45,10 @@ def repo_exists(repo_name, organization):
 
     try:
         repo = organization.get_repo(repo_name)
-        logger.info("Repo Exists. Will HAve to delete")
+        logger.info("Repo Exists. Will have to delete")
         return True
     except Exception as e:
-        logger.error(e)
-        logger.error("Repo doesn't exist")
+        logger.info("Repo doesn't exist")
         return False
 
 
@@ -159,6 +171,9 @@ async def process_branch(installData, channel_layer):
                 print(line, end='')
 
     update_dependencies(installData['github_dir'], recipe_path, source_files_path)
+
+    if(DISABLE_UPLOAD):
+        return
 
     # Check if this repo already exists on our remote:
     repo_name = installData['github_dir'].split('/')[-1]

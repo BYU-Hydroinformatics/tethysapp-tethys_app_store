@@ -1,9 +1,12 @@
 from channels.generic.websocket import AsyncWebsocketConsumer
 from .installation_handlers import *
 from .submission_handlers import *
+from .begin_install import begin_install
 
 import json
 import sys
+
+import threading
 
 
 class notificationsConsumer(AsyncWebsocketConsumer):
@@ -25,6 +28,9 @@ class notificationsConsumer(AsyncWebsocketConsumer):
         logger.info(f"Received message {text_data} at {self.channel_name}")
         text_data_json = json.loads(text_data)
         if "type" in text_data_json:
-            await getattr(sys.modules[__name__], text_data_json['type'])(text_data_json['data'], self.channel_layer)
+            thread = threading.Thread(target=getattr(sys.modules[__name__], text_data_json['type']),
+                                      args=(text_data_json['data'], self.channel_layer)
+                                      )
+            thread.start()
         else:
             logger.info("Can't redirect incoming message.")

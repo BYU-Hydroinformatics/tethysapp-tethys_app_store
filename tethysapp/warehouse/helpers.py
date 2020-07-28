@@ -7,11 +7,17 @@ import logging
 from tethys_apps.base import TethysAppBase
 from django.conf import settings
 from django.urls.base import clear_url_caches
+from asgiref.sync import async_to_sync
 
-logger = logging.getLogger(f'tethys.apps.{__name__}')
+logger = logging.getLogger(f'tethys.apps.warehouse')
+# Ensure that this logger is putting everything out.
+# @TODO: Change this back to the default later
+logger.setLevel(logging.INFO)
 
 
 def add_if_exists(a, b, keys):
+    if not a:
+        return b
     for key in keys:
         if key in a:
             b[key] = a[key]
@@ -47,3 +53,22 @@ def reload_urlconf(urlconf=None):
     if urlconf in sys.modules:
         importlib.reload(sys.modules[urlconf])
     clear_url_caches()
+
+
+def send_notif(msg, channel_layer):
+    return channel_layer.group_send(
+        "notifications",
+        {
+            "type": "install_notifications",
+            "message": msg
+        }
+    )
+
+
+def send_notification(msg, channel_layer):
+    async_to_sync(channel_layer.group_send)(
+        "notifications", {
+            "type": "install_notifications",
+            "message": msg
+        }
+    )

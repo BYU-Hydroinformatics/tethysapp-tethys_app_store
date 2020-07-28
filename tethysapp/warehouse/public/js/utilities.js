@@ -4,6 +4,8 @@
 
 var notification_ws
 var notifCount = 0
+var inRestart = false
+
 const serviceLookup = {
 	spatial: "spatialdatasetservice",
 	dataset: "datasetservice",
@@ -30,15 +32,15 @@ function setServerOnline() {
 	$("#serverStatusOnline").show()
 	$("#serverStatusOffline").hide()
 	// Check for any pending updates and resume processing
-	if (installRunning) {
-		// Send WS request
-		notification_ws.send(
-			JSON.stringify({
-				data: installData,
-				type: "continueAfterInstall"
-			})
-		)
-	}
+	// if (installRunning) {
+	// 	// Send WS request
+	// 	notification_ws.send(
+	// 		JSON.stringify({
+	// 			data: installData,
+	// 			type: "continueAfterInstall"
+	// 		})
+	// 	)
+	// }
 }
 
 function getParameterByName(name, url) {
@@ -70,14 +72,13 @@ const sendNotification = (message, n_content) => {
 	if (message == "install_complete") {
 		hideLoader()
 		new_element = `<div style="display: none;" id="install_notif_${notifCount}">Install Complete. Restarting Server for changes to take effect.</div>`
-		setServerOffline()
-        notification_ws.send(
-            JSON.stringify({
-                data: {
-                },
-                type: `restart_server`
-            })
-        )
+		inRestart = true
+		notification_ws.send(
+			JSON.stringify({
+				data: {},
+				type: `restart_server`
+			})
+		)
 		$("#goToAppButton").show()
 		$("#doneInstallButton").show()
 	}
@@ -89,6 +90,12 @@ function startWS(websocketServerLocation, n_content) {
 	notification_ws = new WebSocket(websocketServerLocation)
 	notification_ws.onopen = () => {
 		console.log("WebSocket is Open")
+		if (inRestart) {
+			inRestart = false
+			sendNotification("Server restart completed successfully", n_content)
+			// Hide Cancel Button
+			$("#mainCancel").hide()
+		}
 		setServerOnline()
 	}
 
