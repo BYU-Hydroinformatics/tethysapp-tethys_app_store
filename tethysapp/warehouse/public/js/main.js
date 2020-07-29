@@ -285,10 +285,11 @@ $(document).ready(function() {
     if (location.protocol === "https:") {
         protocol = "wss"
     }
-    startWS(
-        `${protocol}://` + window.location.host + "/warehouse/install/notifications/ws/",
-        n_content
-    )
+    let ws_url = `${protocol}://${window.location.host}`
+
+    ws_url = `${ws_url}${warehouseHomeUrl}install/notifications/ws/`
+    startWS(ws_url, n_content)
+
     $("#serverRefresh").click(function() {
         setServerOffline()
         notification_ws.send(
