@@ -60,7 +60,6 @@ const hideLoader = (modal = "notification") => {
 }
 
 const showLoader = (modal = "notification") => {
-	console.log(modal)
 	$(`#${modal} .modal-footer`)
 		.find("img")
 		.show()
@@ -70,7 +69,6 @@ const sendNotification = (message, n_content) => {
 	notifCount = notifCount + 1
 	let new_element = `<div style="display: none;" id="install_notif_${notifCount}">${message}</div>`
 	if (message == "install_complete") {
-		hideLoader()
 		new_element = `<div style="display: none;" id="install_notif_${notifCount}">Install Complete. Restarting Server for changes to take effect.</div>`
 		inRestart = true
 		notification_ws.send(
@@ -91,6 +89,7 @@ function startWS(websocketServerLocation, n_content) {
 	notification_ws.onopen = () => {
 		console.log("WebSocket is Open")
 		if (inRestart) {
+			hideLoader()
 			inRestart = false
 			sendNotification("Server restart completed successfully", n_content)
 			// Hide Cancel Button

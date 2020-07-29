@@ -106,7 +106,6 @@ def conda_install(app_metadata, app_version, channel_layer):
     app_name = app_metadata['name'] + "=" + app_version
     install_command = [script_path, app_name, app_metadata['metadata']['channel']]
 
-    time.sleep(1)
     # Running this sub process, in case the library isn't installed, triggers a restart.
 
     # p = subprocess.Popen(install_command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)

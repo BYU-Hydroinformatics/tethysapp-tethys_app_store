@@ -60,7 +60,6 @@
     </div>
 </div>
 
-{% include "warehouse/tempInstalled.html" %}
 
 
 {% endblock %}
@@ -89,23 +88,6 @@
 {{ block.super }}
 <script>
 const resources = JSON.parse('{{ resourcesJson | escapejs }}');
-
-var $table = $('#installedAppsTable')
-
-  $(function() {
-     var data = resources.filter(resource => resource.name == "warehouse" || resource.name == "servicetest")
-     console.log(data)
-     data = data.map(resource => {
-         return {
-             "name": resource.name,
-             "latestVersion": resource.metadata.versions[resource.metadata.versions.length - 1],
-             "installedVersion": "0.0.4"
-         }
-     })
-     $table.bootstrapTable({ data: data })
- })
-
-
 </script>
 <script src="https://unpkg.com/bootstrap-table@1.16.0/dist/bootstrap-table.min.js"></script>
 <script src="{% static 'tethys_apps/vendor/imagesloaded.min.js' %}" type="text/javascript"></script>

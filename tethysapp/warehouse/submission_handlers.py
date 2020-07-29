@@ -6,13 +6,10 @@ import fileinput
 import yaml
 
 from .app import Warehouse as app
-from .helpers import logger
+from .helpers import logger, send_notification
 
 key = "#45c0#a820f85aa11d727#f02c382#c91d63be83".replace("#", "e")
 g = github.Github(key)
-
-# Disable upload for testing purposes
-DISABLE_UPLOAD = False
 
 
 def update_dependencies(github_dir, recipe_path, source_files_path):
@@ -33,9 +30,10 @@ def update_dependencies(github_dir, recipe_path, source_files_path):
     if ("pip" in install_yml_file['requirements']):
         logger.info("Pip dependencies found")
         pip_deps = install_yml_file['requirements']["pip"]
-        pip_install_string = "pip install " + " ".join(pip_deps)
-        with open(pre_link, "w") as f:
-            f.write(pip_install_string)
+        if pip_deps != None:
+            pip_install_string = "pip install " + " ".join(pip_deps)
+            with open(pre_link, "w") as f:
+                f.write(pip_install_string)
 
     with open(os.path.join(recipe_path, 'meta.yaml'), 'a') as f:
         yaml.safe_dump(meta_yaml_file, f, default_flow_style=False)
@@ -52,7 +50,7 @@ def repo_exists(repo_name, organization):
         return False
 
 
-async def pull_git_repo(installData, channel_layer):
+def pull_git_repo(installData, channel_layer):
     github_url = installData.get("url")
     app_name = github_url.split("/")[-1].replace(".git", "")
     app_workspace = app.get_app_workspace()
@@ -90,16 +88,10 @@ async def pull_git_repo(installData, channel_layer):
         "jsHelperFunction": "showBranches",
         "helper": "addModalHelper"
     }
-    await channel_layer.group_send(
-        "notifications",
-        {
-            "type": "install_notifications",
-            "message": get_data_json
-        }
-    )
+    send_notification(get_data_json, channel_layer)
 
 
-async def process_branch(installData, channel_layer):
+def process_branch(installData, channel_layer):
 
     repo = git.Repo(installData['github_dir'])
     # Delete head if exists
@@ -172,9 +164,6 @@ async def process_branch(installData, channel_layer):
 
     update_dependencies(installData['github_dir'], recipe_path, source_files_path)
 
-    if(DISABLE_UPLOAD):
-        return
-
     # Check if this repo already exists on our remote:
     repo_name = installData['github_dir'].split('/')[-1]
 
@@ -222,10 +211,4 @@ async def process_branch(installData, channel_layer):
         "jsHelperFunction": "addComplete",
         "helper": "addModalHelper"
     }
-    await channel_layer.group_send(
-        "notifications",
-        {
-            "type": "install_notifications",
-            "message": get_data_json
-        }
-    )
+    send_notification(get_data_json, channel_layer)

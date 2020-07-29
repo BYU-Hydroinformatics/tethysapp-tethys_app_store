@@ -78,7 +78,6 @@ const settingsHelper = {
                         type: completeMessage.returnMethod
                     })
                 )
-                sendNotification("No Custom Settings found to process", n_content)
             }
         } else {
             sendNotification("No Custom Settings found to process", n_content)

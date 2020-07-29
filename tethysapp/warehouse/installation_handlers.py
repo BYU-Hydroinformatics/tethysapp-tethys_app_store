@@ -42,12 +42,6 @@ def get_service_options(service_type):
 
 
 def restart_server(data, channel_layer):
-    # process = subprocess.Popen(['tethys', 'manage', 'collectall', '--noinput'], stdout=subprocess.PIPE)
-    # output, error = process.communicate()
-    # logger.info(output)
-    # logger.error(error)
-
-    #
 
     if 'runserver' in sys.argv:
         logger.info("Dev Mode. Attempting to restart by changing file")
@@ -56,11 +50,23 @@ def restart_server(data, channel_layer):
         with open(file_path, "w") as f:
             f.write("import os")
     else:
-        # Server Mode. Attempt to restart SuperVisorCTL
-        # @TODO: Check if running within docker container and run without sudo
-        sudoPassword = app.get_custom_setting('sudo_server_pass')
+        logger.info("Running Tethys Collectall")
+        process = subprocess.Popen(['tethys', 'manage', 'collectall', '--noinput'], stdout=subprocess.PIPE)
+        output, error = process.communicate()
+        logger.info(output)
+        if error:
+            logger.error(error)
+
         command = 'supervisorctl restart all'
-        p = os.system('echo %s|sudo -S %s' % (sudoPassword, command))
+        try:
+            subprocess.run(['sudo'], check=True)
+            sudoPassword = app.get_custom_setting('sudo_server_pass')
+            p = os.system('echo %s|sudo -S %s' % (sudoPassword, command))
+        except Exception as e:
+            logger.debug(e)
+            logger.debug("No SUDO. Docker container implied. Restarting without SUDO")
+            # Error encountered while running sudo. Let's try without sudo
+            p = os.system(command)
 
 
 def continueAfterInstall(installData, channel_layer):
@@ -76,13 +82,12 @@ def continueAfterInstall(installData, channel_layer):
         # Check if matching version found
         for package in conda_search_result:
             if package["version"] == installData['version']:
-                send_notification("Conda install completed", channel_layer)
+                send_notification("Resuming processing...", channel_layer)
                 detect_app_dependencies(installData['name'], installData['version'], channel_layer)
                 break
             else:
                 send_notification(
                     "Server error while processing this installation. Please check your logs", channel_layer)
-
                 logger.error("ERROR: ContinueAfterInstall: Correct version is not installed of this package.")
 
 
@@ -141,8 +146,9 @@ def process_settings(app_instance, app_py_path, channel_layer):
     unlinked_settings = app_settings['unlinked_settings']
 
     services = []
-
     for setting in unlinked_settings:
+        if setting.__class__.__name__ == "CustomSetting":
+            continue
         service_type = get_service_type_from_setting(setting)
         newSetting = {
             "name": setting.name,

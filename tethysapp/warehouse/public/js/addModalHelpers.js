@@ -65,7 +65,6 @@ const addModalHelper = {
 		$("#processBranchButton").show()
 	},
 	addComplete: (addData, content, completeMessage, ws) => {
-		console.log(addData)
 		$("#loaderEllipsis").hide()
 		$("#processBranchButton").hide()
 		$("#cancelAddButton").hide()

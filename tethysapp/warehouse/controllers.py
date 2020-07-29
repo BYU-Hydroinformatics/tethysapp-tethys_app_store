@@ -29,11 +29,8 @@ def home(request, app_workspace):
     #         tag_list = tag_list + resource['metadata']['app_tags']
 
     # tag_list = list(set(tag_list))
-    context = {'resources': list(
-        filter(
-            lambda x: x['name'] not in ["warehouse", "hydroviewer_madeira_river"],
-            all_resources)),
-        'resourcesJson': json.dumps(all_resources),
-        "tags": tag_list}
+    context = {'resources': all_resources,
+               'resourcesJson': json.dumps(all_resources),
+               "tags": tag_list}
 
     return render(request, 'warehouse/home.html', context)
