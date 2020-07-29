@@ -286,8 +286,8 @@ $(document).ready(function() {
         protocol = "wss"
     }
     let ws_url = `${protocol}://${window.location.host}`
-
-    ws_url = `${ws_url}${warehouseHomeUrl}install/notifications/ws/`
+    let app_path = warehouseHomeUrl.replace("/apps", "")
+    ws_url = `${ws_url}${app_path}install/notifications/ws/`
     startWS(ws_url, n_content)
 
     $("#serverRefresh").click(function() {
