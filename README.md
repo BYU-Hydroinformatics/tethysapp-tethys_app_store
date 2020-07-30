@@ -9,6 +9,45 @@ tethys settings --set CHANNEL_LAYERS.default.BACKEND channels.layers.InMemoryCha
 conda install -c tethysapp warehouse
 ```
 
+### Setup on a server employing a reverse proxy
+
+If you are running the warehouse within a docker container, you have probably setup an Nginx/Apache Proxy to the container. In that case, the proxy needs to also support redirecting WebSocket requests. A working example is here:
+
+```
+
+
+# top-level http config for websocket headers
+# If Upgrade is defined, Connection = upgrade
+# If Upgrade is empty, Connection = close
+map $http_upgrade $connection_upgrade {
+    default upgrade;
+    ''      close;
+}
+
+
+server {
+	listen 8008 default_server;
+	listen [::]:8008 default_server ipv6only=on;
+
+
+location /tethys {
+            rewrite ^/tethys/(.*)$ /$1 break;
+            proxy_pass http://127.0.0.1:8006$uri$is_args$args;
+            proxy_set_header Host $host;
+            proxy_set_header X-Script-Name /tethys;
+            proxy_cookie_path / /tethys;
+
+            #WEBSOCKET support
+
+	        proxy_set_header Upgrade $http_upgrade;
+            proxy_set_header Connection $connection_upgrade;
+        }
+
+}
+
+
+```
+
 ## Testing
 
 To help out with testing this application on your local installation, please follow these instructions:

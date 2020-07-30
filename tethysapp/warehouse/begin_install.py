@@ -108,34 +108,34 @@ def conda_install(app_metadata, app_version, channel_layer):
 
     # Running this sub process, in case the library isn't installed, triggers a restart.
 
-    # p = subprocess.Popen(install_command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+    p = subprocess.Popen(install_command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
 
-    # while True:
-    #     output = p.stdout.readline()
-    #     print(output)
-    #     if output == '':
-    #         break
-    #     if output:
-    #         # Checkpoints for the output
-    #         str_output = str(output.strip())
-    #         logger.info(str_output)
-    #         if(check_all_present(str_output, ['Collecting package metadata', 'done'])):
-    #             send_notif("Package Metadata Collection: Done", channel_layer)
-    #         if(check_all_present(str_output, ['Solving environment', 'done'])):
-    #             send_notif("Solving Environment: Done", channel_layer)
-    #         if(check_all_present(str_output, ['Verifying transaction', 'done'])):
-    #             send_notif("Verifying Transaction: Done", channel_layer)
-    #         if(check_all_present(str_output, ['All requested packages already installed.'])):
-    #             send_notif("Application package is already installed in this conda environment.",
-    #                        channel_layer)
-    #         if(check_all_present(str_output, ['Conda Install Complete'])):
-    #             break
-    #         if(check_all_present(str_output, ['Found conflicts!'])):
-    #             send_notif("Conda install found conflicts."
-    #                        "Please try running the following command in your terminal's"
-    #                        "conda environment to attempt a manual installation : "
-    #                        "conda install -c " + app_metadata['metadata']['channel'] + " " + app_name,
-    #                        channel_layer)
+    while True:
+        output = p.stdout.readline()
+        print(output)
+        if output == '':
+            break
+        if output:
+            # Checkpoints for the output
+            str_output = str(output.strip())
+            logger.info(str_output)
+            if(check_all_present(str_output, ['Collecting package metadata', 'done'])):
+                send_notif("Package Metadata Collection: Done", channel_layer)
+            if(check_all_present(str_output, ['Solving environment', 'done'])):
+                send_notif("Solving Environment: Done", channel_layer)
+            if(check_all_present(str_output, ['Verifying transaction', 'done'])):
+                send_notif("Verifying Transaction: Done", channel_layer)
+            if(check_all_present(str_output, ['All requested packages already installed.'])):
+                send_notif("Application package is already installed in this conda environment.",
+                           channel_layer)
+            if(check_all_present(str_output, ['Conda Install Complete'])):
+                break
+            if(check_all_present(str_output, ['Found conflicts!'])):
+                send_notif("Conda install found conflicts."
+                           "Please try running the following command in your terminal's"
+                           "conda environment to attempt a manual installation : "
+                           "conda install -c " + app_metadata['metadata']['channel'] + " " + app_name,
+                           channel_layer)
 
     send_notification("Conda install completed in %.2f seconds." % (time.time() - start_time), channel_layer)
 
