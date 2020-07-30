@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from tethys_sdk.permissions import login_required
+from tethys_sdk.permissions import login_required, permission_required
 from tethys_sdk.workspaces import app_workspace
 
 import json
@@ -14,6 +14,7 @@ CACHE_KEY = "warehouse_app_resources"
 
 
 @login_required()
+@permission_required('use_warehouse')
 @app_workspace
 def home(request, app_workspace):
 

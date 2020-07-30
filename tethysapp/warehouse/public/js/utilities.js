@@ -32,15 +32,15 @@ function setServerOnline() {
 	$("#serverStatusOnline").show()
 	$("#serverStatusOffline").hide()
 	// Check for any pending updates and resume processing
-	// if (installRunning) {
-	// 	// Send WS request
-	// 	notification_ws.send(
-	// 		JSON.stringify({
-	// 			data: installData,
-	// 			type: "continueAfterInstall"
-	// 		})
-	// 	)
-	// }
+	if (installRunning) {
+		// Send WS request
+		notification_ws.send(
+			JSON.stringify({
+				data: installData,
+				type: "continueAfterInstall"
+			})
+		)
+	}
 }
 
 function getParameterByName(name, url) {

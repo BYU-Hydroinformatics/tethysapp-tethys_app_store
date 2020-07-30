@@ -230,7 +230,8 @@ const startInstall = (appName) => {
 
 const createNewService = (settingType) => {
     let serviceURLPart = serviceLookup[settingType]
-    let url = `/admin/tethys_services/${serviceURLPart}/add/?_to_field=id&_popup=1&type=${settingType}`
+    let baseURL = warehouseHomeUrl.replace("/apps/warehouse", "/admin")
+    let url = `${baseURL}tethys_services/${serviceURLPart}/add/?_to_field=id&_popup=1&type=${settingType}`
     let newWindow = window.open(
         url,
         "_blank",

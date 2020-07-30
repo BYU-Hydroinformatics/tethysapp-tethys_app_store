@@ -1,5 +1,6 @@
 from tethys_sdk.base import TethysAppBase, url_map_maker
 from tethys_sdk.app_settings import CustomSetting
+from tethys_sdk.permissions import Permission, PermissionGroup
 
 
 class Warehouse(TethysAppBase):
@@ -39,6 +40,24 @@ class Warehouse(TethysAppBase):
         )
 
         return url_maps
+
+    def permissions(self):
+        """
+        Require admin to use the app.
+        """
+        use_warehouse = Permission(
+            name='use_warehouse',
+            description='Use the warehouse'
+        )
+
+        admin = PermissionGroup(
+            name='admin',
+            permissions=(use_warehouse,)
+        )
+
+        permissions = (admin,)
+
+        return permissions
 
     def custom_settings(self):
         return (
