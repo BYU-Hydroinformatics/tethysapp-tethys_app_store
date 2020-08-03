@@ -4,6 +4,7 @@ import shutil
 import github
 import fileinput
 import yaml
+from pathlib import Path
 
 from .app import Warehouse as app
 from .helpers import logger, send_notification
@@ -15,7 +16,12 @@ g = github.Github(key)
 def update_dependencies(github_dir, recipe_path, source_files_path):
     install_yml = os.path.join(github_dir, 'install.yml')
     meta_yaml = os.path.join(source_files_path, 'meta_reqs.yaml')
-    pre_link = os.path.join(recipe_path, 'pre_link.sh')
+    app_files_dir = os.path.join(recipe_path, '../tethysapp')
+
+    app_folders = next(os.walk(app_files_dir))[1]
+    app_scripts_path = os.path.join(app_files_dir, app_folders[0], 'scripts')
+
+    Path(app_scripts_path).mkdir(parents=True, exist_ok=True)
 
     with open(install_yml) as f:
         install_yml_file = yaml.safe_load(f)
@@ -28,9 +34,10 @@ def update_dependencies(github_dir, recipe_path, source_files_path):
     # Check if any pip dependencies are present
 
     if ("pip" in install_yml_file['requirements']):
-        logger.info("Pip dependencies found")
         pip_deps = install_yml_file['requirements']["pip"]
         if pip_deps != None:
+            logger.info("Pip dependencies found")
+            pre_link = os.path.join(app_scripts_path, "install_pip.sh")
             pip_install_string = "pip install " + " ".join(pip_deps)
             with open(pre_link, "w") as f:
                 f.write(pip_install_string)
@@ -159,6 +166,9 @@ def process_branch(installData, channel_layer):
         for line in f:
             if "tethys_apps.app_installation" in line:
                 print("from setup_helper import find_resource_files", end='\n')
+            elif ("release_package" in line) and ("tethysapp" in line):
+                print(line, end='')
+                print("resource_files = find_resource_files('tethysapp/' + app_package + '/scripts', 'tethysapp/' + app_package)", end='\n')
             else:
                 print(line, end='')
 
@@ -168,9 +178,6 @@ def process_branch(installData, channel_layer):
     repo_name = installData['github_dir'].split('/')[-1]
 
     organization = g.get_organization("tethysapp")
-
-    # For testing don't delete and recreate
-    # tethysapp_repo = organization.get_repo(repo_name)
 
     if repo_exists(repo_name, organization):
         # Delete the repo

@@ -33,7 +33,15 @@ def handle_property_not_present(prop):
     pass
 
 
-def detect_app_dependencies(install_metadata, app_version, channel_layer):
+def process_post_install_scripts(path):
+    # Check if scripts directory exists
+    scripts_dir = os.path.join(path, 'scripts')
+    if os.path.exists(scripts_dir):
+        logger.info("TODO: Process scripts dir.")
+        # Currently only processing the pip install script, but need to add ability to process post scripts as well
+
+
+def detect_app_dependencies(app_name, app_version, channel_layer):
     """
     Method goes through the app.py and determines the following:
     1.) Any services required
@@ -59,11 +67,15 @@ def detect_app_dependencies(install_metadata, app_version, channel_layer):
     importlib.reload(tethysapp)
 
     # paths = list()
-    paths = list(filter(lambda x: install_metadata['name'] in x, tethysapp.__path__))
+    paths = list(filter(lambda x: app_name in x, tethysapp.__path__))
 
     if len(paths) < 1:
         print("Can't find the installed app location.")
         return
+    # Check for any pre install script to install pip dependencies
+
+    print(paths)
+    # Check for a scripts directory
 
     app_instance = get_app_instance_from_path(paths)
     custom_settings_json = []
@@ -156,7 +168,7 @@ def begin_install(installData, channel_layer):
         return
 
     try:
-        detect_app_dependencies(resource, installData["version"], channel_layer)
+        detect_app_dependencies(resource['name'], installData["version"], channel_layer)
     except Exception as e:
         print(e)
         send_notification("Error while checking package for services", channel_layer)
