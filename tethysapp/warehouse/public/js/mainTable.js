@@ -77,6 +77,7 @@ window.operateEvents = {
     let n_content = $("#notification .lead")
     n_content.empty()
     n_div.modal()
+    $("#goToAppButton").hide()
     notifCount = 0
     // Setup Versions
 

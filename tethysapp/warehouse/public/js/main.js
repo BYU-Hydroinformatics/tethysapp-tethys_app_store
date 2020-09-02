@@ -106,6 +106,7 @@ const settingsHelper = {
             if (servicesData.length > 0) {
                 currentServicesList = servicesData
                 $("#services-modal").modal("show")
+                $("#services-container").empty()
                 $("#services-container").prepend(`<div>
                     <input id="servicesToConfigureCount" hidden value="${
                         servicesData.length

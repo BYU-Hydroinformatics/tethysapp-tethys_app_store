@@ -7,7 +7,6 @@ import json
 from .notifications import *
 from .resource_helpers import fetch_resources
 from .helpers import logger
-from .model import *
 
 ALL_RESOURCES = []
 CACHE_KEY = "warehouse_app_resources"
@@ -19,6 +18,7 @@ CACHE_KEY = "warehouse_app_resources"
 def home(request, app_workspace):
 
     require_refresh = request.GET.get('refresh', '') == "true"
+    print(require_refresh)
     all_resources = fetch_resources(app_workspace, require_refresh)
 
     tag_list = []

@@ -28,10 +28,11 @@ def fetch_resources(app_workspace, refresh=False):
     all_resources = cache.get(CACHE_KEY)
     if (cache.get(CACHE_KEY) is None) or refresh:
         # Look for packages:
+        logger.info("Refreshing list of apps cache")
         (conda_search_result, err, code) = run_command(Commands.SEARCH,
                                                        ["-c", CHANNEL_NAME, "--override-channels", "-i", "--json"])
         conda_search_result = json.loads(conda_search_result)
-
+        logger.info(conda_search_result)
         resource_metadata = []
         for conda_package in conda_search_result:
             newPackage = {
@@ -51,7 +52,7 @@ def fetch_resources(app_workspace, refresh=False):
         cache.set(CACHE_KEY, resource_metadata)
         return resource_metadata
     else:
-        print("Found in cache")
+        logger.info("Found in cache")
         return cache.get(CACHE_KEY)
 
 
@@ -87,7 +88,7 @@ def process_resources(resources, app_workspace):
                     meta_yaml = yaml.safe_load(f)
                     # Add metadata to the resources object.
                     app['metadata'] = add_if_exists(meta_yaml.get('about'), app['metadata'], [
-                                                    'author', 'description', 'dev_url', 'license'])
+                        'author', 'description', 'dev_url', 'license'])
                     app['metadata'] = add_if_exists(meta_yaml.get('extra'), app['metadata'], [
                         'author_email', 'keywords'])
 
