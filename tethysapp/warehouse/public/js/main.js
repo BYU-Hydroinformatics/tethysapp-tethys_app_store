@@ -4,6 +4,9 @@
 var currentServicesList = []
 var installRunning = false
 var installData = {}
+var uninstallData = {}
+var uninstallRunning = false
+
 // End Vars
 const settingsHelper = {
     processCustomSettings: (settingsData, n_content, completeMessage, ws) => {
@@ -275,6 +278,23 @@ const getRepoForAdd = () => {
     }
 }
 
+const uninstall = () => {
+    console.log(uninstallData)
+
+    // Hide Elements
+    $("#uninstallingAppNotice").hide()
+    $("#yesUninstall").hide()
+    $("#noUninstall").hide()
+    $("#uninstallLoaderEllipsis").show()
+    $("#uninstall_processing_label").text(`Uninstalling: ${uninstallData.name}`)
+    notification_ws.send(
+        JSON.stringify({
+            data: uninstallData,
+            type: `uninstall_app`
+        })
+    )
+}
+
 $(document).ready(function() {
     initMainTable()
     // Hide the nav
@@ -300,19 +320,6 @@ $(document).ready(function() {
                 type: `restart_server`
             })
         )
-    })
-
-    $('a[id^="app_button_"]').click(function() {
-        n_content.empty()
-        n_div.modal()
-        notifCount = 0
-        // Setup Versions
-
-        installData["name"] = $(this).data("app-name")
-        let versionHTML = getVersionsHTML($(this).data("app-name"), resources)
-        n_content.append(htmlHelpers.versions($(this).data("app-name")))
-        n_content.find("#selectVersion").append(versionHTML)
-        $("#versions").select2()
     })
 
     $("#skipServicesButton").click(() => {

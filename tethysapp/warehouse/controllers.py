@@ -18,20 +18,22 @@ CACHE_KEY = "warehouse_app_resources"
 def home(request, app_workspace):
 
     require_refresh = request.GET.get('refresh', '') == "true"
-    print(require_refresh)
     all_resources = fetch_resources(app_workspace, require_refresh)
 
-    tag_list = []
+    installed_apps = []
+    available_apps = []
 
-    # for resource in ALL_RESOURCES:
-    #     resource['tag_class'] = ""
-    #     if len(resource['metadata']['app_tags']) > 0:
-    #         resource['tag_class'] = ' '.join(resource['metadata']['app_tags'])
-    #         tag_list = tag_list + resource['metadata']['app_tags']
+    for resource in all_resources:
+        if resource["installed"]:
 
-    # tag_list = list(set(tag_list))
-    context = {'resources': all_resources,
-               'resourcesJson': json.dumps(all_resources),
-               "tags": tag_list}
+            installed_apps.append(resource)
+        else:
+            available_apps.append(resource)
+
+    context = {
+        'resources': available_apps,
+        'resourcesJson': json.dumps(available_apps),
+        'installedApps': json.dumps(installed_apps)
+    }
 
     return render(request, 'warehouse/home.html', context)

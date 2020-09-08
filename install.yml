@@ -8,5 +8,6 @@ requirements:
     packages:
       - pygithub
       - gitpython
+
 post:
   - setup_tethys_channel.sh

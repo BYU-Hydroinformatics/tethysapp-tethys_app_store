@@ -101,14 +101,24 @@ function startWS(websocketServerLocation, n_content) {
 	notification_ws.onmessage = function(e) {
 		let data = JSON.parse(e.data)
 		if (typeof data.message == "string") {
+			let content = n_content
+			if ("target" in data.message) {
+				content = $(`#${data.message.target}`)
+			}
 			// It's normal string
-			sendNotification(data.message, n_content)
+			sendNotification(data.message, content)
 			return false
 		} else {
 			// Found an object?
 			// Check if we have a function to call
 			let helper = settingsHelper
 			let content = n_content
+
+			if ("target" in data.message) {
+				content = $(`#${data.message.target}`)
+				return sendNotification(data.message.message, content)
+			}
+
 			if ("helper" in data.message) {
 				if (data.message["helper"] == "addModalHelper") {
 					helper = addModalHelper

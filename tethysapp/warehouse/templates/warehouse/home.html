@@ -34,7 +34,7 @@
     <div class="card-body">
         <div id="toolbar">
         </div>
-        <table data-toggle="table" data-search="true" data-show-search-clear-button="true" data-toolbar="#toolbar" data-show-columns="true" id="mainAppsTable" data-show-toggle="true" data-detail-view="true" data-detail-formatter="detailFormatter">
+        <table data-toggle="table" data-search="true" data-show-search-clear-button="true" data-toolbar="#toolbar" data-show-columns="true" id="mainAppsTable" data-show-toggle="true" data-pagination="true" data-detail-view="true" data-detail-formatter="detailFormatter">
             <thead>
                 <tr>
                     <th>Tethys App Name</th>
@@ -60,7 +60,23 @@
     </div>
 </div>
 
-
+<div class="card card-default installed-app-list">
+    <div class="card-header">Installed Tethys Applications</div>
+    <div class="card-body">
+        <table data-toggle="table" data-search="true" data-show-search-clear-button="true" data-toolbar="#toolbar" data-show-columns="true" id="installedAppsTable" data-show-toggle="true" data-detail-view="true" data-detail-formatter="detailFormatter">
+            <thead>
+                <tr>
+                    <th data-field="name">Tethys App Name</th>
+                    <th data-field="installedVersion">Installed Version</th>
+                    <th data-field="latestVersion">Latest Version</th>
+                    <th data-field="operate" data-formatter="operateFormatter2" data-events="operateEvents">Actions</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+    <div class="card-footer ">
+    </div>
+</div>
 
 {% endblock %}
 
@@ -72,6 +88,8 @@
 {% include "warehouse/modals/services.html" %}
 {% include "warehouse/modals/serverOffline.html" %}
 {% include "warehouse/modals/addToWarehouse.html" %}
+{% include "warehouse/modals/uninstall.html" %}
+
 {% endblock %}
 
 
@@ -88,6 +106,7 @@
 {{ block.super }}
 <script>
 const resources = JSON.parse('{{ resourcesJson | escapejs }}');
+const installedApps = JSON.parse('{{ installedApps | escapejs }}');
 const warehouseHomeUrl = "{% url 'warehouse:home' %}";
 </script>
 <script src="https://unpkg.com/bootstrap-table@1.16.0/dist/bootstrap-table.min.js"></script>

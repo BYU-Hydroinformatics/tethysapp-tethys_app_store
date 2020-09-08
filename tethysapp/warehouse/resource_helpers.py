@@ -1,5 +1,6 @@
 from conda.cli.python_api import Commands, run_command
 from django.core.cache import cache
+from packaging import version
 
 import os
 import json
@@ -32,17 +33,22 @@ def fetch_resources(app_workspace, refresh=False):
         (conda_search_result, err, code) = run_command(Commands.SEARCH,
                                                        ["-c", CHANNEL_NAME, "--override-channels", "-i", "--json"])
         conda_search_result = json.loads(conda_search_result)
-        logger.info(conda_search_result)
+        # logger.info(conda_search_result)
         resource_metadata = []
         for conda_package in conda_search_result:
+            installed_version = check_if_app_installed(conda_package)
             newPackage = {
                 'name': conda_package,
+                'installed': False,
                 'metadata': {
                     'versions': [],
                     'versionURLs': [],
                     'channel': CHANNEL_NAME
                 }
             }
+            if installed_version:
+                newPackage["installed"] = True
+                newPackage["installedVersion"] = installed_version
             for conda_version in conda_search_result[conda_package]:
                 newPackage.get("metadata").get("versions").append(conda_version.get('version'))
                 newPackage.get("metadata").get("versionURLs").append(conda_version.get('url'))
@@ -62,6 +68,12 @@ def process_resources(resources, app_workspace):
         workspace_folder = os.path.join(app_workspace.path, 'apps')
         if not os.path.exists(workspace_folder):
             os.makedirs(workspace_folder)
+
+        # Set Latest Version
+        app["latestVersion"] = app.get("metadata").get("versions")[-1]
+        if(app['installed']):
+            app["updateAvailable"] = version.parse(app['installedVersion']) < version.parse(app['latestVersion'])
+
         latest_version_url = app.get("metadata").get("versionURLs")[-1]
         file_name = latest_version_url.split('/')
         folder_name = app.get("name")

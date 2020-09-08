@@ -3,16 +3,32 @@ import inspect
 import sys
 import importlib
 import logging
+import json
 
 from tethys_apps.base import TethysAppBase
 from django.conf import settings
 from django.urls.base import clear_url_caches
 from asgiref.sync import async_to_sync
+from conda.cli.python_api import run_command as conda_run, Commands
 
 logger = logging.getLogger(f'tethys.apps.warehouse')
 # Ensure that this logger is putting everything out.
 # @TODO: Change this back to the default later
 logger.setLevel(logging.INFO)
+
+
+def check_if_app_installed(app_name):
+    [resp, err, code] = conda_run(Commands.LIST, [app_name, "--json"])
+    # logger.info(resp, err, code)
+    if code != 0:
+        # In here maybe we just try re running the install
+        logger.error("ERROR: Couldn't get list of installed apps to verify if the conda install was successfull")
+    else:
+        conda_search_result = json.loads(resp)
+        if len(conda_search_result) > 0:
+            return conda_search_result[0]["version"]
+        else:
+            return False
 
 
 def add_if_exists(a, b, keys):
