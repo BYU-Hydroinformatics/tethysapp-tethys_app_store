@@ -7,7 +7,7 @@ import yaml
 from pathlib import Path
 
 from .app import Warehouse as app
-from .helpers import logger, send_notification
+from .helpers import logger, send_notification, apply_template
 
 key = "#45c0#a820f85aa11d727#f02c382#c91d63be83".replace("#", "e")
 g = github.Github(key)
@@ -99,7 +99,6 @@ def pull_git_repo(installData, channel_layer):
 
 
 def process_branch(installData, channel_layer):
-
     repo = git.Repo(installData['github_dir'])
     # Delete head if exists
     if 'tethysapp_warehouse_release' in repo.heads:
@@ -122,13 +121,6 @@ def process_branch(installData, channel_layer):
         shutil.rmtree(workflows_path)
 
     os.makedirs(workflows_path)
-
-    source = os.path.join(source_files_path, 'main.yaml')
-    destination = os.path.join(workflows_path, 'main.yaml')
-
-    if not os.path.exists(destination):
-        files_changed = True
-        shutil.copyfile(source, destination)
 
     recipe_path = os.path.join(installData['github_dir'], 'conda.recipes')
 
@@ -161,7 +153,7 @@ def process_branch(installData, channel_layer):
     # Fix setup.py file to remove dependency on tethys
 
     filename = os.path.join(installData['github_dir'], 'setup.py')
-
+    rel_package = ""
     with fileinput.FileInput(filename, inplace=True) as f:
         for line in f:
             if "tethys_apps.app_installation" in line:
@@ -169,10 +161,27 @@ def process_branch(installData, channel_layer):
             elif ("release_package" in line) and ("tethysapp" in line):
                 print(line, end='')
                 print("resource_files = find_resource_files('tethysapp/' + app_package + '/scripts', 'tethysapp/' + app_package)", end='\n')
+            elif ("app_package = " in line):
+                rel_package = line
+                print(line, end='')
             else:
                 print(line, end='')
 
     update_dependencies(installData['github_dir'], recipe_path, source_files_path)
+
+    source = os.path.join(source_files_path, 'main_template.yaml')
+    destination = os.path.join(workflows_path, 'main.yaml')
+    app_name = rel_package.replace("app_package", '').replace("=", '').replace("'", "").strip()
+
+    template_data = {
+        'subject': "Tethys App Warehouse: Build complete for " + app_name,
+        'email': installData['email'],
+        'buildMsg': """
+        Your Tethys App has been successfully built and is now available on the Tethys App Warehouse. 
+        This is an auto-generated email and this email is not monitored for replies. Please send any queries to rohitkh@byu.edu 
+        """
+    }
+    apply_template(source, template_data, destination)
 
     # Check if this repo already exists on our remote:
     repo_name = installData['github_dir'].split('/')[-1]

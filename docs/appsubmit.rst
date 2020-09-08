@@ -36,11 +36,12 @@ Developers can submit their applications to the warehouse by click on the Add Ap
    :width: 600
 
 
-Upon clicking that button, you will be presented with a modal that asks for the link to the GitHub Repository of your Tethys Application. 
+Upon clicking that button, you will be presented with a modal that asks for the link to the GitHub Repository of your Tethys Application. It also instructs to put in an email address which is notified once the build is completed successfully and the application is available on the warehouse.
 
-.. image:: images/add_process.png
+.. image:: images/add_step_1.png
    :width: 600
 
+- Enter Notification email address (Mostly this will be your own or the developer's email address)
 - Enter the link to your GitHub Repository 
 - If there are multiple branches on your GitHub repository, you will be presented with a list of branches on your GitHub repository, Select the branch that you would like to submit to the application warehouse. The warehouse uses the Master branch in case 
-- After selecting the branch the warehouse begins the processing. Currently there isn't a good system to inform the user about the application submitted, but we are working on that. 
+- After selecting the branch the warehouse begins the processing. Once the build is done, an email will be sent to the address provided. 

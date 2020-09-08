@@ -31,7 +31,8 @@ const addModalHelper = {
 				JSON.stringify({
 					data: {
 						branch: branchesData["branches"][0],
-						github_dir: branchesData["github_dir"]
+						github_dir: branchesData["github_dir"],
+						email: $("#notifEmail").val()
 					},
 					type: `process_branch`
 				})
@@ -56,7 +57,8 @@ const addModalHelper = {
 				JSON.stringify({
 					data: {
 						branch: branchName,
-						github_dir: branchesData["github_dir"]
+						github_dir: branchesData["github_dir"],
+						email: $("#notifEmail").val()
 					},
 					type: `process_branch`
 				})

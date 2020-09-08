@@ -10,6 +10,7 @@ from django.conf import settings
 from django.urls.base import clear_url_caches
 from asgiref.sync import async_to_sync
 from conda.cli.python_api import run_command as conda_run, Commands
+from string import Template
 
 logger = logging.getLogger(f'tethys.apps.warehouse')
 # Ensure that this logger is putting everything out.
@@ -88,3 +89,13 @@ def send_notification(msg, channel_layer):
             "message": msg
         }
     )
+
+
+# Template Generator
+
+def apply_template(template_location, data, output_location):
+    filein = open(template_location)
+    src = Template(filein.read())
+    result = src.substitute(data)
+    with open(output_location, "w") as f:
+        f.write(result)
