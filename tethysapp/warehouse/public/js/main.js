@@ -279,8 +279,6 @@ const getRepoForAdd = () => {
 }
 
 const uninstall = () => {
-    console.log(uninstallData)
-
     // Hide Elements
     $("#uninstallingAppNotice").hide()
     $("#yesUninstall").hide()
@@ -327,4 +325,7 @@ $(document).ready(function() {
         sendNotification("Services Setup Skipped", n_content)
         sendNotification("install_complete", n_content)
     })
+
+    $("#doneInstallButton").click(() => reloadCacheRefresh())
+    $("#doneUninstallButton").click(() => reloadCacheRefresh())
 })

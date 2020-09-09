@@ -76,6 +76,7 @@ def detect_app_dependencies(app_name, app_version, channel_layer):
 
     print(paths)
     # Check for a scripts directory
+    # TODO : Complete pre install scripts here
 
     app_instance = get_app_instance_from_path(paths)
     custom_settings_json = []

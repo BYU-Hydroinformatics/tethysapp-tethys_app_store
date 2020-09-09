@@ -14,6 +14,10 @@ CACHE_KEY = "warehouse_app_resources"
 CHANNEL_NAME = 'tethysapp'
 
 
+def clear_cache(data, channel_layer):
+    cache.delete(CACHE_KEY)
+
+
 def fetch_resources(app_workspace, refresh=False):
 
     # Fields that are required

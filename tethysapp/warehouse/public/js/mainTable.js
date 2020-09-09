@@ -84,10 +84,12 @@ function operateFormatter2(value, row, index) {
 
 window.operateEvents = {
   "click .install": function(e, value, row, index) {
+    $("#mainCancel").show()
+
     let n_div = $("#notification")
     let n_content = $("#notification .lead")
     n_content.empty()
-    n_div.modal()
+    n_div.modal({ backdrop: "static", keyboard: false })
     $("#goToAppButton").hide()
     notifCount = 0
     // Setup Versions
@@ -116,11 +118,13 @@ window.operateEvents = {
       name: row["name"]
     }
     $("#uninstallingAppNotice").show()
+    $("#doneUninstallButton").hide()
+
     $("#yesUninstall").show()
     $("#noUninstall").show()
     $("#uninstall_processing_label").empty()
     $("#uninstallNotices").empty()
-    $("#uninstall-app-modal").modal("show")
+    $("#uninstall-app-modal").modal({ backdrop: "static", keyboard: false })
   }
 }
 

@@ -3,6 +3,7 @@ from .installation_handlers import *
 from .submission_handlers import *
 from .begin_install import begin_install
 from .uninstall_handlers import *
+from .resource_helpers import clear_cache
 
 import json
 import sys

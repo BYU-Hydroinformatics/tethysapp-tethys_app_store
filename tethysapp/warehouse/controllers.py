@@ -7,6 +7,7 @@ import json
 from .notifications import *
 from .resource_helpers import fetch_resources
 from .helpers import logger
+from .model import *
 
 ALL_RESOURCES = []
 CACHE_KEY = "warehouse_app_resources"

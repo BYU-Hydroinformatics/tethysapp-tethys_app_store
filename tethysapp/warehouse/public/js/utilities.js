@@ -12,6 +12,18 @@ const serviceLookup = {
 	wps: "webprocessingservice",
 	persistent: "persistentstoreservice"
 }
+
+const reloadCacheRefresh = () => {
+	notification_ws.send(
+		JSON.stringify({
+			data: {},
+			type: `clear_cache`
+		})
+	)
+	// Refresh Page
+	location.reload()
+}
+
 function resetInstallStatus() {
 	if (installData) {
 		installData = {}
@@ -54,15 +66,12 @@ function getParameterByName(name, url) {
 }
 
 const hideLoader = (modal = "notification") => {
-	$(`#${modal} .modal-footer`)
-		.find("img")
-		.hide()
+	$(`#installLoaderEllipsis`).hide()
 }
 
 const showLoader = (modal = "notification") => {
-	$(`#${modal} .modal-footer`)
-		.find("img")
-		.show()
+	$(`#installLoaderEllipsis`).show()
+	$("#mainCancel").hide()
 }
 
 const sendNotification = (message, n_content) => {
@@ -80,6 +89,15 @@ const sendNotification = (message, n_content) => {
 		$("#goToAppButton").show()
 		$("#doneInstallButton").show()
 	}
+	if (message == "Uninstall completed. Restarting server...") {
+		inRestart = true
+		notification_ws.send(
+			JSON.stringify({
+				data: {},
+				type: `restart_server`
+			})
+		)
+	}
 	n_content.append(new_element)
 	$(`#install_notif_${notifCount}`).show("fast")
 }
@@ -89,22 +107,33 @@ function startWS(websocketServerLocation, n_content) {
 	notification_ws.onopen = () => {
 		console.log("WebSocket is Open")
 		if (inRestart) {
-			hideLoader()
 			inRestart = false
-			sendNotification("Server restart completed successfully", n_content)
-			// Hide Cancel Button
-			$("#mainCancel").hide()
+
+			if ("name" in uninstallData) {
+				// Coming back from an uninstall restart
+				sendNotification(
+					"Server restart completed successfully",
+					$("#uninstallNotices")
+				)
+
+				$("#uninstallLoaderEllipsis").hide()
+				$("#doneUninstallButton").show()
+			} else {
+				hideLoader()
+				sendNotification("Server restart completed successfully", n_content)
+
+				// Hide Cancel Button
+				$("#mainCancel").hide()
+			}
 		}
 		setServerOnline()
 	}
 
 	notification_ws.onmessage = function(e) {
 		let data = JSON.parse(e.data)
+		let content = n_content
+
 		if (typeof data.message == "string") {
-			let content = n_content
-			if ("target" in data.message) {
-				content = $(`#${data.message.target}`)
-			}
 			// It's normal string
 			sendNotification(data.message, content)
 			return false
@@ -112,7 +141,6 @@ function startWS(websocketServerLocation, n_content) {
 			// Found an object?
 			// Check if we have a function to call
 			let helper = settingsHelper
-			let content = n_content
 
 			if ("target" in data.message) {
 				content = $(`#${data.message.target}`)
