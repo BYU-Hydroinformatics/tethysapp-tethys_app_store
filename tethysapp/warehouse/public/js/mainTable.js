@@ -65,10 +65,10 @@ function operateFormatter2(value, row, index) {
   let buttons = [
     '<a class="uninstall button-spaced" href="javascript:void(0)" title="Uninstall">',
     `<button type="button" class="btn btn-info btn-warning btn-xs">Uninstall</button>`,
-    "</a>",
-    '<a class="reconfigure button-spaced" href="javascript:void(0)" title="Configure">',
-    `<button type="button" class="btn btn-info btn-default btn-xs">Configure</button>`,
     "</a>"
+    // '<a class="reconfigure button-spaced" href="javascript:void(0)" title="Configure">',
+    // `<button type="button" class="btn btn-info btn-default btn-xs">Configure</button>`,
+    // "</a>"
   ]
 
   if (row.updateAvailable) {

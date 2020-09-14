@@ -70,13 +70,31 @@ def detect_app_dependencies(app_name, app_version, channel_layer):
     paths = list(filter(lambda x: app_name in x, tethysapp.__path__))
 
     if len(paths) < 1:
-        print("Can't find the installed app location.")
+        logger.error("Can't find the installed app location.")
         return
+
     # Check for any pre install script to install pip dependencies
 
-    print(paths)
-    # Check for a scripts directory
-    # TODO : Complete pre install scripts here
+    app_folders = next(os.walk(paths[0]))[1]
+    app_scripts_path = os.path.join(paths[0], app_folders[0], 'scripts')
+    pip_install_script_path = os.path.join(app_scripts_path, 'install_pip.sh')
+    print(pip_install_script_path)
+    if os.path.exists(pip_install_script_path):
+        logger.info("PIP dependencies found. Running Pip install script")
+        send_notification("Running PIP install....", channel_layer)
+        p = subprocess.Popen(['sh', pip_install_script_path], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        while True:
+            output = p.stdout.readline()
+            if output == '':
+                break
+            if output:
+                # Checkpoints for the output
+                str_output = str(output.strip())
+                logger.info(str_output)
+
+        send_notification("PIP install completed", channel_layer)
+
+    # @TODO: Add support for post installation scripts as well.
 
     app_instance = get_app_instance_from_path(paths)
     custom_settings_json = []
@@ -125,7 +143,6 @@ def conda_install(app_metadata, app_version, channel_layer):
 
     while True:
         output = p.stdout.readline()
-        print(output)
         if output == '':
             break
         if output:

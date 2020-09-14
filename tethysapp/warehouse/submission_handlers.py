@@ -4,6 +4,7 @@ import shutil
 import github
 import fileinput
 import yaml
+import stat
 from pathlib import Path
 
 from .app import Warehouse as app
@@ -41,6 +42,8 @@ def update_dependencies(github_dir, recipe_path, source_files_path):
             pip_install_string = "pip install " + " ".join(pip_deps)
             with open(pre_link, "w") as f:
                 f.write(pip_install_string)
+            st = os.stat(pre_link)
+            os.chmod(pre_link, st.st_mode | stat.S_IXUSR | stat.S_IXGRP | stat.S_IXOTH)
 
     with open(os.path.join(recipe_path, 'meta.yaml'), 'a') as f:
         yaml.safe_dump(meta_yaml_file, f, default_flow_style=False)
@@ -158,9 +161,10 @@ def process_branch(installData, channel_layer):
         for line in f:
             if "tethys_apps.app_installation" in line:
                 print("from setup_helper import find_resource_files", end='\n')
-            elif ("release_package" in line) and ("tethysapp" in line):
+            elif ("setup(" in line):
+                print(
+                    "resource_files = find_resource_files('tethysapp/' + app_package + '/scripts', 'tethysapp/' + app_package)", end='\n')
                 print(line, end='')
-                print("resource_files = find_resource_files('tethysapp/' + app_package + '/scripts', 'tethysapp/' + app_package)", end='\n')
             elif ("app_package = " in line):
                 rel_package = line
                 print(line, end='')
