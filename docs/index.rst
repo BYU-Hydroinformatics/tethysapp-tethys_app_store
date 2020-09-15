@@ -15,7 +15,6 @@ The Tethys App Warehouse is similar in concept to the iOS App Store for Apple mo
 .. toctree::
   :caption: Table of Contents
   :maxdepth: 2
-  :caption: Contents:
 
   install
   appsubmit
