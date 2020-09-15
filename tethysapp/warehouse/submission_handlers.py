@@ -42,6 +42,7 @@ def update_dependencies(github_dir, recipe_path, source_files_path):
             pip_install_string = "pip install " + " ".join(pip_deps)
             with open(pre_link, "w") as f:
                 f.write(pip_install_string)
+                f.write('\necho "PIP Install Complete"')
             st = os.stat(pre_link)
             os.chmod(pre_link, st.st_mode | stat.S_IXUSR | stat.S_IXGRP | stat.S_IXOTH)
 
@@ -163,7 +164,7 @@ def process_branch(installData, channel_layer):
                 print("from setup_helper import find_resource_files", end='\n')
             elif ("setup(" in line):
                 print(
-                    "resource_files = find_resource_files('tethysapp/' + app_package + '/scripts', 'tethysapp/' + app_package)", end='\n')
+                    "resource_files += find_resource_files('tethysapp/' + app_package + '/scripts', 'tethysapp/' + app_package)", end='\n')
                 print(line, end='')
             elif ("app_package = " in line):
                 rel_package = line

@@ -86,8 +86,6 @@ const sendNotification = (message, n_content) => {
 				type: `restart_server`
 			})
 		)
-		$("#goToAppButton").show()
-		$("#doneInstallButton").show()
 	}
 	if (message == "Uninstall completed. Restarting server...") {
 		inRestart = true
@@ -121,7 +119,8 @@ function startWS(websocketServerLocation, n_content) {
 			} else {
 				hideLoader()
 				sendNotification("Server restart completed successfully", n_content)
-
+				$("#goToAppButton").show()
+				$("#doneInstallButton").show()
 				// Hide Cancel Button
 				$("#mainCancel").hide()
 			}

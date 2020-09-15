@@ -91,6 +91,8 @@ def detect_app_dependencies(app_name, app_version, channel_layer):
                 # Checkpoints for the output
                 str_output = str(output.strip())
                 logger.info(str_output)
+                if(check_all_present(str_output, ['PIP Install Complete'])):
+                    break
 
         send_notification("PIP install completed", channel_layer)
 
