@@ -25,7 +25,7 @@ def home(request, app_workspace):
     available_apps = []
 
     for resource in all_resources:
-        if resource["installed"] and resource["name"] != "epanet_model_viewer":
+        if resource["installed"]:
             installed_apps.append(resource)
         else:
             available_apps.append(resource)
