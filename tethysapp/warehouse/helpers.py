@@ -19,7 +19,7 @@ logger.setLevel(logging.INFO)
 
 
 def check_if_app_installed(app_name):
-    [resp, err, code] = conda_run(Commands.LIST, [app_name, "--json"])
+    [resp, err, code] = conda_run(Commands.LIST, [app_name, "-f",  "--json"])
     # logger.info(resp, err, code)
     if code != 0:
         # In here maybe we just try re running the install

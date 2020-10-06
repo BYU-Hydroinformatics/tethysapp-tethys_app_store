@@ -19,6 +19,7 @@ CACHE_KEY = "warehouse_app_resources"
 def home(request, app_workspace):
 
     require_refresh = request.GET.get('refresh', '') == "true"
+    # Always require refresh
     all_resources = fetch_resources(app_workspace, require_refresh)
 
     installed_apps = []

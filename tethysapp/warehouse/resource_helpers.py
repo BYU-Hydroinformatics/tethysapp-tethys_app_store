@@ -30,40 +30,44 @@ def fetch_resources(app_workspace, refresh=False):
     #         'versions':['0.0.0']
     #     }
     # }
-    all_resources = cache.get(CACHE_KEY)
-    if (cache.get(CACHE_KEY) is None) or refresh:
-        # Look for packages:
-        logger.info("Refreshing list of apps cache")
-        (conda_search_result, err, code) = run_command(Commands.SEARCH,
-                                                       ["-c", CHANNEL_NAME, "--override-channels", "-i", "--json"])
-        conda_search_result = json.loads(conda_search_result)
-        # logger.info(conda_search_result)
-        resource_metadata = []
-        for conda_package in conda_search_result:
-            installed_version = check_if_app_installed(conda_package)
-            newPackage = {
-                'name': conda_package,
-                'installed': False,
-                'metadata': {
-                    'versions': [],
-                    'versionURLs': [],
-                    'channel': CHANNEL_NAME
-                }
-            }
-            if installed_version:
-                newPackage["installed"] = True
-                newPackage["installedVersion"] = installed_version
-            for conda_version in conda_search_result[conda_package]:
-                newPackage.get("metadata").get("versions").append(conda_version.get('version'))
-                newPackage.get("metadata").get("versionURLs").append(conda_version.get('url'))
-            resource_metadata.append(newPackage)
 
-        resource_metadata = process_resources(resource_metadata, app_workspace)
-        cache.set(CACHE_KEY, resource_metadata)
-        return resource_metadata
-    else:
-        logger.info("Found in cache")
-        return cache.get(CACHE_KEY)
+    # Warning: Caching disabled right now. Refresh cache on every load
+
+    # all_resources = cache.get(CACHE_KEY)
+    # if (cache.get(CACHE_KEY) is None) or refresh:
+    #
+        # Look for packages:
+    logger.info("Refreshing list of apps cache")
+    (conda_search_result, err, code) = run_command(Commands.SEARCH,
+                                                   ["-c", CHANNEL_NAME, "--override-channels", "-i", "--json"])
+    conda_search_result = json.loads(conda_search_result)
+    # logger.info(conda_search_result)
+    resource_metadata = []
+    for conda_package in conda_search_result:
+        installed_version = check_if_app_installed(conda_package)
+        newPackage = {
+            'name': conda_package,
+            'installed': False,
+            'metadata': {
+                'versions': [],
+                'versionURLs': [],
+                'channel': CHANNEL_NAME
+            }
+        }
+        if installed_version:
+            newPackage["installed"] = True
+            newPackage["installedVersion"] = installed_version
+        for conda_version in conda_search_result[conda_package]:
+            newPackage.get("metadata").get("versions").append(conda_version.get('version'))
+            newPackage.get("metadata").get("versionURLs").append(conda_version.get('url'))
+        resource_metadata.append(newPackage)
+
+    resource_metadata = process_resources(resource_metadata, app_workspace)
+    cache.set(CACHE_KEY, resource_metadata)
+    return resource_metadata
+    # else:
+    #     logger.info("Found in cache")
+    #     return cache.get(CACHE_KEY)
 
 
 def process_resources(resources, app_workspace):

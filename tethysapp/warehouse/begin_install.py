@@ -78,7 +78,7 @@ def detect_app_dependencies(app_name, app_version, channel_layer):
     app_folders = next(os.walk(paths[0]))[1]
     app_scripts_path = os.path.join(paths[0], app_folders[0], 'scripts')
     pip_install_script_path = os.path.join(app_scripts_path, 'install_pip.sh')
-    print(pip_install_script_path)
+
     if os.path.exists(pip_install_script_path):
         logger.info("PIP dependencies found. Running Pip install script")
         send_notification("Running PIP install....", channel_layer)
