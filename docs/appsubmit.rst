@@ -44,4 +44,13 @@ Upon clicking that button, you will be presented with a modal that asks for the 
 - Enter Notification email address (Mostly this will be your own or the developer's email address)
 - Enter the link to your GitHub Repository 
 - If there are multiple branches on your GitHub repository, you will be presented with a list of branches on your GitHub repository, Select the branch that you would like to submit to the application warehouse. The warehouse uses the Master branch in case 
-- After selecting the branch the warehouse begins the processing. Once the build is done, an email will be sent to the address provided. 
+- After selecting the branch the warehouse begins the processing. Once the build is done, an email will be sent to the address provided.
+
+
+.. note::
+   After your application is successfully built, you will need to tell the warehouse to refresh your local list of applications. To do this click on the refresh button as shown in the image below.
+
+.. image:: images/refresh_button.png
+	:width: 600
+
+
