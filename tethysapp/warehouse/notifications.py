@@ -24,10 +24,10 @@ class notificationsConsumer(AsyncWebsocketConsumer):
     async def install_notifications(self, event):
         message = event['message']
         await self.send(text_data=json.dumps({'message': message, }))
-        logger.info(f"Got message {event} at {self.channel_name}")
+        # logger.info(f"Got message {event} at {self.channel_name}")
 
     async def receive(self, text_data):
-        logger.info(f"Received message {text_data} at {self.channel_name}")
+        # logger.info(f"Received message {text_data} at {self.channel_name}")
         text_data_json = json.loads(text_data)
         if "type" in text_data_json:
             thread = threading.Thread(target=getattr(sys.modules[__name__], text_data_json['type']),
