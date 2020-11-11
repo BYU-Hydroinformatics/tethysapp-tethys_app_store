@@ -51,7 +51,7 @@ def restart_server(data, channel_layer):
             f.write("import os")
     else:
         logger.info("Running Tethys Collectall")
-        process = subprocess.Popen(['tethys', 'manage', 'collectall', '--noinput'], stdout=subprocess.PIPE)
+        process = subprocess.Popen(['tethys', 'manage', 'collectall', '--noinput', '-f'], stdout=subprocess.PIPE)
         output, error = process.communicate()
         logger.info(output)
         if error:

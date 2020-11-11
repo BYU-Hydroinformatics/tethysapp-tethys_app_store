@@ -6,6 +6,8 @@ var installRunning = false
 var installData = {}
 var uninstallData = {}
 var uninstallRunning = false
+var availableApps = {}
+var installedApps = {}
 
 // End Vars
 const settingsHelper = {
@@ -294,9 +296,23 @@ const uninstall = () => {
 }
 
 $(document).ready(function() {
-    initMainTable()
     // Hide the nav
-    $("#app-content-wrapper").toggleClass("show-nav")
+    $("#app-content-wrapper").removeClass("show-nav")
+
+    // Get Main Data and load the table
+    $.ajax({
+        url: `${warehouseHomeUrl}get_resources`,
+        dataType: "json"
+    })
+        .done(function(data) {
+            availableApps = data.availableApps
+            installedApps = data.installedApps
+            $("#mainAppLoader").hide()
+            initMainTables()
+        })
+        .fail(function(err) {
+            console.log(error)
+        })
 
     let n_div = $("#notification")
     let n_content = $("#notification .lead")

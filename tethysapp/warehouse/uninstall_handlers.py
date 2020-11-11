@@ -30,7 +30,8 @@ def uninstall_app(data, channel_layer):
 
     send_uninstall_messages('Tethys App Uninstalled. Running Conda Cleanup...', channel_layer)
 
-    [resp, err, code] = conda_run(Commands.REMOVE, ["-c", "tethysplatform", "--override-channels", data['name']])
+    [resp, err, code] = conda_run(Commands.REMOVE, ["--force", "-c", "tethysplatform",
+                                                    "--override-channels", data['name']])
 
     print(resp, err, code)
     send_uninstall_messages('Uninstall completed. Restarting server...', channel_layer)

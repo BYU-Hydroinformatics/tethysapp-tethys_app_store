@@ -5,10 +5,11 @@ import github
 import fileinput
 import yaml
 import stat
+import json
 from pathlib import Path
 
 from .app import Warehouse as app
-from .helpers import logger, send_notification, apply_template
+from .helpers import logger, send_notification, apply_template, parse_setup_py
 
 key = "#45c0#a820f85aa11d727#f02c382#c91d63be83".replace("#", "e")
 g = github.Github(key)
@@ -142,6 +143,12 @@ def process_branch(installData, channel_layer):
 
     source = os.path.join(source_files_path, 'meta_template.yaml')
     destination = os.path.join(recipe_path, 'meta.yaml')
+    filename = os.path.join(installData['github_dir'], 'setup.py')
+
+    template_data = {
+        'metadataObj': json.dumps(parse_setup_py(filename)).replace('"', "'")
+    }
+    apply_template(source, template_data, destination)
 
     if not os.path.exists(destination):
         files_changed = True
@@ -156,7 +163,6 @@ def process_branch(installData, channel_layer):
 
     # Fix setup.py file to remove dependency on tethys
 
-    filename = os.path.join(installData['github_dir'], 'setup.py')
     rel_package = ""
     with fileinput.FileInput(filename, inplace=True) as f:
         for line in f:

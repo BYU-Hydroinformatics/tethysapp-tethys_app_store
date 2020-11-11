@@ -4,6 +4,7 @@ import sys
 import importlib
 import logging
 import json
+import fileinput
 
 from tethys_apps.base import TethysAppBase
 from django.conf import settings
@@ -98,3 +99,28 @@ def apply_template(template_location, data, output_location):
     result = src.substitute(data)
     with open(output_location, "w") as f:
         f.write(result)
+
+
+def parse_setup_py(file_location):
+    params = {}
+    found_setup = False
+    with open(file_location, "r") as f:
+        for line in f.readlines():
+            if ("setup(" in line):
+                found_setup = True
+                continue
+            if found_setup:
+                if (")" in line):
+                    found_setup = False
+                    break
+                else:
+                    parts = line.split("=")
+                    value = parts[1].strip()
+                    if(value[-1] == ","):
+                        value = value[:-1]
+                    if(value[0] == "'" or value[0] == '"'):
+                        value = value[1:]
+                    if(value[-1] == "'" or value[-1] == '"'):
+                        value = value[:-1]
+                    params[parts[0].strip()] = value
+    return params

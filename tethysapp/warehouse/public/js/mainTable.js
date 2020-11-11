@@ -7,10 +7,10 @@ const keyLookup = {
   author_email: "App Developer Email"
 }
 
-function getResourceValue(key, index) {
-  if (resources) {
-    if (resources[index]) {
-      let app = resources[index]
+function getResourceValue(key, index, apps) {
+  if (apps) {
+    if (apps[index]) {
+      let app = apps[index]
       if (key in app) {
         return app[key]
       }
@@ -21,9 +21,9 @@ function getResourceValue(key, index) {
   }
 }
 
-function getResourceValueByName(key, name) {
-  if (resources) {
-    let currentResource = resources.filter((resource) => resource.name == name)
+function getResourceValueByName(key, name, apps) {
+  if (apps) {
+    let currentResource = apps.filter((resource) => resource.name == name)
     if (currentResource.length > 0) {
       let app = currentResource[0]
       if (key in app) {
@@ -36,8 +36,8 @@ function getResourceValueByName(key, name) {
   }
 }
 
-function getHtmlElementIfExists(key, index) {
-  let val = getResourceValue(key, index)
+function getHtmlElementIfExists(key, index, apps) {
+  let val = getResourceValue(key, index, apps)
   if (val) {
     return `<li><strong>${keyLookup[key]}</strong>: ${val}</li>`
   }
@@ -45,7 +45,18 @@ function getHtmlElementIfExists(key, index) {
 
 function detailFormatter(index, row) {
   var html = ["<ul>"]
-  Object.keys(keyLookup).forEach((key) => html.push(getHtmlElementIfExists(key, index)))
+  Object.keys(keyLookup).forEach((key) =>
+    html.push(getHtmlElementIfExists(key, index, availableApps))
+  )
+  html.push("</ul>")
+  return html.join("")
+}
+
+function detailFormatterInstalledApps(index, row) {
+  var html = ["<ul>"]
+  Object.keys(keyLookup).forEach((key) =>
+    html.push(getHtmlElementIfExists(key, index, installedApps))
+  )
   html.push("</ul>")
   return html.join("")
 }
@@ -93,18 +104,17 @@ window.operateEvents = {
     $("#goToAppButton").hide()
     notifCount = 0
     // Setup Versions
-
-    let appName = getResourceValueByName("name", row[0])
+    let appName = getResourceValueByName("name", row.name, availableApps)
     $("#installingAppName").text(appName)
     installData["name"] = appName
-    let versionHTML = getVersionsHTML(appName, resources)
+    let versionHTML = getVersionsHTML(appName, availableApps)
     n_content.append(htmlHelpers.versions(appName))
     n_content.find("#selectVersion").append(versionHTML)
     $("#versions").select2()
   },
 
   "click .github": function(e, value, row, index) {
-    let githubURL = getResourceValueByName("dev_url", row[0])
+    let githubURL = getResourceValueByName("dev_url", row.name, availableApps)
     if (githubURL) window.open(githubURL, "_blank")
   },
 
@@ -128,7 +138,9 @@ window.operateEvents = {
   }
 }
 
-function initMainTable() {
-  var $table = $("#installedAppsTable")
-  $table.bootstrapTable({ data: installedApps })
+function initMainTables() {
+  $("#installedAppsTable").bootstrapTable({ data: installedApps })
+  $("#mainAppsTable").bootstrapTable({ data: availableApps })
+  $(".main-app-list").removeClass("hidden")
+  $(".installed-app-list").removeClass("hidden")
 }

@@ -29,41 +29,41 @@
 {% endblock %}
 
 {% block app_content %}
-<div class="card card-default main-app-list">
+<!-- <div class="loading">Loading&#8230;</div> -->
+<div class='container' id="mainAppLoader">
+  <div class='loader'>
+    <div class='loader--dot'></div>
+    <div class='loader--dot'></div>
+    <div class='loader--dot'></div>
+    <div class='loader--dot'></div>
+    <div class='loader--dot'></div>
+    <div class='loader--dot'></div>
+    <div class='loader--text'></div>
+  </div>
+</div>
+
+<div class="card card-default main-app-list hidden">
     <div class="card-header">Available Tethys Applications</div>
     <div class="card-body">
-        <div id="toolbar">
-        </div>
-        <table data-toggle="table" data-search="true" data-show-search-clear-button="true" data-toolbar="#toolbar" data-show-columns="true" id="mainAppsTable" data-show-toggle="true" data-pagination="true" data-detail-view="true" data-detail-formatter="detailFormatter">
+        <table data-search="true" data-show-search-clear-button="true" data-toolbar="#toolbar" data-show-columns="true" id="mainAppsTable" data-show-toggle="true" data-pagination="true" data-detail-view="true" data-detail-formatter="detailFormatter">
             <thead>
                 <tr>
-                    <th>Tethys App Name</th>
-                    <th>Latest Version</th>
-                    <th>Developer</th>
+                    <th data-field="name">Tethys App Name</th>
+                    <th data-field="latestVersion">Latest Version</th>
+                    <th data-field="metadata.author">Developer</th>
                     <th data-field="operate" data-formatter="operateFormatter" data-events="operateEvents">Actions</th>
                 </tr>
             </thead>
-            <tbody>
-                {% for resource in resources %}
-                <tr>
-                    <td data-app-id="{{ forloop.counter0 }}">{{ resource.name }}</td>
-                    <td>{{ resource.metadata.versions|last }}</td>
-                    <td>{{ resource.metadata.author }}</td>
-                    <td>
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
         </table>
     </div>
     <div class="card-footer ">
     </div>
 </div>
 
-<div class="card card-default installed-app-list">
+<div class="card card-default installed-app-list hidden">
     <div class="card-header">Installed Tethys Applications</div>
     <div class="card-body">
-        <table data-toggle="table" data-search="true" data-show-search-clear-button="true" data-toolbar="#toolbar" data-show-columns="true" id="installedAppsTable" data-show-toggle="true" data-detail-view="true" data-detail-formatter="detailFormatter">
+        <table data-search="true" data-show-search-clear-button="true" data-toolbar="#toolbar" data-show-columns="true" id="installedAppsTable" data-show-toggle="true" data-pagination="true"  data-detail-view="true" data-detail-formatter="detailFormatter">
             <thead>
                 <tr>
                     <th data-field="name">Tethys App Name</th>
@@ -104,11 +104,6 @@
 
 {% block scripts %}
 {{ block.super }}
-<script>
-const resources = JSON.parse('{{ resourcesJson | escapejs }}');
-const installedApps = JSON.parse('{{ installedApps | escapejs }}');
-const warehouseHomeUrl = "{% url 'warehouse:home' %}";
-</script>
 <script src="https://unpkg.com/bootstrap-table@1.16.0/dist/bootstrap-table.min.js"></script>
 <script src="{% static 'tethys_apps/vendor/imagesloaded.min.js' %}" type="text/javascript"></script>
 <script src="{% static 'tethys_apps/vendor/masonry.min.js' %}" type="text/javascript"></script>

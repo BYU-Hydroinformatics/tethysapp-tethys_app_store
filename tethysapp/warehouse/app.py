@@ -32,6 +32,11 @@ class Warehouse(TethysAppBase):
                 controller='warehouse.controllers.home'
             ),
             UrlMap(
+                name='get_resources',
+                url='warehouse/get_resources',
+                controller='warehouse.controllers.get_resources'
+            ),
+            UrlMap(
                 name='install_notifications',
                 url='warehouse/install/notifications',
                 controller='warehouse.controllers.notificationsConsumer',

@@ -8,7 +8,7 @@ package:
 about:
   author: {{ data.get('author')}}
   description: {{ data.get('description')}}
-  license: {{ data.get('license')}}
+  license: "$metadataObj"
   dev_url: {{ data.get('url') }}
 
 outputs:

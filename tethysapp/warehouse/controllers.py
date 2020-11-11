@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from tethys_sdk.permissions import login_required, permission_required
 from tethys_sdk.workspaces import app_workspace
+from django.http import JsonResponse
 
 import json
 
@@ -15,9 +16,14 @@ CACHE_KEY = "warehouse_app_resources"
 
 @login_required()
 @permission_required('use_warehouse')
-@app_workspace
-def home(request, app_workspace):
+def home(request):
+    return render(request, 'warehouse/home.html', {})
 
+
+@login_required()
+@permission_required('use_warehouse')
+@app_workspace
+def get_resources(request, app_workspace):
     require_refresh = request.GET.get('refresh', '') == "true"
     # Always require refresh
     all_resources = fetch_resources(app_workspace, require_refresh)
@@ -32,9 +38,8 @@ def home(request, app_workspace):
             available_apps.append(resource)
 
     context = {
-        'resources': available_apps,
-        'resourcesJson': json.dumps(available_apps),
-        'installedApps': json.dumps(installed_apps)
+        'availableApps': available_apps,
+        'installedApps': installed_apps
     }
 
-    return render(request, 'warehouse/home.html', context)
+    return JsonResponse(context)
