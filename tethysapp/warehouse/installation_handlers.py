@@ -1,4 +1,7 @@
 import json
+import os
+import sys
+import subprocess
 
 from argparse import Namespace
 from django.core.exceptions import ObjectDoesNotExist
@@ -7,17 +10,16 @@ from django.core.cache import cache
 import tethys_apps
 
 from django.utils.autoreload import trigger_reload
+from conda.cli.python_api import run_command as conda_run, Commands
 from tethys_apps.models import CustomSetting, TethysApp
 from tethys_apps.utilities import (get_app_settings, link_service_to_app_setting)
+from tethys_cli.cli_helpers import get_manage_path
 from tethys_cli.install_commands import (get_service_type_from_setting, get_setting_type_from_setting)
 from tethys_cli.services_commands import services_list_command
-from .begin_install import detect_app_dependencies
-from conda.cli.python_api import run_command as conda_run, Commands
-from .helpers import *
-import os
-import sys
+
 from .app import Warehouse as app
-import subprocess
+from .begin_install import detect_app_dependencies
+from .helpers import *
 
 
 def get_service_options(service_type):
@@ -51,22 +53,27 @@ def restart_server(data, channel_layer):
             f.write("import os")
     else:
         logger.info("Running Tethys Collectall")
-        process = subprocess.Popen(['tethys', 'manage', 'collectall', '--noinput', '-f'], stdout=subprocess.PIPE)
-        output, error = process.communicate()
-        logger.info(output)
-        if error:
-            logger.error(error)
 
-        command = 'supervisorctl restart all'
-        try:
-            subprocess.run(['sudo'], check=True)
-            sudoPassword = app.get_custom_setting('sudo_server_pass')
-            p = os.system('echo %s|sudo -S %s' % (sudoPassword, command))
-        except Exception as e:
-            logger.debug(e)
-            logger.debug("No SUDO. Docker container implied. Restarting without SUDO")
-            # Error encountered while running sudo. Let's try without sudo
-            p = os.system(command)
+        manage_path = get_manage_path({})
+
+        intermediate_process = ['python', manage_path, 'pre_collectstatic']
+        run_process(intermediate_process)
+        # Setup for main collectstatic
+        intermediate_process = ['python', manage_path, 'collectstatic', '--noinput']
+        run_process(intermediate_process)
+        # Run collectworkspaces command
+        primary_process = ['python', manage_path, 'collectworkspaces',  '--force']
+        run_process(intermediate_process)
+
+    try:
+        subprocess.run(['sudo'], check=True)
+        sudoPassword = app.get_custom_setting('sudo_server_pass')
+        p = os.system('echo %s|sudo -S %s' % (sudoPassword, command))
+    except Exception as e:
+        logger.debug(e)
+        logger.debug("No SUDO. Docker container implied. Restarting without SUDO")
+        # Error encountered while running sudo. Let's try without sudo
+        p = os.system(command)
 
 
 def continueAfterInstall(installData, channel_layer):

@@ -12,11 +12,19 @@ from django.urls.base import clear_url_caches
 from asgiref.sync import async_to_sync
 from conda.cli.python_api import run_command as conda_run, Commands
 from string import Template
+from subprocess import PIPE, run
 
 logger = logging.getLogger(f'tethys.apps.warehouse')
 # Ensure that this logger is putting everything out.
 # @TODO: Change this back to the default later
 logger.setLevel(logging.INFO)
+
+
+def run_process(args):
+    result = run(args, capture_output=True)
+    logger.info(result.stdout)
+    if result.returncode != 0:
+        logger.error(result.stderr)
 
 
 def check_if_app_installed(app_name):

@@ -311,7 +311,8 @@ $(document).ready(function() {
             initMainTables()
         })
         .fail(function(err) {
-            console.log(error)
+            console.log(err)
+            location.reload()
         })
 
     let n_div = $("#notification")
