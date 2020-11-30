@@ -25,6 +25,7 @@ requirements:
   run:
     - pygithub
     - gitpython
+    - requests
 
 outputs:
   - name: {{ name }}

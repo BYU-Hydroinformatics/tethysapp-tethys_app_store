@@ -6,6 +6,12 @@ import fileinput
 import yaml
 import stat
 import json
+import time
+import requests
+
+import requests
+from requests.exceptions import HTTPError
+
 from pathlib import Path
 
 from .app import Warehouse as app
@@ -188,8 +194,8 @@ def process_branch(installData, channel_layer):
         'subject': "Tethys App Warehouse: Build complete for " + app_name,
         'email': installData['email'],
         'buildMsg': """
-        Your Tethys App has been successfully built and is now available on the Tethys App Warehouse. 
-        This is an auto-generated email and this email is not monitored for replies. Please send any queries to rohitkh@byu.edu 
+        Your Tethys App has been successfully built and is now available on the Tethys App Warehouse.
+        This is an auto-generated email and this email is not monitored for replies. Please send any queries to rohitkh@byu.edu
         """
     }
     apply_template(source, template_data, destination)
@@ -231,9 +237,33 @@ def process_branch(installData, channel_layer):
 
     tethysapp_remote.push('tethysapp_warehouse_release')
 
+    workflowFound = False
+
+    while not workflowFound:
+        time.sleep(1)
+        if tethysapp_repo.get_workflow_runs().totalCount > 0:
+            logger.info("Obtained Workflow for Submission. Getting Job URL")
+
+            try:
+                response = requests.get(tethysapp_repo.get_workflow_runs()[0].jobs_url, auth=('tethysapp', key))
+                response.raise_for_status()
+                jsonResponse = response.json()
+                workflowFound = jsonResponse["total_count"] > 0
+
+            except HTTPError as http_err:
+                logger.error(f'HTTP error occurred while getting Jobs from GITHUB API: {http_err}')
+            except Exception as err:
+                logger.error(f'Other error occurred while getting jobs from GITHUB API: {err}')
+
+        if workflowFound:
+            job_url = jsonResponse["jobs"][0]["html_url"]
+
+    logger.info("Obtained Job URL: " + job_url)
+
     get_data_json = {
         "data": {
-            "githubURL": tethysapp_repo.git_url.replace("git:", "https:")
+            "githubURL": tethysapp_repo.git_url.replace("git:", "https:"),
+            "job_url": job_url
         },
         "jsHelperFunction": "addComplete",
         "helper": "addModalHelper"
