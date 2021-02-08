@@ -43,37 +43,46 @@ def get_service_options(service_type):
     return existing_services
 
 
-def restart_server(data, channel_layer):
+def restart_server(data, channel_layer, run_collect_all=True):
+
+    manage_path = get_manage_path({})
+    if data["restart_type"] == "install":
+        # Run SyncStores
+        logger.info("Running Syncstores for app: " + data["name"])
+        intermediate_process = ['python', manage_path, 'syncstores', data["name"],  '-f']
+        run_process(intermediate_process)
 
     if 'runserver' in sys.argv:
+
         logger.info("Dev Mode. Attempting to restart by changing file")
         dir_path = os.path.dirname(os.path.realpath(__file__))
         file_path = os.path.join(dir_path, 'model.py')
         with open(file_path, "w") as f:
             f.write("import os")
+
     else:
-        logger.info("Running Tethys Collectall")
+        if run_collect_all and data["restart_type"] == "install":
 
-        manage_path = get_manage_path({})
+            logger.info("Running Tethys Collectall")
+            intermediate_process = ['python', manage_path, 'pre_collectstatic']
+            run_process(intermediate_process)
+            # Setup for main collectstatic
+            intermediate_process = ['python', manage_path, 'collectstatic', '--noinput']
+            run_process(intermediate_process)
+            # Run collectworkspaces command
+            intermediate_process = ['python', manage_path, 'collectworkspaces',  '--force']
+            run_process(intermediate_process)
 
-        intermediate_process = ['python', manage_path, 'pre_collectstatic']
-        run_process(intermediate_process)
-        # Setup for main collectstatic
-        intermediate_process = ['python', manage_path, 'collectstatic', '--noinput']
-        run_process(intermediate_process)
-        # Run collectworkspaces command
-        primary_process = ['python', manage_path, 'collectworkspaces',  '--force']
-        run_process(intermediate_process)
-
-    try:
-        subprocess.run(['sudo'], check=True)
-        sudoPassword = app.get_custom_setting('sudo_server_pass')
-        p = os.system('echo %s|sudo -S %s' % (sudoPassword, command))
-    except Exception as e:
-        logger.debug(e)
-        logger.debug("No SUDO. Docker container implied. Restarting without SUDO")
-        # Error encountered while running sudo. Let's try without sudo
-        p = os.system(command)
+        try:
+            command = 'supervisorctl restart all'
+            subprocess.run(['sudo'], check=True)
+            sudoPassword = app.get_custom_setting('sudo_server_pass')
+            p = os.system('echo %s|sudo -S %s' % (sudoPassword, command))
+        except Exception as e:
+            logger.debug(e)
+            logger.debug("No SUDO. Docker container implied. Restarting without SUDO")
+            # Error encountered while running sudo. Let's try without sudo
+            p = os.system(command)
 
 
 def continueAfterInstall(installData, channel_layer):
@@ -104,7 +113,7 @@ def set_custom_settings(custom_settings_data, channel_layer):
 
     if "skip" in custom_settings_data:
         if(custom_settings_data["skip"]):
-            logger.error("Skip/NoneFound option called.")
+            logger.info("Skip/NoneFound option called.")
 
             msg = "Custom Setting Configuration Skipped"
             if "noneFound" in custom_settings_data:

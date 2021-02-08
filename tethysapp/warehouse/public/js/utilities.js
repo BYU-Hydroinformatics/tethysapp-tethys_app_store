@@ -82,16 +82,17 @@ const sendNotification = (message, n_content) => {
 		inRestart = true
 		notification_ws.send(
 			JSON.stringify({
-				data: {},
+				data: { ...installData, restart_type: "install" },
 				type: `restart_server`
 			})
 		)
+		resetInstallStatus()
 	}
 	if (message == "Uninstall completed. Restarting server...") {
 		inRestart = true
 		notification_ws.send(
 			JSON.stringify({
-				data: {},
+				data: { ...uninstallData, restart_type: "uninstall" },
 				type: `restart_server`
 			})
 		)

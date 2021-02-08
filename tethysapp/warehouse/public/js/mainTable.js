@@ -122,7 +122,8 @@ window.operateEvents = {
     $("#uninstallingAppNotice").html(
       `Are you sure you would like to uninstall <strong>${
         row["name"]
-      }</strong> app from your Tethys Portal?`
+      }</strong> app from your Tethys Portal? 
+      \n This will remove all associated files and data stored in any linked persistent stores.`
     )
     uninstallData = {
       name: row["name"]

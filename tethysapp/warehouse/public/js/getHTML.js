@@ -58,7 +58,7 @@ htmlHelpers.getServiceCard = (settingName, service) => {
                     <div id="${service.name}_loaderImage" hidden="">
                         Loading...
                         ${$("#notification .modal-footer")
-                            .find("img")
+                            .find("div")
                             .html()}
                     </div>
                     <div id="${service.name}_successMessage" hidden="">

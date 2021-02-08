@@ -12,7 +12,6 @@ var installedApps = {}
 // End Vars
 const settingsHelper = {
     processCustomSettings: (settingsData, n_content, completeMessage, ws) => {
-        resetInstallStatus()
         if (settingsData) {
             if (settingsData.length > 0) {
                 $("#skipConfigButton").click(function() {
@@ -172,6 +171,7 @@ const settingsHelper = {
         if (parseInt($(`#servicesToConfigureCount`).val()) == 1) {
             // We are done
             $(`#finishServicesButton`).prop("disabled", false)
+            $("#services-modal").modal("hide")
             sendNotification("install_complete", n_content)
         } else {
             $(`#servicesToConfigureCount`).val(
