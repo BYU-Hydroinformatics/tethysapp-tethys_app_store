@@ -20,10 +20,14 @@ from .helpers import logger, send_notification, apply_template, parse_setup_py
 key = "#45c0#a820f85aa11d727#f02c382#c91d63be83".replace("#", "e")
 g = github.Github(key)
 
+LOCAL_DEBUG_MODE = False
 
-def update_dependencies(github_dir, recipe_path, source_files_path):
+
+def update_dependencies(github_dir, recipe_path, source_files_path, keywords=[], email=""):
     install_yml = os.path.join(github_dir, 'install.yml')
     meta_yaml = os.path.join(source_files_path, 'meta_reqs.yaml')
+    meta_extras = os.path.join(source_files_path, 'meta_extras.yaml')
+
     app_files_dir = os.path.join(recipe_path, '../tethysapp')
 
     app_folders = next(os.walk(app_files_dir))[1]
@@ -36,6 +40,12 @@ def update_dependencies(github_dir, recipe_path, source_files_path):
 
     with open(meta_yaml) as f:
         meta_yaml_file = yaml.safe_load(f)
+
+    with open(meta_extras) as f:
+        meta_extras_file = yaml.safe_load(f)
+
+    meta_extras_file['extra']['author_email'] = email
+    meta_extras_file['extra']['keywords'] = keywords
 
     meta_yaml_file['requirements']['run'] = install_yml_file['requirements']['conda']['packages']
 
@@ -54,6 +64,8 @@ def update_dependencies(github_dir, recipe_path, source_files_path):
             os.chmod(pre_link, st.st_mode | stat.S_IXUSR | stat.S_IXGRP | stat.S_IXOTH)
 
     with open(os.path.join(recipe_path, 'meta.yaml'), 'a') as f:
+        yaml.safe_dump(meta_extras_file, f, default_flow_style=False)
+        f.write("\n")
         yaml.safe_dump(meta_yaml_file, f, default_flow_style=False)
 
 
@@ -113,7 +125,7 @@ def process_branch(installData, channel_layer):
     repo = git.Repo(installData['github_dir'])
     # Delete head if exists
     if 'tethysapp_warehouse_release' in repo.heads:
-        print("Deleting existing release branch")
+        logger.info("Deleting existing release branch")
         repo.delete_head('tethysapp_warehouse_release', '-D')
 
     origin = repo.remote(name='origin')
@@ -151,9 +163,29 @@ def process_branch(installData, channel_layer):
     destination = os.path.join(recipe_path, 'meta.yaml')
     filename = os.path.join(installData['github_dir'], 'setup.py')
 
+    setup_py_data = parse_setup_py(filename)
+    keywords = []
+    email = ""
+
+    try:
+        # Dropping Keywords if it exists as they are already present in the main.yaml file
+        keywords = setup_py_data.pop('keywords', None)
+        email = setup_py_data["author_email"]
+
+        # Clean up keywords
+        keywords = keywords.replace('"', '').replace("'", '')
+        if ',' in keywords:
+            keywords = keywords.split(',')
+        keywords = list(map(lambda x: x.strip(), keywords))
+
+    except Exception as err:
+        logger.error("Error ocurred while formatting keywords from setup.py")
+        logger.error(err)
+
     template_data = {
-        'metadataObj': json.dumps(parse_setup_py(filename)).replace('"', "'")
+        'metadataObj': json.dumps(setup_py_data).replace('"', "'")
     }
+
     apply_template(source, template_data, destination)
 
     if not os.path.exists(destination):
@@ -184,7 +216,7 @@ def process_branch(installData, channel_layer):
             else:
                 print(line, end='')
 
-    update_dependencies(installData['github_dir'], recipe_path, source_files_path)
+    update_dependencies(installData['github_dir'], recipe_path, source_files_path, keywords, email)
 
     source = os.path.join(source_files_path, 'main_template.yaml')
     destination = os.path.join(workflows_path, 'main.yaml')
@@ -200,9 +232,19 @@ def process_branch(installData, channel_layer):
     }
     apply_template(source, template_data, destination)
 
+    # remove __init__.py file if present at top level
+
+    init_path = os.path.join(installData['github_dir'], '__init__.py')
+
+    if os.path.exists(init_path):
+        os.remove(init_path)
+
+    if LOCAL_DEBUG_MODE:
+        logger.info("Completed Local Debug Processing for Git Repo")
+        return
+
     # Check if this repo already exists on our remote:
     repo_name = installData['github_dir'].split('/')[-1]
-
     organization = g.get_organization("tethysapp")
 
     if repo_exists(repo_name, organization):

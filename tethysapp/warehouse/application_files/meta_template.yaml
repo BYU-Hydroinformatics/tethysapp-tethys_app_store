@@ -13,9 +13,3 @@ about:
 
 outputs:
   - name: {{ name }}
-
-extra:
-  author_email:  {{ data.get('author_email')}}
-  keywords: {{ data.get('keywords')}}
-  recipe-maintainers:
-    - TethysAppWarehouse
