@@ -5,6 +5,8 @@ import importlib
 import logging
 import json
 import fileinput
+import shutil
+import os
 
 from tethys_apps.base import TethysAppBase
 from django.conf import settings
@@ -28,16 +30,31 @@ def run_process(args):
 
 
 def check_if_app_installed(app_name):
-    [resp, err, code] = conda_run(Commands.LIST, ["-f",  "--json", app_name])
-    if code != 0:
-        # In here maybe we just try re running the install
-        logger.error("ERROR: Couldn't get list of installed apps to verify if the conda install was successfull")
-    else:
-        conda_search_result = json.loads(resp)
-        if len(conda_search_result) > 0:
-            return conda_search_result[0]["version"]
+
+    try:
+        [resp, err, code] = conda_run(Commands.LIST, ["-f",  "--json", app_name])
+        if code != 0:
+            # In here maybe we just try re running the install
+            logger.error("ERROR: Couldn't get list of installed apps to verify if the conda install was successfull")
         else:
-            return False
+            conda_search_result = json.loads(resp)
+            if len(conda_search_result) > 0:
+                return conda_search_result[0]["version"]
+            else:
+                return False
+    except RuntimeError as err:
+        err_string = str(err)
+        if "Path not found" in err_string and "tethysapp_warehouse" in err_string:
+            # Old instance of warehouse files present. Need to cleanup
+            err_path = err_string.split(": ")[1]
+            if "EGG-INFO" in err_path:
+                err_path = err_path.replace("EGG-INFO", '')
+
+            if os.path.exists(err_path):
+                shutil.rmtree(err_path)
+
+            logger.info("Cleaning up: " + err_path)
+        return check_if_app_installed(app_name)
 
 
 def add_if_exists(a, b, keys):
