@@ -103,7 +103,14 @@ def pull_git_repo(installData, channel_layer):
         origin = repo.create_remote('origin', github_url)
 
     origin.fetch()
-    repo.git.checkout("master", "-f")
+
+    # Git has changed the default branch name to main so this next command might fail with git.exc.GitCommandError
+    try:
+        repo.git.checkout("master", "-f")
+    except git.exc.GitCommandError:
+        logger.info("Couldn't check out master branch. Attempting to checkout main")
+        repo.git.checkout("main", "-f")
+
     origin.pull()
     remote_refs = repo.remote().refs
     branches = []
@@ -280,9 +287,9 @@ def process_branch(installData, channel_layer):
     tethysapp_remote.push('tethysapp_warehouse_release')
 
     workflowFound = False
-
+    print(dir(tethysapp_repo))
     while not workflowFound:
-        time.sleep(1)
+        time.sleep(4)
         if tethysapp_repo.get_workflow_runs().totalCount > 0:
             logger.info("Obtained Workflow for Submission. Getting Job URL")
 

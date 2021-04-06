@@ -41,6 +41,11 @@ class Warehouse(TethysAppBase):
                 url='warehouse/install/notifications',
                 controller='warehouse.controllers.notificationsConsumer',
                 protocol='websocket'
+            ),
+            UrlMap(
+                name='install_git',
+                url='warehouse/install/git',
+                controller='warehouse.controllers.run_git_install',
             )
         )
 

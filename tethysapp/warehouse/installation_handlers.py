@@ -61,7 +61,7 @@ def restart_server(data, channel_layer, run_collect_all=True):
             f.write("import os")
 
     else:
-        if run_collect_all and data["restart_type"] == "install":
+        if run_collect_all and (data["restart_type"] == "install" or data["restart_type"] == "gInstall"):
 
             logger.info("Running Tethys Collectall")
             intermediate_process = ['python', manage_path, 'pre_collectstatic']
@@ -79,8 +79,8 @@ def restart_server(data, channel_layer, run_collect_all=True):
             sudoPassword = app.get_custom_setting('sudo_server_pass')
             p = os.system('echo %s|sudo -S %s' % (sudoPassword, command))
         except Exception as e:
-            logger.debug(e)
-            logger.debug("No SUDO. Docker container implied. Restarting without SUDO")
+            logger.error(e)
+            logger.info("No SUDO. Docker container implied. Restarting without SUDO")
             # Error encountered while running sudo. Let's try without sudo
             p = os.system(command)
 

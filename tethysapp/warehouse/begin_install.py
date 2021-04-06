@@ -9,7 +9,6 @@ import asyncio
 import functools
 
 from django.core.cache import cache
-from django.core.cache import caches
 from conda.cli.python_api import run_command as conda_run, Commands
 
 from subprocess import call

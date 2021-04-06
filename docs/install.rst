@@ -35,3 +35,24 @@ Install from GitHub
     cd warehouse
     tethys install
 
+
+
+Updating Installed Warehouse
+****************************
+
+If you installed the warehouse using the Miniconda command, then run the following command to update the warehouse to the latest version: 
+
+.. code-block:: shell
+ 	#Activate Tethys environment if not already active
+    t
+
+    conda install -c tethysapp warehouse   
+
+In case you installed the warehouse from GitHub, just pull the latest changes: 
+
+.. code-block:: shell
+
+	cd <directory_where_warehouse_is_installed>
+	git pull
+
+
