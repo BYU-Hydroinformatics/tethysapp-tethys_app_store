@@ -84,8 +84,12 @@ def process_resources(resources, app_workspace):
 
         # Set Latest Version
         app["latestVersion"] = app.get("metadata").get("versions")[-1]
+
+        # if(app['installed']):
+        #     app["updateAvailable"] = version.parse(app['installedVersion']) < version.parse(app['latestVersion'])
+        # FOR Debugging only. @TODO: Remove
         if(app['installed']):
-            app["updateAvailable"] = version.parse(app['installedVersion']) < version.parse(app['latestVersion'])
+            app["updateAvailable"] = True
 
         latest_version_url = app.get("metadata").get("versionURLs")[-1]
         file_name = latest_version_url.split('/')

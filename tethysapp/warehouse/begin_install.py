@@ -18,15 +18,6 @@ from .helpers import *
 from .resource_helpers import get_resource
 
 
-def check_all_present(string, substrings):
-    result = True
-    for substring in substrings:
-        if substring not in string:
-            result = False
-            break
-    return result
-
-
 def handle_property_not_present(prop):
     # TODO: Generate an error message that metadata is incorrect for this application
     pass
@@ -40,7 +31,7 @@ def process_post_install_scripts(path):
         # Currently only processing the pip install script, but need to add ability to process post scripts as well
 
 
-def detect_app_dependencies(app_name, app_version, channel_layer):
+def detect_app_dependencies(app_name, app_version, channel_layer, notification_method=send_notification):
     """
     Method goes through the app.py and determines the following:
     1.) Any services required
@@ -80,7 +71,7 @@ def detect_app_dependencies(app_name, app_version, channel_layer):
 
     if os.path.exists(pip_install_script_path):
         logger.info("PIP dependencies found. Running Pip install script")
-        send_notification("Running PIP install....", channel_layer)
+        notification_method("Running PIP install....", channel_layer)
         p = subprocess.Popen(['sh', pip_install_script_path], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         while True:
             output = p.stdout.readline()
@@ -93,7 +84,7 @@ def detect_app_dependencies(app_name, app_version, channel_layer):
                 if(check_all_present(str_output, ['PIP Install Complete'])):
                     break
 
-        send_notification("PIP install completed", channel_layer)
+        notification_method("PIP install completed", channel_layer)
 
     # @TODO: Add support for post installation scripts as well.
 
@@ -101,7 +92,7 @@ def detect_app_dependencies(app_name, app_version, channel_layer):
     custom_settings_json = []
 
     if getattr(app_instance, "custom_settings"):
-        send_notification("Processing App's Custom Settings....", channel_layer)
+        notification_method("Processing App's Custom Settings....", channel_layer)
         custom_settings = getattr(app_instance, "custom_settings")
         for setting in custom_settings() or []:
             setting = {"name": getattr(setting, "name"),
@@ -116,7 +107,7 @@ def detect_app_dependencies(app_name, app_version, channel_layer):
         "jsHelperFunction": "processCustomSettings",
         "app_py_path": str(paths[0])
     }
-    send_notification(get_data_json, channel_layer)
+    notification_method(get_data_json, channel_layer)
 
     return
 
@@ -131,7 +122,7 @@ def conda_install(app_metadata, app_version, channel_layer):
     if not app_version:
         app_version = latest_version
 
-    # Try running the conda install as a subprocess to get more visibility into the running process
+    # Running the conda install as a subprocess to get more visibility into the running process
     dir_path = os.path.dirname(os.path.realpath(__file__))
     script_path = os.path.join(dir_path, "scripts", "conda_install.sh")
 
@@ -180,15 +171,16 @@ def begin_install(installData, channel_layer):
     send_notification("Installing Version: " + installData["version"], channel_layer)
 
     try:
-        app_path = conda_install(resource, installData["version"], channel_layer)
+        conda_install(resource, installData["version"], channel_layer)
     except Exception as e:
-        print(e)
+        logger.error("Error while running conda install")
+        logger.error(e)
         send_notification("Error while Installing Conda package. Please check logs for details", channel_layer)
         return
 
     try:
         detect_app_dependencies(resource['name'], installData["version"], channel_layer)
     except Exception as e:
-        print(e)
+        logger.error(e)
         send_notification("Error while checking package for services", channel_layer)
         return

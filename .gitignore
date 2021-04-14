@@ -11,4 +11,7 @@ dist/
 build/
 tethysapp/warehouse/workspaces/app_workspace/apps/
 tethysapp/warehouse/workspaces/app_workspace/gitsubmission/
+tethysapp/warehouse/workspaces/app_workspace/install_status/
+tethysapp/warehouse/workspaces/app_workspace/logs/
+
 docs/_build

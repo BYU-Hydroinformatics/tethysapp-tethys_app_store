@@ -8,6 +8,7 @@ var uninstallData = {}
 var uninstallRunning = false
 var availableApps = {}
 var installedApps = {}
+var updateData = {}
 
 // End Vars
 const settingsHelper = {
@@ -295,6 +296,24 @@ const uninstall = () => {
     )
 }
 
+const update = () => {
+    // Hide Elements
+    $("#update-app-notice").hide()
+    $("#yes-update").hide()
+    $("#no-update").hide()
+    $("#pre-update-notice").hide()
+    $("#update-loader").show()
+    $("#update-processing-label").text(
+        `Updating: ${updateData.name} to version ${updateData.version}`
+    )
+    notification_ws.send(
+        JSON.stringify({
+            data: updateData,
+            type: `update_app`
+        })
+    )
+}
+
 $(document).ready(function() {
     // Hide the nav
     $("#app-content-wrapper").removeClass("show-nav")
@@ -345,4 +364,5 @@ $(document).ready(function() {
 
     $("#doneInstallButton").click(() => reloadCacheRefresh())
     $("#doneUninstallButton").click(() => reloadCacheRefresh())
+    $("#done-update-button").click(() => reloadCacheRefresh())
 })

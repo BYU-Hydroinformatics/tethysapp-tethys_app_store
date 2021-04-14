@@ -22,6 +22,15 @@ logger = logging.getLogger(f'tethys.apps.warehouse')
 logger.setLevel(logging.INFO)
 
 
+def check_all_present(string, substrings):
+    result = True
+    for substring in substrings:
+        if substring not in string:
+            result = False
+            break
+    return result
+
+
 def run_process(args):
     result = run(args, capture_output=True)
     logger.info(result.stdout)

@@ -46,7 +46,7 @@ def get_service_options(service_type):
 def restart_server(data, channel_layer, run_collect_all=True):
 
     manage_path = get_manage_path({})
-    if data["restart_type"] == "install":
+    if data["restart_type"] == "install" or data["restart_type"] == "update":
         # Run SyncStores
         logger.info("Running Syncstores for app: " + data["name"])
         intermediate_process = ['python', manage_path, 'syncstores', data["name"],  '-f']

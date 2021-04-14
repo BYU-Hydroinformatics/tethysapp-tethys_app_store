@@ -136,6 +136,31 @@ window.operateEvents = {
     $("#uninstall_processing_label").empty()
     $("#uninstallNotices").empty()
     $("#uninstall-app-modal").modal({ backdrop: "static", keyboard: false })
+  },
+
+  "click .update": function(e, value, row, index) {
+    let n_content = $("#update-notices .lead")
+    // Find The installed App's version
+    let installedApp = installedApps.find((app) => app.name == row["name"])
+    $("#current-version-update").html(installedApp.installedVersion)
+    $("#latest-version-update").html(installedApp.latestVersion)
+    $("#update-app-notice").html(
+      `Are you sure you would like to update the <strong>${
+        row["name"]
+      }</strong> app to version ${installedApp.latestVersion}? `
+    )
+    updateData = {
+      name: row["name"],
+      version: installedApp.latestVersion
+    }
+    $("#update-app-notice").show()
+    $("#done-update-button").hide()
+
+    $("#yes-update").show()
+    $("#no-update").show()
+    $("#update-processing-label").empty()
+    $("#update-notices").empty()
+    $("#update-app-modal").modal({ backdrop: "static", keyboard: false })
   }
 }
 

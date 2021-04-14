@@ -46,7 +46,18 @@ class Warehouse(TethysAppBase):
                 name='install_git',
                 url='warehouse/install/git',
                 controller='warehouse.controllers.run_git_install',
+            ),
+            UrlMap(
+                name='install_git',
+                url='warehouse/install/git/status',
+                controller='warehouse.controllers.get_status',
+            ),
+            UrlMap(
+                name='install_git',
+                url='warehouse/install/git/logs',
+                controller='warehouse.controllers.get_logs',
             )
+
         )
 
         return url_maps

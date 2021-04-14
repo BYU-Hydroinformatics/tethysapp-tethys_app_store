@@ -126,6 +126,17 @@ function startWS(websocketServerLocation, n_content) {
 				$("#mainCancel").hide()
 			}
 		}
+		// Check if we have any updateData
+		if ("name" in updateData) {
+			// clear out updateData
+			updateData = {}
+			sendNotification(
+				"Server restart completed successfully",
+				$("#update-notices")
+			)
+			$("#update-loader").hide()
+			$("#done-update-button").show()
+		}
 		setServerOnline()
 	}
 

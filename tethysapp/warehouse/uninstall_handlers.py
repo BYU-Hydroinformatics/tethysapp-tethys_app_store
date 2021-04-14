@@ -1,6 +1,7 @@
 from conda.cli.python_api import run_command as conda_run, Commands
 from tethys_cli.cli_helpers import get_manage_path
 from tethys_apps.exceptions import TethysAppSettingNotAssigned
+from psycopg2 import OperationalError
 
 import subprocess
 
@@ -44,6 +45,11 @@ def uninstall_app(data, channel_layer):
     except IndexError:
         # Couldn't find the target application
         logger.info("Couldn't find the target application for removal of databases. Continuing clean up")
+    except Exception as e:
+        # Something wrong with the persistent store setting
+        # Could not connect to the database
+        logger.info(e)
+        logger.info("Couldn't connect to database for removal. Continuing clean up")
 
     process = ['python', manage_path, 'tethys_app_uninstall', app_name]
     process.append('-f')
