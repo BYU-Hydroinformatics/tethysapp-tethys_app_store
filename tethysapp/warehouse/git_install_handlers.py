@@ -36,38 +36,63 @@ logger_formatter = logging.Formatter('%(asctime)s : %(message)s')
 # This function is run when this module gets loaded at reboots
 # Picks up on any pending installs based on the status files
 def run_pending_installs():
+    # Sleep for 10 s. This could just be a restart attempt and in case it is, we don't want to continue until
+    # it's completely done and the server is ready.
+    time.sleep(10)
+    logger.info("Checking for Pending Installs")
     app_workspace = app.get_app_workspace()
     workspace_directory = app_workspace.path
     install_status_dir = os.path.join(workspace_directory, 'install_status', 'github')
+    if not os.path.exists(install_status_dir):
+        return
     # Check each file for any that are still not completed or errored out
-    for filename in os.listdir(install_status_dir):
-        if filename.endswith(".json"):
-            with open(os.path.join(install_status_dir, filename), "r") as jsonFile:
-                data = json.load(jsonFile)
-                print(data)
+    for file_name in os.listdir(install_status_dir):
+        if file_name.endswith(".json"):
+            file_path = os.path.join(install_status_dir, file_name)
+            with open(os.path.join(install_status_dir, file_name), "r") as json_file:
+                data = json.load(json_file)
+                # Check if setupPy is running and continue the install for that
+                if data["status"]["setupPy"] == "Running":
+                    logger.info("Continuing Install for " + data["installID"])
+                    # Create logging handler
+                    app_workspace = app.get_app_workspace()
+                    workspace_directory = app_workspace.path
+                    install_logs_dir = os.path.join(workspace_directory, 'logs', 'github_install')
+                    logfile_location = os.path.join(install_logs_dir, data["installID"] + '.log')
+                    fh = logging.FileHandler(logfile_location)
+                    fh.setFormatter(logger_formatter)
+                    fh.setLevel(logging.DEBUG)
+                    git_install_logger.addHandler(fh)
+
+                    install_yml_path = Path(os.path.join(data["workspacePath"], 'install.yml'))
+                    install_options = open_file(install_yml_path)
+                    if "name" in install_options:
+                        app_name = install_options['name']
+
+                    continue_install(git_install_logger, file_path, install_options, app_name)
 
 
-def update_status_file(path, status, error_msg=""):
-    if status == "Completed":
-        with open(path, "r") as jsonFile:
-            data = json.load(jsonFile)
+def update_status_file(path, status, status_key, error_msg=""):
 
-        data["status"] = "Complete"
-        data["completionDateTime"] = datetime.now().strftime('%Y-%m-%dT%H:%M:%S.%f')
-        print(data)
-        with open(path, "w") as jsonFile:
-            json.dump(data, jsonFile)
+    with open(path, "r") as json_file:
+        data = json.load(json_file)
 
-    if status == "Error":
-        with open(path, "r") as jsonFile:
-            data = json.load(jsonFile)
+    data["status"][status_key] = status
 
-        data["status"] = "Error"
+    # Check if all status is set to true
+    if all(value == True for value in data["status"].values()):
+        # Install is completed
+        data["installCompletedTime"] = datetime.now().strftime('%Y-%m-%dT%H:%M:%S.%f')
+        data["installComplete"] = True
+
+    if error_msg != "":
         data["errorDateTime"] = datetime.now().strftime('%Y-%m-%dT%H:%M:%S.%f')
         data["errorMessage"] = error_msg
+    else:
+        data["lastUpdate"] = datetime.now().strftime('%Y-%m-%dT%H:%M:%S.%f')
 
-        with open(path, "w") as jsonFile:
-            json.dump(data, jsonFile)
+    with open(path, "w") as json_file:
+        json.dump(data, json_file)
 
 
 def install_packages(conda_config, logger, status_file_path):
@@ -87,8 +112,9 @@ def install_packages(conda_config, logger, status_file_path):
         if code != 0:
             error_msg = 'Warning: Packages installation ran into an error. Please try again or a manual install'
             logger.error(error_msg)
-            update_status_file(status_file_path, "Error", error_msg)
+            update_status_file(status_file_path, False, "conda", error_msg)
         else:
+            update_status_file(status_file_path, True, "conda")
             logger.info(resp)
 
 
@@ -99,7 +125,32 @@ def write_logs(logger, output, subHeading):
             logger.info(subHeading + cleaned_line)
 
 
-def install_worker(workspace_apps_path, status_file_path, logger):
+def continue_install(logger, status_file_path, install_options, app_name):
+    update_status_file(status_file_path, True, "setupPy")
+    process = Popen(['tethys', 'db', 'sync'], stdout=PIPE, stderr=STDOUT)
+    write_logs(logger, process.stdout, 'Tethys DB Sync : ')
+    exitcode = process.wait()
+    if exitcode == 0:
+        update_status_file(status_file_path, True, "dbSync")
+    else:
+        update_status_file(status_file_path, False, "dbSync", "Error while running DBSync. Please check logs")
+
+    # Check to see if any extra scripts need to be run
+    if validate_schema('post', install_options):
+        logger.info("Running post installation tasks...")
+        for post in install_options["post"]:
+            path_to_post = file_path.resolve().parent / post
+            # Attempting to run processes.
+            process = Popen(str(path_to_post), shell=True, stdout=PIPE)
+            stdout = process.communicate()[0]
+            logger.info("Post Script Result: {}".format(stdout))
+
+    update_status_file(status_file_path, True, "post")
+    logger.info("Install completed")
+    restart_server({"restart_type": "gInstall", "name": app_name}, None)
+
+
+def install_worker(workspace_apps_path, status_file_path, logger, install_run_id):
     # Install Dependencies
     logger.info("Installing dependencies...")
     file_path = Path(os.path.join(workspace_apps_path, 'install.yml'))
@@ -127,31 +178,18 @@ def install_worker(workspace_apps_path, status_file_path, logger):
                 exitcode = process.wait()
                 logger.info("PIP Install exited with: " + str(exitcode))
 
+    update_status_file(status_file_path, True, "pip")
+    update_status_file(status_file_path, "Running", "setupPy")
+
     # Run Setup.py
-    # logger.info("Running application install....")
-    # process = Popen(['python', 'setup.py', 'install'], cwd=workspace_apps_path, stdout=PIPE, stderr=STDOUT)
-    # write_logs(logger, process.stdout, 'Python Install SubProcess: ')
-    # exitcode = process.wait()
-    # logger.info("Python Application install exited with: " + str(exitcode))
-
-    process = Popen(['tethys', 'db', 'sync'], stdout=PIPE, stderr=STDOUT)
-    write_logs(logger, process.stdout, 'Tethys DB Sync : ')
+    logger.info("Running application install....")
+    process = Popen(['python', 'setup.py', 'install'], cwd=workspace_apps_path, stdout=PIPE, stderr=STDOUT)
+    write_logs(logger, process.stdout, 'Python Install SubProcess: ')
     exitcode = process.wait()
+    logger.info("Python Application install exited with: " + str(exitcode))
 
-    # Check to see if any extra scripts need to be run
-    if validate_schema('post', install_options):
-        logger.info("Running post installation tasks...")
-        for post in install_options["post"]:
-            path_to_post = file_path.resolve().parent / post
-            # Attempting to run processes.
-            process = Popen(str(path_to_post), shell=True, stdout=PIPE)
-            stdout = process.communicate()[0]
-            logger.info("Post Script Result: {}".format(stdout))
-
-    logger.info("Install completed")
-    # Update StatusFile
-    update_status_file(status_file_path, "Completed")
-    restart_server({"restart_type": "gInstall", "name": app_name}, None)
+    # This step might cause a server restart and will not have the rest of the code execute.
+    continue_install(logger, status_file_path, install_options, app_name)
 
 
 def get_log_file(id):
@@ -202,6 +240,7 @@ def get_logs(request):
 @ authentication_classes((TokenAuthentication,))
 def run_git_install(request):
     repo_url = request.POST.get('url', '')
+    branch = request.POST.get('branch', 'master')
     url_end = repo_url.split("/")[-1]
     url_end = url_end.replace(".git", "")
 
@@ -220,17 +259,32 @@ def run_git_install(request):
         os.makedirs(install_status_dir)
 
     install_run_id = str(uuid.uuid4())
+
     # Create new logFile
     logfile_location = os.path.join(install_logs_dir, install_run_id + '.log')
     fh = logging.FileHandler(logfile_location)
     fh.setFormatter(logger_formatter)
     fh.setLevel(logging.DEBUG)
 
+    # TODO: Validation on the GitHUB URL
+    workspace_apps_path = os.path.join(workspace_directory, 'apps', 'installed', url_end)
+
     # Create new statusFile
+
     statusfile_location = os.path.join(install_status_dir, install_run_id + '.json')
     statusfile_data = {
+        'installID': install_run_id,
         'githubURL': repo_url,
-        'status': "Installation Started",
+        'workspacePath': workspace_apps_path,
+        'installComplete': False,
+        'status': {
+            "installStarted": True,
+            "conda": "Pending",
+            "pip": "Pending",
+            "setupPy": "Pending",
+            "dbSync": "Pending",
+            "post": "Pending"
+        },
         'installStartTime': datetime.now().strftime('%Y-%m-%dT%H:%M:%S.%f')
     }
     with open(statusfile_location, 'w') as outfile:
@@ -241,8 +295,6 @@ def run_git_install(request):
     git_install_logger.info("Input URL: " + repo_url)
     git_install_logger.info("Assumed App Name: " + url_end)
 
-    # TODO: Validation on the GitHUB URL
-    workspace_apps_path = os.path.join(workspace_directory, 'apps', 'installed', url_end)
     git_install_logger.info("Application Install Path: " + workspace_apps_path)
 
     # Create Dir if it doesn't exist
@@ -256,18 +308,20 @@ def run_git_install(request):
 
         # Git has changed the default branch name to main so this next command might fail with git.exc.GitCommandError
         try:
-            repo.git.checkout("master", "-f")
+            repo.git.checkout(branch, "-f")
         except git.exc.GitCommandError:
-            git_install_logger.info("Couldn't check out master branch. Attempting to checkout main")
+            git_install_logger.info("Couldn't check out " + branch + " branch. Attempting to checkout main")
             repo.git.checkout("main", "-f")
 
     # Run command in new thread
     install_thread = threading.Thread(target=install_worker, name="InstallApps",
-                                      args=(workspace_apps_path, statusfile_location, git_install_logger))
+                                      args=(workspace_apps_path, statusfile_location, git_install_logger, install_run_id))
     # install_thread.setDaemon(True)
     install_thread.start()
 
-    return JsonResponse({})
+    return JsonResponse({'status': "InstallRunning", 'install_id': install_run_id})
 
 
-# run_pending_installs()
+resume_thread = threading.Thread(target=run_pending_installs, name="ResumeGitInstalls")
+resume_thread.setDaemon(True)
+resume_thread.start()

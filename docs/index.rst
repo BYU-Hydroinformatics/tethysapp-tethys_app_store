@@ -23,4 +23,5 @@ The Tethys App Warehouse is similar in concept to the iOS App Store for Apple mo
   publications
   future
   devfunding
+  githubinstall
 
