@@ -1,6 +1,6 @@
-========================
+======================
 Application Submission
-========================
+======================
 
 Before attempting to submit your application to the warehouse, ensure that your application fulfills the requirements for Tethys App Warehouse: 
 
@@ -32,13 +32,13 @@ Steps to Submit
 
 Developers can submit their applications to the warehouse by click on the Add App button as highlighted in the image below: 
 
-.. image:: images/add_button.png
+.. image:: _static/images/add_button.png
    :width: 600
 
 
 Upon clicking that button, you will be presented with a modal that asks for the link to the GitHub Repository of your Tethys Application. It also instructs to put in an email address which is notified once the build is completed successfully and the application is available on the warehouse.
 
-.. image:: images/add_step_1.png
+.. image:: _static/images/add_step_1.png
    :width: 600
 
 - Enter Notification email address (Mostly this will be your own or the developer's email address)
@@ -50,7 +50,7 @@ Upon clicking that button, you will be presented with a modal that asks for the 
 .. note::
    After your application is successfully built, you will need to tell the warehouse to refresh your local list of applications. To do this click on the refresh button as shown in the image below.
 
-.. image:: images/refresh_button.png
+.. image:: _static/images/refresh_button.png
 	:width: 600
 
 
