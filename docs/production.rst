@@ -1,6 +1,6 @@
-========================
+=======================
 Production Installation
-========================
+=======================
 
 On a production server, ensure that you set the custom settings which require the SUDO password to the server user that has the ability to restart the Tethys Process. Usually this is the same as the user you used to setup Tethys. The password is stored in a Database and is only used when we need to restart the server after installing an application so that the changes can be seen. 
 

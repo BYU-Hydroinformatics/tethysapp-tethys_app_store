@@ -11,15 +11,15 @@ While using Miniconda install, we need to ensure that the Tethys portal is setup
 
 .. code-block:: shell
 
-    # If you haven't set this already
-    tethys settings --set CHANNEL_LAYERS.default.BACKEND channels.layers.InMemoryChannelLayer
+	# If you haven't set this already
+	tethys settings --set CHANNEL_LAYERS.default.BACKEND channels.layers.InMemoryChannelLayer
 
 
 Following that, installing the warehouse is a simple conda install command: 
 
 .. code-block:: shell
 
-    conda install -c tethysapp warehouse   
+	conda install -c tethysapp warehouse
 
 
 
@@ -27,13 +27,13 @@ Install from GitHub
 ********************
 
 .. code-block:: shell
-    
-    #Activate tethys environment if not already active
-    t
 
-    git clone https://github.com/BYU-Hydroinformatics/warehouse.git
-    cd warehouse
-    tethys install
+	# Activate tethys environment if not already active
+	conda activate tethys
+
+	git clone https://github.com/BYU-Hydroinformatics/warehouse.git
+	cd warehouse
+	tethys install
 
 
 
@@ -43,10 +43,11 @@ Updating Installed Warehouse
 If you installed the warehouse using the Miniconda command, then run the following command to update the warehouse to the latest version: 
 
 .. code-block:: shell
- 	#Activate Tethys environment if not already active
-    t
 
-    conda install -c tethysapp warehouse   
+	# Activate Tethys environment if not already active
+	conda activate tethys
+
+	conda install -c tethysapp warehouse
 
 In case you installed the warehouse from GitHub, just pull the latest changes: 
 

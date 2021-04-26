@@ -17,11 +17,11 @@ The Tethys App Warehouse is similar in concept to the iOS App Store for Apple mo
   :maxdepth: 2
 
   install
-  appsubmit
+  app-submit
   production
   compatibility
   publications
   future
-  devfunding
-  githubinstall
+  dev-funding
+  github-install
 
