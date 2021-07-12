@@ -7,19 +7,25 @@ import json
 import fileinput
 import shutil
 import os
+import re
 
 from tethys_apps.base import TethysAppBase
 from django.conf import settings
 from django.urls.base import clear_url_caches
+from django.core.cache import cache
+
 from asgiref.sync import async_to_sync
 from conda.cli.python_api import run_command as conda_run, Commands
 from string import Template
 from subprocess import PIPE, run
+from .app import Warehouse as app
 
 logger = logging.getLogger(f'tethys.apps.warehouse')
 # Ensure that this logger is putting everything out.
 # @TODO: Change this back to the default later
 logger.setLevel(logging.INFO)
+
+CACHE_KEY = "warehouse_github_app_resources"
 
 
 def check_all_present(string, substrings):
@@ -41,10 +47,12 @@ def run_process(args):
 def check_if_app_installed(app_name):
 
     try:
-        [resp, err, code] = conda_run(Commands.LIST, ["-f",  "--json", app_name])
+        [resp, err, code] = conda_run(
+            Commands.LIST, ["-f",  "--json", app_name])
         if code != 0:
             # In here maybe we just try re running the install
-            logger.error("ERROR: Couldn't get list of installed apps to verify if the conda install was successfull")
+            logger.error(
+                "ERROR: Couldn't get list of installed apps to verify if the conda install was successfull")
         else:
             conda_search_result = json.loads(resp)
             if len(conda_search_result) > 0:
@@ -79,7 +87,8 @@ def get_app_instance_from_path(paths):
     app_instance = None
     for _, modname, ispkg in pkgutil.iter_modules(paths):
         if ispkg:
-            app_module = __import__('tethysapp.{}'.format(modname) + ".app", fromlist=[''])
+            app_module = __import__('tethysapp.{}'.format(
+                modname) + ".app", fromlist=[''])
             for name, obj in inspect.getmembers(app_module):
                 # Retrieve the members of the app_module and iterate through
                 # them to find the the class that inherits from AppBase.
@@ -158,3 +167,84 @@ def parse_setup_py(file_location):
                         value = value[:-1]
                     params[parts[0].strip()] = value
     return params
+
+# Get apps that might have been installed via GitHub install process
+
+
+def find_string_in_line(line):
+    # try singleQuotes First
+    matches = re.findall("'([^']*)'", line)
+    if len(matches) > 0:
+        return matches[0]
+    else:
+        # try double quotes
+        matches = re.findall('"([^"]*)"', line)
+        if len(matches) > 0:
+            return matches[0]
+
+
+def get_github_install_metadata():
+
+    if (cache.get(CACHE_KEY) is None):
+        logger.info("GitHub Apps list cache miss")
+        app_workspace = app.get_app_workspace()
+        workspace_directory = app_workspace.path
+        workspace_apps_path = os.path.join(
+            workspace_directory, 'apps', 'installed')
+        possible_apps = [f.path for f in os.scandir(
+            workspace_apps_path) if f.is_dir()]
+        github_installed_apps_list = []
+        for possible_app in possible_apps:
+            installed_app = {
+                'name': '',
+                'installed': True,
+                'metadata':
+                {
+                    'channel': 'tethysapp',
+                    'license': 'BSD 3-Clause License',
+                },
+                'installedVersion': '',
+                'path': possible_app
+            }
+            setup_path = os.path.join(possible_app, 'setup.py')
+            with open(setup_path, 'rt') as myfile:
+                for myline in myfile:
+                    if 'app_package' in myline and 'find_resource_files' not in myline and 'release_package' not in myline:
+                        installed_app["name"] = find_string_in_line(myline)
+                        continue
+                    if 'version' in myline:
+                        installed_app["installedVersion"] = find_string_in_line(
+                            myline)
+                        continue
+                    if 'description' in myline:
+                        installed_app["metadata"]["description"] = find_string_in_line(
+                            myline)
+                        continue
+                    if 'author' in myline:
+                        installed_app["author"] = find_string_in_line(myline)
+                        continue
+                    if 'description' in myline:
+                        installed_app["installedVersion"] = find_string_in_line(
+                            myline)
+                        continue
+                    if 'url' in myline:
+                        installed_app["dev_url"] = find_string_in_line(
+                            myline)
+                        continue
+            github_installed_apps_list.append(installed_app)
+        cache.set(CACHE_KEY, github_installed_apps_list)
+        return github_installed_apps_list
+    else:
+        return cache.get(CACHE_KEY)
+
+
+def check_github_install(app_name):
+    possible_apps = get_github_install_metadata()
+    print(possible_apps)
+
+
+def get_github_installed_apps():
+
+    # print(possible_apps)
+
+    return ""
