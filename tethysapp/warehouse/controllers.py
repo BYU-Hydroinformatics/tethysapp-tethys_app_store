@@ -7,7 +7,7 @@ import json
 
 from .notifications import *
 from .resource_helpers import fetch_resources
-from .helpers import logger
+from .helpers import logger, get_github_install_metadata
 from .model import *
 from .git_install_handlers import run_git_install, get_status, get_logs
 
@@ -38,9 +38,12 @@ def get_resources(request, app_workspace):
         else:
             available_apps.append(resource)
 
+    # Get any apps installed via GitHub install process
+    github_apps = get_github_install_metadata()
+
     context = {
         'availableApps': available_apps,
-        'installedApps': installed_apps
+        'installedApps': installed_apps + github_apps
     }
 
     return JsonResponse(context)

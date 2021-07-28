@@ -1,12 +1,13 @@
 from conda.cli.python_api import run_command as conda_run, Commands
+from conda.exceptions import PackagesNotFoundError
 from tethys_cli.cli_helpers import get_manage_path
 from tethys_apps.exceptions import TethysAppSettingNotAssigned
-from psycopg2 import OperationalError
 
 import subprocess
+import shutil
 
-from .helpers import logger, send_notification
-from .installation_handlers import restart_server
+from .helpers import logger, send_notification, get_github_install_metadata
+from .git_install_handlers import clear_github_cache_list
 
 
 def send_uninstall_messages(msg, channel_layer):
@@ -22,7 +23,8 @@ def uninstall_app(data, channel_layer):
     manage_path = get_manage_path({})
     app_name = data['name']
 
-    send_uninstall_messages('Starting Uninstall. Please wait...', channel_layer)
+    send_uninstall_messages(
+        'Starting Uninstall. Please wait...', channel_layer)
 
     try:
         # Check if application had provisioned any Persistent stores and clear them out
@@ -35,7 +37,8 @@ def uninstall_app(data, channel_layer):
                 # If there is a db for this PS, drop it
                 try:
                     if setting.persistent_store_database_exists():
-                        logger.info("Droping Database for persistent store setting: " + str(setting))
+                        logger.info(
+                            "Droping Database for persistent store setting: " + str(setting))
                         setting.drop_persistent_store_database()
                 except TethysAppSettingNotAssigned:
                     pass
@@ -44,12 +47,14 @@ def uninstall_app(data, channel_layer):
             logger.info("No Persistent store services found for: " + app_name)
     except IndexError:
         # Couldn't find the target application
-        logger.info("Couldn't find the target application for removal of databases. Continuing clean up")
+        logger.info(
+            "Couldn't find the target application for removal of databases. Continuing clean up")
     except Exception as e:
         # Something wrong with the persistent store setting
         # Could not connect to the database
         logger.info(e)
-        logger.info("Couldn't connect to database for removal. Continuing clean up")
+        logger.info(
+            "Couldn't connect to database for removal. Continuing clean up")
 
     process = ['python', manage_path, 'tethys_app_uninstall', app_name]
     process.append('-f')
@@ -59,13 +64,24 @@ def uninstall_app(data, channel_layer):
     except KeyboardInterrupt:
         pass
 
-    send_uninstall_messages('Tethys App Uninstalled. Running Conda Cleanup...', channel_layer)
+    send_uninstall_messages(
+        'Tethys App Uninstalled. Running Conda/GitHub Cleanup...', channel_layer)
 
-    [resp, err, code] = conda_run(Commands.REMOVE, ["--force", "-c", "tethysplatform",
-                                                    "--override-channels", data['name']])
+    try:
+        [resp, err, code] = conda_run(Commands.REMOVE, ["--force", "-c", "tethysplatform",
+                                                        "--override-channels", data['name']])
+        logger.info(resp)
+        if err:
+            logger.error(err)
+    except PackagesNotFoundError:
+        # This was installed using GitHub. Try to clean out
+        github_installed = get_github_install_metadata()
+        for app in github_installed:
+            if app['name'] == data['name']:
+                # remove App Directory
+                shutil.rmtree(app['path'])
 
-    logger.info(resp)
-    if err:
-        logger.error(err)
+        clear_github_cache_list()
 
-    send_uninstall_messages('Uninstall completed. Restarting server...', channel_layer)
+    send_uninstall_messages(
+        'Uninstall completed. Restarting server...', channel_layer)
