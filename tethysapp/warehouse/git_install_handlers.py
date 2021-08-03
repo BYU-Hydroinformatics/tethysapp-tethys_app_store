@@ -274,8 +274,6 @@ def run_git_install(request):
     url_end = repo_url.split("/")[-1]
     url_end = url_end.replace(".git", "")
 
-    # Check if application is already installed. In that case just pull the
-
     # Get workspace since @app_workspace doesn't work with api request?
     app_workspace = app.get_app_workspace()
     workspace_directory = app_workspace.path
@@ -349,6 +347,12 @@ def run_git_install(request):
             git_install_logger.info(
                 "Couldn't check out " + branch + " branch. Attempting to checkout main")
             repo.git.checkout("main", "-f")
+    else:
+        # The Dir Exists. This app is possibly already installed.
+        # Do A Pull and Continue
+        git_install_logger.info("Git Repo exists locally. Doing a pull to get the latest")
+        g = git.cmd.Git(workspace_apps_path)
+        g.pull()
 
     # Run command in new thread
     install_thread = threading.Thread(target=install_worker, name="InstallApps",
