@@ -16,3 +16,4 @@ tethysapp/warehouse/workspaces/app_workspace/install_status/
 tethysapp/warehouse/workspaces/app_workspace/logs/
 
 docs/_build
+.vscode/
