@@ -22,7 +22,7 @@ from pathlib import Path
 from subprocess import (call, Popen, PIPE, STDOUT)
 from datetime import datetime
 
-from .app import Warehouse as app
+from .app import AppStore as app
 from .helpers import *
 from .installation_handlers import restart_server
 

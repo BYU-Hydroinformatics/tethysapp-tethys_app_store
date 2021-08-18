@@ -14,7 +14,7 @@ def find_resource_files(directory, relative_to=None):
 
 
 # -- Apps Definition -- #
-app_package = 'warehouse'
+app_package = 'app-store'
 release_package = 'tethysapp-' + app_package
 
 # -- Get Resource File -- #
@@ -30,12 +30,12 @@ dependencies = []
 setup(
     name=release_package,
     version='0.3.1',
-    description='Tethys Application Warehouse',
+    description='Tethys App Store',
     long_description='This application allows you to discover, install, manage and configure Tethys Applications.',
     keywords='Tethys, Warehouse, Conda',
     author='Rohit Khattar',
     author_email='rohitkhattar11@gmail.com',
-    url='https://github.com/BYU-Hydroinformatics/warehouse',
+    url='https://github.com/BYU-Hydroinformatics/app_store',
     license='BSD 3-Clause License',
     packages=find_namespace_packages(),
     package_data={'': resource_files},

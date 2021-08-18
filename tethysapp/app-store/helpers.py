@@ -18,7 +18,7 @@ from asgiref.sync import async_to_sync
 from conda.cli.python_api import run_command as conda_run, Commands
 from string import Template
 from subprocess import PIPE, run
-from .app import Warehouse as app
+from .app import AppStore as app
 
 logger = logging.getLogger(f'tethys.apps.warehouse')
 # Ensure that this logger is putting everything out.

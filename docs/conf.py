@@ -18,8 +18,8 @@ import sphinx_rtd_theme
 
 # -- Project information -----------------------------------------------------
 
-project = 'Tethys App Warehouse'
-copyright = '2020, Rohit Khattar'
+project = 'Tethys App Store'
+copyright = '2021, Rohit Khattar'
 author = 'Rohit Khattar'
 
 # The full version, including alpha/beta/rc tags

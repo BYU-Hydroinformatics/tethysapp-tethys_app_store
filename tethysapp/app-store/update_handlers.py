@@ -8,7 +8,7 @@ from tethys_cli.cli_helpers import load_apps
 
 
 from .helpers import logger, send_notification, check_all_present
-from .app import Warehouse as app
+from .app import AppStore as app
 from .resource_helpers import get_resource
 from .installation_handlers import restart_server
 

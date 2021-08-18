@@ -16,13 +16,13 @@ CACHE_KEY = "warehouse_app_resources"
 
 
 @login_required()
-@permission_required('use_warehouse')
+@permission_required('use_app_store')
 def home(request):
-    return render(request, 'warehouse/home.html', {})
+    return render(request, 'app-store/home.html', {})
 
 
 @login_required()
-@permission_required('use_warehouse')
+@permission_required('use_app_store')
 @app_workspace
 def get_resources(request, app_workspace):
     require_refresh = request.GET.get('refresh', '') == "true"
