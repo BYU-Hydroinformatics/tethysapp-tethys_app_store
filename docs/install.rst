@@ -31,8 +31,8 @@ Install from GitHub
 	# Activate tethys environment if not already active
 	conda activate tethys
 
-	git clone https://github.com/BYU-Hydroinformatics/warehouse.git
-	cd warehouse
+	git clone https://github.com/BYU-Hydroinformatics/tethysapp-tethys_app_store.git
+	cd tethysapp-tethys_app_store
 	tethys install
 
 
