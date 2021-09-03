@@ -1,0 +1,53 @@
+html, body, #app-content, #inner-app-content, #outer-container, #map {
+    margin: 0px;
+    padding: 2px;
+    height: 100%;
+}
+
+#app-navigation-items {
+    height: 100% !important;
+}
+
+#inner-app-content {
+    padding: 0;
+    height: 100%;
+}
+
+.lftable {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: scroll;
+    height: 50%;
+}
+
+.lftable td, .lftable th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+.lftable td:last-child {
+    border: none;
+    flex: 1;
+    background-color: #ffffff;
+}
+
+.lftable tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.lftable tr:last-child {
+    border: none;
+    flex: 1;
+    background-color: #ffffff;
+}
+
+.lftable th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    padding-left: 12px;
+    text-align: left;
+    background-color: #4CAF50;
+    color: white;
+}

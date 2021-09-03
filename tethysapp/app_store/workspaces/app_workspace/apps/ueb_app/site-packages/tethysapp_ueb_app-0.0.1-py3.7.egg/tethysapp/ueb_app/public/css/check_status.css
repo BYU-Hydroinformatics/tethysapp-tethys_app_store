@@ -1,0 +1,52 @@
+#side-bar-container  {
+    margin-top: 100px;
+    background-color:#efefef;
+    height: 1000px;
+    overflow:auto;
+
+}
+
+#user-form {
+    margin-bottom: 10px;
+    margin-left:10px;
+    margin-top:20px;
+}
+
+#main-container {
+    margin-top: 100px;
+    margin-left:20px
+
+}
+
+.form-subtitle{
+    color:#0059b3;
+    font-size:130%;
+    margin-top:10px;
+}
+
+#response-status {
+    color: #000000;
+    font-size: 120%;
+}
+
+#response-result {
+    color: #000000;
+    font-size: 120%;
+}
+
+#submit-response {
+    display:none;
+    padding-left: 10px;
+    padding-right: 5px;
+    padding-bottom: 5px;
+    padding-top:5px;
+    margin-bottom:20px;
+    margin-top:10px;
+    margin-right:10px;
+}
+
+#job-table {
+    height:750px;
+    overflow:auto;
+}
+

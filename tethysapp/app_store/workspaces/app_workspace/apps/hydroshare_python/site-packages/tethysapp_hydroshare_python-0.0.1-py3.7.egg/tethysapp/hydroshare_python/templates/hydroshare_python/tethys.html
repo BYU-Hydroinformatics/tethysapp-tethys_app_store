@@ -1,0 +1,49 @@
+{% extends "hydroshare_python/base.html" %}
+{% load tethys_gizmos %}
+{% load static %}
+
+
+
+{% block app_content %}
+
+<h1>Tethys - A Brief Introduction</h1>
+
+<h3>What is Tethys ?</h3>
+<p></p>
+<p>Tethys is a platform that can be used to develop and host environmental web apps. It includes a suite of free and open source software (FOSS) that has been carefully selected to address the unique development needs of environmental web apps. Tethys web apps are developed using a Python software development kit (SDK) which includes programmatic links to each software component. Tethys Platform is powered by the Django Python web framework giving it a solid web foundation with excellent security and performance.</p>
+<p></p>
+<p>Tethys is a platform that can be used to develop and host engaging, interactive water resources web applications or web apps. It includes a suite of free and open source software (FOSS) that has been carefully selected to address the unique development needs of water resources web apps. Tethys web apps are developed using a Python software development kit (SDK) which includes programmatic links to each software component. Tethys Platform is powered by the Django Python web framework giving it a solid web foundation with excellent security and performance.</p>
+<img src="{% static 'hydroshare_python/images/feature_tethys_1.jpeg'%}" alt="Resource ID" height="500">
+<h4>Software Suite</h4>
+<p>Tethys Platform provides a suite of free and open source software. Included in the Software Suite is PostgreSQL with the PostGIS extension for spatial database storage, GeoServer for spatial data publishing, and 52 North WPS for geoprocessing. Tethys also provides Gizmos for inserting OpenLayers and Google Maps for interactive spatial data visualizations in your web apps. The Software Suite also includes HTCondor for managing distributed computing resources and scheduling computing jobs.</p>
+<img src="{% static 'hydroshare_python/images/feature_tethys_2.jpeg'%}" alt="Resource ID" height="500">
+<h4>Python Software Development Kit</h4>
+<p>Tethys web apps are developed with the Python programming language and a Software Development Kit (SDK). Tethys web apps projects are organized using a model-view-controller (MVC) approach. The SDK provides Python module links to each software component of the Tethys Platform, making the functionality of each software easy to incorporate each in your web apps. In addition, you can use all of the Python modules that you are accustomed to using in your scientific Python scripts to power your web apps.</p>
+<img src="{% static 'hydroshare_python/images/feature_tethys_3.jpeg'%}" alt="Resource ID" height="500">
+<h4>Templating and Gizmos</h4>
+<p>Tethys SDK takes advantage of the Django template system so you can build dynamic pages for your web app while writing less HTML. It also provides a series of modular user interface elements called Gizmos. With only a few lines of code you can add range sliders, toggle switches, auto completes, interactive maps, and dynamic plots to your web app.</p>
+<img src="{% static 'hydroshare_python/images/feature_tethys_4.jpeg'%}" alt="Resource ID" height="500">
+<h4>Tethys Portal</h4>
+<p>Tethys Platform includes a modern web portal built on Django that is used to host web apps called Tethys Portal. It provides the core website functionality that is often taken for granted in modern web applications including a user account system with with a password reset mechanism for forgotten passwords. It provides an administrator backend that can be used to manage user accounts, permissions, link to elements of the software suite, and customize the instance.
+The portal also includes landing page that can be used to showcase the capabilities of the Tethys Platform instance and an app library page that serves as the access point for installed apps. The homepage and theme of Tethys Portal are customizable allowing organizations to re-brand it to meet the their needs.</p>
+<img src="{% static 'hydroshare_python/images/feature_tethys_5.jpeg'%}" alt="Resource ID" height="500">
+<h4>Computing</h4>
+<p>Tethys Platform includes Python modules that allow you to provision and run computing jobs in distributed computing environments. With CondorPy you can define your computing jobs and submit them to distributed computing environments provided by HTCondor.CondorPy enables computing jobs to be created and submitted to a HTCondor computing pool.
+
+  HTCondor provides a way to make use of the idle computing power that is already available in your office.</p>
+<img src="{% static 'hydroshare_python/images/feature_tethys_6.jpeg'%}" alt="Resource ID" height="500">
+
+<p></p>
+
+<p></p>
+
+
+
+
+
+
+{% endblock %}
+
+{% block app_actions %}
+  
+{% endblock %}

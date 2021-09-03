@@ -1,0 +1,48 @@
+
+#side-bar-container {
+    margin-top: 100px;
+    background-color:#efefef;
+    height: 1000px;
+    overflow:auto;
+
+}
+
+#user-form {
+    margin-bottom: 10px;
+    margin-left:10px;
+    margin-top:20px;
+}
+
+#main-container {
+    margin-top: 100px;
+    margin-left:20px
+
+}
+
+figure {
+    text-align: center;
+    margin-top:20px;
+    margin-bottom:30px
+}
+.help-list li{
+    font-size:120%;
+    color:#666666;
+}
+
+.panel-title a {
+    font-size:125%;
+    color:#0059b3;
+}
+
+.sub-description {
+    font-size:120%;
+}
+
+.sub-title {
+    font-size:160%;
+    font-weight: bold
+}
+
+
+
+

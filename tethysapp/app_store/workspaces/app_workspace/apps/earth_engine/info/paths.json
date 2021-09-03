@@ -1,0 +1,107 @@
+{
+  "paths": [
+    {
+      "_path": "site-packages/tethysapp_earth_engine-0.0.1-py3.7.egg/EGG-INFO/PKG-INFO",
+      "path_type": "hardlink",
+      "sha256": "40de62f24865e71f6413c42c731e981119bc0c06c6282c2775009b4592e4fdcf",
+      "size_in_bytes": 196
+    },
+    {
+      "_path": "site-packages/tethysapp_earth_engine-0.0.1-py3.7.egg/EGG-INFO/SOURCES.txt",
+      "path_type": "hardlink",
+      "sha256": "d2d7f49cfb1534438a74a486f2c186386b8f56c246d785d5bf3451cdb6466318",
+      "size_in_bytes": 453
+    },
+    {
+      "_path": "site-packages/tethysapp_earth_engine-0.0.1-py3.7.egg/EGG-INFO/dependency_links.txt",
+      "path_type": "hardlink",
+      "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "size_in_bytes": 1
+    },
+    {
+      "_path": "site-packages/tethysapp_earth_engine-0.0.1-py3.7.egg/EGG-INFO/not-zip-safe",
+      "path_type": "hardlink",
+      "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "size_in_bytes": 1
+    },
+    {
+      "_path": "site-packages/tethysapp_earth_engine-0.0.1-py3.7.egg/EGG-INFO/top_level.txt",
+      "path_type": "hardlink",
+      "sha256": "a191b84ae1684f532955c88ff8022d4dd6c51f6aa209ff78a3016a0dca775f7e",
+      "size_in_bytes": 10
+    },
+    {
+      "_path": "site-packages/tethysapp_earth_engine-0.0.1-py3.7.egg/tethysapp/earth_engine/__init__.py",
+      "path_type": "hardlink",
+      "sha256": "109cc1f83fc2143811ddb5839feabd881366ae668857c05098174d7dde599d5a",
+      "size_in_bytes": 47
+    },
+    {
+      "_path": "site-packages/tethysapp_earth_engine-0.0.1-py3.7.egg/tethysapp/earth_engine/app.py",
+      "path_type": "hardlink",
+      "sha256": "ec18b4fa5818c0b226d7345d36bf35b8d9cfbc167792b63765beed56b16a3a22",
+      "size_in_bytes": 752
+    },
+    {
+      "_path": "site-packages/tethysapp_earth_engine-0.0.1-py3.7.egg/tethysapp/earth_engine/controllers.py",
+      "path_type": "hardlink",
+      "sha256": "564810f97c16867229eb5b4652447ee3432ec07cc6a918db094d00f643e3da6b",
+      "size_in_bytes": 1811
+    },
+    {
+      "_path": "site-packages/tethysapp_earth_engine-0.0.1-py3.7.egg/tethysapp/earth_engine/handoff.py",
+      "path_type": "hardlink",
+      "sha256": "005cc35265c8d75aa6890dd599a358162a0bb0fba8bb523d85a40ff45a301020",
+      "size_in_bytes": 128
+    },
+    {
+      "_path": "site-packages/tethysapp_earth_engine-0.0.1-py3.7.egg/tethysapp/earth_engine/public/css/main.css",
+      "path_type": "hardlink",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_in_bytes": 0
+    },
+    {
+      "_path": "site-packages/tethysapp_earth_engine-0.0.1-py3.7.egg/tethysapp/earth_engine/public/images/icon.gif",
+      "path_type": "hardlink",
+      "sha256": "2c7a238a28ce00cec1d7e279a46ab05d2740269d0d9c8ec06d4b5ccc741d339b",
+      "size_in_bytes": 14125
+    },
+    {
+      "_path": "site-packages/tethysapp_earth_engine-0.0.1-py3.7.egg/tethysapp/earth_engine/public/js/main.js",
+      "path_type": "hardlink",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_in_bytes": 0
+    },
+    {
+      "_path": "site-packages/tethysapp_earth_engine-0.0.1-py3.7.egg/tethysapp/earth_engine/templates/earth_engine/base.html",
+      "path_type": "hardlink",
+      "sha256": "1c07b2a1bb84cf4ce7a692422d0436231b12bdbc55463f5d708310ffc76b5001",
+      "size_in_bytes": 1340
+    },
+    {
+      "_path": "site-packages/tethysapp_earth_engine-0.0.1-py3.7.egg/tethysapp/earth_engine/templates/earth_engine/home.html",
+      "path_type": "hardlink",
+      "sha256": "a4447969a209d60cb8300fb0386c8d1a64fedf62cc5074f1c5743510a863ccd0",
+      "size_in_bytes": 2466
+    },
+    {
+      "_path": "site-packages/tethysapp_earth_engine-0.0.1-py3.7.egg/tethysapp/earth_engine/tests/__init__.py",
+      "path_type": "hardlink",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_in_bytes": 0
+    },
+    {
+      "_path": "site-packages/tethysapp_earth_engine-0.0.1-py3.7.egg/tethysapp/earth_engine/tests/tests.py",
+      "path_type": "hardlink",
+      "sha256": "f4130f776933170679a4f986ff2a18a0d5976cadcec5581e16d8d788fbfefc70",
+      "size_in_bytes": 8355
+    },
+    {
+      "_path": "site-packages/tethysapp_earth_engine.pth",
+      "path_type": "hardlink",
+      "sha256": "7e4f7762dd2ace6f654c9df2946fcd3fcf982f1f752ac253314e5d21d0b1dcec",
+      "size_in_bytes": 41
+    }
+  ],
+  "paths_version": 1
+}

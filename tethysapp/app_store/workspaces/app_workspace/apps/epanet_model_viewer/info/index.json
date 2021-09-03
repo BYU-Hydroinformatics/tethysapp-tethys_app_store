@@ -1,0 +1,14 @@
+{
+  "arch": null,
+  "build": "py_0",
+  "build_number": 0,
+  "depends": [
+    "python"
+  ],
+  "name": "epanet_model_viewer",
+  "noarch": "python",
+  "platform": null,
+  "subdir": "noarch",
+  "timestamp": 1603151247198,
+  "version": "0.0.2"
+}

@@ -1,0 +1,55 @@
+{% load staticfiles %}
+
+<div class="modal fade" id="welcome-popup" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Welcome to the Snow Inspector!</h4>
+            </div>
+            <div class="modal-body">
+                <div id="welcome-info">
+                    <p>The purpose of this app is to provide the user with a visualization of data on different snow
+                        parameters such as snow coverage, mass, and its water equivalent anywhere in the world. This
+                        data is useful in reducing uncertainty in flooding and weather predictions.</p>
+                    <p style="font-size:20px; text-decoration:underline;">Steps</p>
+                    <ol style="padding-left:20px;">
+                        <p class="steps">1. Select time period</p>
+                        <p>Choose the date and the length of the time period in days.</p>
+                        <p class="steps">2. Select layer</p>
+                        <p>Choose the snow parameter to acquire data for.</p>
+                        <p class="steps">3. Select point of interest</p>
+                        <p>Click the map or enter coordinates to select the point of interest.</p>
+                        <p class="steps">4. Get time series</p>
+                        <p>Click the "Retrieve Snow Data" button to show a time-series graph.</p>
+                        <p class="steps">5. Download Results</p>
+                        <p>Click the "Get WaterML" to save results as a WaterML file.</p>
+                        <p class="steps">6. Upload to HydroShare</p>
+                        <p>Click the "Upload to HydroShare" and fill out the metadata form.</p>
+                        <p style="font-size:16px;">Refer to the following video for more detailed instructions: </p>
+                        <iframe width="400" height="225" src="https://www.youtube.com/embed/Ew8krANGb0E" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                        <h9><br><br>
+                            We acknowledge the use of imagery provided by services from the <a href="https://earthdata.nasa.gov/about/science-system-description/eosdis-components/global-imagery-browse-services-gibs" target="_blank">
+                                NASA Global Imagery Browse Service (GIBS)</a>, operated by the NASA/GSFC/Earth Science Data and Information System (ESDIS, <a href="https://earthdata.nasa.gov" target="_blank">https://earthdata.nasa.gov</a>) with funding provided by NASA/HQ.<br>
+                        </h9>
+                        <br>
+                        <p>Kadlec, Jiří, A. Woodruff Miller, and Daniel P. Ames. "Extracting snow cover time series data from open access
+                            web mapping tile services." <i>JAWRA Journal of the American Water Resources Association</i>
+                            52, no. 4 (2016): 916-932. <a href="https://onlinelibrary.wiley.com/doi/abs/10.1111/1752-1688.12387" target="_blank">https://onlinelibrary.wiley.com/doi/abs/10.1111/1752-1688.12387</a>
+                        </p>
+                        <div id="extra-buttons">
+                            <a class="btn btn-default" href="https://github.com/BYU-Hydroinformatics/snow-inspector.git" target="_blank">Source Code</a>
+                        </div>
+                    </ol>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div id="byu-logo-container">
+                    <span style="font-size:14px"><i>Originally developed by Jiri Kadlec at the BYU Hydroinformatics Lab</i></span>
+                    <img src="{% static 'snow_inspector/images/byu-medallion.png' %}" />
+                </div>
+                <button type="button" class="btn btn-default" id="close-popup" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

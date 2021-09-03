@@ -1,0 +1,179 @@
+{
+  "paths": [
+    {
+      "_path": "site-packages/tethysapp_gfs-4-py3.7.egg/EGG-INFO/PKG-INFO",
+      "path_type": "hardlink",
+      "sha256": "21772c3de437b16adc109b88a7a562fa5b9dc2123a2c8790d4e8d068454d84b5",
+      "size_in_bytes": 237
+    },
+    {
+      "_path": "site-packages/tethysapp_gfs-4-py3.7.egg/EGG-INFO/SOURCES.txt",
+      "path_type": "hardlink",
+      "sha256": "d42f587fc4e2d6dd6399605fce2eba5042adbcd79c53725767ca8ca0db1eff65",
+      "size_in_bytes": 500
+    },
+    {
+      "_path": "site-packages/tethysapp_gfs-4-py3.7.egg/EGG-INFO/dependency_links.txt",
+      "path_type": "hardlink",
+      "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "size_in_bytes": 1
+    },
+    {
+      "_path": "site-packages/tethysapp_gfs-4-py3.7.egg/EGG-INFO/not-zip-safe",
+      "path_type": "hardlink",
+      "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "size_in_bytes": 1
+    },
+    {
+      "_path": "site-packages/tethysapp_gfs-4-py3.7.egg/EGG-INFO/top_level.txt",
+      "path_type": "hardlink",
+      "sha256": "7d8daaf5d6c818479efa8669f485e3634e81d2767a791f25d86e26746eb3a1be",
+      "size_in_bytes": 35
+    },
+    {
+      "_path": "site-packages/tethysapp_gfs-4-py3.7.egg/data_workflow/gfsworkflow.py",
+      "path_type": "hardlink",
+      "sha256": "4bacde052aae5bf189e12842956b3503906994629946da7ee255dd3d6f24b1ed",
+      "size_in_bytes": 16854
+    },
+    {
+      "_path": "site-packages/tethysapp_gfs-4-py3.7.egg/docs/conf.py",
+      "path_type": "hardlink",
+      "sha256": "83e410e748b71f9c86f79ea1e208b559d3f8460a2d990590bcdd21f38511e51a",
+      "size_in_bytes": 1936
+    },
+    {
+      "_path": "site-packages/tethysapp_gfs-4-py3.7.egg/tethysapp/gfs/__init__.py",
+      "path_type": "hardlink",
+      "sha256": "109cc1f83fc2143811ddb5839feabd881366ae668857c05098174d7dde599d5a",
+      "size_in_bytes": 47
+    },
+    {
+      "_path": "site-packages/tethysapp_gfs-4-py3.7.egg/tethysapp/gfs/ajax.py",
+      "path_type": "hardlink",
+      "sha256": "1d2078709f9e3fc857ce0f9c680d70b3a1e2d5a52bbf3c877ec491a8d742d3b0",
+      "size_in_bytes": 3409
+    },
+    {
+      "_path": "site-packages/tethysapp_gfs-4-py3.7.egg/tethysapp/gfs/api.py",
+      "path_type": "hardlink",
+      "sha256": "231f2e7fa741e64c47cf44258c060d1e01b18cc18fadc9da4746b0ddb5cfd4c0",
+      "size_in_bytes": 5582
+    },
+    {
+      "_path": "site-packages/tethysapp_gfs-4-py3.7.egg/tethysapp/gfs/app.py",
+      "path_type": "hardlink",
+      "sha256": "785a5165d971225c0dcacbad22d0b0a32a3d6e9a49213d27ea64db95e6d661e4",
+      "size_in_bytes": 3930
+    },
+    {
+      "_path": "site-packages/tethysapp_gfs-4-py3.7.egg/tethysapp/gfs/charts.py",
+      "path_type": "hardlink",
+      "sha256": "571ae3db968d29ff6f872dfb0594f6f3ca7d7929ac5c917b9c19494022ae419f",
+      "size_in_bytes": 3765
+    },
+    {
+      "_path": "site-packages/tethysapp_gfs-4-py3.7.egg/tethysapp/gfs/controllers.py",
+      "path_type": "hardlink",
+      "sha256": "d83dfc3517e581ee1ee2cf48f1eebac5dcaa4ccb80e2c6fd4adfc1a23dc759f2",
+      "size_in_bytes": 3724
+    },
+    {
+      "_path": "site-packages/tethysapp_gfs-4-py3.7.egg/tethysapp/gfs/options.py",
+      "path_type": "hardlink",
+      "sha256": "72fcc7290f95fac2465867c62399105f7a88f26270f95f6b4f7462b278b9f241",
+      "size_in_bytes": 16905
+    },
+    {
+      "_path": "site-packages/tethysapp_gfs-4-py3.7.egg/tethysapp/gfs/public/css/main.css",
+      "path_type": "hardlink",
+      "sha256": "f3f304fd541848944ff3d074f28a29c595d34cfedf639119f7fcc92e539c3462",
+      "size_in_bytes": 434
+    },
+    {
+      "_path": "site-packages/tethysapp_gfs-4-py3.7.egg/tethysapp/gfs/public/images/gfs.png",
+      "path_type": "hardlink",
+      "sha256": "3507390580dcd355336443766742bc3dcfc33c8c5c9f0e45605f978e31be83cd",
+      "size_in_bytes": 101612
+    },
+    {
+      "_path": "site-packages/tethysapp_gfs-4-py3.7.egg/tethysapp/gfs/public/js/bounds.js",
+      "path_type": "hardlink",
+      "sha256": "bcde3db8ac076129330205bd6a5958056eace2f9438b2f07077845792a3321e6",
+      "size_in_bytes": 1553
+    },
+    {
+      "_path": "site-packages/tethysapp_gfs-4-py3.7.egg/tethysapp/gfs/public/js/countries.js",
+      "path_type": "hardlink",
+      "sha256": "f8cbfa14d080cb25f3a422166e0c8d0c176840bc2800bf5e97dd2406bfd18b94",
+      "size_in_bytes": 3849
+    },
+    {
+      "_path": "site-packages/tethysapp_gfs-4-py3.7.egg/tethysapp/gfs/public/js/customShapeGJ.js",
+      "path_type": "hardlink",
+      "sha256": "10529abe3cc0876b0aa0585e21f4e96de88b816f72a08bc27a087d5573cc7977",
+      "size_in_bytes": 2673
+    },
+    {
+      "_path": "site-packages/tethysapp_gfs-4-py3.7.egg/tethysapp/gfs/public/js/leaflet_draw.js",
+      "path_type": "hardlink",
+      "sha256": "e1ee087e2487c87872705369643ff3eb0bf4371e5bf0499034eda238c00142c9",
+      "size_in_bytes": 839
+    },
+    {
+      "_path": "site-packages/tethysapp_gfs-4-py3.7.egg/tethysapp/gfs/public/js/leaflet_map.js",
+      "path_type": "hardlink",
+      "sha256": "61c22d3d49fe82c62f4e1ed52fd6bbccceaaa7572fc57cbff95f349570dafbc1",
+      "size_in_bytes": 8094
+    },
+    {
+      "_path": "site-packages/tethysapp_gfs-4-py3.7.egg/tethysapp/gfs/public/js/main.js",
+      "path_type": "hardlink",
+      "sha256": "c5f9c1ba30411baf4c8153f36f31295ff78daabf5c4867d304fb657826312f35",
+      "size_in_bytes": 3683
+    },
+    {
+      "_path": "site-packages/tethysapp_gfs-4-py3.7.egg/tethysapp/gfs/public/js/plotly.js",
+      "path_type": "hardlink",
+      "sha256": "7febfa8efc37e90f6d0c6c0e5fd49bf1d1416b5f11913cbad30b08ad2c0557d1",
+      "size_in_bytes": 5435
+    },
+    {
+      "_path": "site-packages/tethysapp_gfs-4-py3.7.egg/tethysapp/gfs/templates/gfs/base.html",
+      "path_type": "hardlink",
+      "sha256": "155c61a52b1b57fcf8179554e99e03a3cf59eea8f7c001f7b8e14503afba0c72",
+      "size_in_bytes": 5451
+    },
+    {
+      "_path": "site-packages/tethysapp_gfs-4-py3.7.egg/tethysapp/gfs/templates/gfs/home.html",
+      "path_type": "hardlink",
+      "sha256": "b8af7779a896812d8ea2623f5fd6fb58c0931ea5d4697108937569fa071529e9",
+      "size_in_bytes": 8029
+    },
+    {
+      "_path": "site-packages/tethysapp_gfs-4-py3.7.egg/tethysapp/gfs/tests/__init__.py",
+      "path_type": "hardlink",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_in_bytes": 0
+    },
+    {
+      "_path": "site-packages/tethysapp_gfs-4-py3.7.egg/tethysapp/gfs/tests/tests.py",
+      "path_type": "hardlink",
+      "sha256": "72d54d92a46566f7f8342b94722926b4a5238ef78336649db783b46bfa475d3d",
+      "size_in_bytes": 8271
+    },
+    {
+      "_path": "site-packages/tethysapp_gfs-4-py3.7.egg/tethysapp/gfs/utilities.py",
+      "path_type": "hardlink",
+      "sha256": "63246140c1a3b0615a302b127a3aedcb6473f24ec3195bb25177352698f2a890",
+      "size_in_bytes": 950
+    },
+    {
+      "_path": "site-packages/tethysapp_gfs.pth",
+      "path_type": "hardlink",
+      "sha256": "ac73d81112c94b1f7a8ea61583238a6f5ce1599595053538b83d19474800d7fb",
+      "size_in_bytes": 28
+    }
+  ],
+  "paths_version": 1
+}

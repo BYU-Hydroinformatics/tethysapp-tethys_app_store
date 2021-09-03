@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<timeSeriesResponse xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.cuahsi.org/waterML/1.1/">
+    <queryInfo>
+        <creationTime>2015-04-17T11:04:51-06:00</creationTime>
+        <criteria MethodCalled="GetValues">
+            <parameter name="site" value="user defined" />
+            <parameter name="variable" value="MODIS:SCA" />
+        </criteria>
+    </queryInfo>
+    <timeSeries>
+        <sourceInfo xsi:type="SiteInfoType">
+            <siteName>{{ site_name }}</siteName>
+            <siteCode network="MODIS_TERRA_SNOW_COVER">{{ site_name }}</siteCode>
+            <geoLocation>
+                <geogLocation xsi:type="LatLonPointType">
+                    <latitude>{{ lat }}</latitude>
+                    <longitude>{{ lon }}</longitude>
+                </geogLocation>
+            </geoLocation>
+            <elevation_m>0</elevation_m>
+            <verticalDatum>Unknown</verticalDatum>
+        </sourceInfo>
+        <variable>
+            <variableCode vocabulary="MODIS_TERRA_SNOW_COVER" default="true" variableID="7">SCA</variableCode>
+            <variableName>Percent Snow Cover</variableName>
+            <valueType>Derived Value</valueType>
+            <dataType>Continuous</dataType>
+            <generalCategory>Climate</generalCategory>
+            <sampleMedium>Snow</sampleMedium>
+            <unit>
+                <unitName>percent </unitName>
+                <unitType>Dimensionless</unitType>
+                <unitAbbreviation>%</unitAbbreviation>
+                <unitCode>1</unitCode>
+            </unit>
+            <noDataValue>-9999</noDataValue>
+            <timeScale isRegular="true">
+                <unit>
+                    <unitName>day</unitName>
+                    <unitType>Time</unitType>
+                    <unitAbbreviation>d</unitAbbreviation>
+                    <unitCode>104</unitCode>
+                </unit>
+                <timeSupport>0</timeSupport>
+            </timeScale>
+            <speciation>Not applicable</speciation>
+        </variable>
+        <values>
+            {% for tvp in time_series %}
+            <value censorCode="nc" dateTime="{{tvp.date}}" timeOffset="-7" dateTimeUTC="{{tvp.date}}" methodCode="1" sourceCode="1" qualityControlLevelCode="1">{{tvp.val}}</value>
+            {% endfor %}
+            <qualityControlLevel qualityControlLevelID="1">
+                <qualityControlLevelCode>1</qualityControlLevelCode>
+                <definition>Raw data</definition>
+                <explanation>The data was not quality controlled. Errors may exist in the data.</explanation>
+            </qualityControlLevel>
+            <method methodID="1">
+                <methodCode>1</methodCode>
+                <methodDescription>The original data is based on the MODIS TERRA MOD10_L3 fractional snow cover dataset. It was extracted by Snow Inspector application from the NASA GIBS MODIS TERRA snow cover WMTS web service.</methodDescription>
+                <methodLink></methodLink>
+            </method>
+            <source sourceID="1">
+            <sourceCode>1</sourceCode>
+            <organization>NASA GIBS</organization>
+            <sourceDescription>NASA GIBS and BYU</sourceDescription>
+            <contactInformation>
+                <contactName>Jiri Kadlec</contactName>
+                <typeOfContact>main</typeOfContact>
+                <email>jirikadlec2@gmail.com</email>
+                <phone>435-315-5263</phone><address xsi:type="xsd:string">Clyde Building, Provo, Utah, 84604</address>
+            </contactInformation>
+            <sourceLink>http://tools.hydroshare.org/apps/snow-inspector</sourceLink>
+            <citation>MODIS TERRA daily percent of snow cover in the 500x500 m pixel extracted using the Snow Inspector application from the WMTS web service. Data source: http://catalog.data.gov/dataset/gibs-web-map-tile-service-wmts</citation>
+            </source>
+            <censorCode>
+                <censorCode>nc</censorCode>
+                <censorCodeDescription>not censored</censorCodeDescription>
+            </censorCode>
+        </values>
+    </timeSeries>
+</timeSeriesResponse>

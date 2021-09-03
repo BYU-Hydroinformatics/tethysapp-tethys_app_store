@@ -1,0 +1,84 @@
+{% extends "gwlm/base.html" %}
+{% load tethys_gizmos %}
+{% load static %}
+
+{% block app_content %}
+<h3>Add Measurements</h3>
+<div id="message" class="alert alert-danger hidden" role="alert"></div>
+
+{% gizmo region_select %}
+<p class="help-block">Don't see the Region you want? Add one <a href="{% url 'gwlm:add-region' %}">here</a>.</p>
+
+{% gizmo aquifer_select %}
+<p class="help-block">Don't see the Aquifer you want? Add one <a href="{% url 'gwlm:add-aquifer' %}">here</a>.</p>
+
+{% gizmo variable_select %}
+<p class="help-block">Don't see the Variable you want? Add one <a href="{% url 'gwlm:add-variable' %}">here</a>.</p>
+
+<div class="form-group shp_upload">
+    <label class="control-label" for="shp-upload-input">Shapefile (.shp, .shx, .dbf required) or .csv file:</label>
+    <input id="shp-upload-input" name="shp-upload-input" type="file" accept=".shp,.shx,.prj,.dbf,.csv" multiple>
+</div>
+{% gizmo attributes_button %}
+
+<div type="button" data-toggle="modal" class="btn btn-primary" data-target="#measurements-modal">
+    Measurements Wizard
+</div>
+
+{% endblock %}
+
+{% block after_app_content %}
+<!-- Update Modal -->
+<form class="modal fade" id="measurements-modal" tabindex="-1" role="dialog" aria-labelledby="measurements-modal-label">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h5 class="modal-title" id="update-modal-label">Measurements Wizard</h5>
+            </div>
+            <div class="modal-body" >
+                <div class="attributes hidden">
+                    <label for="aquifer_attributes">
+                        Select Aquifer Id Column
+                    </label>
+                    <select  class="aquifer_attributes" name="aquifer_attributes" id="aquifer_attributes" style="width: 100%">
+                    </select>
+                </div>
+                <div class="attributes hidden">
+                    <label for="id_attributes">
+                        Select Well Id Column
+                    </label>
+                    <select  class="id_attributes" name="id_attributes" id="id_attributes" style="width: 100%">
+                    </select>
+                </div>
+                <div class="attributes hidden">
+                    <label for="time_attributes">
+                        Select Time Column
+                    </label>
+                    <select  class="time_attributes" name="time_attributes" id="time_attributes" style="width: 100%">
+                    </select>
+                </div>
+                <div class="attributes hidden">
+                    <label for="value_attributes">
+                        Select Measurement Column
+                    </label>
+                    <select  class="value_attributes" name="value_attributes" id="value_attributes" style="width: 100%">
+                    </select>
+                </div>
+                {% gizmo format_text_input %}
+                <p>Date Format in the Python Date Format. See the following for reference:
+                    <a target="_blank" href="https://strftime.org">https://strftime.org/</a></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-success submit-add-measurements" data-dismiss="modal">Add Measurements</button>
+            </div>
+        </div>
+    </div>
+</form>
+{% endblock %}
+
+{% block scripts %}
+{{ block.super }}
+<script src="{% static 'gwlm/js/add_measurements.js' %}" type="text/javascript"></script>
+{% endblock %}

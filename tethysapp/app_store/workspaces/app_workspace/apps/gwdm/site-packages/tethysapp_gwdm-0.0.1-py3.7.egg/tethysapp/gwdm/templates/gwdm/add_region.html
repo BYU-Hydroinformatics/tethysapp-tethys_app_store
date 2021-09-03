@@ -1,0 +1,22 @@
+{% extends "gwdm/base.html" %}
+{% load tethys_gizmos %}
+{% load staticfiles %}
+
+{% block app_content %}
+<h3>Add a Region</h3>
+<div id="message" class="alert alert-danger hidden" role="alert"></div>
+
+{% gizmo region_text_input %}
+
+<div class="form-group shp_upload">
+    <label class="control-label" for="shp-upload-input">Shapefile (.shp, .shx, .dbf required) or .csv or .geojson file:</label>
+    <input id="shp-upload-input" name="shp-upload-input" type="file" accept=".shp,.shx,.prj,.dbf,.csv,.geojson" multiple>
+</div>
+
+{% gizmo add_button %}
+{% endblock %}
+
+{% block scripts %}
+{{ block.super }}
+<script src="{% static 'gwdm/js/add_region.js' %}" type="text/javascript"></script>
+{% endblock %}

@@ -1,0 +1,18 @@
+{
+  "arch": null,
+  "build": "py_0",
+  "build_number": 0,
+  "depends": [
+    "gitpython",
+    "pygithub",
+    "python",
+    "requests"
+  ],
+  "license": "BSD 3-Clause License",
+  "name": "warehouse",
+  "noarch": "python",
+  "platform": null,
+  "subdir": "noarch",
+  "timestamp": 1619458714012,
+  "version": "0.3.0"
+}

@@ -1,0 +1,28 @@
+{
+  "arch": null,
+  "build": "0",
+  "build_number": 0,
+  "depends": [
+    "geojson",
+    "geopandas",
+    "gstools",
+    "matplotlib",
+    "pandarallel",
+    "python_abi 3.7.* *_cp37m",
+    "rioxarray",
+    "scipy",
+    "simplejson",
+    "sphinx",
+    "sphinx_rtd_theme",
+    "sphinxcontrib-napoleon",
+    "statsmodels",
+    "thredds_crawler"
+  ],
+  "license": "MIT",
+  "name": "gwlm",
+  "noarch": "python",
+  "platform": null,
+  "subdir": "noarch",
+  "timestamp": 1595467192512,
+  "version": "0.0.1"
+}

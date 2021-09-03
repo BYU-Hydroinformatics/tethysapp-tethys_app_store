@@ -1,0 +1,55 @@
+# This file created by conda-build 3.21.4
+# meta.yaml template originally from:
+# /github/workspace/conda.recipes, last modified Mon Apr 26 17:36:04 2021
+# ------------------------------------------------
+
+package:
+  name: warehouse
+  version: 0.3.0
+source:
+  path: /github/workspace
+build:
+  noarch: python
+  preserve_egg_dir: true
+  script: python setup.py install --record=record.txt
+  string: py_0
+requirements:
+  build:
+    - _libgcc_mutex 0.1 conda_forge
+    - _openmp_mutex 4.5 1_gnu
+    - ca-certificates 2020.12.5 ha878542_0
+    - certifi 2020.12.5 py37h89c1867_1
+    - ld_impl_linux-64 2.35.1 hea4e1c9_2
+    - libffi 3.3 h58526e2_2
+    - libgcc-ng 9.3.0 h2828fa1_19
+    - libgomp 9.3.0 h2828fa1_19
+    - libstdcxx-ng 9.3.0 h6de172a_19
+    - ncurses 6.2 h58526e2_4
+    - openssl 1.1.1k h7f98852_0
+    - pip 21.1 pyhd8ed1ab_0
+    - python 3.7.10 hffdb5ce_100_cpython
+    - python_abi 3.7 1_cp37m
+    - readline 8.1 h46c0cb4_0
+    - setuptools 49.6.0 py37h89c1867_3
+    - sqlite 3.35.5 h74cdb3f_0
+    - tk 8.6.10 h21135ba_1
+    - wheel 0.36.2 pyhd3deb0d_0
+    - xz 5.2.5 h516909a_1
+    - zlib 1.2.11 h516909a_1010
+  run:
+    - gitpython
+    - pygithub
+    - python
+    - requests
+about:
+  author: Rohit Khattar
+  description: Tethys Application Warehouse
+  dev_url: https://github.com/BYU-Hydroinformatics/warehouse
+  license: BSD 3-Clause License
+extra:
+  author_email: rohitkhattar11@gmail.com
+  copy_test_source_files: true
+  final: true
+  keywords: Tethys, Warehouse, Conda
+  recipe-maintainers:
+    - RohitKhattar

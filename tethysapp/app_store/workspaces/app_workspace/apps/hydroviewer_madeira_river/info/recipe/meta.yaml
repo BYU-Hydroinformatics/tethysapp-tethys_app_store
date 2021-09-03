@@ -1,0 +1,61 @@
+# This file created by conda-build 3.18.11
+# meta.yaml template originally from:
+# /github/workspace/conda.recipes, last modified Mon Aug  3 17:22:31 2020
+# ------------------------------------------------
+
+package:
+    name: hydroviewer_madeira_river
+    version: '1'
+source:
+    path: /github/workspace
+build:
+    noarch: python
+    preserve_egg_dir: true
+    script: python setup.py install --record=record.txt
+    string: '0'
+requirements:
+    build:
+        - _libgcc_mutex 0.1 conda_forge
+        - _openmp_mutex 4.5 1_gnu
+        - ca-certificates 2020.6.20 hecda079_0
+        - certifi 2020.6.20 py37hc8dfbb8_0
+        - ld_impl_linux-64 2.34 hc38a660_9
+        - libffi 3.2.1 he1b5a44_1007
+        - libgcc-ng 9.3.0 h24d8f2e_14
+        - libgomp 9.3.0 h24d8f2e_14
+        - libstdcxx-ng 9.3.0 hdf63c60_14
+        - ncurses 6.2 he1b5a44_1
+        - openssl 1.1.1g h516909a_1
+        - pip 20.2 py_0
+        - python 3.7.8 h6f2ec95_1_cpython
+        - python_abi 3.7 1_cp37m
+        - readline 8.0 he28a2e2_2
+        - setuptools 49.2.1 py37hc8dfbb8_0
+        - sqlite 3.32.3 hcee41ef_1
+        - tk 8.6.10 hed695b0_0
+        - wheel 0.34.2 py_1
+        - xz 5.2.5 h516909a_1
+        - zlib 1.2.11 h516909a_1006
+    run:
+        - bs4
+        - geoglows>=0.18.1
+        - hydrostats
+        - lxml
+        - numpy
+        - pandas
+        - plotly
+        - python_abi 3.7.* *_cp37m
+        - requests
+        - scipy
+about:
+    author: Jorge Luis Sanchez-Lozano, Chris Edwards, Anna Cecil, Tessa Muir
+    description: This app evaluates the accuracy for the historical streamflow values
+        obtained from Streamflow Prediction Tool in Madeira River Basin.
+extra:
+    author_email: jorgessanchez7@gmail.com, chris3edwards3@gmail.com, anna.cecil1999@gmail.com,
+        tessmuir16@gmail.com
+    copy_test_source_files: true
+    final: true
+    keywords: Historical Validation Tool
+    recipe-maintainers:
+        - TethysAppWarehouse

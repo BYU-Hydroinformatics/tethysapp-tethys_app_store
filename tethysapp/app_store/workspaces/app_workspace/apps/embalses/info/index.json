@@ -1,0 +1,19 @@
+{
+  "arch": null,
+  "build": "py_0",
+  "build_number": 0,
+  "depends": [
+    "google-api-python-client",
+    "pandas",
+    "python",
+    "requests",
+    "xlrd"
+  ],
+  "license": "MIT License",
+  "name": "embalses",
+  "noarch": "python",
+  "platform": null,
+  "subdir": "noarch",
+  "timestamp": 1600286779224,
+  "version": "1.0.0"
+}

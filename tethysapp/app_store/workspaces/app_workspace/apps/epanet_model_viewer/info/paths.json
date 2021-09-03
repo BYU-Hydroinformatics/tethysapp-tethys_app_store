@@ -1,0 +1,3191 @@
+{
+  "paths": [
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/EGG-INFO/PKG-INFO",
+      "path_type": "hardlink",
+      "sha256": "b3ee40514c066d7cf64b8093ff7e94fc5433a4d8bebacc514e76f0726693c07b",
+      "size_in_bytes": 203
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/EGG-INFO/SOURCES.txt",
+      "path_type": "hardlink",
+      "sha256": "95fbe995f6d289268f228ceca8bed1e766fcaf7d80beffb7b60f57d34fbcda48",
+      "size_in_bytes": 580
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/EGG-INFO/dependency_links.txt",
+      "path_type": "hardlink",
+      "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "size_in_bytes": 1
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/EGG-INFO/not-zip-safe",
+      "path_type": "hardlink",
+      "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "size_in_bytes": 1
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/EGG-INFO/top_level.txt",
+      "path_type": "hardlink",
+      "sha256": "a191b84ae1684f532955c88ff8022d4dd6c51f6aa209ff78a3016a0dca775f7e",
+      "size_in_bytes": 10
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/__init__.py",
+      "path_type": "hardlink",
+      "sha256": "109cc1f83fc2143811ddb5839feabd881366ae668857c05098174d7dde599d5a",
+      "size_in_bytes": 47
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/ajax_controllers.py",
+      "path_type": "hardlink",
+      "sha256": "b4a66bca6b2b1ecd807ebba36cc5949593839eefbaa8ddbe961c478c06b35294",
+      "size_in_bytes": 8344
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/app.py",
+      "path_type": "hardlink",
+      "sha256": "dda39d82c4cc0228abbaf1d1c8466143c98f04c105e1b83b11dd9e21dd8d466c",
+      "size_in_bytes": 1402
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/controllers.py",
+      "path_type": "hardlink",
+      "sha256": "af85261993b2f3e10db85333f4a98f321445643509644faaea1a233df649813b",
+      "size_in_bytes": 307
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/handoff.py",
+      "path_type": "hardlink",
+      "sha256": "005cc35265c8d75aa6890dd599a358162a0bb0fba8bb523d85a40ff45a301020",
+      "size_in_bytes": 128
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/css/main.css",
+      "path_type": "hardlink",
+      "sha256": "2b374c4f3e6ad18c3a5860692424e8ce939947f388e1b6388f63719867e4dd3f",
+      "size_in_bytes": 11300
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/images/NCIMM.png",
+      "path_type": "hardlink",
+      "sha256": "d1546df405ba87f1919511076e1a36c945cbc30949f24f2682e4af381befc4dc",
+      "size_in_bytes": 15500
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/images/byu-medallion.png",
+      "path_type": "hardlink",
+      "sha256": "f8c9e0081a97ddf1705e6c0ab658f61217cae83c5e2f764c72c29ed170f2f68c",
+      "size_in_bytes": 41728
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/images/cursor.png",
+      "path_type": "hardlink",
+      "sha256": "7db9a609f184448285fa49a20a65f7f694b2121866f80e83725ca51d78d95cfd",
+      "size_in_bytes": 1000
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/images/icon.gif",
+      "path_type": "hardlink",
+      "sha256": "2c7a238a28ce00cec1d7e279a46ab05d2740269d0d9c8ec06d4b5ccc741d339b",
+      "size_in_bytes": 14125
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/images/junction.png",
+      "path_type": "hardlink",
+      "sha256": "994e5b3edd2361c09dee2495ab2b7025177ccd65c843b31c5938c13705b8920d",
+      "size_in_bytes": 16446
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/images/label.png",
+      "path_type": "hardlink",
+      "sha256": "6fbc3068605d28d459df4124ed21482ef6f649473a93e18575376e794c59b9d9",
+      "size_in_bytes": 16446
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/images/loading-animation.gif",
+      "path_type": "hardlink",
+      "sha256": "6c108c7663bf8e35d9df1ab89fb41a648b4d7342c70faaa3319d8244edc4f379",
+      "size_in_bytes": 3951
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/images/pipe.png",
+      "path_type": "hardlink",
+      "sha256": "f5e3eff0fc4ccb3e97062bce563e7e2f28fba4a06f8cafa6d6b196eae64597d7",
+      "size_in_bytes": 16446
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/images/pump.png",
+      "path_type": "hardlink",
+      "sha256": "68f673d43ebf0c5da25c8a3c6b247fa034b6c216348011a2bd7527608e7c0cf5",
+      "size_in_bytes": 16446
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/images/reservoir.png",
+      "path_type": "hardlink",
+      "sha256": "44066cf82507573f21e5a6df1b118d6c0bd72ef07cc37da8e090c9b7b55d25ae",
+      "size_in_bytes": 16446
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/images/tank.png",
+      "path_type": "hardlink",
+      "sha256": "d12efe7008bb8d61a1dae3b49d49eafd08aa2d46fdd487e785d6a08246c575f4",
+      "size_in_bytes": 16446
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/images/valve.png",
+      "path_type": "hardlink",
+      "sha256": "e79778d4ab5ee84787d96b2cd59a9e0d4e1e369e70a1bd4fbef195169d1df41f",
+      "size_in_bytes": 16446
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/js/epanet_reader.js",
+      "path_type": "hardlink",
+      "sha256": "d2502c18bb075b7c4c01e2be2ef93c6b63429255ba118151d0b86e0dfb3367d3",
+      "size_in_bytes": 17423
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/js/epanet_writer.js",
+      "path_type": "hardlink",
+      "sha256": "2540961241032d85acdee12e048c3c605771abc3aaadd3fdaa07e411331ed6de",
+      "size_in_bytes": 9488
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/js/main.js",
+      "path_type": "hardlink",
+      "sha256": "96c20928f37d5f76e60e610be85e32818cc7ff391974ac24a2dc6ac79d975654",
+      "size_in_bytes": 170599
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/.gitignore",
+      "path_type": "hardlink",
+      "sha256": "f2472f98394f7e4894f23cc03bff9c9251c6842935f20bdb35ca7f0f3751cc30",
+      "size_in_bytes": 49
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/.npmignore",
+      "path_type": "hardlink",
+      "sha256": "ac2b7cad4785c13b451d44467e7af466275e250309894f9cf90bd619398846b1",
+      "size_in_bytes": 89
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/.travis.yml",
+      "path_type": "hardlink",
+      "sha256": "544dee0b194ae0786b61b2538a14e08d99c77444c4812ae4a47fea6e2042eac8",
+      "size_in_bytes": 62
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/AUTHORS",
+      "path_type": "hardlink",
+      "sha256": "de1ebdc9afb1af827754df57f872d675fc9c6442f46a03f9e13bb6d84c7e903f",
+      "size_in_bytes": 1584
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/CHANGELOG.md",
+      "path_type": "hardlink",
+      "sha256": "d79eead63764f21ded6331d700d99c15febbe50fae32b1c8388c3b4368ee94b4",
+      "size_in_bytes": 17934
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/Gruntfile.js",
+      "path_type": "hardlink",
+      "sha256": "aebfa09a05d1e96edc4e3518a26661b4aa25fa9528cb38d6bb6739a21d5c1abe",
+      "size_in_bytes": 7174
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/LICENSE.txt",
+      "path_type": "hardlink",
+      "sha256": "e1c0ad728983d8a57335e52cf1064f1affd1d454173d8cebd3ed8b4a72b48704",
+      "size_in_bytes": 35121
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/README.md",
+      "path_type": "hardlink",
+      "sha256": "5790c1cd996df92504fb1f058f3b950f0d94df47e584c6df38ad3421ce4be31c",
+      "size_in_bytes": 8077
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/dist/plugins.js",
+      "path_type": "hardlink",
+      "sha256": "c56fcfdedf9f6673763052be5093b97c412c2c72b68b451cef87c21651c7fdc3",
+      "size_in_bytes": 792304
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/dist/plugins.min.js",
+      "path_type": "hardlink",
+      "sha256": "ae0c6f14d9cdc981b255b654eeae602ef09df3a5d15e1f158d9c5000fa918f78",
+      "size_in_bytes": 299080
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/dist/plugins.min.js.map",
+      "path_type": "hardlink",
+      "sha256": "ac976307a756bcd4fddb20fa24d1aa7306b96cf93ba30b612103a7d9f816ecb1",
+      "size_in_bytes": 388292
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/dist/plugins/sigma.exporters.gexf.min.js",
+      "path_type": "hardlink",
+      "sha256": "3234617065f3bbbd78e9e97d86e98ae75559222c24e8811a327144437d29d083",
+      "size_in_bytes": 5585
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/dist/plugins/sigma.exporters.gexf.min.js.map",
+      "path_type": "hardlink",
+      "sha256": "c725ef8047f9b26ea5bac1aa8664ac7b551195bba934a93c0fe4c56105086ae1",
+      "size_in_bytes": 7477
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/dist/plugins/sigma.exporters.graphml.min.js",
+      "path_type": "hardlink",
+      "sha256": "f54c03b70593586b89f1afdf29b3b4f5d4b2bda8ab0bd2090ea5ba13bc751066",
+      "size_in_bytes": 4922
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/dist/plugins/sigma.exporters.graphml.min.js.map",
+      "path_type": "hardlink",
+      "sha256": "51914d540c13f371051ef538afda7f9b13fdc7acb33241f75e849c4d86b0a069",
+      "size_in_bytes": 6948
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/dist/plugins/sigma.exporters.image.min.js",
+      "path_type": "hardlink",
+      "sha256": "4524791c64c205fc29b6a03b1c3cab0bc448652cfa907b5cc2f95aca0663df85",
+      "size_in_bytes": 3839
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/dist/plugins/sigma.exporters.image.min.js.map",
+      "path_type": "hardlink",
+      "sha256": "7559ce6260f5442d37d2dc8f5d09f8c4b62e3b7b901ff7add582a857e839c46b",
+      "size_in_bytes": 6116
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/dist/plugins/sigma.exporters.json.min.js",
+      "path_type": "hardlink",
+      "sha256": "43179583a25bf7eee18b9950b16ba547430d53967e9b7319fff5f2561ffb5936",
+      "size_in_bytes": 1426
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/dist/plugins/sigma.exporters.json.min.js.map",
+      "path_type": "hardlink",
+      "sha256": "319e88aeeb07c2e67c400b7f6cada2686c15af4b1cddcaf46627059f5edc525e",
+      "size_in_bytes": 1999
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/dist/plugins/sigma.exporters.spreadsheet.min.js",
+      "path_type": "hardlink",
+      "sha256": "90ba7ee1c292592e8594a86f7cb639e1426f831f5b224b2f777ab43185510ee0",
+      "size_in_bytes": 2531
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/dist/plugins/sigma.exporters.spreadsheet.min.js.map",
+      "path_type": "hardlink",
+      "sha256": "d6fcc35c98480c9765d2ea8fbaf3d4dfc0762caf9a5b4cd81fd041e44ff7e5b7",
+      "size_in_bytes": 3664
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/dist/plugins/sigma.exporters.svg.min.js",
+      "path_type": "hardlink",
+      "sha256": "7df1a23f1d273ebc11cb5f388f0c427faa34b0a245adf5f744f37a2a5af41458",
+      "size_in_bytes": 3255
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/dist/plugins/sigma.exporters.svg.min.js.map",
+      "path_type": "hardlink",
+      "sha256": "7e6fe513ef45d88ab38b4cd814d3ab92d0012a80c35a939a21c238c6b6f09995",
+      "size_in_bytes": 4101
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/dist/plugins/sigma.exporters.xlsx.min.js",
+      "path_type": "hardlink",
+      "sha256": "a619a8ef41e50b1dbbec37e1da4d9e1e0c700a8bef62092c11e57d7260690711",
+      "size_in_bytes": 3301
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/dist/plugins/sigma.exporters.xlsx.min.js.map",
+      "path_type": "hardlink",
+      "sha256": "859b24ee41589a143db898d45b30042c84d416f1c2797e1e90ae1ce3e996a500",
+      "size_in_bytes": 5418
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/dist/plugins/sigma.helpers.graph.min.js",
+      "path_type": "hardlink",
+      "sha256": "0574145b57135e3e34f4777e1cfe5833534dac245e26631715facdf5583f6ac9",
+      "size_in_bytes": 3377
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/dist/plugins/sigma.helpers.graph.min.js.map",
+      "path_type": "hardlink",
+      "sha256": "dc622c7d87dc3e6398fa568cd17f90d3c8038d3192c16f402b32010b4d7ae980",
+      "size_in_bytes": 3399
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/dist/plugins/sigma.layouts.dagre.min.js",
+      "path_type": "hardlink",
+      "sha256": "27d5e43890351b12d6ef34c6b4f42927f0dfaa76c67723f6b5559b6d02434ef2",
+      "size_in_bytes": 3663
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/dist/plugins/sigma.layouts.dagre.min.js.map",
+      "path_type": "hardlink",
+      "sha256": "68cf50b00c762f311c55c468545060542616128f3a653599a4b3819839cf9b91",
+      "size_in_bytes": 5327
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/dist/plugins/sigma.layouts.forceAtlas2.min.js",
+      "path_type": "hardlink",
+      "sha256": "7cf73dfe74dbde078a401718adc3bec62666e0a39a75f5b4696396feeb043ba6",
+      "size_in_bytes": 11587
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/dist/plugins/sigma.layouts.forceAtlas2/supervisor.js",
+      "path_type": "hardlink",
+      "sha256": "6e59a75837881301e3857d515e6a602446fbe00a9944170553cc12c2cf49f641",
+      "size_in_bytes": 4461
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/dist/plugins/sigma.layouts.forceAtlas2/supervisor.js.map",
+      "path_type": "hardlink",
+      "sha256": "937ba00a86f8809338dbeec54166bfe00cb171a5f54c6a3649f1758205021b21",
+      "size_in_bytes": 5498
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/dist/plugins/sigma.layouts.forceAtlas2/worker.js",
+      "path_type": "hardlink",
+      "sha256": "76fd0451223cc396ffd26cb914a6eff2fd6ef90239c2d37c3c2f2bf8867ae8fd",
+      "size_in_bytes": 10617
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/dist/plugins/sigma.layouts.forceAtlas2/worker.js.map",
+      "path_type": "hardlink",
+      "sha256": "f6ea87c2db1e1bff6b5e8aa42760e526772834a5fb1256ead42438bb71ef0d12",
+      "size_in_bytes": 17009
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/dist/plugins/sigma.layouts.forceLink.min.js",
+      "path_type": "hardlink",
+      "sha256": "79188ddebfc8a15265e5830c1baf5cc7126e554dbee95d10d798f76e34f7da89",
+      "size_in_bytes": 14947
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/dist/plugins/sigma.layouts.forceLink/supervisor.js",
+      "path_type": "hardlink",
+      "sha256": "d9cb8ba68e14641936c71cded95258041e98e8dd72db1f95d55f0a1a88303b7e",
+      "size_in_bytes": 5573
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/dist/plugins/sigma.layouts.forceLink/supervisor.js.map",
+      "path_type": "hardlink",
+      "sha256": "6fd74fc3abb52347dd5534656606e781d3b9476a66ad6a0565542908cc068305",
+      "size_in_bytes": 6407
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/dist/plugins/sigma.layouts.forceLink/worker.js",
+      "path_type": "hardlink",
+      "sha256": "8a0a6110d2c458dab056760fcf2f394c866eb322b0052319768bbd624dd5447d",
+      "size_in_bytes": 13354
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/dist/plugins/sigma.layouts.forceLink/worker.js.map",
+      "path_type": "hardlink",
+      "sha256": "810f5b01036db86c9a788ee78ab07a2e8c404b2dbe85499058c446e372418a90",
+      "size_in_bytes": 21716
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/dist/plugins/sigma.layouts.fruchtermanReingold.min.js",
+      "path_type": "hardlink",
+      "sha256": "60d8ca6d6d6549a7fea5a2370efc13abf54a7d4f437343ab5d45e9835cb12976",
+      "size_in_bytes": 3512
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/dist/plugins/sigma.layouts.fruchtermanReingold.min.js.map",
+      "path_type": "hardlink",
+      "sha256": "9c84b66f637eeae3c8441b0c1321d64ddf99a761418119fd3be1000d9370192c",
+      "size_in_bytes": 5515
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/dist/plugins/sigma.layouts.noverlap.min.js",
+      "path_type": "hardlink",
+      "sha256": "e486ce40b17c8e643feedf77e3855d1f8666d74b531a47f820d1ea4de91ec7f7",
+      "size_in_bytes": 4439
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/dist/plugins/sigma.layouts.noverlap.min.js.map",
+      "path_type": "hardlink",
+      "sha256": "ad9b73f568381281d8a5a3fe7226697fd76e8ede7756b1fafca409645e7074c8",
+      "size_in_bytes": 7018
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/dist/plugins/sigma.parsers.cypher.min.js",
+      "path_type": "hardlink",
+      "sha256": "142e730449615ecc2fa667258f08a2897d3b44378443a5364acc94d8e0690f63",
+      "size_in_bytes": 2043
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/dist/plugins/sigma.parsers.cypher.min.js.map",
+      "path_type": "hardlink",
+      "sha256": "493d86aaddee4fc5bea83b87c78463f086adcb1fd97c9b893a31ad669da8e358",
+      "size_in_bytes": 2986
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/dist/plugins/sigma.parsers.gexf.min.js",
+      "path_type": "hardlink",
+      "sha256": "f2dc06f9ab95719f9bf5723baa82919468ffc4a38d1674a83469ce4595a286dd",
+      "size_in_bytes": 6496
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/dist/plugins/sigma.parsers.gexf.min.js.map",
+      "path_type": "hardlink",
+      "sha256": "34ac246f88721960e9929a0fd3c115bb34237a1be281b7d63a63ae0e467a9b7c",
+      "size_in_bytes": 9272
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/dist/plugins/sigma.parsers.json.min.js",
+      "path_type": "hardlink",
+      "sha256": "53bd2de1ccc668bd9a1a16d7a414b60502abbe80a09854a1b0c76a75904e9d0e",
+      "size_in_bytes": 858
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/dist/plugins/sigma.parsers.json.min.js.map",
+      "path_type": "hardlink",
+      "sha256": "75c6953903ce1f26abbd5ab8edd155e4e3574c88e663317417c7f22aac413f76",
+      "size_in_bytes": 1081
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/dist/plugins/sigma.pathfinding.astar.min.js",
+      "path_type": "hardlink",
+      "sha256": "88525047d372fa9946859c8559996a5eef1eaaeb5ddf3f02001479c65e26e283",
+      "size_in_bytes": 1173
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/dist/plugins/sigma.pathfinding.astar.min.js.map",
+      "path_type": "hardlink",
+      "sha256": "f5c01863e2e5859b2cffa30f01a49c9ded2c02c5b9d37ddf76f0072b32278641",
+      "size_in_bytes": 2299
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/dist/plugins/sigma.plugins.activeState.min.js",
+      "path_type": "hardlink",
+      "sha256": "c9d87d126d69af3b54aff78779b328e735c276ad312471e65ecdc32897a2f444",
+      "size_in_bytes": 5339
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/dist/plugins/sigma.plugins.activeState.min.js.map",
+      "path_type": "hardlink",
+      "sha256": "8de933edefb487b359df8e88a4df4bc1bbcfdb3ff05ad71ca0b1446b5b3537e1",
+      "size_in_bytes": 6451
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/dist/plugins/sigma.plugins.animate.min.js",
+      "path_type": "hardlink",
+      "sha256": "37d8048b7eb950e359bd3350595af1b1f098b8050f76eb4691e5fd8d72e4fc94",
+      "size_in_bytes": 1960
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/dist/plugins/sigma.plugins.animate.min.js.map",
+      "path_type": "hardlink",
+      "sha256": "fa902ba6cbcbe41fc6a8b25f6d3d9e7ac8b90d51db01d461db1b691fc27d45d3",
+      "size_in_bytes": 2979
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/dist/plugins/sigma.plugins.colorbrewer.min.js",
+      "path_type": "hardlink",
+      "sha256": "bcdfbb1620203c33c9a4c938d5b56b039bfce359a2b73062e703d197985c863a",
+      "size_in_bytes": 18472
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/dist/plugins/sigma.plugins.colorbrewer.min.js.map",
+      "path_type": "hardlink",
+      "sha256": "8703c159e7ff9636ca91df99f85315a509e1dce12095c1edcdaef73a147467a3",
+      "size_in_bytes": 11194
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/dist/plugins/sigma.plugins.design.min.js",
+      "path_type": "hardlink",
+      "sha256": "9934ea3f5fde53747b4602d02b919d33b9bd02808b16ea9d0db746906434ab72",
+      "size_in_bytes": 15738
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/dist/plugins/sigma.plugins.design.min.js.map",
+      "path_type": "hardlink",
+      "sha256": "f052cc0053e005dec703c4ec7abcfb8fbdb9786c94129c5fd59ffa375eaa9957",
+      "size_in_bytes": 18753
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/dist/plugins/sigma.plugins.dragNodes.min.js",
+      "path_type": "hardlink",
+      "sha256": "3a99b69f7c881119965f942a0404161658e14a29c9e7709983543ba002e9dc2a",
+      "size_in_bytes": 3775
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/dist/plugins/sigma.plugins.dragNodes.min.js.map",
+      "path_type": "hardlink",
+      "sha256": "063fb2fa6842dae9fb0b549834c574534efa4a611eb6f488ede9beb325274e25",
+      "size_in_bytes": 6186
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/dist/plugins/sigma.plugins.edgeSiblings.min.js",
+      "path_type": "hardlink",
+      "sha256": "82096a69498b3e310da6d87855bc4aad7179d30789a6bb4d52971f0c1cdc4d68",
+      "size_in_bytes": 4596
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/dist/plugins/sigma.plugins.edgeSiblings.min.js.map",
+      "path_type": "hardlink",
+      "sha256": "538d5fcd9c1deb2e4ef8a159c6c0d96f2631209cda74fd72f1f43b2405d54f7b",
+      "size_in_bytes": 4683
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/dist/plugins/sigma.plugins.filter.min.js",
+      "path_type": "hardlink",
+      "sha256": "39c2251e1444cf87472a6704da95b5e14a788f8f1bd6ad642b9741b49637476b",
+      "size_in_bytes": 6403
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/dist/plugins/sigma.plugins.filter.min.js.map",
+      "path_type": "hardlink",
+      "sha256": "4f260c1f708791b05dcd8b17995be6049d4580c5302d7c40ae1cd47e669a484b",
+      "size_in_bytes": 7227
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/dist/plugins/sigma.plugins.fullScreen.min.js",
+      "path_type": "hardlink",
+      "sha256": "670b014d756b4afe93535f68c7306fdde13e6d0154b4b5d6ee2bbc856f218e41",
+      "size_in_bytes": 1076
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/dist/plugins/sigma.plugins.fullScreen.min.js.map",
+      "path_type": "hardlink",
+      "sha256": "604d81090cb2fad9cf161691014f2f54e2f2bfb121fcbbf63724d0f83ddd2a3f",
+      "size_in_bytes": 1368
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/dist/plugins/sigma.plugins.generators.min.js",
+      "path_type": "hardlink",
+      "sha256": "0fd5decce473d15061c13584fa3f8dbae7b075a73ff0df0903de6095b0a5d876",
+      "size_in_bytes": 8419
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/dist/plugins/sigma.plugins.generators.min.js.map",
+      "path_type": "hardlink",
+      "sha256": "04654340c07147699d1b59de195594580ab737929dc6930f30b4788d6190c4d5",
+      "size_in_bytes": 10596
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/dist/plugins/sigma.plugins.keyboard.min.js",
+      "path_type": "hardlink",
+      "sha256": "eb46fabe509508ec8297f3ec4226dfda08b4627a8de517330b2032ceab530412",
+      "size_in_bytes": 2204
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/dist/plugins/sigma.plugins.keyboard.min.js.map",
+      "path_type": "hardlink",
+      "sha256": "5aff3e8325cd297665a9a6d56bb9bd85946ac0775642a142e0d3c9b56772a1d7",
+      "size_in_bytes": 2952
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/dist/plugins/sigma.plugins.lasso.min.js",
+      "path_type": "hardlink",
+      "sha256": "0e309e12293d6f3c936f1946dd6e84b01bc48df69986930474f0da4881a5d8cb",
+      "size_in_bytes": 4714
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/dist/plugins/sigma.plugins.lasso.min.js.map",
+      "path_type": "hardlink",
+      "sha256": "f97dc75680a58df08ca78d11c7e7ccbaf1a30ec7e8bfa770f066354e3f423851",
+      "size_in_bytes": 5644
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/dist/plugins/sigma.plugins.leaflet.min.js",
+      "path_type": "hardlink",
+      "sha256": "261efe37ee587461122192728396bebe7f9e557d22068310b8cff751ee2e0453",
+      "size_in_bytes": 8040
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/dist/plugins/sigma.plugins.leaflet.min.js.map",
+      "path_type": "hardlink",
+      "sha256": "1186d00295d2ff881778c48d7cd2cae3209eee988c1b36b4184432aadf59d6b7",
+      "size_in_bytes": 12161
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/dist/plugins/sigma.plugins.legend.min.js",
+      "path_type": "hardlink",
+      "sha256": "39f1f9410513a8d5ee87f45e252f745161fb8910c4a9545922ef63371d694477",
+      "size_in_bytes": 18293
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/dist/plugins/sigma.plugins.legend.min.js.map",
+      "path_type": "hardlink",
+      "sha256": "d162ffe7832bb8536837f43bffcc163d15c83eeae2ec3fe05f919b8be3792c41",
+      "size_in_bytes": 29350
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/dist/plugins/sigma.plugins.locate.min.js",
+      "path_type": "hardlink",
+      "sha256": "4ba2e317d6e655736f105cf530a5b8b1cc0d3027bcf83ed5c649d0e52267967c",
+      "size_in_bytes": 4545
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/dist/plugins/sigma.plugins.locate.min.js.map",
+      "path_type": "hardlink",
+      "sha256": "5432fe8310376311ad054b106853c1820834569e8a2a356c8e6f70c5f00662b8",
+      "size_in_bytes": 6638
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/dist/plugins/sigma.plugins.neighborhoods.min.js",
+      "path_type": "hardlink",
+      "sha256": "8ac36d7647d902c5a52c4baaf66b8815e9bdc0fa086956d1712b44cc754df645",
+      "size_in_bytes": 1402
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/dist/plugins/sigma.plugins.neighborhoods.min.js.map",
+      "path_type": "hardlink",
+      "sha256": "583ac840a3492b9165ded88e8569f2ddd679ee5509ced9c12d4ed4cb9027904e",
+      "size_in_bytes": 1972
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/dist/plugins/sigma.plugins.poweredBy.min.js",
+      "path_type": "hardlink",
+      "sha256": "3a764e43fc0eec4445046b0f5b436f09e579fb248d86abf50f9a07196b8836b9",
+      "size_in_bytes": 1173
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/dist/plugins/sigma.plugins.poweredBy.min.js.map",
+      "path_type": "hardlink",
+      "sha256": "1f6e7d82a5054020da90ba1d86cdb815761d387b645d5c5685ecd3e5036dfef5",
+      "size_in_bytes": 1467
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/dist/plugins/sigma.plugins.relativeSize.min.js",
+      "path_type": "hardlink",
+      "sha256": "01e6b64f3a9740453b14e5d66b9a03d90737b6d25e47d60571038b64ff8a1718",
+      "size_in_bytes": 345
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/dist/plugins/sigma.plugins.relativeSize.min.js.map",
+      "path_type": "hardlink",
+      "sha256": "7b5e42722be89358d4f2fcb3efe415c39ea000069a76657a17a51b938bcd673a",
+      "size_in_bytes": 609
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/dist/plugins/sigma.plugins.select.min.js",
+      "path_type": "hardlink",
+      "sha256": "2fe53a82d6d6e7e18a5ada3b9e157178d0b9bc8a87892083f70fdffa6e683006",
+      "size_in_bytes": 4253
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/dist/plugins/sigma.plugins.select.min.js.map",
+      "path_type": "hardlink",
+      "sha256": "547ba0a0b60563b0926ceeec3f0538bd05a4868d8a75b889791a8d6fe14bc34a",
+      "size_in_bytes": 5543
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/dist/plugins/sigma.plugins.tooltips.min.js",
+      "path_type": "hardlink",
+      "sha256": "e75b3350c7e2b81dbc9611e50f9c55c095b32408bd553c14ee4c977ce0f568c9",
+      "size_in_bytes": 7588
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/dist/plugins/sigma.plugins.tooltips.min.js.map",
+      "path_type": "hardlink",
+      "sha256": "02dce07be1d2a7c3c74add3438a4627e3ccf26738d020da824532545efe0dcef",
+      "size_in_bytes": 10058
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/dist/plugins/sigma.renderers.customEdgeShapes.min.js",
+      "path_type": "hardlink",
+      "sha256": "8cc676a1df8045a091592690d079043af25c1af38ba60afe90a35c3cb3cd2502",
+      "size_in_bytes": 10502
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/dist/plugins/sigma.renderers.customEdgeShapes.min.js.map",
+      "path_type": "hardlink",
+      "sha256": "6d400271f30092941a8e3f1d515b89f3b7dd2df0f04eca17a23b742a2f9efffa",
+      "size_in_bytes": 12606
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/dist/plugins/sigma.renderers.edgeLabels.min.js",
+      "path_type": "hardlink",
+      "sha256": "83df59d21989de10b56dcfaa8b280e61cdff74bfaf7b792d551928cc71c9272d",
+      "size_in_bytes": 8398
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/dist/plugins/sigma.renderers.edgeLabels.min.js.map",
+      "path_type": "hardlink",
+      "sha256": "31d2452dd425b66af2d20f3534174d722a59388c962e55dc18e8f5bfbcd61abd",
+      "size_in_bytes": 10891
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/dist/plugins/sigma.renderers.glyphs.min.js",
+      "path_type": "hardlink",
+      "sha256": "6671955a549883b014d1c1efb9ab2de6a5daac67136b2e9a70e4e425d798bd1d",
+      "size_in_bytes": 3274
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/dist/plugins/sigma.renderers.glyphs.min.js.map",
+      "path_type": "hardlink",
+      "sha256": "bf12d50f7ab70da968c8b77f437c96b816237b939af45bdee875320dbf528d72",
+      "size_in_bytes": 4811
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/dist/plugins/sigma.renderers.halo.min.js",
+      "path_type": "hardlink",
+      "sha256": "f5253fd275e66f913412b5727c147789ab7711e803f8d2320a2539f86e08dbf4",
+      "size_in_bytes": 3636
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/dist/plugins/sigma.renderers.halo.min.js.map",
+      "path_type": "hardlink",
+      "sha256": "652761fac0e518a3c95874f7dd305d60e8eabe30e6ff7cee7d9fb46634b9108d",
+      "size_in_bytes": 6201
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/dist/plugins/sigma.renderers.linkurious.min.js",
+      "path_type": "hardlink",
+      "sha256": "7a3e3f20d8bb779e996f5f08724f6d6d88bed9ada6411d4c654c0046da53ae79",
+      "size_in_bytes": 66734
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/dist/plugins/sigma.renderers.linkurious.min.js.map",
+      "path_type": "hardlink",
+      "sha256": "617efb957fd1069d88fcc9bfa663041e980724ba074b58958450baf1c59db9a0",
+      "size_in_bytes": 80439
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/dist/plugins/sigma.statistics.HITS.min.js",
+      "path_type": "hardlink",
+      "sha256": "02fe89c54714830a95441399f36575820a5f7e2c6432fa9e5de94adf082f0c01",
+      "size_in_bytes": 1217
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/dist/plugins/sigma.statistics.HITS.min.js.map",
+      "path_type": "hardlink",
+      "sha256": "165f6da5a2a0005b8d370ad78a3dea3a6f73d75d195e4d5acee71d8bd6d6270d",
+      "size_in_bytes": 2100
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/dist/plugins/sigma.statistics.louvain.min.js",
+      "path_type": "hardlink",
+      "sha256": "9486ce9172aec76a80da8e4666da2d7b4d255272d4415c228b41650d1e396211",
+      "size_in_bytes": 4835
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/dist/plugins/sigma.statistics.louvain.min.js.map",
+      "path_type": "hardlink",
+      "sha256": "36bc27e3a59b0dcf7ae161cbb4c52881c9149546b3ae600ab47be7745682d4e7",
+      "size_in_bytes": 8540
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/dist/sigma.js",
+      "path_type": "hardlink",
+      "sha256": "c592ff8aa3a0098e4246d977c5045d3cf7999f10c7125fb6bb1120eda6016201",
+      "size_in_bytes": 358716
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/dist/sigma.min.js",
+      "path_type": "hardlink",
+      "sha256": "8ea2375abf2d68fcc9ff459678a6d342630aeaa1143d9230b1058ffd299719a7",
+      "size_in_bytes": 119951
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/dist/sigma.min.js.map",
+      "path_type": "hardlink",
+      "sha256": "74c8fd9c3a1399d7d848b6c359b7ba270216304db455188e16ebce75eba307db",
+      "size_in_bytes": 162563
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/dist/sigma.require.js",
+      "path_type": "hardlink",
+      "sha256": "68d5f7449c65e48664cacae43776307ec6bb2301136ae21a38683025929df1ab",
+      "size_in_bytes": 359206
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/active-state.html",
+      "path_type": "hardlink",
+      "sha256": "ce9de80987b09bf3e8e7ae426925db50112af355fedc240f8f4b31d3586d62d6",
+      "size_in_bytes": 7474
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/add-node-on-click.html",
+      "path_type": "hardlink",
+      "sha256": "83fe2d736fc5aa1dc10b80bb1e1e9df2ad84f0affb81e354571676eb145f3792",
+      "size_in_bytes": 12345
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/animate.html",
+      "path_type": "hardlink",
+      "sha256": "e49d5a390a699960f5b2aca75e410871b98b661e7cd7a63a15e889500effb20d",
+      "size_in_bytes": 5315
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/api-candy.html",
+      "path_type": "hardlink",
+      "sha256": "30027a05c880c0e3c77a3e9c3c21cb3bfe84e96657722c9bc245fcf3077d8c72",
+      "size_in_bytes": 6212
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/autocurve-parallel-edges.html",
+      "path_type": "hardlink",
+      "sha256": "871b719884bda5b88fca5507a630ab46feb7d87e1dfc506371eec0cca8e42951",
+      "size_in_bytes": 6332
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/basic.html",
+      "path_type": "hardlink",
+      "sha256": "7b80dd56db6377be3d32a4b123431b97176189acba07c88814641644ad0e2824",
+      "size_in_bytes": 4317
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/custom-edge-renderer.html",
+      "path_type": "hardlink",
+      "sha256": "c55cb4a956d74aa5436560a1006f968065554c5f389a6623d708cb16e36d7de6",
+      "size_in_bytes": 5986
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/custom-node-renderer.html",
+      "path_type": "hardlink",
+      "sha256": "f31a4242990d4bf7f5a827877bab2b58af836409a9fd3aecf57b5658e973687b",
+      "size_in_bytes": 7700
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/dagre.html",
+      "path_type": "hardlink",
+      "sha256": "fb26d21220cdf158f465b9acffac282895ff236eb27693c6a35675df2a764e5c",
+      "size_in_bytes": 6283
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/data/airlines.gexf",
+      "path_type": "hardlink",
+      "sha256": "382ea4b2bb36a7eb1a57a2e8c953824f8c8b95cd1195e27d837f600260d6710b",
+      "size_in_bytes": 179791
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/data/arctic.gexf",
+      "path_type": "hardlink",
+      "sha256": "b0d8b759709cc03d3739cadcba4952be445cba0edf4fa9664e7bdd97131684c0",
+      "size_in_bytes": 917920
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/data/arctic.json",
+      "path_type": "hardlink",
+      "sha256": "960709669596dd58c01e2a012a6c3576452feaeb3b1a7b3b8e5aefa89e61251d",
+      "size_in_bytes": 525791
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/data/geolocalized.json",
+      "path_type": "hardlink",
+      "sha256": "4ba6757d1bbc3b7e53bc67d49ce25429b1959a7afccf5b404916f73c6bbf4044",
+      "size_in_bytes": 3147
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/data/moroccan-ediaspora.gexf",
+      "path_type": "hardlink",
+      "sha256": "9b5e239d779a40483fcd9dcccdb9cc4be3a7ef22d5744dd36ed160ad8bfa92e8",
+      "size_in_bytes": 262242
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/data/standard_graph.gexf",
+      "path_type": "hardlink",
+      "sha256": "0737c250acaa0f6c8513dd8730a9f948981a6ab4abcabaf62c273694b11c26b9",
+      "size_in_bytes": 6582
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/data/standard_graph_communities.gexf",
+      "path_type": "hardlink",
+      "sha256": "6e0c2058905e9ce370d454778ea93c9a03f9c15959381ac8c41ce0d778f5f10f",
+      "size_in_bytes": 11429
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/design.html",
+      "path_type": "hardlink",
+      "sha256": "aee075ed8900e888f822497e0bb0d2e44c70613219eda538e0a8d84bdc59e71f",
+      "size_in_bytes": 11175
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/drag-nodes.html",
+      "path_type": "hardlink",
+      "sha256": "dd29f1ad0fe411da5d37fddf27d071e5ed7cafbb440ed41922088106783e9aeb",
+      "size_in_bytes": 7127
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/edge-renderers.html",
+      "path_type": "hardlink",
+      "sha256": "dd4c7efc594a9932a6f95c7847f634ab04fd7c27fe25d8a4a214d4785a5e5612",
+      "size_in_bytes": 4990
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/edge-siblings.html",
+      "path_type": "hardlink",
+      "sha256": "eca09c85ef7d6a4957949b268d5039f0368f8f429aac4c92febede90d1dfcaa8",
+      "size_in_bytes": 4897
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/events-and-force.html",
+      "path_type": "hardlink",
+      "sha256": "920a444e639ef1fe6d17a1bcd31242ebcbff889ccdab527124880eec18a64142",
+      "size_in_bytes": 5475
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/events.html",
+      "path_type": "hardlink",
+      "sha256": "c1531ddae0976a5513e0258a49aeacc497295158c1a70c48c6ef899e38f05d68",
+      "size_in_bytes": 6666
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/filters.html",
+      "path_type": "hardlink",
+      "sha256": "ad2551ed0ae381af565a0badc2f28cac1113ff083b832164b6badb66d2a88af2",
+      "size_in_bytes": 9464
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/fonts/FontAwesome.otf",
+      "path_type": "hardlink",
+      "sha256": "f7b60acb8a44554b59ef3c31bae942be65e0f1045b55400807a2ac6fde2949ba",
+      "size_in_bytes": 75188
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/fonts/font-awesome.css",
+      "path_type": "hardlink",
+      "sha256": "fa6157c69856fb6d100bf1ff411f7d27d0eb9e8407be856b4ecc84babd6d54c8",
+      "size_in_bytes": 25152
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/fonts/fontawesome-webfont.eot",
+      "path_type": "hardlink",
+      "sha256": "9f8288933d2c87ab3cdbdbda5c9fa1e1e139b01c7c1d1983f91a13be85173975",
+      "size_in_bytes": 72449
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/fonts/fontawesome-webfont.svg",
+      "path_type": "hardlink",
+      "sha256": "4f1f9ffe01469bbd03b254ec563c304dd92276514110364148cb7ffdd75d3297",
+      "size_in_bytes": 253487
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/fonts/fontawesome-webfont.ttf",
+      "path_type": "hardlink",
+      "sha256": "c2a9333b008247abd42354df966498b4c2f1aa51a10b7e178a4f5df2edea4ce1",
+      "size_in_bytes": 141564
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/fonts/fontawesome-webfont.woff",
+      "path_type": "hardlink",
+      "sha256": "66db52b456efe7e29cec11fa09421d03cb09e37ed1b567307ec0444fd605ce31",
+      "size_in_bytes": 83760
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/force-background.html",
+      "path_type": "hardlink",
+      "sha256": "8e2c4a0e650c4113dae83afe249e0bb431c16e8ec7d7664249f9a157a5a2605f",
+      "size_in_bytes": 5836
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/force-graph-arctic.html",
+      "path_type": "hardlink",
+      "sha256": "4ac9b80b1c57b04353f1d1b43ac986e67bd1172b90a363527ef3181ef84eaad0",
+      "size_in_bytes": 6400
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/force-graph-community.html",
+      "path_type": "hardlink",
+      "sha256": "115a2cf3858c7725906b913e6f48f693b7933302ba186537689b5dfac3c89a54",
+      "size_in_bytes": 5085
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/force-node-siblings.html",
+      "path_type": "hardlink",
+      "sha256": "fe7ec6a13c3f1b33736b5046c42abd8105dab909ccd48dbb5917083e57c0b92b",
+      "size_in_bytes": 5742
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/force.html",
+      "path_type": "hardlink",
+      "sha256": "f2d6d401d5267f48cac4bcf8fd5d2422c1c14a60d53ac4b07d7bcbc2599ff867",
+      "size_in_bytes": 5117
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/glyphs-renderer-icons.html",
+      "path_type": "hardlink",
+      "sha256": "5d54bcbf4f6bc4f7734d42e630a20306c305f1a37d86899614fdaaffe8f49c9e",
+      "size_in_bytes": 6517
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/glyphs-renderer.html",
+      "path_type": "hardlink",
+      "sha256": "cb85ae0a83a35f6cbe2d0a79458d6c536dfdadf7cd23e1c4e9366850d7015390",
+      "size_in_bytes": 6054
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/img/img1.png",
+      "path_type": "hardlink",
+      "sha256": "ccf96ec183c85f2a6be557a3b5a693699dcb14f9982885e551e9d919f0563048",
+      "size_in_bytes": 310100
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/img/img2.png",
+      "path_type": "hardlink",
+      "sha256": "bb01913feb8f945bf7456b19218e210aea29956a73bd2dbd8fa4a3a4a6237825",
+      "size_in_bytes": 64986
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/img/img3.png",
+      "path_type": "hardlink",
+      "sha256": "de9592e3e0fc63d21bc9e12b3d3455cd1bb8fb1eef6e6c6e4c74b303c7be2a76",
+      "size_in_bytes": 37991
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/img/img4.png",
+      "path_type": "hardlink",
+      "sha256": "d19ce671ef4177c32187584bc83bba49aaa7289e26ab6612b9c1753db48b47df",
+      "size_in_bytes": 102662
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/index.html",
+      "path_type": "hardlink",
+      "sha256": "4527053b0b2da3e452a77eeda7b72086f89f5bdc60ed1dfef6894ec604ef4cda",
+      "size_in_bytes": 5239
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/lasso.html",
+      "path_type": "hardlink",
+      "sha256": "2087d2a4a70a61cff6b561faf60f0459d15f53e082ab863aee57e26d4ae3edbc",
+      "size_in_bytes": 9126
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/lib/dagre.js",
+      "path_type": "hardlink",
+      "sha256": "96a5c75915e155060a4e16382fd2dfac8c6c284dbfc49573edf647db82989f37",
+      "size_in_bytes": 338472
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/lib/jquery-2.1.1.min.js",
+      "path_type": "hardlink",
+      "sha256": "874706b2b1311a0719b5267f7d1cf803057e367e94ae1ff7bf78c5450d30f5d4",
+      "size_in_bytes": 84245
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/load-external-gexf.html",
+      "path_type": "hardlink",
+      "sha256": "41089b56bd8babb74fdbd45a3177c89466f74fd8ddb753223f1e4d193db5c57c",
+      "size_in_bytes": 4045
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/load-external-json.html",
+      "path_type": "hardlink",
+      "sha256": "647b84cdf329d57b531f2e26de6044b9ded2dd632817f5b77b4160ed2a0cb453",
+      "size_in_bytes": 4102
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/load-neo4j-cypher-query.html",
+      "path_type": "hardlink",
+      "sha256": "3e35468e244c1478048c2107bd2e00c3e625c6bc40c80696cd11fdcf4a53810d",
+      "size_in_bytes": 4912
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/locate.html",
+      "path_type": "hardlink",
+      "sha256": "545888861258528e04da62669b64d10d37213c83c1a6645cb8083a097dd603e2",
+      "size_in_bytes": 7459
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/neighborhoods-plugin.html",
+      "path_type": "hardlink",
+      "sha256": "28ab8c3459e4a1b67aad257d7e6bf8d02636cca2b9e591c70ecce07f59fcf1a0",
+      "size_in_bytes": 6191
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/node-labels.html",
+      "path_type": "hardlink",
+      "sha256": "f6ad15e402b3b64c62d20ffa025c6cb422c094555e87dd5174424b7384c36f9d",
+      "size_in_bytes": 4928
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/noverlap.html",
+      "path_type": "hardlink",
+      "sha256": "69e2d980c35473ad400a38bafee2f5cad6e07d4d4fcf7573341168514b20c3cb",
+      "size_in_bytes": 5056
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/parallel-edges.html",
+      "path_type": "hardlink",
+      "sha256": "d869bd7d4d3d2556b1503c1fec4a2efe0650512a8bb3fbdb48123dcaae355fd9",
+      "size_in_bytes": 5579
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/plugin-exporters-gexf.html",
+      "path_type": "hardlink",
+      "sha256": "0904815b20a0ed6857ab1d061c7cb8ee8ce7790254586d9be6fcad76ad103a97",
+      "size_in_bytes": 4718
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/plugin-exporters-graphml.html",
+      "path_type": "hardlink",
+      "sha256": "6d43db73c65a53ba6d9b7ef97a4736270c6e079709ec1691d6ba374eeb3f45f7",
+      "size_in_bytes": 6299
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/plugin-exporters-json.html",
+      "path_type": "hardlink",
+      "sha256": "fd4394a95d7e2cc3c88d932093c67f9b83f7fad447d85201e66101e8199c13cf",
+      "size_in_bytes": 4524
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/plugin-exporters-spreadsheet.html",
+      "path_type": "hardlink",
+      "sha256": "06f806504d33b1af76c1b41facb42ecf14b05a611ec6fb01b37d66c4d46bc5f2",
+      "size_in_bytes": 5607
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/plugin-exporters-xlsx.html",
+      "path_type": "hardlink",
+      "sha256": "a22e3564fc6e6bb5092be588b660812db87ca41838d8e70d607266dfbc48fc19",
+      "size_in_bytes": 5723
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/plugin-fullscreen.html",
+      "path_type": "hardlink",
+      "sha256": "1f5dd853fa89726be8c44b7dab7f07399fad45ba7f6b82454fe24d7cc8ea84e0",
+      "size_in_bytes": 5688
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/plugin-generators.html",
+      "path_type": "hardlink",
+      "sha256": "88880e2fea2e56b00fe9059d8e32506f435934ae909348f7537b826a89302780",
+      "size_in_bytes": 15281
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/plugin-halo.html",
+      "path_type": "hardlink",
+      "sha256": "10dfcad9b9712366dcfdb0a78624e33f2bb42fb316e76e894df2ca99628aa374",
+      "size_in_bytes": 5998
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/plugin-hits.html",
+      "path_type": "hardlink",
+      "sha256": "e512bf8d68bd08eec1d0c8811cf976455c8ff957f5bdb47eb5eed8ddd61063dc",
+      "size_in_bytes": 4470
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/plugin-image.html",
+      "path_type": "hardlink",
+      "sha256": "b822ed622033cfed5d41b506f7a08cc87ecb5d6b68da38728d71ab1e079ded9a",
+      "size_in_bytes": 6558
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/plugin-keyboard.html",
+      "path_type": "hardlink",
+      "sha256": "fa5436b777d6f90843c846ddf526677f2209e0254e69cea1197f2ba84a657b01",
+      "size_in_bytes": 6073
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/plugin-layouts-fruchtermanReingold.html",
+      "path_type": "hardlink",
+      "sha256": "b9f77c053dba1c17fd44a4407cf7e66e38223fdf4efd71e64bd087b68e184744",
+      "size_in_bytes": 5420
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/plugin-leaflet-airlines.html",
+      "path_type": "hardlink",
+      "sha256": "911d5058583d919930cb488f3e438961ecafc0f86d9d175f48d773a9fa70c0ea",
+      "size_in_bytes": 5639
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/plugin-leaflet.html",
+      "path_type": "hardlink",
+      "sha256": "d4f377b8f297acae0c386af976fdda41a97149071cda110e09c0c32d21515515",
+      "size_in_bytes": 11562
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/plugin-legend.html",
+      "path_type": "hardlink",
+      "sha256": "b24a2858faa521fa54ac8407aee248eee6140fe1940ee382208de83c19a19aa6",
+      "size_in_bytes": 12212
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/plugin-louvain.html",
+      "path_type": "hardlink",
+      "sha256": "f03ef05b0e4b9b4d77b424485876c451a239e3a90b3c1df4c2168d2f85dff823",
+      "size_in_bytes": 8944
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/plugin-pathfinding-astar.html",
+      "path_type": "hardlink",
+      "sha256": "745eacbc1fa8c5acf8e045a4051bf8a131ca210a6742918d176036120c2b8840",
+      "size_in_bytes": 6723
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/plugin-poweredby.html",
+      "path_type": "hardlink",
+      "sha256": "b5466f7c0361732c8e2feac0a0f46034286b1d39a5276a337564b1af4c3d80a1",
+      "size_in_bytes": 4657
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/plugin-select.html",
+      "path_type": "hardlink",
+      "sha256": "985afa98ec7e756b6d825cc6b8e0d4c0a254067f9e0b1f89db1790c3650a9ace",
+      "size_in_bytes": 7764
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/plugin-tooltips-multiples.html",
+      "path_type": "hardlink",
+      "sha256": "ad65b68d748a5042afefc3acd0d6ba12bd3a25655e5da530ab2bf729229b40ad",
+      "size_in_bytes": 8512
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/plugin-tooltips.html",
+      "path_type": "hardlink",
+      "sha256": "cbe19f057b172e1d40414cbad894b4cf90072acf70a8eb9556cb18537e94a491",
+      "size_in_bytes": 8403
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/renderers-linkurious-edges-shapes.html",
+      "path_type": "hardlink",
+      "sha256": "52fac77d1012a8e3dab2c63d2c6710675e3612071bf9ebecb77e826d8d225985",
+      "size_in_bytes": 5597
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/renderers-linkurious-icons.html",
+      "path_type": "hardlink",
+      "sha256": "b05426757ddb8e5c0bc0fe184e58890c2b9e5e5752611d26c9185728216885ce",
+      "size_in_bytes": 8679
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/renderers-linkurious-images.html",
+      "path_type": "hardlink",
+      "sha256": "5e200ac33580f68923322f892dcd563d1e59b26b94a64fdf446184c454cff233",
+      "size_in_bytes": 7578
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/renderers-linkurious-pie-charts.html",
+      "path_type": "hardlink",
+      "sha256": "18b15dd786d530bd7e07317eb9cca8dc16c0da9beacb5398a660b839f8b2bc23",
+      "size_in_bytes": 4367
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/renderers-linkurious.html",
+      "path_type": "hardlink",
+      "sha256": "36dfe7214802e1a579b16051894d43b1382ed075173ac6187f32d168789e11b4",
+      "size_in_bytes": 8564
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/screens/active-state.png",
+      "path_type": "hardlink",
+      "sha256": "eb82f4e6bb62b1c9d1adc10fb48f99d982db6e413aa6db3eae9153c4987beb45",
+      "size_in_bytes": 120955
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/screens/add-node-on-click.png",
+      "path_type": "hardlink",
+      "sha256": "072592a817a650d463b066e599e5024b45bcc318a7603b495295c002fdbd7ef6",
+      "size_in_bytes": 4137
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/screens/animate.png",
+      "path_type": "hardlink",
+      "sha256": "b4f8886cd8f390cc6e9e820d85d9ee952fe58d2956d6bbc84283a73d965ef0c1",
+      "size_in_bytes": 238842
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/screens/api-candy.png",
+      "path_type": "hardlink",
+      "sha256": "5cea4b1fcd4f33bd52ffd0779346454bf7e0747b3e8d5c71d35f21cabe5f48b5",
+      "size_in_bytes": 105210
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/screens/basic.png",
+      "path_type": "hardlink",
+      "sha256": "dd6e7a277584efa3ca2b833c0c82dee2f3f5ce35f40f3cf9659c1d9ed5447780",
+      "size_in_bytes": 55305
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/screens/custom-edge-renderer.png",
+      "path_type": "hardlink",
+      "sha256": "845a2cc8fb1bcaed82a01fc7358f26a3a58930f52f22a710ca17653c4ff3970e",
+      "size_in_bytes": 24587
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/screens/custom-node-renderer.png",
+      "path_type": "hardlink",
+      "sha256": "93f3a6c3ed996bfa438d8bdb1dddb34eaa36eeed1a2e356da9f4b0394bc04acc",
+      "size_in_bytes": 218279
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/screens/dagre.png",
+      "path_type": "hardlink",
+      "sha256": "1e2d6d2939413a88eba3261b62548d74974bf1e84fc438692d652f89e4c337ed",
+      "size_in_bytes": 17350
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/screens/design.png",
+      "path_type": "hardlink",
+      "sha256": "1b562ed7f54b65f638608fecfef36f7ea219a77f79a771fbfeb912aef33b193f",
+      "size_in_bytes": 83857
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/screens/drag-nodes.png",
+      "path_type": "hardlink",
+      "sha256": "92a74d2b5438ccd31f56e2d182548fa31eee1d827d325180bd802963d1e5d23f",
+      "size_in_bytes": 55323
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/screens/edge-renderers.png",
+      "path_type": "hardlink",
+      "sha256": "8e278df516b158961c8d15959f73142bf529cf4991091b2051e73db2cc4b3943",
+      "size_in_bytes": 19580
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/screens/edge-siblings.png",
+      "path_type": "hardlink",
+      "sha256": "8abd93e82ccefff91ffafe6838135ce00bc1449eb74e1ecf33a729e1065fe0bc",
+      "size_in_bytes": 2645
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/screens/events-and-force.png",
+      "path_type": "hardlink",
+      "sha256": "be0d6bbb33a282bdb1dd00c4e9088c7d786e7c39eaccb2e2077fc69890c8e516",
+      "size_in_bytes": 35722
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/screens/events.png",
+      "path_type": "hardlink",
+      "sha256": "5f88e1a119751d444e994d529c8ce14d68bf65c16084b25c9546a09e9910dbeb",
+      "size_in_bytes": 55168
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/screens/filters.png",
+      "path_type": "hardlink",
+      "sha256": "8d7894ef5133a8de3b7ce84910944f2cacb059308ccff667e67e2bcf7ab7cafc",
+      "size_in_bytes": 53880
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/screens/force-background.png",
+      "path_type": "hardlink",
+      "sha256": "aac05b9bab3ec4f2557d8cd8363f3fedfe2858e6a1fe1679ff55738d8dd7c4e8",
+      "size_in_bytes": 113230
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/screens/force-graph-arctic.png",
+      "path_type": "hardlink",
+      "sha256": "69b05605a0035eec4bf11bd54caad85f9a755a8894f019a595ea88261a322bbd",
+      "size_in_bytes": 129727
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/screens/force-graph-community.png",
+      "path_type": "hardlink",
+      "sha256": "3f21833ec0448d6407e7f3b835b5a82b0f8ef47badfe9eadfe1c8677f8a2cf87",
+      "size_in_bytes": 22605
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/screens/force-node-siblings.png",
+      "path_type": "hardlink",
+      "sha256": "fae6e791d040318ee872933c56a7126cd999f145a7354053aa73435b9fc97fb6",
+      "size_in_bytes": 6702
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/screens/force.png",
+      "path_type": "hardlink",
+      "sha256": "c1a24a48b23684828845bec8701dc5568f7987826b08f2443a92dddca311d716",
+      "size_in_bytes": 111566
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/screens/glyphs-renderer-icons.png",
+      "path_type": "hardlink",
+      "sha256": "3a1e3c69fc9ecde150f246666d3233ddfd92ac46fd8e905541a28ea84d08c122",
+      "size_in_bytes": 100460
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/screens/glyphs-renderer.png",
+      "path_type": "hardlink",
+      "sha256": "852639e257ee7293b995b72d4576631045f1c8501a1bd8e94786c5c6a77d696e",
+      "size_in_bytes": 99942
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/screens/lasso.png",
+      "path_type": "hardlink",
+      "sha256": "9b566f55fcb2eaa7810d10373c8f35219ca084ce31d7cb0249d4ae45935c69d1",
+      "size_in_bytes": 13327
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/screens/load-external-gexf.png",
+      "path_type": "hardlink",
+      "sha256": "e50d623c58954a68d3a62d8df51c4c86e5eb8afbbb4c073b9a02ec04a725e1b9",
+      "size_in_bytes": 116540
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/screens/load-external-json.png",
+      "path_type": "hardlink",
+      "sha256": "d66cb19ef5810d31b2be31bdd5cc52886d4d29c6d740fcf6c03f97a4b2cb169e",
+      "size_in_bytes": 117044
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/screens/load-neo4j-cypher-query.png",
+      "path_type": "hardlink",
+      "sha256": "daa767f704fe6bc291a6fa447e84e0f8bccf9ca0acdcd9f2973d36f19904b76f",
+      "size_in_bytes": 370
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/screens/locate.png",
+      "path_type": "hardlink",
+      "sha256": "1ae5b99ae573be8abeebe6781970a040654c7e4661e06556683b4cb7b5ccbd65",
+      "size_in_bytes": 20972
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/screens/neighborhoods-plugin.png",
+      "path_type": "hardlink",
+      "sha256": "ca7b4646a256cb6d79dd36b1c1f9d867ffe952ff04c083cf2aee0d34794b8daa",
+      "size_in_bytes": 42193
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/screens/parallel-edges.png",
+      "path_type": "hardlink",
+      "sha256": "1eec547eec5f3ac5536deb3a5b5766ae9c45c2e59904382e2bea566febddc8f2",
+      "size_in_bytes": 4100
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/screens/plugin-exporters-gexf.png",
+      "path_type": "hardlink",
+      "sha256": "81e02bcc27be034ff857a9d1faccf75f6401e27bf930ce45152c05376b2fd89e",
+      "size_in_bytes": 4579
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/screens/plugin-exporters-json.png",
+      "path_type": "hardlink",
+      "sha256": "c54fd17dd9369b6d3b2b2259c2fccfcd68ba04536eb072b5c54fd057a964110f",
+      "size_in_bytes": 6750
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/screens/plugin-exporters-spreadsheet.png",
+      "path_type": "hardlink",
+      "sha256": "10f6a19495aa2c1c323220530d1322133645567ba1d94a0391aa1bb954ea9a45",
+      "size_in_bytes": 8911
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/screens/plugin-exporters-xlsx.png",
+      "path_type": "hardlink",
+      "sha256": "15b3621282da6ead2250e18cbbbbfb74b8ed6afd911134c3867aabadcc62639c",
+      "size_in_bytes": 60950
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/screens/plugin-fullscreen.png",
+      "path_type": "hardlink",
+      "sha256": "8cc48307080d7cabcf67aa84b70e6355cf0436a7100e43da9cbb04d05d951f17",
+      "size_in_bytes": 58672
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/screens/plugin-generators.png",
+      "path_type": "hardlink",
+      "sha256": "f123eb2db1e8e1aeca53978cd7db7b49250849cbe9e357d9eb6d28344f716fed",
+      "size_in_bytes": 50200
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/screens/plugin-halo.png",
+      "path_type": "hardlink",
+      "sha256": "0264dc707806eaa938d487151d721cb0800a3b67e3bc3e189fe30efd4c0f4b45",
+      "size_in_bytes": 133073
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/screens/plugin-hits.png",
+      "path_type": "hardlink",
+      "sha256": "3bc088463ded8db36a605ca397072e3664bcdbbea715b01947bf7ed301f38cf3",
+      "size_in_bytes": 58968
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/screens/plugin-image.png",
+      "path_type": "hardlink",
+      "sha256": "1dcc587f71cb99ff495b0639954188b8f4303b84f3872e0f681cdafd1aa439d6",
+      "size_in_bytes": 39091
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/screens/plugin-keyboard.png",
+      "path_type": "hardlink",
+      "sha256": "7ab3292293025ddc63cef99707ae588faa9a1fb8be9d0611e42869728707e1c2",
+      "size_in_bytes": 56096
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/screens/plugin-layouts-fruchtermanReingold.png",
+      "path_type": "hardlink",
+      "sha256": "9340392a4233ee0047a930ae9edd07bd6f348b189fba12b8c78ba30159e74073",
+      "size_in_bytes": 34501
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/screens/plugin-louvain.png",
+      "path_type": "hardlink",
+      "sha256": "c30ffdfcb9041b2682ca29c44cf24387011cd81a990dba0846569ebe396fec7f",
+      "size_in_bytes": 24272
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/screens/plugin-pathfinding-astar.png",
+      "path_type": "hardlink",
+      "sha256": "43d19fc4f72f15425f04c33dc8c6959a53ba2d9a2d355a406130e931050d48ba",
+      "size_in_bytes": 30068
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/screens/plugin-poweredby.png",
+      "path_type": "hardlink",
+      "sha256": "5d26b19ff72cecb8e7875eb71770eaffcf1dc5a5d2091c56739d50689be8c439",
+      "size_in_bytes": 12572
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/screens/plugin-select.png",
+      "path_type": "hardlink",
+      "sha256": "93a21573dc0353022dffad1ffdaad9e75ca3f61caf88a4b21a57e741131a035c",
+      "size_in_bytes": 95227
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/screens/plugin-tooltips-multiples.png",
+      "path_type": "hardlink",
+      "sha256": "a69b06763ee3a7c915ecd8d2cb6981cdb111ac7915020e3e5e3958a5116dc741",
+      "size_in_bytes": 61340
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/screens/plugin-tooltips.png",
+      "path_type": "hardlink",
+      "sha256": "f8276b3c320dd9ee061033a4de075ed6eda388cc8c01296c26df69bfc2f5238b",
+      "size_in_bytes": 92126
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/screens/renderers-linkurious-edges-shapes.png",
+      "path_type": "hardlink",
+      "sha256": "479faf4bc54f665ae02fea099db0a418aeea6e97e3105ff5dc633b2ec2e15a15",
+      "size_in_bytes": 48223
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/screens/renderers-linkurious-icons.png",
+      "path_type": "hardlink",
+      "sha256": "d4ea7e57e48399f95486bf6d1144f30313a6e88972f63a11b4bc9ff1f2dfaa21",
+      "size_in_bytes": 121201
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/screens/renderers-linkurious-images.png",
+      "path_type": "hardlink",
+      "sha256": "1a71a864c1dce3f1ce38b0168234e689e3df20a2c4ff51dec8dfdc706f354511",
+      "size_in_bytes": 119674
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/screens/renderers-linkurious-pie-charts.png",
+      "path_type": "hardlink",
+      "sha256": "b7093b5e93fc14de5dad3778717c0c3e7b252874cfe1f952a4bf86b12aae1f02",
+      "size_in_bytes": 101381
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/screens/renderers-linkurious.png",
+      "path_type": "hardlink",
+      "sha256": "266217543db609bf77d5793e1bf0571333af27067e7a829f3dc46ed282dc757b",
+      "size_in_bytes": 109857
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/screens/scrollable-page.png",
+      "path_type": "hardlink",
+      "sha256": "5fdfed306f50566862d3d84b587c2b9fc605835cd842c002a44712f573b488c0",
+      "size_in_bytes": 18833
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/screens/select-and-drag-nodes.png",
+      "path_type": "hardlink",
+      "sha256": "5ace3f35b9410a76b2e19c4171006f6c9d3f525419490a219cff28eef21c502a",
+      "size_in_bytes": 56643
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/screens/share-camera.png",
+      "path_type": "hardlink",
+      "sha256": "b30a17d1571094ba3acbbd9c839cf4e8a6e1ca0fe3a64c8b662f77e2731c68a2",
+      "size_in_bytes": 109183
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/screens/svg-export.png",
+      "path_type": "hardlink",
+      "sha256": "40f06c9418034995a87215244ff74eb2547800bfad8490806d87e172d724ead1",
+      "size_in_bytes": 233196
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/screens/svg-freestyle-renderer.png",
+      "path_type": "hardlink",
+      "sha256": "6f2e21546138c9ec441e8c5717db572d0698114c17aab11bd0a11f2cda2aaefe",
+      "size_in_bytes": 136347
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/screens/svg-renderer.png",
+      "path_type": "hardlink",
+      "sha256": "71df220c5fd30b2fd86fa87b5b38fc8bbc34d888c6368eea5f595c97a9395fa7",
+      "size_in_bytes": 116597
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/screens/use-minified-sigma.png",
+      "path_type": "hardlink",
+      "sha256": "89edd8a74d4f8a75a1fff5682839f820b29f88d51cb8545dc5dd9f7c91d6d3f2",
+      "size_in_bytes": 35565
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/scrollable-page.html",
+      "path_type": "hardlink",
+      "sha256": "a7e2458b894315a196515ab78f3a963c56e204a738bcae8c1badab852bdfec32",
+      "size_in_bytes": 4457
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/select-and-drag-nodes.html",
+      "path_type": "hardlink",
+      "sha256": "cfcc9e8410ffa6456ef0d0d0043b019d01529448d21b171682901155d67c4729",
+      "size_in_bytes": 8437
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/share-camera.html",
+      "path_type": "hardlink",
+      "sha256": "e6faf9a3c2846bc777025af5047ae317ad435a9f02226ce8776f86f5883b8919",
+      "size_in_bytes": 5342
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/svg-export.html",
+      "path_type": "hardlink",
+      "sha256": "3ddd21adb6b29d7e8c0a9db4b8fbfcbb6278fae8be1ddf0d38e43cd7ed3475f2",
+      "size_in_bytes": 5394
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/svg-freestyle-renderer.html",
+      "path_type": "hardlink",
+      "sha256": "9748e216a56cde782e9fc32246b851f1d1973a6c256b8dea0c7d2cc096c70ff7",
+      "size_in_bytes": 6425
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/svg-renderer.html",
+      "path_type": "hardlink",
+      "sha256": "03769ccf31af09b24397482adc4d40a4ed518455508c2b24a176bf8307888745",
+      "size_in_bytes": 5160
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/examples/use-minified-sigma.html",
+      "path_type": "hardlink",
+      "sha256": "d25d38e0b4e9c1feecf95e6e1387b43eccae69872bbc7c3fa7849e8c3d4f9b11",
+      "size_in_bytes": 831
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/package.json",
+      "path_type": "hardlink",
+      "sha256": "19c0c24a9e30d864db17c2720e1cf82a8894ab6e439e7fc8835c06c7e27d8a7f",
+      "size_in_bytes": 1154
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/list.html",
+      "path_type": "hardlink",
+      "sha256": "6c5da1000d6b8a826735f102221296d7338c6f2adbe8d5e3a3128429c56b8001",
+      "size_in_bytes": 3817
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.exporters.gexf/LICENSE",
+      "path_type": "hardlink",
+      "sha256": "aee1cd936467b2e9dd788ef6cc2a28b8d4d5fae99f77d2bc75f02e04ac34a892",
+      "size_in_bytes": 1081
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.exporters.gexf/README.md",
+      "path_type": "hardlink",
+      "sha256": "5dd1a95a6b589ae459e5cd0ea670e7509279fefdfd48ddde96558c3d9b1f10c2",
+      "size_in_bytes": 2528
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.exporters.gexf/sigma.exporters.gexf.js",
+      "path_type": "hardlink",
+      "sha256": "f52f58b6eee0934b5c4d3ba87d765413162dc348ee296e31a98b70bf153a5753",
+      "size_in_bytes": 14313
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.exporters.graphml/README.md",
+      "path_type": "hardlink",
+      "sha256": "bd6dc8f32b20785fedd29c6706f3da99a54c1172de0b99f3df1b39492449b159",
+      "size_in_bytes": 2364
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.exporters.graphml/sigma.exporters.graphml.js",
+      "path_type": "hardlink",
+      "sha256": "881b95ef8a4c5a27bdfecf2cce304099df6f39c2abdb7536b04d75d3a3dcdbd2",
+      "size_in_bytes": 10629
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.exporters.image/LICENSE",
+      "path_type": "hardlink",
+      "sha256": "aee1cd936467b2e9dd788ef6cc2a28b8d4d5fae99f77d2bc75f02e04ac34a892",
+      "size_in_bytes": 1081
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.exporters.image/README.md",
+      "path_type": "hardlink",
+      "sha256": "52f7ed75ab427103ec83b18cb63354fa0a8652da504a5b6e9ed24aa52079147f",
+      "size_in_bytes": 1660
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.exporters.image/sigma.exporters.image.js",
+      "path_type": "hardlink",
+      "sha256": "76c21f434aa9ef3f1902689319c644d9824a3ae9eae1908d4b7b03394b0e6d19",
+      "size_in_bytes": 8835
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.exporters.json/LICENSE",
+      "path_type": "hardlink",
+      "sha256": "aee1cd936467b2e9dd788ef6cc2a28b8d4d5fae99f77d2bc75f02e04ac34a892",
+      "size_in_bytes": 1081
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.exporters.json/README.md",
+      "path_type": "hardlink",
+      "sha256": "802786e805135696e9d45be220c652c0c07f2a88a6fbec5339fb140e6266f523",
+      "size_in_bytes": 1248
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.exporters.json/sigma.exporters.json.js",
+      "path_type": "hardlink",
+      "sha256": "f169c42823cb9fd360003671e927424489d31bed32448fd090cf71175eaf08e0",
+      "size_in_bytes": 3647
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.exporters.spreadsheet/LICENSE",
+      "path_type": "hardlink",
+      "sha256": "e1c0ad728983d8a57335e52cf1064f1affd1d454173d8cebd3ed8b4a72b48704",
+      "size_in_bytes": 35121
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.exporters.spreadsheet/README.md",
+      "path_type": "hardlink",
+      "sha256": "e8150eb1dfb3814391aaebdd2a5daf142e2542d34a28046a959eb55322096e87",
+      "size_in_bytes": 2230
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.exporters.spreadsheet/sigma.exporters.spreadsheet.js",
+      "path_type": "hardlink",
+      "sha256": "24da1eab0150a1b24d639056581e97b22948ac83ce5db533d5ede949b5055ade",
+      "size_in_bytes": 6204
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.exporters.svg/README.md",
+      "path_type": "hardlink",
+      "sha256": "5314641f1eb2ac0b6acd5c76df819b07d506a8ae5fbfca8d459ea0d5d205dc6c",
+      "size_in_bytes": 1374
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.exporters.svg/sigma.exporters.svg.js",
+      "path_type": "hardlink",
+      "sha256": "dc2fe317ad611505d460e021e28dc47c35aa32798b5e694766bb02a1f1b91a96",
+      "size_in_bytes": 6782
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.exporters.xlsx/LICENSE",
+      "path_type": "hardlink",
+      "sha256": "e1c0ad728983d8a57335e52cf1064f1affd1d454173d8cebd3ed8b4a72b48704",
+      "size_in_bytes": 35121
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.exporters.xlsx/README.md",
+      "path_type": "hardlink",
+      "sha256": "5c28894f99d39e82351a7061da7c99d202a4db5cd6321fa6f338962028e77cf7",
+      "size_in_bytes": 2780
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.exporters.xlsx/sigma.exporters.xlsx.js",
+      "path_type": "hardlink",
+      "sha256": "cfefda5a66f0205b2b5d9b2f574720224de8353c866c0a2f734de4bb93accb71",
+      "size_in_bytes": 7817
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.helpers.graph/LICENSE",
+      "path_type": "hardlink",
+      "sha256": "e1c0ad728983d8a57335e52cf1064f1affd1d454173d8cebd3ed8b4a72b48704",
+      "size_in_bytes": 35121
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.helpers.graph/README.md",
+      "path_type": "hardlink",
+      "sha256": "94c5bc05d7214358006cb89363878720f135e4b18bfabde57fed037f02af12c7",
+      "size_in_bytes": 2061
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.helpers.graph/sigma.helpers.graph.js",
+      "path_type": "hardlink",
+      "sha256": "ba565fcd6a4dcf527213b5749b80a59ef1cec2fd7c757546db52dc853449a132",
+      "size_in_bytes": 7247
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.layouts.dagre/README.md",
+      "path_type": "hardlink",
+      "sha256": "f0cadf4730c528fd18f9303c13ca9bd9c588323dbb31e73b8e2043e20cd7e2ef",
+      "size_in_bytes": 5428
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.layouts.dagre/sigma.layout.dagre.js",
+      "path_type": "hardlink",
+      "sha256": "86228d1608528b2987d0fc507735dae4afd345c39eb8ff694d28d8b271f37b1c",
+      "size_in_bytes": 12168
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.layouts.forceAtlas2/Gruntfile.js",
+      "path_type": "hardlink",
+      "sha256": "4e9b725714871be7cda765d5f3a913fab1e604d5b1d8b9e285a73d3e70b78597",
+      "size_in_bytes": 614
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.layouts.forceAtlas2/README.md",
+      "path_type": "hardlink",
+      "sha256": "4192c40cf8fb46741993421ed0abce08ee50480674ff09bda39366b7184e7e6e",
+      "size_in_bytes": 2265
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.layouts.forceAtlas2/supervisor.js",
+      "path_type": "hardlink",
+      "sha256": "397a6dbf0222139f83653fdb6a411d5f3b30d23f31109386260061b6cb855c06",
+      "size_in_bytes": 8058
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.layouts.forceAtlas2/tasks/forceAtlas2.js",
+      "path_type": "hardlink",
+      "sha256": "bdca9100514a6d1af580b81f4b9cbcb95a817ca17661145c97f79e8355e814fa",
+      "size_in_bytes": 2703
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.layouts.forceAtlas2/worker.js",
+      "path_type": "hardlink",
+      "sha256": "5d7b16a64fcb9bce208972f2d00fc76b82204c6cd372050fe1b6fcbf00425140",
+      "size_in_bytes": 34625
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.layouts.forceLink/Gruntfile.js",
+      "path_type": "hardlink",
+      "sha256": "0b7bd371c4561f1b4d531a3af9c2fc2ce2fa30f03920445bd7a9f516bb609594",
+      "size_in_bytes": 608
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.layouts.forceLink/README.md",
+      "path_type": "hardlink",
+      "sha256": "4fc05897bfb1597786dbc1e40187e3a8ecddcf539781f42ebcadaf4e5206ff8b",
+      "size_in_bytes": 5425
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.layouts.forceLink/supervisor.js",
+      "path_type": "hardlink",
+      "sha256": "d79f7de27bc7234814575213e4e726716f170c6d50b61e6cee7171b3f8f8c9e8",
+      "size_in_bytes": 10046
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.layouts.forceLink/tasks/forceLink.js",
+      "path_type": "hardlink",
+      "sha256": "be06b2e242863852636bab6129b323e6f9a42f3e39a581dd33f9cdfa0bcf4712",
+      "size_in_bytes": 2693
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.layouts.forceLink/worker.js",
+      "path_type": "hardlink",
+      "sha256": "02d414885b30c31d51de339b558ac0993937eb96fa8c1ae487ba623c9810e846",
+      "size_in_bytes": 45427
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.layouts.fruchtermanReingold/LICENSE",
+      "path_type": "hardlink",
+      "sha256": "aee1cd936467b2e9dd788ef6cc2a28b8d4d5fae99f77d2bc75f02e04ac34a892",
+      "size_in_bytes": 1081
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.layouts.fruchtermanReingold/README.md",
+      "path_type": "hardlink",
+      "sha256": "3065b48e251d3d9ad44e2668eb9250491ce04760518d1ccf579c3a361c8a34e4",
+      "size_in_bytes": 4130
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.layouts.fruchtermanReingold/sigma.layout.fruchtermanReingold.js",
+      "path_type": "hardlink",
+      "sha256": "e320b3ccb51c52610ccd790f65067fc079007f8ec2877a5813a699cedd810362",
+      "size_in_bytes": 11768
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.layouts.noverlap/README.md",
+      "path_type": "hardlink",
+      "sha256": "1064afb397888d04751a15232c1df6c16ee6c1cb8520db704f2972569ab66b43",
+      "size_in_bytes": 2945
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.layouts.noverlap/sigma.layouts.noverlap.js",
+      "path_type": "hardlink",
+      "sha256": "892f431af88e17f7bfac19adc395a5d0392ee40815a45ee8efd110200c760e02",
+      "size_in_bytes": 13642
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.parsers.cypher/LICENSE",
+      "path_type": "hardlink",
+      "sha256": "0ab5fe49af3e0206ee45494889d328f350d0abc4e7f1adb7448e8324eba94be2",
+      "size_in_bytes": 34275
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.parsers.cypher/README.md",
+      "path_type": "hardlink",
+      "sha256": "de2aeef05f641c5a74c1b0ee68c8bbd3eccfe9fb2711e2f9aa41e494d54e9441",
+      "size_in_bytes": 2049
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.parsers.cypher/sigma.parsers.cypher.js",
+      "path_type": "hardlink",
+      "sha256": "16f15f1551215c75d26e83edb1f1e83e8e5b3d933c80a779c6f26840a62171e1",
+      "size_in_bytes": 8559
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.parsers.gexf/README.md",
+      "path_type": "hardlink",
+      "sha256": "c087aa04fd07e7f1c432f05290118d2ab4c94274427db160d7064be01e446176",
+      "size_in_bytes": 869
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.parsers.gexf/gexf-parser.js",
+      "path_type": "hardlink",
+      "sha256": "3b6cbdf49f0efdb7faf288e2b5e756534be15ad785eb1c87853e775a5f2483cb",
+      "size_in_bytes": 13072
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.parsers.gexf/sigma.parsers.gexf.js",
+      "path_type": "hardlink",
+      "sha256": "920b975e5fee60e658e184e722c21506324a937eb0db57b8a4e4e9bc54d77930",
+      "size_in_bytes": 3607
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.parsers.json/README.md",
+      "path_type": "hardlink",
+      "sha256": "273d62c1807c7a656db3f743a0f3f07549ca88fe7d4a1e119a0293ae2516e31b",
+      "size_in_bytes": 863
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.parsers.json/sigma.parsers.json.js",
+      "path_type": "hardlink",
+      "sha256": "b65104abf932922bffe5641437ff997934eee95ee5dea29fc95ecfab04a66233",
+      "size_in_bytes": 2381
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.pathfinding.astar/LICENSE",
+      "path_type": "hardlink",
+      "sha256": "60d2c28d19d2bdf7bbaa59829e7a595234265e8111a01ccb74d25d6c4d2d013a",
+      "size_in_bytes": 1211
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.pathfinding.astar/README.md",
+      "path_type": "hardlink",
+      "sha256": "b216d8fb5e4ec3d597b092cdbaeaf2ad077c148e2d895f2ff243f8ef85c76183",
+      "size_in_bytes": 2128
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.pathfinding.astar/sigma.pathfinding.astar.js",
+      "path_type": "hardlink",
+      "sha256": "9bb0775b009cb5d84b8cb07710320e98d0744f9b6dbebea6fb096e000f16d645",
+      "size_in_bytes": 3857
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.plugins.activeState/LICENSE",
+      "path_type": "hardlink",
+      "sha256": "e1c0ad728983d8a57335e52cf1064f1affd1d454173d8cebd3ed8b4a72b48704",
+      "size_in_bytes": 35121
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.plugins.activeState/README.md",
+      "path_type": "hardlink",
+      "sha256": "83a627d6949320752740e00345f7de3c79bb1969a9a03ecd33fa9a803c2b01dd",
+      "size_in_bytes": 5828
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.plugins.activeState/sigma.plugins.activeState.js",
+      "path_type": "hardlink",
+      "sha256": "b5f94721768f90de307bc03e09c8135244f864db3eb8546d4babba1668b86d30",
+      "size_in_bytes": 15836
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.plugins.animate/README.md",
+      "path_type": "hardlink",
+      "sha256": "0d956e7df43a047f59b42cc864a308c4a01c3d1ff46c11fe47d42d90f78e6d29",
+      "size_in_bytes": 1609
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.plugins.animate/sigma.plugins.animate.js",
+      "path_type": "hardlink",
+      "sha256": "ef969db922a0959225fdcc5ba9ec0c18253a3e48a742e8676ea4fc6d65a5a1e2",
+      "size_in_bytes": 5905
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.plugins.colorbrewer/LICENSE",
+      "path_type": "hardlink",
+      "sha256": "aba881933999be3549b2171832a11a9dfad574243019df95c067ccf3d47b9649",
+      "size_in_bytes": 1710
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.plugins.colorbrewer/README.md",
+      "path_type": "hardlink",
+      "sha256": "95da1f63284707320214bb1b31380faaddd354820339edb18dbcb4d2f118c0a6",
+      "size_in_bytes": 425
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.plugins.colorbrewer/sigma.plugins.colorbrewer.js",
+      "path_type": "hardlink",
+      "sha256": "16ea8946a963b4dcab9cc61249db56eeec088b6ed7e26d5859125fe3e195a9b9",
+      "size_in_bytes": 19192
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.plugins.design/LICENSE",
+      "path_type": "hardlink",
+      "sha256": "e1c0ad728983d8a57335e52cf1064f1affd1d454173d8cebd3ed8b4a72b48704",
+      "size_in_bytes": 35121
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.plugins.design/README.md",
+      "path_type": "hardlink",
+      "sha256": "1e9dc3a084b851be83bf030874354dded86282f1593875ec0ceac13043a8b7d8",
+      "size_in_bytes": 17486
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.plugins.design/sigma.plugins.design.js",
+      "path_type": "hardlink",
+      "sha256": "d7d4da2723f0e602f5779940ef028f07cddabad24823d25070cec7a9df1c40d4",
+      "size_in_bytes": 43494
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.plugins.dragNodes/README.md",
+      "path_type": "hardlink",
+      "sha256": "6a0aa145b79a5c252ca5ef5e372fe1a14a87454803b3e1d447bfa2e6fa9755df",
+      "size_in_bytes": 1885
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.plugins.dragNodes/sigma.plugins.dragNodes.js",
+      "path_type": "hardlink",
+      "sha256": "d1167c4c4b5b5a3822301feb0fdf84b57d52e5cf5b784b58b17feda074b1ceb2",
+      "size_in_bytes": 12148
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.plugins.edgeSiblings/LICENSE",
+      "path_type": "hardlink",
+      "sha256": "e1c0ad728983d8a57335e52cf1064f1affd1d454173d8cebd3ed8b4a72b48704",
+      "size_in_bytes": 35121
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.plugins.edgeSiblings/README.md",
+      "path_type": "hardlink",
+      "sha256": "8a53bef335402b47855b2c01bde0ee19dd00c3a4f527b813862d3e1c2575bc1f",
+      "size_in_bytes": 6244
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.plugins.edgeSiblings/sigma.plugins.edgeSiblings.js",
+      "path_type": "hardlink",
+      "sha256": "3575828773dcb2548d5045aada89d7c53fcdff33f119559275a4c3345c1446bb",
+      "size_in_bytes": 12737
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.plugins.epanet/sigma.epanet.labelDraw.js",
+      "path_type": "hardlink",
+      "sha256": "371e86214468c4241cddd9c3db89a540cf1d321134032ede17d716bcd48452f8",
+      "size_in_bytes": 1117
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.plugins.epanet/sigma.epanet.vertDraw.js",
+      "path_type": "hardlink",
+      "sha256": "12a8cfa69478ccbef13611e2eb6016d91ee29a7e6e28822167579b33a18a5384",
+      "size_in_bytes": 1188
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.plugins.epanet/sigma.epanet.vertHoverDraw.js",
+      "path_type": "hardlink",
+      "sha256": "c96f9dfdbd37aff336bb0370072d3b3ec9ec0e10aec0cd3d8fa0159b6f44a034",
+      "size_in_bytes": 2061
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.plugins.filter/LICENSE",
+      "path_type": "hardlink",
+      "sha256": "e1c0ad728983d8a57335e52cf1064f1affd1d454173d8cebd3ed8b4a72b48704",
+      "size_in_bytes": 35121
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.plugins.filter/README.md",
+      "path_type": "hardlink",
+      "sha256": "4e08c6aed24991fcefefc6f357abae1e3e849138a01e3cd8f36a90615527806d",
+      "size_in_bytes": 7598
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.plugins.filter/sigma.plugins.filter.js",
+      "path_type": "hardlink",
+      "sha256": "711c9b2f79b204e0f40cd0aed9a1ef9202330cb3b3a8dd29689bcc5a971344e5",
+      "size_in_bytes": 19046
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.plugins.fullScreen/LICENSE",
+      "path_type": "hardlink",
+      "sha256": "aee1cd936467b2e9dd788ef6cc2a28b8d4d5fae99f77d2bc75f02e04ac34a892",
+      "size_in_bytes": 1081
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.plugins.fullScreen/README.md",
+      "path_type": "hardlink",
+      "sha256": "1cd1e4ad8f93028e99b1e72f8c91535406757dee49b3bbad71da0704778ef7c6",
+      "size_in_bytes": 969
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.plugins.fullScreen/sigma.plugins.fullScreen.js",
+      "path_type": "hardlink",
+      "sha256": "2326c1f662817f3ea9c769c6cef7aa13ba489aeb4e0cdd760688f2817c2e8031",
+      "size_in_bytes": 2911
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.plugins.generators/README.md",
+      "path_type": "hardlink",
+      "sha256": "dd68041ea54545eeff7286e9c2656f2663d29d9397a733407ca44965c447e7b3",
+      "size_in_bytes": 4915
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.plugins.generators/sigma.plugins.generators.js",
+      "path_type": "hardlink",
+      "sha256": "a75c27a3d3f3eebbf306054fd6294ca845e46c86d5909e2eb232db06bdb6c10d",
+      "size_in_bytes": 19321
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.plugins.keyboard/LICENSE",
+      "path_type": "hardlink",
+      "sha256": "aee1cd936467b2e9dd788ef6cc2a28b8d4d5fae99f77d2bc75f02e04ac34a892",
+      "size_in_bytes": 1081
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.plugins.keyboard/README.md",
+      "path_type": "hardlink",
+      "sha256": "0f4876ad7633e5c6c0ce0561aa1385b8a2b59f430a1af7648cc92c130069b41a",
+      "size_in_bytes": 2501
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.plugins.keyboard/sigma.plugins.keyboard.js",
+      "path_type": "hardlink",
+      "sha256": "53c6fb3d049855b5257603b57ee84671fb4002d9170c67ef0f6b5c41119b7170",
+      "size_in_bytes": 5740
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.plugins.lasso/LICENSE",
+      "path_type": "hardlink",
+      "sha256": "aee1cd936467b2e9dd788ef6cc2a28b8d4d5fae99f77d2bc75f02e04ac34a892",
+      "size_in_bytes": 1081
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.plugins.lasso/README.md",
+      "path_type": "hardlink",
+      "sha256": "85b7cb29644e36d4f4686f47a311c21c581608612961a46da7372dc92e13b8c2",
+      "size_in_bytes": 1891
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.plugins.lasso/sigma.plugins.lasso.js",
+      "path_type": "hardlink",
+      "sha256": "46d22cbcff723ba101f8d23437d9f5fb08e5c58de54ada31d0702111972b6cb4",
+      "size_in_bytes": 10679
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.plugins.leaflet/LICENSE",
+      "path_type": "hardlink",
+      "sha256": "e1c0ad728983d8a57335e52cf1064f1affd1d454173d8cebd3ed8b4a72b48704",
+      "size_in_bytes": 35121
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.plugins.leaflet/README.md",
+      "path_type": "hardlink",
+      "sha256": "92ddc14f8e853d789c6c58cc34db742f39af90b02057c704a5c7d1c6c69bc1dd",
+      "size_in_bytes": 7107
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.plugins.leaflet/sigma.plugins.leaflet.js",
+      "path_type": "hardlink",
+      "sha256": "d8a8ec2d64a3749c4d0ea1e5df3ebc8a81f5d5cf5f4844c8d2ccf84fb50517f0",
+      "size_in_bytes": 28130
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.plugins.legend/LICENSE",
+      "path_type": "hardlink",
+      "sha256": "e1c0ad728983d8a57335e52cf1064f1affd1d454173d8cebd3ed8b4a72b48704",
+      "size_in_bytes": 35121
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.plugins.legend/README.md",
+      "path_type": "hardlink",
+      "sha256": "41b480fe689515a5a572a8a93469cb47d541f16d57add0ad0bc2488aa1f63826",
+      "size_in_bytes": 5662
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.plugins.legend/settings.js",
+      "path_type": "hardlink",
+      "sha256": "1ef1a7c491005d0cfa595e391890f3370157629022d6d3107ab275c2910ffd2f",
+      "size_in_bytes": 1764
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.plugins.legend/sigma.plugins.legend.js",
+      "path_type": "hardlink",
+      "sha256": "c55e63cc005ba1c10c4f241e2b018067b663e2c692504f13aed39c91c05ed1e1",
+      "size_in_bytes": 51405
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.plugins.locate/LICENSE",
+      "path_type": "hardlink",
+      "sha256": "e1c0ad728983d8a57335e52cf1064f1affd1d454173d8cebd3ed8b4a72b48704",
+      "size_in_bytes": 35121
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.plugins.locate/README.md",
+      "path_type": "hardlink",
+      "sha256": "66c1df4ecb3dc8544b444c399d0c4e5be787dc54a2373781aa11f0d4c84bbfa2",
+      "size_in_bytes": 4292
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.plugins.locate/sigma.plugins.locate.js",
+      "path_type": "hardlink",
+      "sha256": "392a0090f57c42ca9b92260ad659061d1ed5b5b0614573df93d3f09e6e476b74",
+      "size_in_bytes": 15556
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.plugins.neighborhoods/README.md",
+      "path_type": "hardlink",
+      "sha256": "4a991615af979a6d693b882145686c9a285f7bbe1de5fa025e9b71ab9e5b6883",
+      "size_in_bytes": 1038
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.plugins.neighborhoods/sigma.plugins.neighborhoods.js",
+      "path_type": "hardlink",
+      "sha256": "e2e958ee68a505ad563cabb7d5445d3af72b15728cb4d2e44807ec005a391f00",
+      "size_in_bytes": 5398
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.plugins.poweredBy/LICENSE",
+      "path_type": "hardlink",
+      "sha256": "aee1cd936467b2e9dd788ef6cc2a28b8d4d5fae99f77d2bc75f02e04ac34a892",
+      "size_in_bytes": 1081
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.plugins.poweredBy/README.md",
+      "path_type": "hardlink",
+      "sha256": "7fb2c019c9e33669203a6a258ed2a1e2cfd5379b23b08a8fd17af10d2dc4b3a0",
+      "size_in_bytes": 1481
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.plugins.poweredBy/settings.js",
+      "path_type": "hardlink",
+      "sha256": "8f0088c117fe68bb432b6f71ce991dbf19aa21bc6065713e8de7c91a5a60d7ac",
+      "size_in_bytes": 571
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.plugins.poweredBy/sigma.plugins.poweredBy.js",
+      "path_type": "hardlink",
+      "sha256": "991687048511c1fa909150b5dac9962433062288f15449e0180c51315fb14c83",
+      "size_in_bytes": 1626
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.plugins.relativeSize/README.md",
+      "path_type": "hardlink",
+      "sha256": "fb5b1b79d0e355de84bb9da14ec852df1b91c0632bdcd13f89b7b626c1873689",
+      "size_in_bytes": 228
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.plugins.relativeSize/sigma.plugins.relativeSize.js",
+      "path_type": "hardlink",
+      "sha256": "0ca0edf3e5a639b6317bf129aa843f8ce1689701c1cfbcd1fda7097d616990e0",
+      "size_in_bytes": 710
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.plugins.select/LICENSE",
+      "path_type": "hardlink",
+      "sha256": "e1c0ad728983d8a57335e52cf1064f1affd1d454173d8cebd3ed8b4a72b48704",
+      "size_in_bytes": 35121
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.plugins.select/README.md",
+      "path_type": "hardlink",
+      "sha256": "99fc07b5c63a34906a0f2e4bb1a854d77006b613815d103a93b25e779d0120ff",
+      "size_in_bytes": 2469
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.plugins.select/sigma.plugins.select.js",
+      "path_type": "hardlink",
+      "sha256": "149c2c76f88eb07c327df57cdf6bc27b942f1441d827687921ca18410718f34b",
+      "size_in_bytes": 11370
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.plugins.tooltips/LICENSE",
+      "path_type": "hardlink",
+      "sha256": "e1c0ad728983d8a57335e52cf1064f1affd1d454173d8cebd3ed8b4a72b48704",
+      "size_in_bytes": 35121
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.plugins.tooltips/README.md",
+      "path_type": "hardlink",
+      "sha256": "350b5edda74b9241152558cbf0b15eb22854cdb8ce8491026d6d1a627d82e19f",
+      "size_in_bytes": 5693
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.plugins.tooltips/sigma.plugins.tooltips.js",
+      "path_type": "hardlink",
+      "sha256": "d88412d806d743918f7706d60fdf17b48cb98fc1820ab8dacf5fa9db63111c80",
+      "size_in_bytes": 22180
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.renderers.customEdgeShapes/README.md",
+      "path_type": "hardlink",
+      "sha256": "8b2f2258c53060764b153446abaa2aa5bb258f120fdfb378a15b680f9efb7659",
+      "size_in_bytes": 1438
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.renderers.customEdgeShapes/sigma.canvas.edgehovers.dashed.js",
+      "path_type": "hardlink",
+      "sha256": "d3219e0c9decd593ce6f4cfe287c2df45aa873994522bf6be18ec4553ea37da2",
+      "size_in_bytes": 3307
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.renderers.customEdgeShapes/sigma.canvas.edgehovers.dotted.js",
+      "path_type": "hardlink",
+      "sha256": "516431dcfd5728cdd0e99cc98af579b88d8e9718418b55207ad4dc2cde4ca795",
+      "size_in_bytes": 3305
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.renderers.customEdgeShapes/sigma.canvas.edgehovers.parallel.js",
+      "path_type": "hardlink",
+      "sha256": "4d57ea91ad0b386a72a84f8771901c89c044147f9428ce07465455a69a118602",
+      "size_in_bytes": 3833
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.renderers.customEdgeShapes/sigma.canvas.edgehovers.tapered.js",
+      "path_type": "hardlink",
+      "sha256": "e8fc4acc6d1d8a584cb886810422fe06da280b38985b8d93035a01bde074c55e",
+      "size_in_bytes": 3857
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.renderers.customEdgeShapes/sigma.canvas.edges.dashed.js",
+      "path_type": "hardlink",
+      "sha256": "c8aeba12fe50703ac37c29d1d7be4f0545cf287f1222507b0a7419dc58fcba67",
+      "size_in_bytes": 2997
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.renderers.customEdgeShapes/sigma.canvas.edges.dotted.js",
+      "path_type": "hardlink",
+      "sha256": "f26d156d4ff04915dd2eb7cadc7a60ef3f3b0f2bc6c6e3731b6486d84de47cfd",
+      "size_in_bytes": 2995
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.renderers.customEdgeShapes/sigma.canvas.edges.parallel.js",
+      "path_type": "hardlink",
+      "sha256": "52e35ad49e15ea79cd0de51247ba7bdcae8279c2d1ad911a158753005bb01671",
+      "size_in_bytes": 3528
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.renderers.customEdgeShapes/sigma.canvas.edges.tapered.js",
+      "path_type": "hardlink",
+      "sha256": "5d03e4586006deaf688434ca52c1bf3ea8476741ab31940c76c73b63180d090f",
+      "size_in_bytes": 3769
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.renderers.edgeLabels/README.md",
+      "path_type": "hardlink",
+      "sha256": "19dbd974ee8b4c17630a3e75cde2cbfdaf85c500e7e55ebbed23eaa3eb02d081",
+      "size_in_bytes": 2704
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.renderers.edgeLabels/settings.js",
+      "path_type": "hardlink",
+      "sha256": "ac5633f77b1a066e74369949d4500c3cd88c68f11256974f1b9e446d20fd6fdd",
+      "size_in_bytes": 1888
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.renderers.edgeLabels/sigma.canvas.edges.labels.curve.js",
+      "path_type": "hardlink",
+      "sha256": "5b56fcfbdf8c1445771d0d4215aae5e6dfbbeb1d4540f71f5075a35ef04cf440",
+      "size_in_bytes": 5877
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.renderers.edgeLabels/sigma.canvas.edges.labels.curvedArrow.js",
+      "path_type": "hardlink",
+      "sha256": "8e23b7dcbd8b84511ad2351135aaec2131a1151a0ecfec32aeaa4a7f6f92bbbd",
+      "size_in_bytes": 995
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.renderers.edgeLabels/sigma.canvas.edges.labels.def.js",
+      "path_type": "hardlink",
+      "sha256": "6af84b619c23ae30fd0c521a6e8f33ea5390823866f578ffb5da9de38d3114fc",
+      "size_in_bytes": 5611
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.renderers.edgeLabels/sigma.svg.edges.labels.curve.js",
+      "path_type": "hardlink",
+      "sha256": "738ac9bfd0efc39b3b61bbf7526ebed8de0fe1a3c5a19da54664e40c0f45b61c",
+      "size_in_bytes": 3910
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.renderers.edgeLabels/sigma.svg.edges.labels.curvedArrow.js",
+      "path_type": "hardlink",
+      "sha256": "817942d4e1f5d81d51cac77c2e072e4217ba7df2a7a3e69039e478536ae664f4",
+      "size_in_bytes": 369
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.renderers.edgeLabels/sigma.svg.edges.labels.def.js",
+      "path_type": "hardlink",
+      "sha256": "d910dd451f00cd442b6a6bcd1c2739095fae130e2066752a4bd52bc3d090ce74",
+      "size_in_bytes": 3282
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.renderers.glyphs/LICENSE",
+      "path_type": "hardlink",
+      "sha256": "aee1cd936467b2e9dd788ef6cc2a28b8d4d5fae99f77d2bc75f02e04ac34a892",
+      "size_in_bytes": 1081
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.renderers.glyphs/README.md",
+      "path_type": "hardlink",
+      "sha256": "f47cd7d49ee1d665f9fc9e23a5ed231aa4ddaaf5999aabec7b2f35c59317f10c",
+      "size_in_bytes": 4879
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.renderers.glyphs/settings.js",
+      "path_type": "hardlink",
+      "sha256": "caeeb413e7c99a5b31a47b099790ddc7a5aa99df26c39f0361fd0806e6383056",
+      "size_in_bytes": 1452
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.renderers.glyphs/sigma.renderers.glyphs.js",
+      "path_type": "hardlink",
+      "sha256": "3e2301fe66d7dcf872657c407dfe25e30bb520d131edfda1d6b67c33a341e89e",
+      "size_in_bytes": 5854
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.renderers.halo/LICENSE",
+      "path_type": "hardlink",
+      "sha256": "aee1cd936467b2e9dd788ef6cc2a28b8d4d5fae99f77d2bc75f02e04ac34a892",
+      "size_in_bytes": 1081
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.renderers.halo/README.md",
+      "path_type": "hardlink",
+      "sha256": "2bd5eb574ec57f085d9b8e40d2e49c3ec955bf70ecf3d013a13e79bb1bdcdb05",
+      "size_in_bytes": 3269
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.renderers.halo/settings.js",
+      "path_type": "hardlink",
+      "sha256": "1ca4025da74fc1080d4009b36577a371d0cd49c6a9fe969884dc2209cf2033d6",
+      "size_in_bytes": 823
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.renderers.halo/sigma.renderers.halo.js",
+      "path_type": "hardlink",
+      "sha256": "876ee6d2639b7ad2bd20fc6fce87da0445a97917ffdcc20f14fafe9baf6ec369",
+      "size_in_bytes": 8901
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.renderers.linkurious/LICENSE",
+      "path_type": "hardlink",
+      "sha256": "e1c0ad728983d8a57335e52cf1064f1affd1d454173d8cebd3ed8b4a72b48704",
+      "size_in_bytes": 35121
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.renderers.linkurious/README.md",
+      "path_type": "hardlink",
+      "sha256": "7c453458a528cb994b00dca14311804a09775744955e9eb318d8c70f4e7a1656",
+      "size_in_bytes": 14018
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.renderers.linkurious/canvas/sigma.canvas.edgehovers.arrow.js",
+      "path_type": "hardlink",
+      "sha256": "62d368028188ef0b2ae43f4886bd4370c705d0d636672842504f71d3abcc69b4",
+      "size_in_bytes": 3979
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.renderers.linkurious/canvas/sigma.canvas.edgehovers.curve.js",
+      "path_type": "hardlink",
+      "sha256": "f2437c37f4d93eafcc9d7fb648f56508d712c80fc6a5a6abaab559944b013461",
+      "size_in_bytes": 3656
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.renderers.linkurious/canvas/sigma.canvas.edgehovers.curvedArrow.js",
+      "path_type": "hardlink",
+      "sha256": "0d5a7f91f3f814071bad926a250d7324646174ede158f952f703c3c866347ecd",
+      "size_in_bytes": 4730
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.renderers.linkurious/canvas/sigma.canvas.edgehovers.dashed.js",
+      "path_type": "hardlink",
+      "sha256": "6ae8f27c5286ebdc2bd868e32a7a3cedbde997439b08454ed1b3b1a434a6c0cf",
+      "size_in_bytes": 3340
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.renderers.linkurious/canvas/sigma.canvas.edgehovers.def.js",
+      "path_type": "hardlink",
+      "sha256": "10bbd8d394363410fd1a0347f1e2a46ff8a6b0dd556837714bde1d0f7c597006",
+      "size_in_bytes": 3259
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.renderers.linkurious/canvas/sigma.canvas.edgehovers.dotted.js",
+      "path_type": "hardlink",
+      "sha256": "c508b9113296d55907cc0cfcf0a2b5b671e1b67c2e8225e5a293337d8689ff7c",
+      "size_in_bytes": 3375
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.renderers.linkurious/canvas/sigma.canvas.edgehovers.parallel.js",
+      "path_type": "hardlink",
+      "sha256": "9b37523d3d65817eb9499b04e4cfc9ead7d9a6bb42cca70bcd95faea70c12e07",
+      "size_in_bytes": 3866
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.renderers.linkurious/canvas/sigma.canvas.edgehovers.tapered.js",
+      "path_type": "hardlink",
+      "sha256": "6dfaa64f939de7e457703600a6bd48dac06fbbc6b05acec1534694e9822570cc",
+      "size_in_bytes": 3890
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.renderers.linkurious/canvas/sigma.canvas.edges.arrow.js",
+      "path_type": "hardlink",
+      "sha256": "0d5767cc62afeccd9da6615dfbb2584bb4d78e22d993ca63d9f2245ec3802150",
+      "size_in_bytes": 3631
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.renderers.linkurious/canvas/sigma.canvas.edges.autoCurve.js",
+      "path_type": "hardlink",
+      "sha256": "f1007f66d8e7f9e33671293fc30e68f57e0b3229f133306d62a78249789f2a66",
+      "size_in_bytes": 2733
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.renderers.linkurious/canvas/sigma.canvas.edges.curve.js",
+      "path_type": "hardlink",
+      "sha256": "bf49c88d3222c18248114c61d425d35f3f91ab7673c629b0328a7af05f26a82f",
+      "size_in_bytes": 3322
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.renderers.linkurious/canvas/sigma.canvas.edges.curvedArrow.js",
+      "path_type": "hardlink",
+      "sha256": "183676895910c168b7ac2c3114df515a7c2d9c22bd35abf925973a2fce0bab2b",
+      "size_in_bytes": 4369
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.renderers.linkurious/canvas/sigma.canvas.edges.dashed.js",
+      "path_type": "hardlink",
+      "sha256": "c8aeba12fe50703ac37c29d1d7be4f0545cf287f1222507b0a7419dc58fcba67",
+      "size_in_bytes": 2997
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.renderers.linkurious/canvas/sigma.canvas.edges.def.js",
+      "path_type": "hardlink",
+      "sha256": "75b46db10bc03dd51cebb49586eab79364f05062d7f54040dfbdeb4d0ca5d905",
+      "size_in_bytes": 2935
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.renderers.linkurious/canvas/sigma.canvas.edges.dotted.js",
+      "path_type": "hardlink",
+      "sha256": "f26d156d4ff04915dd2eb7cadc7a60ef3f3b0f2bc6c6e3731b6486d84de47cfd",
+      "size_in_bytes": 2995
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.renderers.linkurious/canvas/sigma.canvas.edges.parallel.js",
+      "path_type": "hardlink",
+      "sha256": "52e35ad49e15ea79cd0de51247ba7bdcae8279c2d1ad911a158753005bb01671",
+      "size_in_bytes": 3528
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.renderers.linkurious/canvas/sigma.canvas.edges.tapered.js",
+      "path_type": "hardlink",
+      "sha256": "5d03e4586006deaf688434ca52c1bf3ea8476741ab31940c76c73b63180d090f",
+      "size_in_bytes": 3769
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.renderers.linkurious/canvas/sigma.canvas.extremities.def.js",
+      "path_type": "hardlink",
+      "sha256": "c532817ac1f14a3c2107cae22ceffc72fa21780e6e1fe055c794175c09db31de",
+      "size_in_bytes": 1052
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.renderers.linkurious/canvas/sigma.canvas.hovers.def.js",
+      "path_type": "hardlink",
+      "sha256": "a680de86d7f0bd80e955857223c38f9eb9a201420c9fa0ecbba256fb793dc725",
+      "size_in_bytes": 11164
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.renderers.linkurious/canvas/sigma.canvas.labels.def.js",
+      "path_type": "hardlink",
+      "sha256": "74fea3f1adc5a3d265fdaa75458d179ca48dcd826bd2171f0a5abe5ffb981a8b",
+      "size_in_bytes": 5791
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.renderers.linkurious/canvas/sigma.canvas.nodes.cross.js",
+      "path_type": "hardlink",
+      "sha256": "522bfcd44217ec78f005f2daafb7b4946b23655e994d1090820c1547af3d3811",
+      "size_in_bytes": 4504
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.renderers.linkurious/canvas/sigma.canvas.nodes.def.js",
+      "path_type": "hardlink",
+      "sha256": "670c5154a3855f18c9ce869621d2b472fab9cef632f0efb91bff7c203f9334a1",
+      "size_in_bytes": 4901
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.renderers.linkurious/canvas/sigma.canvas.nodes.diamond.js",
+      "path_type": "hardlink",
+      "sha256": "15d795a016ad77eec32df3a2fc4f3ab1556a354d1c8075b642ae159d421dca20",
+      "size_in_bytes": 4026
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.renderers.linkurious/canvas/sigma.canvas.nodes.equilateral.js",
+      "path_type": "hardlink",
+      "sha256": "b39c491389a1cf514217d2e5092516ab6923b84de693a276299650e48840aa49",
+      "size_in_bytes": 4630
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.renderers.linkurious/canvas/sigma.canvas.nodes.square.js",
+      "path_type": "hardlink",
+      "sha256": "7e8fbedd561b15b2ec94ef477563d8eaade51d378fd246891bad6f2e0ae99829",
+      "size_in_bytes": 4306
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.renderers.linkurious/canvas/sigma.canvas.nodes.star.js",
+      "path_type": "hardlink",
+      "sha256": "9dbced4864658b3db18f005b67736b3048f2312b0bae54857d4643bbd96544ac",
+      "size_in_bytes": 4523
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.renderers.linkurious/settings.js",
+      "path_type": "hardlink",
+      "sha256": "7dc5ca8cf6e4482ad9efe7280d0c9a480964d90b0c603de162f7d1615cb5cf31",
+      "size_in_bytes": 4306
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.renderers.linkurious/svg/sigma.svg.edges.tapered.js",
+      "path_type": "hardlink",
+      "sha256": "aae45564c5889feb9e5e897a76b00e97f5c7429af1cc5cec6fb3538e3b8eda54",
+      "size_in_bytes": 2963
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.renderers.linkurious/webgl/sigma.webgl.edges.arrow.js",
+      "path_type": "hardlink",
+      "sha256": "68cdb55737a238c0e523df289197fc9821c8cb90be52f6dd1fa72068a4ede1c2",
+      "size_in_bytes": 11371
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.renderers.linkurious/webgl/sigma.webgl.edges.def.js",
+      "path_type": "hardlink",
+      "sha256": "9b8babacfc290e7979b75e8ffb0a98f2cc015328f657bb447d93df4e4bf302df",
+      "size_in_bytes": 7650
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.renderers.linkurious/webgl/sigma.webgl.edges.fast.js",
+      "path_type": "hardlink",
+      "sha256": "f9c0a8d0e2286c6f41b68309c6337ae9406c8639a1089345fb967c8f6c213a2a",
+      "size_in_bytes": 4313
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.renderers.linkurious/webgl/sigma.webgl.nodes.def.js",
+      "path_type": "hardlink",
+      "sha256": "c629b045a0162e16e97b4bf9d70ed63ba373f9cc3db116a6b424f4251a424721",
+      "size_in_bytes": 24414
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.renderers.linkurious/webgl/sigma.webgl.nodes.fast.js",
+      "path_type": "hardlink",
+      "sha256": "448e71021fedcf16a14736485e6d88868dab3016fdba67a0d252aa138fc4eabc",
+      "size_in_bytes": 5424
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.statistics.HITS/sigma.statistics.HITS.js",
+      "path_type": "hardlink",
+      "sha256": "f502f8afa3497e50fd53da4f05a67a51523206ce121e8b9141070fce7c6b1c8f",
+      "size_in_bytes": 5094
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.statistics.louvain/LICENSE",
+      "path_type": "hardlink",
+      "sha256": "6ece06fc92fbdaa26fb9dd79a4618ec4d275fc610c2339b8b1de726f00c45158",
+      "size_in_bytes": 1082
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.statistics.louvain/README.md",
+      "path_type": "hardlink",
+      "sha256": "444448a427e243306f8c3fdefca11c8f496bede5381db56dacbaf4bf4391f74c",
+      "size_in_bytes": 5093
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/plugins/sigma.statistics.louvain/sigma.statistics.louvain.js",
+      "path_type": "hardlink",
+      "sha256": "fc027138c737c8232233ecd19132cf4985f65f3fed4fd2ebe43898491c514550",
+      "size_in_bytes": 16198
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/scripts/check-errors.py",
+      "path_type": "hardlink",
+      "sha256": "6bc5311240bb9d15ce7b0211d0e833eb74e3319154692bf4074510d9b5d3cf44",
+      "size_in_bytes": 1001
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/scripts/examples-screenshots.py",
+      "path_type": "hardlink",
+      "sha256": "53824b0f0806c501794a784e582e8c1ad08494d143829fc8b07e031fe3650766",
+      "size_in_bytes": 810
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/scripts/resize-screenshots",
+      "path_type": "hardlink",
+      "sha256": "1cf5a736fd12a0c50cf3fe8c43222ca99737f66f73c7542bb5c108bd00fa903b",
+      "size_in_bytes": 122
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/src/LICENSE.txt",
+      "path_type": "hardlink",
+      "sha256": "c290307c376305c27040b8086b54ec763e0c3a8b234321a62bb253ab0b494cc0",
+      "size_in_bytes": 1083
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/src/captors/sigma.captors.mouse.js",
+      "path_type": "hardlink",
+      "sha256": "6ddcc6050c52c2d5f4530167ea8e7829834d40d6b4e1944656c08c2fa0c3f74b",
+      "size_in_bytes": 9822
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/src/captors/sigma.captors.touch.js",
+      "path_type": "hardlink",
+      "sha256": "b5a691911cf29503470c306c349d2b238b61f62e077fd16a4d1bf3c892e0c996",
+      "size_in_bytes": 11306
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/src/classes/sigma.classes.camera.js",
+      "path_type": "hardlink",
+      "sha256": "f52c40488a33026886e518fb51fc7ec240299fba1dde6bc7de8b5eb033c55252",
+      "size_in_bytes": 8131
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/src/classes/sigma.classes.configurable.js",
+      "path_type": "hardlink",
+      "sha256": "65017e1d1dc00668991e716618c4aab1b412735fd691a97c574cbb5e5eb979e4",
+      "size_in_bytes": 4001
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/src/classes/sigma.classes.dispatcher.js",
+      "path_type": "hardlink",
+      "sha256": "8a8e1965c14d03267a4a636aa8b333b143c6ec70d6776468182e4f19ce296ce2",
+      "size_in_bytes": 5546
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/src/classes/sigma.classes.graph.js",
+      "path_type": "hardlink",
+      "sha256": "51b804a05a8b24ba62a99e049b8640ab3f30d70dba45a23a80261086c052f4df",
+      "size_in_bytes": 26677
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/src/classes/sigma.classes.quad.js",
+      "path_type": "hardlink",
+      "sha256": "c82dbc2c959b89709ebdf90b88002701e9e49a36196819783c14d74971ce09e6",
+      "size_in_bytes": 24861
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/src/conrad.js",
+      "path_type": "hardlink",
+      "sha256": "58bcf3d18a3c6eaf9e8379b6e67b606b1fe84cdc51d0c72b3036d86f43f02752",
+      "size_in_bytes": 25821
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/src/middlewares/sigma.middlewares.copy.js",
+      "path_type": "hardlink",
+      "sha256": "8954afbb2209ade4a823bb22054103f6da4815b902bdd5abb76f353bed65ffd9",
+      "size_in_bytes": 923
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/src/middlewares/sigma.middlewares.rescale.js",
+      "path_type": "hardlink",
+      "sha256": "bdee303ee0e1adf0c6d8bda66f9ba70df4e16295b10e70720d63dac33c5924f1",
+      "size_in_bytes": 5783
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/src/misc/sigma.misc.animation.js",
+      "path_type": "hardlink",
+      "sha256": "a923091ef5597588d7d771c1b51176c2f868f63be829b5bd3e7395295096d185",
+      "size_in_bytes": 7427
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/src/misc/sigma.misc.bindDOMEvents.js",
+      "path_type": "hardlink",
+      "sha256": "809a7c2884514a9fede8d29873adda898bb57d77f44d4f0963b4de373f1bcdd1",
+      "size_in_bytes": 4374
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/src/misc/sigma.misc.bindEvents.js",
+      "path_type": "hardlink",
+      "sha256": "6bbb3c33b0a924afd093499cbf3acef5d22934efa602e66e0bc4176aa49a6dcd",
+      "size_in_bytes": 19301
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/src/misc/sigma.misc.drawHovers.js",
+      "path_type": "hardlink",
+      "sha256": "fcead639e6ea9bc8081bebbb49088236c1507571700cd3b884ee0c8a90164e82",
+      "size_in_bytes": 2303
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/src/renderers/canvas/sigma.canvas.edgehovers.arrow.js",
+      "path_type": "hardlink",
+      "sha256": "76b08c9db9532657e20e64d78942b14acb40ad07b94b86d55577e067714a70ac",
+      "size_in_bytes": 2449
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/src/renderers/canvas/sigma.canvas.edgehovers.curve.js",
+      "path_type": "hardlink",
+      "sha256": "afd49ab9a138cf20aef5ccc94719af420c781936279d8c478db86acfc04e1180",
+      "size_in_bytes": 2120
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/src/renderers/canvas/sigma.canvas.edgehovers.curvedArrow.js",
+      "path_type": "hardlink",
+      "sha256": "c75b7faa605debce9a4bb4eb92c5f88038b628d440110f82a9c6522156b503c1",
+      "size_in_bytes": 3159
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/src/renderers/canvas/sigma.canvas.edgehovers.def.js",
+      "path_type": "hardlink",
+      "sha256": "d480346b04ae504a7ff06c7af17ec60102d2c02dded1e494fe810441ccf609d4",
+      "size_in_bytes": 1729
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/src/renderers/canvas/sigma.canvas.edges.arrow.js",
+      "path_type": "hardlink",
+      "sha256": "b25a6ea752913dbb2e568b382117bedfb9dd01a26fee6a730f228fc431020c13",
+      "size_in_bytes": 2169
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/src/renderers/canvas/sigma.canvas.edges.curve.js",
+      "path_type": "hardlink",
+      "sha256": "32de2a7828802abfc9033433b347bb0b99320934ab77589641b26c9f440b31ba",
+      "size_in_bytes": 1858
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/src/renderers/canvas/sigma.canvas.edges.curvedArrow.js",
+      "path_type": "hardlink",
+      "sha256": "12d5a15832ba5ff531e5fa8d786daae59eb7b666565ea6cb7ef49598fd0b6dde",
+      "size_in_bytes": 2881
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/src/renderers/canvas/sigma.canvas.edges.def.js",
+      "path_type": "hardlink",
+      "sha256": "4af2bb7d28e38ecdad2bd5f1a6cfa14a9566530387d9ce977312d0425988e3b5",
+      "size_in_bytes": 1472
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/src/renderers/canvas/sigma.canvas.extremities.def.js",
+      "path_type": "hardlink",
+      "sha256": "a3b5ecd06d6a91b0012cde6898b0ce4ff502b2feed08519379c2722217b3e485",
+      "size_in_bytes": 1078
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/src/renderers/canvas/sigma.canvas.hovers.def.js",
+      "path_type": "hardlink",
+      "sha256": "0ab1138fa6e9e597bb808456511936f820dc9912e0b0aa7b45fff80d716b1efa",
+      "size_in_bytes": 8325
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/src/renderers/canvas/sigma.canvas.labels.def.js",
+      "path_type": "hardlink",
+      "sha256": "459f23d14d45a327b1027a0ca5b9d18503bbed6702a2f342dfe76ccf410bb983",
+      "size_in_bytes": 4949
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/src/renderers/canvas/sigma.canvas.nodes.def.js",
+      "path_type": "hardlink",
+      "sha256": "3e9f3fb59d42ff275fa52f9acd477b5636c162a4b34bb610015fe4053fb49479",
+      "size_in_bytes": 769
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/src/renderers/sigma.renderers.canvas.js",
+      "path_type": "hardlink",
+      "sha256": "8bacba63e01f04133cf6f4663aff2f14ef52099fb1cbc75eeb1d95e606d1bde8",
+      "size_in_bytes": 13721
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/src/renderers/sigma.renderers.def.js",
+      "path_type": "hardlink",
+      "sha256": "02c97c9bd3d86b7c145c7ee508428cbdf398db56787ecd4b309c973b0890b85a",
+      "size_in_bytes": 327
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/src/renderers/sigma.renderers.svg.js",
+      "path_type": "hardlink",
+      "sha256": "69b61abfad4b89433a51909043086d0819bb625c9948d231e43b01afc166664f",
+      "size_in_bytes": 14517
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/src/renderers/sigma.renderers.webgl.js",
+      "path_type": "hardlink",
+      "sha256": "e4c699c4a50f6d75b55ca72b435163e93add0754728b0ad487c41ce017588e6c",
+      "size_in_bytes": 22427
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/src/renderers/svg/sigma.svg.edges.curve.js",
+      "path_type": "hardlink",
+      "sha256": "d0c8925edf29679d9ad8f363af2c751c5f5ddc5e1ca23a7fae5178ea840376a4",
+      "size_in_bytes": 2999
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/src/renderers/svg/sigma.svg.edges.curvedArrow.js",
+      "path_type": "hardlink",
+      "sha256": "33407d026dc31df65b47bf99b85d7c63f5dbbab61e4d96b57db6edbf22688fa7",
+      "size_in_bytes": 2956
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/src/renderers/svg/sigma.svg.edges.def.js",
+      "path_type": "hardlink",
+      "sha256": "75cf90a50daa4e10f9fd680a6887abd7940eb356dbe20744f93a17fb573a278b",
+      "size_in_bytes": 2399
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/src/renderers/svg/sigma.svg.hovers.def.js",
+      "path_type": "hardlink",
+      "sha256": "4a5215c3c5badc274427c3c3556e747a68f44661feb4938e2d79a7648e2d7ce3",
+      "size_in_bytes": 4001
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/src/renderers/svg/sigma.svg.labels.def.js",
+      "path_type": "hardlink",
+      "sha256": "e2c4949ab3eeaa9da451afba35cf37c12742172096ec92b8450b3b40c71554d0",
+      "size_in_bytes": 2434
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/src/renderers/svg/sigma.svg.nodes.def.js",
+      "path_type": "hardlink",
+      "sha256": "686095334c7e4bc7a9dcffc127475296d287707fafaa47a95a486223bd246483",
+      "size_in_bytes": 1746
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/src/renderers/svg/sigma.svg.utils.js",
+      "path_type": "hardlink",
+      "sha256": "109e4fc31a087bea917c898e121df59fa770e8139812dd8fce8d91af510dc028",
+      "size_in_bytes": 608
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/src/renderers/webgl/sigma.webgl.edges.arrow.js",
+      "path_type": "hardlink",
+      "sha256": "6b67a2b69ae351de8ae6bed78dd70f5904d44eb5cacc82a7fb7898a6945afd2c",
+      "size_in_bytes": 11098
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/src/renderers/webgl/sigma.webgl.edges.def.js",
+      "path_type": "hardlink",
+      "sha256": "5a62091fd4cbf4f8895fd77ac75fa835de81e86f888e2335ec9e57576a15e340",
+      "size_in_bytes": 7377
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/src/renderers/webgl/sigma.webgl.edges.fast.js",
+      "path_type": "hardlink",
+      "sha256": "4e093838b60836d8d2f31a00878fe4fa9f25d8b9f30f320aee64781564d48227",
+      "size_in_bytes": 4040
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/src/renderers/webgl/sigma.webgl.edges.thickLine.js",
+      "path_type": "hardlink",
+      "sha256": "3568b23ff081c0b9209b1006cd76826ea7b852f6baf37b6e3c085d36f6ef0169",
+      "size_in_bytes": 7072
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/src/renderers/webgl/sigma.webgl.edges.thickLineCPU.js",
+      "path_type": "hardlink",
+      "sha256": "40fa50058f5ce73a97d9602abd4d9112f9f2439c146013aa535b2a1174851941",
+      "size_in_bytes": 6067
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/src/renderers/webgl/sigma.webgl.edges.thickLineGPU.js",
+      "path_type": "hardlink",
+      "sha256": "3eea3c5ea5cb53ff4793fbe572ccde1e85a64ac58e81ec11b1366a5af470b84d",
+      "size_in_bytes": 7385
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/src/renderers/webgl/sigma.webgl.nodes.def.js",
+      "path_type": "hardlink",
+      "sha256": "1a2520a404fa367778b233cb354ca143017fd520e5bbc0e5a39182aba1bb924d",
+      "size_in_bytes": 6106
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/src/renderers/webgl/sigma.webgl.nodes.fast.js",
+      "path_type": "hardlink",
+      "sha256": "bbbcb6108c9fe631760de4c28b55415ddae7510de8c2a4cc60999cebd41ee06f",
+      "size_in_bytes": 5465
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/src/sigma.core.js",
+      "path_type": "hardlink",
+      "sha256": "74819b1bb405188375d945ec0094d0a0eace1aa709f9ddfef8d50e85d3cf8d9f",
+      "size_in_bytes": 20416
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/src/sigma.export.js",
+      "path_type": "hardlink",
+      "sha256": "4635632f25076483adf11a77ee19ce7915d7c1457a51a4e7403710d0c9012b76",
+      "size_in_bytes": 489
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/src/sigma.settings.js",
+      "path_type": "hardlink",
+      "sha256": "5b9b9420059094377390a7e35f5d7d551972af6a6088710d041f9c17629b4556",
+      "size_in_bytes": 9804
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/src/utils/sigma.polyfills.js",
+      "path_type": "hardlink",
+      "sha256": "43515e681e21a28af4ecd470a68c222da1e9e0becfbc1d15cd4d85008b3b5476",
+      "size_in_bytes": 2284
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/src/utils/sigma.utils.js",
+      "path_type": "hardlink",
+      "sha256": "e1201176dae770a786e952975a865294f7ac7ae5ec9f0cb8f6e619f01abadf44",
+      "size_in_bytes": 41392
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/test/qunit/qunit-1.17.1.css",
+      "path_type": "hardlink",
+      "sha256": "330193c50a7214261ea77e65c12cb097c0da40af141a8b539b52180e15cd049f",
+      "size_in_bytes": 5277
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/test/qunit/qunit-1.17.1.js",
+      "path_type": "hardlink",
+      "sha256": "7bfc59ee5478e6b08422d5224f1c2bc1c66ca8696ee1ca196ef75a0f29ebbfba",
+      "size_in_bytes": 71721
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/test/unit.HITS.js",
+      "path_type": "hardlink",
+      "sha256": "501dcaa1370b3d9b9f130d2950139b76763414b2ec71991870cdc612076c2de3",
+      "size_in_bytes": 6091
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/test/unit.animation.js",
+      "path_type": "hardlink",
+      "sha256": "16d93e997574bcba799b9f72d9a3595b0463e13f09f969f16059ef402c8cabf6",
+      "size_in_bytes": 2754
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/test/unit.camera.js",
+      "path_type": "hardlink",
+      "sha256": "735b2d28c3b0d9ae41ff1b7d5eae7e4c06eace423efafd40dad966d8a7efb6bf",
+      "size_in_bytes": 4072
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/test/unit.configurable.js",
+      "path_type": "hardlink",
+      "sha256": "53bf2f2901611fe1c6269be45f1e613f08b2eb28a5a5c9b352b187e786b873c9",
+      "size_in_bytes": 2016
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/test/unit.core.js",
+      "path_type": "hardlink",
+      "sha256": "c3f861734dbc18a1cbf2efab187a4fd353aa7537b2820e6278a6773782d2c930",
+      "size_in_bytes": 4891
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/test/unit.dispatcher.js",
+      "path_type": "hardlink",
+      "sha256": "ff15b71cc9737b7f7544b8abe6ef4366fdaea0e7bc41b091da4554f695644bdd",
+      "size_in_bytes": 3494
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/test/unit.edgequad.js",
+      "path_type": "hardlink",
+      "sha256": "22418c99067c5d844cb5739b07751ec869eee44d38d53fe00ac9531aadac4cbf",
+      "size_in_bytes": 4855
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/test/unit.graph.js",
+      "path_type": "hardlink",
+      "sha256": "156c35e2325dac820b9179c083a10edac98e72374d028320997d512bc9563b67",
+      "size_in_bytes": 18957
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/test/unit.helpers.graph.js",
+      "path_type": "hardlink",
+      "sha256": "1ec071827763376e123dfc94ca5e43d697cea268489ce2c79e736eb0d66ae035",
+      "size_in_bytes": 2221
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/test/unit.html",
+      "path_type": "hardlink",
+      "sha256": "6ef83111f49f54f5101db200c073f48d19f714ce6462334c33c583a7e9d14a3b",
+      "size_in_bytes": 5045
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/test/unit.plugins.activeState.js",
+      "path_type": "hardlink",
+      "sha256": "4e1d10106993a18d0f1ca7f46077a25077b910939e78cebaeaa391efad1b42cd",
+      "size_in_bytes": 6457
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/test/unit.plugins.design.js",
+      "path_type": "hardlink",
+      "sha256": "dc58e3d0a9204d85dce43c97e908655676a5b0e5c0c08b9b8acafd3cc80de89f",
+      "size_in_bytes": 7399
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/test/unit.plugins.edgeSiblings.js",
+      "path_type": "hardlink",
+      "sha256": "9a05af12ad7b5684ffe524fcf37190180a7812605c5a7656a9bce4fc5bf180c9",
+      "size_in_bytes": 5593
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/test/unit.plugins.filter.js",
+      "path_type": "hardlink",
+      "sha256": "c62468f83b06e4d88ae69addc14bcb81462718c7c7daf370d9515cc541d8581a",
+      "size_in_bytes": 10208
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/test/unit.plugins.generators.js",
+      "path_type": "hardlink",
+      "sha256": "fe53364b2ba6e6a520436957ffbac2db33a8c47d0d67f5539df42b86e17f90c7",
+      "size_in_bytes": 5025
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/test/unit.plugins.locate.js",
+      "path_type": "hardlink",
+      "sha256": "70e41795f63ce8752ab512900ccd405597f2d09c2568b910fe9dece72302eae7",
+      "size_in_bytes": 3067
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/test/unit.quad.js",
+      "path_type": "hardlink",
+      "sha256": "53bd034d5ebfc32de80b65dd556fb2356f51a82657f9298c78ab5aa248b06111",
+      "size_in_bytes": 4593
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/public/vendor/linkurious.js-develop/test/unit.renderers.js",
+      "path_type": "hardlink",
+      "sha256": "2db2ce921e3301881304faaa4f0517402e8434ee79fcd475f616df31fef3470f",
+      "size_in_bytes": 1517
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/scripts/install_pip.sh",
+      "path_type": "hardlink",
+      "sha256": "cf14449c912666b1578b9d432b54ded6aa2bdc4a75531aa889b0451389ab4758",
+      "size_in_bytes": 51
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/templates/epanet_model_viewer/base.html",
+      "path_type": "hardlink",
+      "sha256": "c7cc8d9ae407f887edc4d2dbb180c958bad76e0cc38a2c00c658d7f21f3d19d8",
+      "size_in_bytes": 10515
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/templates/epanet_model_viewer/home.html",
+      "path_type": "hardlink",
+      "sha256": "65ca252bf441785cd98df1e79b1577c4f97487dc79e74d8d322096feca58c59f",
+      "size_in_bytes": 55150
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/tests/__init__.py",
+      "path_type": "hardlink",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_in_bytes": 0
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/tests/tests.py",
+      "path_type": "hardlink",
+      "sha256": "16f4f9275a08f1e777e62c6f654569baf2e6f66dc152b195a29a58289c8bdcae",
+      "size_in_bytes": 8438
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/workspaces/app_workspace/.gitkeep",
+      "path_type": "hardlink",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_in_bytes": 0
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer-0.0.2-py3.7.egg/tethysapp/epanet_model_viewer/workspaces/user_workspaces/.gitkeep",
+      "path_type": "hardlink",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_in_bytes": 0
+    },
+    {
+      "_path": "site-packages/tethysapp_epanet_model_viewer.pth",
+      "path_type": "hardlink",
+      "sha256": "7765907964cd6633bf924677de89ec685d498cc883d0774bb1e5639984740379",
+      "size_in_bytes": 48
+    }
+  ],
+  "paths_version": 1
+}

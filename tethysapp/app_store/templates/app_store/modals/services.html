@@ -1,0 +1,20 @@
+{% load staticfiles %}
+<div class="modal fade" id="services-modal" style="z-index:2000; margin-top:10%;" tabindex="-1" role="dialog" aria-labelledby="services-modal-label">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h5 class="modal-title" id="services-modal-label">Define Services</h5>
+            </div>
+            <div class="modal-body" id="services-container">
+            </div>
+            <div class="modal-footer">
+                <div id="servicesLoader" hidden>
+                    <img width="100px" src="{% static 'app_store/images/loader.gif' %}" />
+                </div>
+                <button class="btn btn-danger" data-dismiss="modal" aria-hidden="true" id="skipServicesButton"> Skip Service Configuration </button>
+                <button class="btn btn-success" id="finishServicesButton" data-dismiss="modal" disabled>Finish</button>
+            </div>
+        </div>
+    </div>
+</div>

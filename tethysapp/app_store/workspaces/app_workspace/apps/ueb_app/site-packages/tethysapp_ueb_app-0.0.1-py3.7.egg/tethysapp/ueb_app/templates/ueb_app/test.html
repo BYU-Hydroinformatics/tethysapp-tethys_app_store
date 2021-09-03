@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+
+<form action="test_submit" id="user-form">
+    <input type="text" value="text1">
+    <input type="submit" value="submit">
+</form>
+
+</body>
+
+<script>
+
+
+$(document).ready(function() {
+    // ajax call function to submit the form
+    var user_form= $('#user-form');
+
+    user_form.submit(function(){
+        alert($('#user-form').length);
+        <!--$.ajax({-->
+            <!--type: user_form.attr('method'),-->
+            <!--url: user_form.attr('action'),-->
+            <!--data: user_form.serialize(),-->
+
+            <!--success: function(response) {-->
+                <!--alert('happy');-->
+            <!--},-->
+            <!--error: function() {-->
+                <!--alert('sad');-->
+            <!--},-->
+            <!--complete: function(){-->
+                <!--alert('complete')-->
+            <!--}-->
+        <!--});-->
+
+    <!--});-->
+})
+</script>
+
+</html>

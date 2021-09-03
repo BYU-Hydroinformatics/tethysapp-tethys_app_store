@@ -1,0 +1,20 @@
+{
+  "arch": null,
+  "build": "py_0",
+  "build_number": 0,
+  "depends": [
+    "netcdf4",
+    "numpy",
+    "pandas",
+    "pyshp",
+    "python",
+    "rasterio",
+    "rasterstats"
+  ],
+  "name": "infection",
+  "noarch": "python",
+  "platform": null,
+  "subdir": "noarch",
+  "timestamp": 1600284183889,
+  "version": "1.0.0"
+}

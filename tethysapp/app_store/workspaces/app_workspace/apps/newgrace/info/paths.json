@@ -1,0 +1,425 @@
+{
+  "paths": [
+    {
+      "_path": "site-packages/tethysapp_newgrace-2.0.0-py3.7.egg/EGG-INFO/PKG-INFO",
+      "path_type": "hardlink",
+      "sha256": "30e71554ac5f26534b795aaad588fb2a1408f98702e6bf3737af4e274672a592",
+      "size_in_bytes": 381
+    },
+    {
+      "_path": "site-packages/tethysapp_newgrace-2.0.0-py3.7.egg/EGG-INFO/SOURCES.txt",
+      "path_type": "hardlink",
+      "sha256": "cff4acefa5df53b041c72c5ab4d453dc8e009afbe8107c6924dcaf1ca6710dd5",
+      "size_in_bytes": 634
+    },
+    {
+      "_path": "site-packages/tethysapp_newgrace-2.0.0-py3.7.egg/EGG-INFO/dependency_links.txt",
+      "path_type": "hardlink",
+      "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "size_in_bytes": 1
+    },
+    {
+      "_path": "site-packages/tethysapp_newgrace-2.0.0-py3.7.egg/EGG-INFO/not-zip-safe",
+      "path_type": "hardlink",
+      "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "size_in_bytes": 1
+    },
+    {
+      "_path": "site-packages/tethysapp_newgrace-2.0.0-py3.7.egg/EGG-INFO/top_level.txt",
+      "path_type": "hardlink",
+      "sha256": "a191b84ae1684f532955c88ff8022d4dd6c51f6aa209ff78a3016a0dca775f7e",
+      "size_in_bytes": 10
+    },
+    {
+      "_path": "site-packages/tethysapp_newgrace-2.0.0-py3.7.egg/tethysapp/newgrace/SHAZAAM.py",
+      "path_type": "hardlink",
+      "sha256": "f5c894baedbe9590485b3a8b1d6b99d7901f4cf229418a20f0c996e0343fde70",
+      "size_in_bytes": 33094
+    },
+    {
+      "_path": "site-packages/tethysapp_newgrace-2.0.0-py3.7.egg/tethysapp/newgrace/__init__.py",
+      "path_type": "hardlink",
+      "sha256": "f8f3085e8115960a4905ebbc3d9dc7c4f22a307c08f1f01ecce9991cda7d8852",
+      "size_in_bytes": 20
+    },
+    {
+      "_path": "site-packages/tethysapp_newgrace-2.0.0-py3.7.egg/tethysapp/newgrace/ajax_controllers.py",
+      "path_type": "hardlink",
+      "sha256": "562ab5dbc51ce3a89e5dc5493e50bed9e9176788589dac7da48644242937bb32",
+      "size_in_bytes": 22270
+    },
+    {
+      "_path": "site-packages/tethysapp_newgrace-2.0.0-py3.7.egg/tethysapp/newgrace/api.py",
+      "path_type": "hardlink",
+      "sha256": "5af44c3f15932a59d1d264fd5d27603327c71dea9d417a50231175005960fa17",
+      "size_in_bytes": 2807
+    },
+    {
+      "_path": "site-packages/tethysapp_newgrace-2.0.0-py3.7.egg/tethysapp/newgrace/app.py",
+      "path_type": "hardlink",
+      "sha256": "c9565e2919dddf7fce7a60d04222e636e3cd38fb1b1c935be1c5442c775f5804",
+      "size_in_bytes": 8567
+    },
+    {
+      "_path": "site-packages/tethysapp_newgrace-2.0.0-py3.7.egg/tethysapp/newgrace/config.py",
+      "path_type": "hardlink",
+      "sha256": "193e78f1e29094865f9648bd3e24bfc61a428c94ebd9188886c33e11b6235caa",
+      "size_in_bytes": 401
+    },
+    {
+      "_path": "site-packages/tethysapp_newgrace-2.0.0-py3.7.egg/tethysapp/newgrace/controllers.py",
+      "path_type": "hardlink",
+      "sha256": "f9879149d78e22ca1e7b3f9e93cd341ffa1430c9a37d897e2bf4f5c96c1cbb69",
+      "size_in_bytes": 28602
+    },
+    {
+      "_path": "site-packages/tethysapp_newgrace-2.0.0-py3.7.egg/tethysapp/newgrace/handoff.py",
+      "path_type": "hardlink",
+      "sha256": "dfa01248ce80faa4cfeac1bab1defd7d9067ba7b0ba1aa11706d36b502fc3df1",
+      "size_in_bytes": 129
+    },
+    {
+      "_path": "site-packages/tethysapp_newgrace-2.0.0-py3.7.egg/tethysapp/newgrace/model.py",
+      "path_type": "hardlink",
+      "sha256": "01e67ab5da140b55db4eafa6b817bd2337805b354aea81a0bd6c1e8d823e1406",
+      "size_in_bytes": 1666
+    },
+    {
+      "_path": "site-packages/tethysapp_newgrace-2.0.0-py3.7.egg/tethysapp/newgrace/public/css/fullscreen-icon.png",
+      "path_type": "hardlink",
+      "sha256": "13e1ba55fe90927c90e84a5a368a562b375c8afa817f9379749d348493340a37",
+      "size_in_bytes": 571
+    },
+    {
+      "_path": "site-packages/tethysapp_newgrace-2.0.0-py3.7.egg/tethysapp/newgrace/public/css/main.css",
+      "path_type": "hardlink",
+      "sha256": "1df4ef5e26962afc6f3465ebe3cded0c20d4d76d9ec17b54207acc10b1276825",
+      "size_in_bytes": 921
+    },
+    {
+      "_path": "site-packages/tethysapp_newgrace-2.0.0-py3.7.egg/tethysapp/newgrace/public/images/Servir-logo.png",
+      "path_type": "hardlink",
+      "sha256": "f408e2c3eeaaa95f4a3f1dd16b2d76484368d0111592fbc92d78eafaa3a1f15b",
+      "size_in_bytes": 9736
+    },
+    {
+      "_path": "site-packages/tethysapp_newgrace-2.0.0-py3.7.egg/tethysapp/newgrace/public/images/byu-logo.png",
+      "path_type": "hardlink",
+      "sha256": "b1f99d62110112ceed04a8128b1d25e09ea8ad026e22c3cb320c4e3b986d1947",
+      "size_in_bytes": 17767
+    },
+    {
+      "_path": "site-packages/tethysapp_newgrace-2.0.0-py3.7.egg/tethysapp/newgrace/public/images/default_favicon.png",
+      "path_type": "hardlink",
+      "sha256": "e9f27d4318ab82d485efdcc6b6e1f17ce6353bb6bafd70fe0a7decd770d28a39",
+      "size_in_bytes": 1255
+    },
+    {
+      "_path": "site-packages/tethysapp_newgrace-2.0.0-py3.7.egg/tethysapp/newgrace/public/images/headerbg.jpg",
+      "path_type": "hardlink",
+      "sha256": "b184c5d640b31949e71f3639626791dd6263a4fee6a70d0dfb2f63db649dceba",
+      "size_in_bytes": 111755
+    },
+    {
+      "_path": "site-packages/tethysapp_newgrace-2.0.0-py3.7.egg/tethysapp/newgrace/public/images/icon-fullscreen.png",
+      "path_type": "hardlink",
+      "sha256": "5c57dc8096a4c80867ebfcfa5ee020416094dc4a3b4661268d0813fd8b4b9abb",
+      "size_in_bytes": 1192
+    },
+    {
+      "_path": "site-packages/tethysapp_newgrace-2.0.0-py3.7.egg/tethysapp/newgrace/public/images/icon.gif",
+      "path_type": "hardlink",
+      "sha256": "2c7a238a28ce00cec1d7e279a46ab05d2740269d0d9c8ec06d4b5ccc741d339b",
+      "size_in_bytes": 14125
+    },
+    {
+      "_path": "site-packages/tethysapp_newgrace-2.0.0-py3.7.egg/tethysapp/newgrace/public/images/loader.gif",
+      "path_type": "hardlink",
+      "sha256": "dede012563c945321fbe3952281658f48ee6bda0531c3301bc82e28efc01421f",
+      "size_in_bytes": 8238
+    },
+    {
+      "_path": "site-packages/tethysapp_newgrace-2.0.0-py3.7.egg/tethysapp/newgrace/public/images/logo.jpg",
+      "path_type": "hardlink",
+      "sha256": "c0328d73146b7bb1b2ad7613f4e461b8480816c6ee93c80239060dee7ddc4ac1",
+      "size_in_bytes": 55510
+    },
+    {
+      "_path": "site-packages/tethysapp_newgrace-2.0.0-py3.7.egg/tethysapp/newgrace/public/js/add_region.js",
+      "path_type": "hardlink",
+      "sha256": "6112abdb82a34edebef1e3c7812259d2ead4afeba15710c234ec50c71838a4a5",
+      "size_in_bytes": 14880
+    },
+    {
+      "_path": "site-packages/tethysapp_newgrace-2.0.0-py3.7.egg/tethysapp/newgrace/public/js/add_thredds_server.js",
+      "path_type": "hardlink",
+      "sha256": "32d7b7e87d18aead6e0bca2d2fe52d310ad26a9e34b9e58e1a712790d6ba4780",
+      "size_in_bytes": 5421
+    },
+    {
+      "_path": "site-packages/tethysapp_newgrace-2.0.0-py3.7.egg/tethysapp/newgrace/public/js/graceviewer.js",
+      "path_type": "hardlink",
+      "sha256": "872edb3b55619edb482ede010719c6b86245ea1315044e319592c1ab6db6ae2f",
+      "size_in_bytes": 21292
+    },
+    {
+      "_path": "site-packages/tethysapp_newgrace-2.0.0-py3.7.egg/tethysapp/newgrace/public/js/main.js",
+      "path_type": "hardlink",
+      "sha256": "ea023ec1ec991ff8b4353d527bc08f2cf22b367b400f614236057d540d4e3732",
+      "size_in_bytes": 10856
+    },
+    {
+      "_path": "site-packages/tethysapp_newgrace-2.0.0-py3.7.egg/tethysapp/newgrace/public/js/manage_regions.js",
+      "path_type": "hardlink",
+      "sha256": "3741e2121d75f95dea14e65a7da90e05896a5f6b745db59e4e3d2cf80d86939c",
+      "size_in_bytes": 5544
+    },
+    {
+      "_path": "site-packages/tethysapp_newgrace-2.0.0-py3.7.egg/tethysapp/newgrace/public/js/manage_thredds_servers.js",
+      "path_type": "hardlink",
+      "sha256": "6794a8b1f9ea1a90b186f53184837c0a72e3a57f25df76fdd93971a8853a5d27",
+      "size_in_bytes": 7830
+    },
+    {
+      "_path": "site-packages/tethysapp_newgrace-2.0.0-py3.7.egg/tethysapp/newgrace/public/js/regionviewer.js",
+      "path_type": "hardlink",
+      "sha256": "b387bf9ebbbc9c4a4fa5feb2a717db1c012778ec9c8698b5554becd4717556a9",
+      "size_in_bytes": 27690
+    },
+    {
+      "_path": "site-packages/tethysapp_newgrace-2.0.0-py3.7.egg/tethysapp/newgrace/scripts/install_pip.sh",
+      "path_type": "hardlink",
+      "sha256": "6dfda51479d418b23a3b3919410303ce3c770b387c5d9e7b0d63484310a9ac18",
+      "size_in_bytes": 44
+    },
+    {
+      "_path": "site-packages/tethysapp_newgrace-2.0.0-py3.7.egg/tethysapp/newgrace/templates/newgrace/add_region.html",
+      "path_type": "hardlink",
+      "sha256": "6817d8fa2e0852694cf059395e26c9949eeca0b06b900e9fa95c1d09067366c9",
+      "size_in_bytes": 12359
+    },
+    {
+      "_path": "site-packages/tethysapp_newgrace-2.0.0-py3.7.egg/tethysapp/newgrace/templates/newgrace/add_thredds_server.html",
+      "path_type": "hardlink",
+      "sha256": "4c98a0328b3ad778c55192a98ffaa6711a2a71540c44b7a533c6c8ea5ffe252a",
+      "size_in_bytes": 12100
+    },
+    {
+      "_path": "site-packages/tethysapp_newgrace-2.0.0-py3.7.egg/tethysapp/newgrace/templates/newgrace/base.html",
+      "path_type": "hardlink",
+      "sha256": "31bfbc2281979015de9fc80ac1053984bbe2a88d200825d81980eaa29b13542b",
+      "size_in_bytes": 13920
+    },
+    {
+      "_path": "site-packages/tethysapp_newgrace-2.0.0-py3.7.egg/tethysapp/newgrace/templates/newgrace/global_map.html",
+      "path_type": "hardlink",
+      "sha256": "bc336e4ddb25cfb9a298b8d784b05fe9861bde58d1b6d0f186f229dbab5290fa",
+      "size_in_bytes": 21167
+    },
+    {
+      "_path": "site-packages/tethysapp_newgrace-2.0.0-py3.7.egg/tethysapp/newgrace/templates/newgrace/home.html",
+      "path_type": "hardlink",
+      "sha256": "cb21f6910a76ef3eba9d735905bee04818e207b85c9795535834f68a88398280",
+      "size_in_bytes": 14329
+    },
+    {
+      "_path": "site-packages/tethysapp_newgrace-2.0.0-py3.7.egg/tethysapp/newgrace/templates/newgrace/manage_regions.html",
+      "path_type": "hardlink",
+      "sha256": "387890ff25532e16c19b4a37674035ded6d22446b43333ba76a3fa923d90f8b4",
+      "size_in_bytes": 11589
+    },
+    {
+      "_path": "site-packages/tethysapp_newgrace-2.0.0-py3.7.egg/tethysapp/newgrace/templates/newgrace/manage_regions_table.html",
+      "path_type": "hardlink",
+      "sha256": "ba62624d24ebe20a6963f100adb2524f9a04980e8472b51396fe9f9aa5241da8",
+      "size_in_bytes": 1220
+    },
+    {
+      "_path": "site-packages/tethysapp_newgrace-2.0.0-py3.7.egg/tethysapp/newgrace/templates/newgrace/manage_thredds_servers.html",
+      "path_type": "hardlink",
+      "sha256": "1820fb7bca0e196f30924f0452d998632487c765ae4e605f6e7fedb51ce397ce",
+      "size_in_bytes": 11629
+    },
+    {
+      "_path": "site-packages/tethysapp_newgrace-2.0.0-py3.7.egg/tethysapp/newgrace/templates/newgrace/manage_thredds_servers_table.html",
+      "path_type": "hardlink",
+      "sha256": "b40cd57a5a02a9e42e0248b12f5e3f00a544b0149c40c4e826bfa777f91aad87",
+      "size_in_bytes": 2389
+    },
+    {
+      "_path": "site-packages/tethysapp_newgrace-2.0.0-py3.7.egg/tethysapp/newgrace/templates/newgrace/region.html",
+      "path_type": "hardlink",
+      "sha256": "da8ffcd9634c82f7bd0b4669bf24ba80d5ed5ac4fe8dc0c3793f3d8c3997ffa9",
+      "size_in_bytes": 18953
+    },
+    {
+      "_path": "site-packages/tethysapp_newgrace-2.0.0-py3.7.egg/tethysapp/newgrace/templates/newgrace/update_global_files.html",
+      "path_type": "hardlink",
+      "sha256": "fa9e83f4eac3ba422082fcce19519c27ad4c03047fa4777b7d1ddc3af102eaa6",
+      "size_in_bytes": 12769
+    },
+    {
+      "_path": "site-packages/tethysapp_newgrace-2.0.0-py3.7.egg/tethysapp/newgrace/tests/__init__.py",
+      "path_type": "hardlink",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_in_bytes": 0
+    },
+    {
+      "_path": "site-packages/tethysapp_newgrace-2.0.0-py3.7.egg/tethysapp/newgrace/tests/tests.py",
+      "path_type": "hardlink",
+      "sha256": "8c56a737357937805c4e3d830ce2e6ad7bd4ff6be1119dead108969585b69392",
+      "size_in_bytes": 8321
+    },
+    {
+      "_path": "site-packages/tethysapp_newgrace-2.0.0-py3.7.egg/tethysapp/newgrace/update_global_data.py",
+      "path_type": "hardlink",
+      "sha256": "d5812faaacada1ee8407c9ad6bb5343d99d68aa9e694979464c04d8f5e88b69a",
+      "size_in_bytes": 4950
+    },
+    {
+      "_path": "site-packages/tethysapp_newgrace-2.0.0-py3.7.egg/tethysapp/newgrace/utilities.py",
+      "path_type": "hardlink",
+      "sha256": "4b13307372b63c9946ee4e2624aad65e3a867642fb449ab5e40b659541acfcd7",
+      "size_in_bytes": 7119
+    },
+    {
+      "_path": "site-packages/tethysapp_newgrace-2.0.0-py3.7.egg/tethysapp/newgrace/workspaces/app_workspace/.gitkeep",
+      "path_type": "hardlink",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_in_bytes": 0
+    },
+    {
+      "_path": "site-packages/tethysapp_newgrace-2.0.0-py3.7.egg/tethysapp/newgrace/workspaces/app_workspace/shell/check_for_updates.sh",
+      "path_type": "hardlink",
+      "sha256": "6befea92040763c39ceebd8179bfa65f9dbc115949afe99f89a424d4be6972d1",
+      "size_in_bytes": 325
+    },
+    {
+      "_path": "site-packages/tethysapp_newgrace-2.0.0-py3.7.egg/tethysapp/newgrace/workspaces/app_workspace/shell/concat_monthly.sh",
+      "path_type": "hardlink",
+      "sha256": "8c50f59acd0a4f22af1cc323c4763d740256800112d413537cd084baca607c2d",
+      "size_in_bytes": 2678
+    },
+    {
+      "_path": "site-packages/tethysapp_newgrace-2.0.0-py3.7.egg/tethysapp/newgrace/workspaces/app_workspace/shell/file_cleanup.sh",
+      "path_type": "hardlink",
+      "sha256": "1fb08af415d8e6ecab4982543c7171ae82de8d8095892dca5587aaa758216450",
+      "size_in_bytes": 1138
+    },
+    {
+      "_path": "site-packages/tethysapp_newgrace-2.0.0-py3.7.egg/tethysapp/newgrace/workspaces/app_workspace/shell/gldas_download.sh",
+      "path_type": "hardlink",
+      "sha256": "8cd38123689c9d2fd88212e21a97164a2e3405498237a2040a2d04d6cc1a67d6",
+      "size_in_bytes": 444
+    },
+    {
+      "_path": "site-packages/tethysapp_newgrace-2.0.0-py3.7.egg/tethysapp/newgrace/workspaces/app_workspace/shell/gldas_download_and_update.sh",
+      "path_type": "hardlink",
+      "sha256": "2fec02a69c4d5b9ab10359ddd8a1cf578ebb18856e2b24dcfb91ebb59899c57a",
+      "size_in_bytes": 3859
+    },
+    {
+      "_path": "site-packages/tethysapp_newgrace-2.0.0-py3.7.egg/tethysapp/newgrace/workspaces/app_workspace/shell/grace2subset.sh",
+      "path_type": "hardlink",
+      "sha256": "aebd0dc4ce4504d508e2ceb5c3b84176781a0bd202351e06dc91af7341eb597c",
+      "size_in_bytes": 6788
+    },
+    {
+      "_path": "site-packages/tethysapp_newgrace-2.0.0-py3.7.egg/tethysapp/newgrace/workspaces/app_workspace/shell/grcfo_download.sh",
+      "path_type": "hardlink",
+      "sha256": "fefac046af42b828dfb45db354063e92c387f1014422929df88cc216b5d72c11",
+      "size_in_bytes": 1082
+    },
+    {
+      "_path": "site-packages/tethysapp_newgrace-2.0.0-py3.7.egg/tethysapp/newgrace/workspaces/app_workspace/shell/monthly_gldas_download.sh",
+      "path_type": "hardlink",
+      "sha256": "46975821a99448118db59a5ee8336debade5aa8d6c91d2fa2dcfdf36a270f240",
+      "size_in_bytes": 450
+    },
+    {
+      "_path": "site-packages/tethysapp_newgrace-2.0.0-py3.7.egg/tethysapp/newgrace/workspaces/app_workspace/shell/other_solutions_update.sh",
+      "path_type": "hardlink",
+      "sha256": "b2be298e1cf115f81c5531070ebe1001c4e4c101f0eaa2a39ff5745205591776",
+      "size_in_bytes": 3028
+    },
+    {
+      "_path": "site-packages/tethysapp_newgrace-2.0.0-py3.7.egg/tethysapp/newgrace/workspaces/app_workspace/shell/subset_avg_gw.sh",
+      "path_type": "hardlink",
+      "sha256": "3260e52ef6e450aac8016a9eb5733e0f6f7037e65a8a9c109ce4a95b6af86be3",
+      "size_in_bytes": 923
+    },
+    {
+      "_path": "site-packages/tethysapp_newgrace-2.0.0-py3.7.egg/tethysapp/newgrace/workspaces/app_workspace/shell/subset_avg_tot.sh",
+      "path_type": "hardlink",
+      "sha256": "f428b68259e31017c7107ff391ac6d6eed10482dcb70d7c6e2b74dd2a539efe2",
+      "size_in_bytes": 934
+    },
+    {
+      "_path": "site-packages/tethysapp_newgrace-2.0.0-py3.7.egg/tethysapp/newgrace/workspaces/app_workspace/shell/subset_csr_gw.sh",
+      "path_type": "hardlink",
+      "sha256": "b65bb7aa9ed22e0ad59e778425d2435fe72fabe46c549cd97e04b1a62a1c3d30",
+      "size_in_bytes": 885
+    },
+    {
+      "_path": "site-packages/tethysapp_newgrace-2.0.0-py3.7.egg/tethysapp/newgrace/workspaces/app_workspace/shell/subset_csr_tot.sh",
+      "path_type": "hardlink",
+      "sha256": "81ae8c010bc1816d8b9ddab5502c7e1b24a472d62aa1f501038b2859151f8814",
+      "size_in_bytes": 896
+    },
+    {
+      "_path": "site-packages/tethysapp_newgrace-2.0.0-py3.7.egg/tethysapp/newgrace/workspaces/app_workspace/shell/subset_gfz_gw.sh",
+      "path_type": "hardlink",
+      "sha256": "9e248d159627d14718d03487f3e322c148a707c1b1a304382aa9516384724cb0",
+      "size_in_bytes": 884
+    },
+    {
+      "_path": "site-packages/tethysapp_newgrace-2.0.0-py3.7.egg/tethysapp/newgrace/workspaces/app_workspace/shell/subset_gfz_tot.sh",
+      "path_type": "hardlink",
+      "sha256": "611b3a710494590375918e9f40994010f44b1341396dba7f54165477723930f2",
+      "size_in_bytes": 894
+    },
+    {
+      "_path": "site-packages/tethysapp_newgrace-2.0.0-py3.7.egg/tethysapp/newgrace/workspaces/app_workspace/shell/subset_initial.sh",
+      "path_type": "hardlink",
+      "sha256": "8d06377dbcc669784900e946a899bcec6016032564a40141f64466b080b0238d",
+      "size_in_bytes": 534
+    },
+    {
+      "_path": "site-packages/tethysapp_newgrace-2.0.0-py3.7.egg/tethysapp/newgrace/workspaces/app_workspace/shell/subset_jpl_gw.sh",
+      "path_type": "hardlink",
+      "sha256": "93f857cf110606f0e3c1c92e0d7a91aa175fefc0223e3e33982936933a2aa815",
+      "size_in_bytes": 885
+    },
+    {
+      "_path": "site-packages/tethysapp_newgrace-2.0.0-py3.7.egg/tethysapp/newgrace/workspaces/app_workspace/shell/subset_jpl_tot.sh",
+      "path_type": "hardlink",
+      "sha256": "db65b9b089374437c58797151a4733c9e1fcf04b3f597673fa035b15a35f6c64",
+      "size_in_bytes": 899
+    },
+    {
+      "_path": "site-packages/tethysapp_newgrace-2.0.0-py3.7.egg/tethysapp/newgrace/workspaces/app_workspace/shell/subset_soil.sh",
+      "path_type": "hardlink",
+      "sha256": "d36d340ceb6c80b386c8dcb1ec08b27cd8779aea2b2ef294ca18120f876f6419",
+      "size_in_bytes": 899
+    },
+    {
+      "_path": "site-packages/tethysapp_newgrace-2.0.0-py3.7.egg/tethysapp/newgrace/workspaces/app_workspace/shell/subset_sw.sh",
+      "path_type": "hardlink",
+      "sha256": "abc4cf8ab8f8106580a96752396a05ab5f3c112a52b14793e448d6a2d67a80e3",
+      "size_in_bytes": 859
+    },
+    {
+      "_path": "site-packages/tethysapp_newgrace-2.0.0-py3.7.egg/tethysapp/newgrace/workspaces/user_workspaces/.gitkeep",
+      "path_type": "hardlink",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_in_bytes": 0
+    },
+    {
+      "_path": "site-packages/tethysapp_newgrace.pth",
+      "path_type": "hardlink",
+      "sha256": "ab50f8d02fe899991fb3e1c4a52de5faffe01bf47d29abeb399b956c63321ec2",
+      "size_in_bytes": 37
+    }
+  ],
+  "paths_version": 1
+}

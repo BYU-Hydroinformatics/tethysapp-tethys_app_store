@@ -1,5 +1,5 @@
 version: 0.1
-name: app-store
+name: app_store
 
 requirements:
   conda:

@@ -1,0 +1,155 @@
+{
+  "paths": [
+    {
+      "_path": "site-packages/tethysapp_infection-1.0.0-py3.7.egg/EGG-INFO/PKG-INFO",
+      "path_type": "hardlink",
+      "sha256": "cac024d23cad8d3e8ad727e74df81819a1b003f8b339188b7c51fac1198ee29d",
+      "size_in_bytes": 217
+    },
+    {
+      "_path": "site-packages/tethysapp_infection-1.0.0-py3.7.egg/EGG-INFO/SOURCES.txt",
+      "path_type": "hardlink",
+      "sha256": "81059e4e6ec2ee717a4ace5c75b6a576624efe709ddd276daea740d62e395400",
+      "size_in_bytes": 511
+    },
+    {
+      "_path": "site-packages/tethysapp_infection-1.0.0-py3.7.egg/EGG-INFO/dependency_links.txt",
+      "path_type": "hardlink",
+      "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "size_in_bytes": 1
+    },
+    {
+      "_path": "site-packages/tethysapp_infection-1.0.0-py3.7.egg/EGG-INFO/not-zip-safe",
+      "path_type": "hardlink",
+      "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "size_in_bytes": 1
+    },
+    {
+      "_path": "site-packages/tethysapp_infection-1.0.0-py3.7.egg/EGG-INFO/top_level.txt",
+      "path_type": "hardlink",
+      "sha256": "a191b84ae1684f532955c88ff8022d4dd6c51f6aa209ff78a3016a0dca775f7e",
+      "size_in_bytes": 10
+    },
+    {
+      "_path": "site-packages/tethysapp_infection-1.0.0-py3.7.egg/tethysapp/infection/__init__.py",
+      "path_type": "hardlink",
+      "sha256": "109cc1f83fc2143811ddb5839feabd881366ae668857c05098174d7dde599d5a",
+      "size_in_bytes": 47
+    },
+    {
+      "_path": "site-packages/tethysapp_infection-1.0.0-py3.7.egg/tethysapp/infection/ajax.py",
+      "path_type": "hardlink",
+      "sha256": "cc6f38b7bd908c4de580a6845a24eb9d51651b1f39f0cf0dccbd63edb01e91f1",
+      "size_in_bytes": 2310
+    },
+    {
+      "_path": "site-packages/tethysapp_infection-1.0.0-py3.7.egg/tethysapp/infection/app.py",
+      "path_type": "hardlink",
+      "sha256": "0b90327c23b61a448088f75dea7dad57c717b67ffd7af2a53f482360270528b9",
+      "size_in_bytes": 2326
+    },
+    {
+      "_path": "site-packages/tethysapp_infection-1.0.0-py3.7.egg/tethysapp/infection/charts.py",
+      "path_type": "hardlink",
+      "sha256": "b8cc948ca3797dce0b11052d45c2da2b06429583ffe9d6c65f943a0ddd7dea5e",
+      "size_in_bytes": 6795
+    },
+    {
+      "_path": "site-packages/tethysapp_infection-1.0.0-py3.7.egg/tethysapp/infection/controllers.py",
+      "path_type": "hardlink",
+      "sha256": "19e20b4c0a4dafaa5c14022d89453fbfa3c023d7dad6b65683133b05803c935e",
+      "size_in_bytes": 2077
+    },
+    {
+      "_path": "site-packages/tethysapp_infection-1.0.0-py3.7.egg/tethysapp/infection/options.py",
+      "path_type": "hardlink",
+      "sha256": "79f32c898644a8626169898bb8aa58c9b90081989c068b47d2a22a3dcaa9b5c9",
+      "size_in_bytes": 740
+    },
+    {
+      "_path": "site-packages/tethysapp_infection-1.0.0-py3.7.egg/tethysapp/infection/public/css/main.css",
+      "path_type": "hardlink",
+      "sha256": "eacf1da874879cc80c82cbf1b8e7e3ed2f66d92a50325cd6a7cf09f7b5813fe9",
+      "size_in_bytes": 350
+    },
+    {
+      "_path": "site-packages/tethysapp_infection-1.0.0-py3.7.egg/tethysapp/infection/public/images/icon.gif",
+      "path_type": "hardlink",
+      "sha256": "2c7a238a28ce00cec1d7e279a46ab05d2740269d0d9c8ec06d4b5ccc741d339b",
+      "size_in_bytes": 14125
+    },
+    {
+      "_path": "site-packages/tethysapp_infection-1.0.0-py3.7.egg/tethysapp/infection/public/js/customShp.js",
+      "path_type": "hardlink",
+      "sha256": "64078c657bb1a81613148e7451700d7d0627c7303481d62e19e84505ac2b25c6",
+      "size_in_bytes": 1230
+    },
+    {
+      "_path": "site-packages/tethysapp_infection-1.0.0-py3.7.egg/tethysapp/infection/public/js/leaflet.js",
+      "path_type": "hardlink",
+      "sha256": "a830f4732ea7aec0ee7e6b04358b081b3e2ba79217818d91f1a19a69333fac2b",
+      "size_in_bytes": 4859
+    },
+    {
+      "_path": "site-packages/tethysapp_infection-1.0.0-py3.7.egg/tethysapp/infection/public/js/main.js",
+      "path_type": "hardlink",
+      "sha256": "90b8d8a014a06dca66790b095cddbe4d93dafda5dfd291c52717b5716a13abe4",
+      "size_in_bytes": 3094
+    },
+    {
+      "_path": "site-packages/tethysapp_infection-1.0.0-py3.7.egg/tethysapp/infection/public/js/plotly.js",
+      "path_type": "hardlink",
+      "sha256": "6a08214b6e160c77b4e89907c172a3833d03d746bede5c37eade71a27dff1f4a",
+      "size_in_bytes": 6714
+    },
+    {
+      "_path": "site-packages/tethysapp_infection-1.0.0-py3.7.egg/tethysapp/infection/templates/infection/base.html",
+      "path_type": "hardlink",
+      "sha256": "1cdfe99a5ff04c86db9ad1a73bff608da909da74e643c3ec79d0957d59671ff2",
+      "size_in_bytes": 4221
+    },
+    {
+      "_path": "site-packages/tethysapp_infection-1.0.0-py3.7.egg/tethysapp/infection/templates/infection/home.html",
+      "path_type": "hardlink",
+      "sha256": "01557abef71420475d5bf47c61397a1e7aa2433d2a3884f8169eafc80b98ead8",
+      "size_in_bytes": 5061
+    },
+    {
+      "_path": "site-packages/tethysapp_infection-1.0.0-py3.7.egg/tethysapp/infection/tests/__init__.py",
+      "path_type": "hardlink",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_in_bytes": 0
+    },
+    {
+      "_path": "site-packages/tethysapp_infection-1.0.0-py3.7.egg/tethysapp/infection/tests/tests.py",
+      "path_type": "hardlink",
+      "sha256": "3666575ed6d8bab1424f2aa3c19f2c432df516ccacfe88859ce2923c012a9adb",
+      "size_in_bytes": 8349
+    },
+    {
+      "_path": "site-packages/tethysapp_infection-1.0.0-py3.7.egg/tethysapp/infection/utilities.py",
+      "path_type": "hardlink",
+      "sha256": "f870b02062d3bd3b2864dc22058fe4ce3f912c8e0326e355bfd366b174b424db",
+      "size_in_bytes": 152
+    },
+    {
+      "_path": "site-packages/tethysapp_infection-1.0.0-py3.7.egg/tethysapp/infection/workspaces/app_workspace/.gitkeep",
+      "path_type": "hardlink",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_in_bytes": 0
+    },
+    {
+      "_path": "site-packages/tethysapp_infection-1.0.0-py3.7.egg/tethysapp/infection/workspaces/user_workspaces/.gitkeep",
+      "path_type": "hardlink",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_in_bytes": 0
+    },
+    {
+      "_path": "site-packages/tethysapp_infection.pth",
+      "path_type": "hardlink",
+      "sha256": "0b43e38542608a55ea0e8a94d0a8680d534ac889f92d9e44dea2c295b7668680",
+      "size_in_bytes": 38
+    }
+  ],
+  "paths_version": 1
+}

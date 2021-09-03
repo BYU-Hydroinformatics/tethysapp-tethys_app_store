@@ -1,0 +1,49 @@
+{% load tethys_gizmos %}
+
+<div class="table-overflow">
+    <table class="table table-striped">
+        <thead>
+            <th>Update</th>
+            <th>Delete</th>
+            <th>ID</th>
+            <th>Name</th>
+            <th>URL</th>
+            <th>Username</th>
+            <th>Password</th>
+        </thead>
+    <tbody>
+    {% for thredds_server in thredds_servers %}
+        <tr>
+            <td class="table-button"><div class=" btn-group "><a name="submit-update-thredds-server" class="btn btn-warning submit-update-thredds-server" role="button">
+                <span class="glyphicon glyphicon-floppy-disk"></span> Update </a>
+                </div>
+            </td>
+            <td class="table-button"><div class=" btn-group "><a name="submit-delete-thredds-server" class="btn btn-danger submit-delete-thredds-server" role="button">
+                <span class="glyphicon glyphicon-remove"></span> Delete </a>
+                </div>
+            </td>
+            <td class="thredds-server-id">{{thredds_server.id}}</td>
+            <td class="thredds-server-name" contenteditable>{{thredds_server.name}}</td>
+            <td class="thredds-server-url" contenteditable>{{thredds_server.url}}</td>
+            <td class="thredds-server-username" contenteditable>{{thredds_server.username}}</td>
+            <td class="thredds-server-password" contenteditable>
+                <div class="form-group">
+                    <div class="input-group">
+                        <input class="form-control thredds-server-password-input" name="thredds-server-password-input" type="password" value="{{thredds_server.password}}" placeholder="e.g.: thredds_server">
+                        <div class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></div>
+                    </div>
+                    <p class="help-block hidden">No geoserver password specified.</p>
+                </div>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+    </table>
+</div>
+<div class="row" style="margin: auto; padding: 15px">
+    <div style="margin-left: auto;margin-right: auto">
+        <div class="col-md-4" style="text-align:right">{% gizmo button prev_button %}</div>
+        <div class="col-md-3" id="display-info" style="text-align: center"></div>
+        <div class="col-md-5" style="text-align:left">{% gizmo button next_button %}</div>
+    </div>
+</div>

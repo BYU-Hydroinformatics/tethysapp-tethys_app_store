@@ -1,0 +1,15 @@
+{
+  "arch": null,
+  "build": "py_0",
+  "build_number": 0,
+  "depends": [
+    "hs_restclient",
+    "python"
+  ],
+  "name": "hydroshare_python",
+  "noarch": "python",
+  "platform": null,
+  "subdir": "noarch",
+  "timestamp": 1603300356148,
+  "version": "0.0.1"
+}

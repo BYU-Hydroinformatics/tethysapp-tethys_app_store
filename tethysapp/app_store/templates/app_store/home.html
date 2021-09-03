@@ -1,0 +1,112 @@
+{% extends "app_store/base.html" %}
+{% load staticfiles tethys_gizmos tags %}
+
+
+{% block styles %}
+{{ block.super }}
+<link href="{% static 'tethys_apps/css/app_library.css' %}" rel="stylesheet"/>
+<link href="https://unpkg.com/bootstrap-table@1.16.0/dist/bootstrap-table.min.css" rel="stylesheet">
+{% endblock %}
+
+{% block import_gizmos %}
+    {% import_gizmo_dependency select_input %}
+{% endblock %}
+
+
+{% block header_buttons %}
+<div class="header-button glyphicon-button" data-toggle="tooltip" data-placement="bottom" title="Help">
+    <a data-toggle="modal" data-target="#help-modal"><span class="glyphicon glyphicon-question-sign"></span></a>
+</div>
+<div class="header-button glyphicon-button" data-toggle="tooltip" data-placement="bottom" title="Add App">
+    <a data-toggle="modal" data-target="#add-app-modal"><span class="glyphicon glyphicon-plus-sign"></span></a>
+</div>
+<div class="header-button glyphicon-button" data-toggle="tooltip" data-placement="bottom" title="Refresh Apps">
+    <a href="#" onclick="reloadCacheRefresh()"><span class="glyphicon glyphicon-refresh"></span></a>
+</div>
+<!-- <div class="header-button glyphicon-button" data-toggle="tooltip" data-placement="bottom" title="Refresh Server">
+    <a id="serverRefresh"><span class="glyphicon glyphicon-off"></span></a>
+</div> -->
+{% endblock %}
+
+{% block app_content %}
+<!-- <div class="loading">Loading&#8230;</div> -->
+<div class='container' id="mainAppLoader">
+  <div class='loader'>
+    <div class='loader--dot'></div>
+    <div class='loader--dot'></div>
+    <div class='loader--dot'></div>
+    <div class='loader--dot'></div>
+    <div class='loader--dot'></div>
+    <div class='loader--dot'></div>
+    <div class='loader--text'></div>
+  </div>
+</div>
+
+<div class="card card-default main-app-list hidden">
+    <div class="card-header">Available Tethys Applications</div>
+    <div class="card-body">
+        <table data-search="true" data-show-search-clear-button="true" data-toolbar="#toolbar" data-show-columns="true" id="mainAppsTable" data-show-toggle="true" data-pagination="true" data-detail-view="true" data-detail-formatter="detailFormatter">
+            <thead>
+                <tr>
+                    <th data-field="name">Tethys App Name</th>
+                    <th data-field="latestVersion">Latest Version</th>
+                    <th data-field="metadata.author">Developer</th>
+                    <th data-field="operate" data-formatter="operateFormatter" data-events="operateEvents">Actions</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+    <div class="card-footer ">
+    </div>
+</div>
+
+<div class="card card-default installed-app-list hidden">
+    <div class="card-header">Installed Tethys Applications</div>
+    <div class="card-body">
+        <table data-search="true" data-show-search-clear-button="true" data-toolbar="#toolbar" data-show-columns="true" id="installedAppsTable" data-show-toggle="true" data-pagination="true"  data-detail-view="true" data-detail-formatter="detailFormatter">
+            <thead>
+                <tr>
+                    <th data-field="name">Tethys App Name</th>
+                    <th data-field="installedVersion">Installed Version</th>
+                    <th data-field="latestVersion">Latest Version</th>
+                    <th data-field="operate" data-formatter="operateFormatter2" data-events="operateEvents">Actions</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+    <div class="card-footer ">
+    </div>
+</div>
+
+{% endblock %}
+
+
+{% block after_app_content %}
+<div id="overlay"></div>
+{% include "app_store/modals/mainProcess.html" %}
+{% include "app_store/modals/customSettings.html" %}
+{% include "app_store/modals/services.html" %}
+{% include "app_store/modals/serverOffline.html" %}
+{% include "app_store/modals/addToWarehouse.html" %}
+{% include "app_store/modals/uninstall.html" %}
+{% include "app_store/modals/update.html" %}
+{% endblock %}
+
+
+{% block app_actions %}
+<button id="serverStatusOnline" class="btn-success over-overlay" disabled hidden>
+    Server Status: Online
+</button>
+<button id="serverStatusOffline" class="btn-danger over-overlay" disabled hidden>
+    Server Status: Offline.
+</button>
+{% endblock %}
+
+{% block scripts %}
+{{ block.super }}
+<script src="https://unpkg.com/bootstrap-table@1.16.0/dist/bootstrap-table.min.js"></script>
+<script src="{% static 'tethys_apps/vendor/imagesloaded.min.js' %}" type="text/javascript"></script>
+<script src="{% static 'tethys_apps/vendor/masonry.min.js' %}" type="text/javascript"></script>
+<script src="{% static 'tethys_apps/js/app_library.js' %}" type="text/javascript"></script>
+<script src="{% static 'tethys_apps/js/isotope.pkgd.min.js' %}" type="text/javascript"></script>
+{% endblock %}

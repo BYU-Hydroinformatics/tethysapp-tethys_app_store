@@ -1,0 +1,83 @@
+{% extends "snow_inspector/base.html" %}
+{% load staticfiles %}
+{% load tethys_gizmos %}
+{% block global_scripts %}
+{{ block.super }}
+<script src="{% static 'snow_inspector/vendor/openlayers/v3.3.0/ol.js' %}" type="text/javascript"></script>
+{% endblock %}
+{% block styles %}
+{{ block.super }}
+<link rel="stylesheet" href="{% static 'snow_inspector/vendor/openlayers/v3.3.0/ol.css' %}" type="text/css" />
+{% endblock %}
+{% block app_navigation_items %}
+<form method="get" action="snow_graph/">
+    <br>
+    <li>
+        {% gizmo date_picker date_picker %}
+        {% gizmo text_input days_picker %}
+        <table>
+            <tr>
+                <td>{% gizmo text_input lat_picker %}</td>
+                <td width="10px"></td>
+                <td>{% gizmo text_input lon_picker %}</td>
+            </tr>
+        </table>
+    </li>
+    <input type='hidden' id='end' name='end'>
+    <input type='hidden' id='zoom' name='zoom'>
+    <input type='hidden' id='layer' name='layer'>
+    <input type="hidden" id="layer1" name="layer1">
+    <input type="hidden" id="level1" name="level">
+    <input type="hidden" id="zoom1" name="zoom1">
+    <input type="hidden" id="resolutions" name="resolutions">
+    <input type='hidden' id="matrix_set" name="matrix_set">
+    <input type="hidden" id="matrix_ids" name="matrix_ids">
+    <input type="hidden" id="tileSize" name="tileSize">
+    <input type="submit" id='getsnow' value="Retrieve Snow Data" name='getsnow' class="btn btn-default">
+</form>
+{% endblock %}
+{% block app_content_wrapper_override %}
+{% include "snow_inspector/welcome_modal.html" %}
+{{block.super}}
+{% endblock %}
+
+{% block app_content %}
+<p style="display:inline;">Click on the map to select location. Then click on the "Retrieve Snow Data" button
+    to show data history.
+    <input type="button" id="btnShowPixels" name="btnShowPixels" value="Show Pixels" />
+    <!-- This is the original Show Modis Layer button, modified to accept different layers
+    <input type="button" id="btnShowModis" name="btnShowModis" value="Hide Modis Layer" /> -->
+    <br>
+    Select Layer:
+    <select id="selectLayer" style="display:inline; text-align:left; cursor:pointer;">
+        <option value="snowCover">Snow Cover</option>
+        <option value="snowMass">Snow Mass</option>
+        <!--<option value="snowWaterEquivalent">Snow Water Equivalent</option>-->
+        <option value="none">None</option>
+    </select>
+    &nbsp; Base Map:
+    <select id="selectBaseMap">
+        <option value="esri">Esri</option>
+        <option value="bing">Bing</option>
+        <option value="osm">OpenStreetMap</option>
+        <!-- MapQuest stopped offering free service. Not displaying the option anymore
+        <option value="mapquest">MapQuest</option>
+        End of changes. -->
+    </select>
+</p>
+<div id="map_view_outer_container">
+    <div class="row">
+        <div class="col-md-12">
+            <div id="map_wrapper">
+                <div id="map_view" style="width: 100%; position: relative;">
+                </div>
+            </div>
+        </div>
+    </div>
+</div><!-- end outerContainer -->
+{% endblock %}
+
+{% block scripts %}
+{{ block.super }}
+<script src="{% static 'snow_inspector/js/map.js' %}"></script>
+{% endblock %}

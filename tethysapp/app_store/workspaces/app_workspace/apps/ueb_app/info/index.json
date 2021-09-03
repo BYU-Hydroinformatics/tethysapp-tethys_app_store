@@ -1,0 +1,19 @@
+{
+  "arch": null,
+  "build": "py_0",
+  "build_number": 0,
+  "depends": [
+    "hs_restclient",
+    "oauthlib",
+    "python",
+    "requests",
+    "time",
+    "xmltodict"
+  ],
+  "name": "ueb_app",
+  "noarch": "python",
+  "platform": null,
+  "subdir": "noarch",
+  "timestamp": 1603391373064,
+  "version": "0.0.1"
+}

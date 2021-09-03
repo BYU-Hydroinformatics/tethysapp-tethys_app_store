@@ -1,0 +1,185 @@
+{% extends "tethys_apps/app_base.html" %}
+
+{% load static %}
+
+{% block title %}{{ tethys_app.name }}{% endblock %}
+
+{% block app_icon %}
+{# The path you provided in your app.py is accessible through the tethys_app.icon context variable #}
+<!--suppress ALL, HtmlUnknownTarget -->
+<img src="{% if 'http' in tethys_app.icon %}{{ tethys_app.icon }}{% else %}{% static tethys_app.icon %}{% endif %}" />
+{% endblock %}
+
+{# The name you provided in your app.py is accessible through the tethys_app.name context variable #}
+{% block app_title %}{{ tethys_app.name }}{% endblock %}
+
+{% block app_navigation_items %}
+
+{% url 'gwdm:home' as home_url %}
+{% url 'gwdm:metrics' as metrics_url %}
+{% url 'gwdm:config' as config_url %}
+{% url 'gwdm:interpolation' as interpolation_url %}
+<!--{% url 'gwdm:jobs-table' as jobs_table %}-->
+{% url 'gwdm:add-region' as add_region_url %}
+{% url 'gwdm:update-region' as update_region_url %}
+{% url 'gwdm:add-aquifer' as add_aquifer_url %}
+{% url 'gwdm:update-aquifer' as update_aquifer_url %}
+{% url 'gwdm:add-wells' as add_wells_url %}
+{% url 'gwdm:edit-wells' as edit_wells_url %}
+{% url 'gwdm:delete-wells' as delete_wells %}
+{% url 'gwdm:add-measurements' as add_measurements_url %}
+{% url 'gwdm:update-measurements' as update_measurements_url %}
+{% url 'gwdm:add-variable' as add_variable_url %}
+{% url 'gwdm:update-variable' as update_variable_url %}
+{% url 'gwdm:upload-rasters' as upload_rasters %}
+{% url 'gwdm:delete-rasters' as delete_rasters %}
+<br>
+<li class="{% if request.path == home_url %}active{% endif %}"><a href="{{home_url}}">Home</a></li>
+<li class="{% if request.path == metrics_url %}active{% endif %}"><a href="{{metrics_url}}">Summary Statistics</a></li>
+
+{% if user.is_superuser or user.is_staff %}
+<li class="title">Configuration</li>
+<li class="{% if request.path == config_url %}active{% endif %}"><a href="{{config_url}}">Configure App</a></li>
+<li class="{% if request.path == interpolation_url %}active{% endif %}"><a href="{{interpolation_url}}">Interpolation Wizard</a></li>
+<!--<li class="{% if request.path == jobs_table %}active{% endif %}"><a href="{{jobs_table}}">Interpolation Jobs Table</a></li>-->
+<!--<li class="{% if request.path == add_region_url %}active{% endif %}"><a href="{{add_region_url}}">Add Region</a></li>-->
+<!--<li class="{% if request.path == update_region_url %}active{% endif %}"><a href="{{update_region_url}}">Edit Region</a></li>-->
+<!--<li class="{% if request.path == add_aquifer_url %}active{% endif %}"><a href="{{add_aquifer_url}}">Add Aquifer</a></li>-->
+<!--<li class="{% if request.path == update_aquifer_url %}active{% endif %}"><a href="{{update_aquifer_url}}">Edit Aquifer</a></li>-->
+<!--<li class="{% if request.path == add_wells_url %}active{% endif %}"><a href="{{add_wells_url}}">Add Wells</a></li>-->
+<!--<li class="{% if request.path == edit_wells_url %}active{% endif %}"><a href="{{edit_wells_url}}">Edit Wells</a></li>-->
+<!--<li class="{% if request.path == delete_wells %}active{% endif %}"><a href="{{delete_wells}}">Delete Wells by Aquifer</a></li>-->
+<!--<li class="{% if request.path == add_measurements_url %}active{% endif %}"><a href="{{add_measurements_url}}">Add Measurements</a></li>-->
+<!--<li class="{% if request.path == update_measurements_url %}active{% endif %}"><a href="{{update_measurements_url}}">Delete Measurements</a></li>-->
+<!--<li class="{% if request.path == add_variable_url %}active{% endif %}"><a href="{{add_variable_url}}">Add Variable</a></li>-->
+<!--<li class="{% if request.path == update_variable_url %}active{% endif %}"><a href="{{update_variable_url}}">Edit Variables</a></li>-->
+<a href="#submenu1" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start">
+  <div>
+    <span class="menu-collapsed menu-header">Region</span>
+  </div>
+</a>
+<div id='submenu1' class="collapse sidebar-submenu {% if request.path == add_region_url or  request.path == update_region_url %}in{% endif %}">
+  <li class="{% if request.path == add_region_url %}active{% endif %}">
+    <a href="{{add_region_url}}" class="list-group-item list-group-item-action bg-dark text-white">
+      <span class="menu-collapsed">Add Region</span>
+    </a>
+  </li>
+  <li class="{% if request.path == update_region_url %}active{% endif %}">
+    <a href="{{update_region_url}}" class="list-group-item list-group-item-action bg-dark text-white">
+      <span class="menu-collapsed">Edit Region</span>
+    </a>
+  </li>
+</div>
+<a href="#submenu2" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start">
+  <div>
+    <span class="menu-collapsed menu-header">Aquifer</span>
+  </div>
+</a>
+<div id='submenu2' class="collapse sidebar-submenu {% if request.path == add_aquifer_url or  request.path == update_aquifer_url %}in{% endif %}">
+  <li class="{% if request.path == add_aquifer_url %}active{% endif %}">
+    <a href="{{add_aquifer_url}}" class="list-group-item list-group-item-action bg-dark text-white">
+      <span class="menu-collapsed">Add Aquifer</span>
+    </a>
+  </li>
+  <li class="{% if request.path == update_aquifer_url %}active{% endif %}">
+    <a href="{{update_aquifer_url}}" class="list-group-item list-group-item-action bg-dark text-white">
+      <span class="menu-collapsed">Edit Aquifer</span>
+    </a>
+  </li>
+</div>
+<a href="#submenu3" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start">
+  <div>
+    <span class="menu-collapsed menu-header">Wells</span>
+  </div>
+</a>
+<div id='submenu3' class="collapse sidebar-submenu
+{% if request.path == add_wells_url or request.path == edit_wells_url or request.path == delete_wells %}in{% endif %}">
+  <li class="{% if request.path == add_wells_url %}active{% endif %}">
+    <a href="{{add_wells_url}}" class="list-group-item list-group-item-action bg-dark text-white">
+      <span class="menu-collapsed">Add Wells</span>
+    </a>
+  </li>
+  <li class="{% if request.path == edit_wells_url %}active{% endif %}">
+    <a href="{{edit_wells_url}}" class="list-group-item list-group-item-action bg-dark text-white">
+      <span class="menu-collapsed">Edit Wells</span>
+    </a>
+  </li>
+  <li class="{% if request.path == delete_wells %}active{% endif %}">
+    <a href="{{delete_wells}}" class="list-group-item list-group-item-action bg-dark text-white">
+      <span class="menu-collapsed">Delete Wells by Aquifer</span>
+    </a>
+  </li>
+</div>
+<a href="#submenu4" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start">
+  <div>
+    <span class="menu-collapsed menu-header">Measurements</span>
+  </div>
+</a>
+<div id='submenu4' class="collapse sidebar-submenu {% if request.path == add_measurements_url or  request.path == update_measurements_url %}in{% endif %}">
+  <li class="{% if request.path == add_measurements_url %}active{% endif %}">
+    <a href="{{add_measurements_url}}" class="list-group-item list-group-item-action bg-dark text-white">
+      <span class="menu-collapsed">Add Measurements</span>
+    </a>
+  </li>
+  <li class="{% if request.path == update_aquifer_url %}active{% endif %}">
+    <a href="{{update_measurements_url}}" class="list-group-item list-group-item-action bg-dark text-white">
+      <span class="menu-collapsed">Delete Measurements</span>
+    </a>
+  </li>
+</div>
+<a href="#submenu5" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start">
+  <div>
+    <span class="menu-collapsed menu-header">Variables</span>
+  </div>
+</a>
+<div id='submenu5' class="collapse sidebar-submenu {% if request.path == add_variable_url or  request.path == update_variable_url %}in{% endif %}">
+  <li class="{% if request.path == add_variable_url %}active{% endif %}">
+    <a href="{{add_variable_url}}" class="list-group-item list-group-item-action bg-dark text-white">
+      <span class="menu-collapsed">Add Variable</span>
+    </a>
+  </li>
+  <li class="{% if request.path == update_variable_url %}active{% endif %}">
+    <a href="{{update_variable_url}}" class="list-group-item list-group-item-action bg-dark text-white">
+      <span class="menu-collapsed">Edit Variables</span>
+    </a>
+  </li>
+</div>
+<a href="#submenu6" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start">
+  <div>
+    <span class="menu-collapsed menu-header">Rasters</span>
+  </div>
+</a>
+<div id='submenu6' class="collapse sidebar-submenu {% if request.path == delete_rasters or request.path == upload_rasters %}in{% endif %}">
+  <li class="{% if request.path == upload_rasters %}active{% endif %}">
+    <a href="{{upload_rasters}}" class="list-group-item list-group-item-action bg-dark text-white">
+      <span class="menu-collapsed">Upload Rasters</span>
+    </a>
+  </li>
+  <li class="{% if request.path == delete_rasters %}active{% endif %}">
+    <a href="{{delete_rasters}}" class="list-group-item list-group-item-action bg-dark text-white">
+      <span class="menu-collapsed">Delete Rasters</span>
+    </a>
+  </li>
+</div>
+
+{% endif%}
+
+{% endblock %}
+
+{% block app_content %}
+{% endblock %}
+
+{% block app_actions %}
+{% endblock %}
+
+{% block content_dependent_styles %}
+{{ block.super }}
+<link href="{% static 'gwdm/css/main.css' %}" rel="stylesheet"/>
+<link href="{% static 'gwdm/vendor/tabulator/tabulator.min.css' %}" rel="stylesheet"/>
+{% endblock %}
+
+{% block scripts %}
+{{ block.super }}
+<script src="{% static 'gwdm/js/main.js' %}" type="text/javascript"></script>
+<script src="{% static 'gwdm/vendor/tabulator/tabulator.min.js' %}" type="text/javascript"></script>
+{% endblock %}
