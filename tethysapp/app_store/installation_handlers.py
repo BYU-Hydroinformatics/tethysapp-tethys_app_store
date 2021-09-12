@@ -17,7 +17,7 @@ from tethys_cli.cli_helpers import get_manage_path
 from tethys_cli.install_commands import (get_service_type_from_setting, get_setting_type_from_setting)
 from tethys_cli.services_commands import services_list_command
 
-from .app import Warehouse as app
+from .app import AppStore as app
 from .begin_install import detect_app_dependencies
 from .helpers import *
 

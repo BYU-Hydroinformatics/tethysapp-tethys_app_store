@@ -13,7 +13,7 @@ from conda.cli.python_api import run_command as conda_run, Commands
 
 from subprocess import call
 
-from .app import Warehouse as app
+from .app import AppStore as app
 from .helpers import *
 from .resource_helpers import get_resource
 

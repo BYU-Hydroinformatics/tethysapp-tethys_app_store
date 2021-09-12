@@ -3,19 +3,19 @@ from tethys_sdk.app_settings import CustomSetting
 from tethys_sdk.permissions import Permission, PermissionGroup
 
 
-class Warehouse(TethysAppBase):
+class AppStore(TethysAppBase):
     """
-    Tethys app class for Warehouse.
+    Tethys app class for App Store.
     """
 
-    name = 'Tethys App Warehouse'
-    index = 'warehouse:home'
-    icon = 'warehouse/images/appicon.png'
-    package = 'warehouse'
-    root_url = 'warehouse'
+    name = 'Tethys App Store'
+    index = 'app_store:home'
+    icon = 'app_store/images/appicon.png'
+    package = 'app_store'
+    root_url = 'app-store'
     color = '#2b7ac0'
-    description = 'The Tethys App Warehouse enables you to discover, install, manage and configure Tethys Applications for your Tethys portal.'
-    tags = 'Tethys,Warehouse,Conda,Github'
+    description = 'The Tethys App Store enables you to discover, install, manage and configure Tethys Applications for your Tethys portal.'
+    tags = 'Tethys,AppStore,Conda,Github'
     enable_feedback = True
     feedback_emails = ["rohitkh@byu.edu"]
 
@@ -28,34 +28,34 @@ class Warehouse(TethysAppBase):
         url_maps = (
             UrlMap(
                 name='home',
-                url='warehouse',
-                controller='warehouse.controllers.home'
+                url='app-store',
+                controller='app_store.controllers.home'
             ),
             UrlMap(
                 name='get_resources',
-                url='warehouse/get_resources',
-                controller='warehouse.controllers.get_resources'
+                url='app-store/get_resources',
+                controller='app_store.controllers.get_resources'
             ),
             UrlMap(
                 name='install_notifications',
-                url='warehouse/install/notifications',
-                controller='warehouse.controllers.notificationsConsumer',
+                url='app-store/install/notifications',
+                controller='app_store.controllers.notificationsConsumer',
                 protocol='websocket'
             ),
             UrlMap(
                 name='install_git',
-                url='warehouse/install/git',
-                controller='warehouse.controllers.run_git_install',
+                url='app-store/install/git',
+                controller='app_store.controllers.run_git_install',
             ),
             UrlMap(
                 name='install_git',
-                url='warehouse/install/git/status',
-                controller='warehouse.controllers.get_status',
+                url='app-store/install/git/status',
+                controller='app_store.controllers.get_status',
             ),
             UrlMap(
                 name='install_git',
-                url='warehouse/install/git/logs',
-                controller='warehouse.controllers.get_logs',
+                url='app-store/install/git/logs',
+                controller='app_store.controllers.get_logs',
             )
 
         )
@@ -66,14 +66,14 @@ class Warehouse(TethysAppBase):
         """
         Require admin to use the app.
         """
-        use_warehouse = Permission(
-            name='use_warehouse',
-            description='Use the warehouse'
+        use_app_store = Permission(
+            name='use_app_store',
+            description='Use the App Store'
         )
 
         admin = PermissionGroup(
             name='admin',
-            permissions=(use_warehouse,)
+            permissions=(use_app_store,)
         )
 
         permissions = (admin,)

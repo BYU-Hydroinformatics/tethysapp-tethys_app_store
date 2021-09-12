@@ -18,9 +18,9 @@ from asgiref.sync import async_to_sync
 from conda.cli.python_api import run_command as conda_run, Commands
 from string import Template
 from subprocess import PIPE, run
-from .app import Warehouse as app
+from .app import AppStore as app
 
-logger = logging.getLogger(f'tethys.apps.warehouse')
+logger = logging.getLogger(f'tethys.apps.app_store')
 # Ensure that this logger is putting everything out.
 # @TODO: Change this back to the default later
 logger.setLevel(logging.INFO)
@@ -191,6 +191,10 @@ def get_github_install_metadata():
         workspace_directory = app_workspace.path
         workspace_apps_path = os.path.join(
             workspace_directory, 'apps', 'installed')
+        if(not os.path.exists(workspace_apps_path)):
+            cache.set(CACHE_KEY, [])
+            return []
+
         possible_apps = [f.path for f in os.scandir(
             workspace_apps_path) if f.is_dir()]
         github_installed_apps_list = []

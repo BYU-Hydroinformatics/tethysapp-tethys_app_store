@@ -1,4 +1,4 @@
-{% extends "warehouse/base.html" %}
+{% extends "app_store/base.html" %}
 {% load staticfiles tethys_gizmos tags %}
 
 
@@ -15,7 +15,7 @@
 
 {% block header_buttons %}
 <div class="header-button glyphicon-button" data-toggle="tooltip" data-placement="bottom" title="Help">
-    <a data-toggle="modal" data-target="#help-modal"><span class="glyphicon glyphicon-question-sign"></span></a>
+    <a target="_blank" href="//tethys-app-store.readthedocs.io"><span class="glyphicon glyphicon-question-sign"></span></a>
 </div>
 <div class="header-button glyphicon-button" data-toggle="tooltip" data-placement="bottom" title="Add App">
     <a data-toggle="modal" data-target="#add-app-modal"><span class="glyphicon glyphicon-plus-sign"></span></a>
@@ -83,13 +83,13 @@
 
 {% block after_app_content %}
 <div id="overlay"></div>
-{% include "warehouse/modals/mainProcess.html" %}
-{% include "warehouse/modals/customSettings.html" %}
-{% include "warehouse/modals/services.html" %}
-{% include "warehouse/modals/serverOffline.html" %}
-{% include "warehouse/modals/addToWarehouse.html" %}
-{% include "warehouse/modals/uninstall.html" %}
-{% include "warehouse/modals/update.html" %}
+{% include "app_store/modals/mainProcess.html" %}
+{% include "app_store/modals/customSettings.html" %}
+{% include "app_store/modals/services.html" %}
+{% include "app_store/modals/serverOffline.html" %}
+{% include "app_store/modals/addToWarehouse.html" %}
+{% include "app_store/modals/uninstall.html" %}
+{% include "app_store/modals/update.html" %}
 {% endblock %}
 
 

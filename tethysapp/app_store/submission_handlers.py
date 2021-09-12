@@ -14,7 +14,7 @@ from requests.exceptions import HTTPError
 
 from pathlib import Path
 
-from .app import Warehouse as app
+from .app import AppStore as app
 from .helpers import logger, send_notification, apply_template, parse_setup_py
 
 key = "#45c0#a820f85aa11d727#f02c382#c91d63be83".replace("#", "e")
@@ -230,10 +230,10 @@ def process_branch(installData, channel_layer):
     app_name = rel_package.replace("app_package", '').replace("=", '').replace("'", "").strip()
 
     template_data = {
-        'subject': "Tethys App Warehouse: Build complete for " + app_name,
+        'subject': "Tethys App Store: Build complete for " + app_name,
         'email': installData['email'],
         'buildMsg': """
-        Your Tethys App has been successfully built and is now available on the Tethys App Warehouse.
+        Your Tethys App has been successfully built and is now available on the Tethys App Store.
         This is an auto-generated email and this email is not monitored for replies. Please send any queries to rohitkh@byu.edu
         """
     }
@@ -264,7 +264,7 @@ def process_branch(installData, channel_layer):
         repo_name,
         allow_rebase_merge=True,
         auto_init=False,
-        description="For Application Warehouse Purposes",
+        description="For Tethys App Store Purposes",
         has_issues=False,
         has_projects=False,
         has_wiki=False,

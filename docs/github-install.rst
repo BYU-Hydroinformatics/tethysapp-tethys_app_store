@@ -2,7 +2,7 @@
 GitHub Install API
 ===================
 
-The warehouse has added the following methods to support installation via GitHub Actions. The repository will need to have public access. 
+The app store has added the following methods to support installation via GitHub Actions. The repository will need to have public access. 
 
 /install/git/
 *************
@@ -96,6 +96,7 @@ Github action example
           uses: fjogeleit/http-request-action@master
           with:
             method: 'POST'
+            # The URL below might need to be updated since the warehouse is being renamed to app store
             url: 'https://tethys-staging.byu.edu/apps/warehouse/install/git/'
             data: '{"url": "https://github.com/${{ github.repository }}.git", "branch": "${{ steps.vars.outputs.short_ref }}"}'
             customHeaders: '{"Authorization": "Token ${{ secrets.TETHYS_AUTH_TOKEN }}"}'

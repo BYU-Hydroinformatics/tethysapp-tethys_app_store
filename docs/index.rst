@@ -16,8 +16,5 @@ The Tethys App Store is similar in concept to the iOS App Store for Apple mobile
   app-submit
   production
   compatibility
-  publications
-  future
-  dev-funding
   github-install
 
