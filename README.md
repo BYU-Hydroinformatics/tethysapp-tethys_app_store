@@ -8,4 +8,4 @@ A Tethys application to discover, install and manage Tethys applications for a T
 
 ## Documentation:
 
-See: [ReadTheDocs](https://tethys-app-store.readthedocs.io/en/latest/) : https://tethys-app-store.readthedocs.io
+See: [ReadTheDocs](https://tethys-app-store.readthedocs.io/en/latest) : https://tethys-app-store.readthedocs.io
