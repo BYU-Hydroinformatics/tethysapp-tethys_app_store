@@ -71,7 +71,14 @@ const addModalHelper = {
 		$("#processBranchButton").hide()
 		$("#cancelAddButton").hide()
 		$("#loadingTextAppSubmit").text("")
-		$("#addSuccessLink").html(`<a href="${addData.job_url}" target="_blank">here</a>`)
+		if (addData.job_url) {
+			$("#addSuccessLink").html(
+				`<a href="${addData.job_url}" target="_blank">here</a>`
+			)
+		} else {
+			// Hide the link part of the success message
+			$("#SuccessLinkMessage").hide()
+		}
 		$("#doneAddButton").show()
 		$("#successMessage").show()
 	}

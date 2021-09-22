@@ -286,28 +286,37 @@ def process_branch(installData, channel_layer):
 
     tethysapp_remote.push('tethysapp_warehouse_release')
 
+    tethysapp_repo = organization.get_repo(repo_name)
+
     workflowFound = False
-    print(dir(tethysapp_repo))
-    while not workflowFound:
-        time.sleep(4)
-        if tethysapp_repo.get_workflow_runs().totalCount > 0:
-            logger.info("Obtained Workflow for Submission. Getting Job URL")
 
-            try:
-                response = requests.get(tethysapp_repo.get_workflow_runs()[0].jobs_url, auth=('tethysapp', key))
-                response.raise_for_status()
-                jsonResponse = response.json()
-                workflowFound = jsonResponse["total_count"] > 0
+    # Sometimes due to weird conda versioning issues the get_workflow_runs is not found
+    # In that case return no value for the job_url and handle it in JS
 
-            except HTTPError as http_err:
-                logger.error(f'HTTP error occurred while getting Jobs from GITHUB API: {http_err}')
-            except Exception as err:
-                logger.error(f'Other error occurred while getting jobs from GITHUB API: {err}')
+    try:
+        while not workflowFound:
+            time.sleep(4)
+            if tethysapp_repo.get_workflow_runs().totalCount > 0:
+                logger.info("Obtained Workflow for Submission. Getting Job URL")
 
-        if workflowFound:
-            job_url = jsonResponse["jobs"][0]["html_url"]
+                try:
+                    response = requests.get(tethysapp_repo.get_workflow_runs()[0].jobs_url, auth=('tethysapp', key))
+                    response.raise_for_status()
+                    jsonResponse = response.json()
+                    workflowFound = jsonResponse["total_count"] > 0
 
-    logger.info("Obtained Job URL: " + job_url)
+                except HTTPError as http_err:
+                    logger.error(f'HTTP error occurred while getting Jobs from GITHUB API: {http_err}')
+                except Exception as err:
+                    logger.error(f'Other error occurred while getting jobs from GITHUB API: {err}')
+
+            if workflowFound:
+                job_url = jsonResponse["jobs"][0]["html_url"]
+
+        logger.info("Obtained Job URL: " + job_url)
+    except AttributeError:
+        logger.info("Unable to obtain Workflow Run")
+        job_url = None
 
     get_data_json = {
         "data": {
