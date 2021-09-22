@@ -7,7 +7,7 @@ requirements:
       - conda-forge
     packages:
       - pygithub
-      - gitpython
+      - gitpython=3.1.18
       - requests
 
 post:
