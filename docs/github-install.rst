@@ -2,7 +2,7 @@
 GitHub Install API
 ===================
 
-The warehouse has added the following methods to support installation via GitHub Actions. The repository will need to have public access. 
+The warehouse has added the following methods to support installation via GitHub Actions. The app repository will need to have public access for this installation method to work. This method is meant for apps that are being developed and tested in a specific portal. It facilitates direct app installation that can trigger on a push or release event from a GitHub repository. For final operational installations, we recommend publishing the app package to the Tethysapp conda channel using the Tethys App Store interface.
 
 /install/git/
 *************
@@ -103,3 +103,7 @@ Github action example
 .. NOTE::
 
     An authorization token is needed to send a request to a specific Tethys portal. This token can be obtained from the API Key parameter in the user account home page of the Tethys portal. We recommend this token is added to the secrets of the github repo that is triggering this workflow. For more information on how to do this see `How to create secrets on Github <https://docs.github.com/en/actions/reference/encrypted-secrets#creating-encrypted-secrets-for-an-environment>`_
+
+.. NOTE::
+
+    This Installation method is meant for apps that are being developed and continue to change in a regular basis. It makes it possible to trigger an app installation update based on a push or release GitHub event.
