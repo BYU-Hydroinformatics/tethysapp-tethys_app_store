@@ -48,14 +48,28 @@ class AppStore(TethysAppBase):
                 controller='app_store.controllers.run_git_install',
             ),
             UrlMap(
-                name='install_git',
+                name='git_get_status',
                 url='app-store/install/git/status',
                 controller='app_store.controllers.get_status',
             ),
             UrlMap(
-                name='install_git',
+                name='git_get_logs',
                 url='app-store/install/git/logs',
                 controller='app_store.controllers.get_logs',
+            ), UrlMap(
+                name='install_git_override',
+                url='app-store/install/git_override',
+                controller='app_store.controllers.run_git_install_override',
+            ),
+            UrlMap(
+                name='git_get_status_override',
+                url='app-store/install/git/status_override',
+                controller='app_store.controllers.get_status_override',
+            ),
+            UrlMap(
+                name='git_get_logs_override',
+                url='app-store/install/git/logs_override',
+                controller='app_store.controllers.get_logs_override',
             )
 
         )
@@ -86,6 +100,12 @@ class AppStore(TethysAppBase):
                 name='sudo_server_pass',
                 type=CustomSetting.TYPE_STRING,
                 description='Sudo password for server',
+                required=False
+            ),
+            CustomSetting(
+                name='github_bypass_key',
+                type=CustomSetting.TYPE_STRING,
+                description='Bypass requirement of API Token if this key is provided.',
                 required=False
             ),
         )

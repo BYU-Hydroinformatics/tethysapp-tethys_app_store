@@ -15,6 +15,7 @@ from rest_framework.decorators import api_view, authentication_classes
 from rest_framework.exceptions import ValidationError, ParseError
 
 from django.http import JsonResponse, Http404, HttpResponse
+from django.views.decorators.csrf import csrf_exempt
 
 from django.core.cache import cache
 from argparse import Namespace
@@ -220,10 +221,7 @@ def get_log_file(id):
     logfile_location = os.path.join(install_logs_dir, install_run_id + '.log')
 
 
-@ api_view(['GET'])
-@ authentication_classes((TokenAuthentication,))
-def get_status(request):
-
+def get_status_main(request):
     install_id = request.GET.get('install_id')
     if install_id is None:
         raise ValidationError({"install_id": "Missing Value"})
@@ -242,7 +240,23 @@ def get_status(request):
 
 @ api_view(['GET'])
 @ authentication_classes((TokenAuthentication,))
-def get_logs(request):
+def get_status(request):
+    # This method is a wrapper function to protect the actual method from being accessed without auth
+    get_status_main(request)
+
+
+@csrf_exempt
+def get_status_override(request):
+    # This method is an override to the get status method. It allows for installation
+    # based on a custom key set in the custom settings. This allows app nursery to use the same code to process the request
+    override_key = app.get_custom_setting('github_bypass_key')
+    if(request.GET.get('custom_key') == override_key):
+        return get_status_main(request)
+    else:
+        return HttpResponse('Unauthorized', status=401)
+
+
+def get_logs_main(request):
     install_id = request.GET.get('install_id')
     if install_id is None:
         raise ValidationError({"install_id": "Missing Value"})
@@ -258,10 +272,24 @@ def get_logs(request):
         raise Http404("No Install with id: " + install_id + " exists")
 
 
-@ api_view(['POST'])
+@ api_view(['GET'])
 @ authentication_classes((TokenAuthentication,))
-def run_git_install(request):
+def get_logs(request):
+    get_logs_main(request)
 
+
+@csrf_exempt
+def get_logs_override(request):
+    # This method is an override to the get status method. It allows for installation
+    # based on a custom key set in the custom settings. This allows app nursery to use the same code to process the request
+    override_key = app.get_custom_setting('github_bypass_key')
+    if(request.GET.get('custom_key') == override_key):
+        return get_logs_main(request)
+    else:
+        return HttpResponse('Unauthorized', status=401)
+
+
+def run_git_install_main(request):
     received_json_data = json.loads(request.body)
     if 'url' in received_json_data:
         repo_url = received_json_data.get('url', '')
@@ -361,6 +389,24 @@ def run_git_install(request):
     install_thread.start()
 
     return JsonResponse({'status': "InstallRunning", 'install_id': install_run_id})
+
+
+@ api_view(['POST'])
+@ authentication_classes((TokenAuthentication,))
+def run_git_install(request):
+    run_git_install_main(request)
+
+
+@csrf_exempt
+def run_git_install_override(request):
+    # This method is an override to the install method. It allows for installation
+    # based on a custom key set in the custom settings. This allows app nursery to use the same code to process the request
+    override_key = app.get_custom_setting('github_bypass_key')
+    print(override_key, request.GET.get('custom_key'))
+    if(request.GET.get('custom_key') == override_key):
+        return run_git_install_main(request)
+    else:
+        return HttpResponse('Unauthorized', status=401)
 
 
 resume_thread = threading.Thread(

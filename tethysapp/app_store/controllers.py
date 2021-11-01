@@ -9,7 +9,7 @@ from .notifications import *
 from .resource_helpers import fetch_resources
 from .helpers import logger, get_github_install_metadata
 from .model import *
-from .git_install_handlers import run_git_install, get_status, get_logs
+from .git_install_handlers import run_git_install, get_status, get_logs, run_git_install_override, get_logs_override, get_status_override
 
 ALL_RESOURCES = []
 CACHE_KEY = "warehouse_app_resources"
