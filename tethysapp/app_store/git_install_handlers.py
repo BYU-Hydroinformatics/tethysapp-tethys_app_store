@@ -22,6 +22,7 @@ from argparse import Namespace
 from pathlib import Path
 from subprocess import (call, Popen, PIPE, STDOUT)
 from datetime import datetime
+from django.conf import settings
 
 from .app import AppStore as app
 from .helpers import *
@@ -238,6 +239,14 @@ def get_status_main(request):
         raise Http404("No Install with id: " + install_id + " exists")
 
 
+def get_override_key():
+    try:
+        return settings.GITHUB_OVERRIDE_VALUE
+    except AttributeError as e:
+        # Setting not defined.
+        return None
+
+
 @ api_view(['GET'])
 @ authentication_classes((TokenAuthentication,))
 def get_status(request):
@@ -249,7 +258,7 @@ def get_status(request):
 def get_status_override(request):
     # This method is an override to the get status method. It allows for installation
     # based on a custom key set in the custom settings. This allows app nursery to use the same code to process the request
-    override_key = app.get_custom_setting('github_bypass_key')
+    override_key = get_override_key()
     if(request.GET.get('custom_key') == override_key):
         return get_status_main(request)
     else:
@@ -282,7 +291,7 @@ def get_logs(request):
 def get_logs_override(request):
     # This method is an override to the get status method. It allows for installation
     # based on a custom key set in the custom settings. This allows app nursery to use the same code to process the request
-    override_key = app.get_custom_setting('github_bypass_key')
+    override_key = get_override_key()
     if(request.GET.get('custom_key') == override_key):
         return get_logs_main(request)
     else:
@@ -401,8 +410,7 @@ def run_git_install(request):
 def run_git_install_override(request):
     # This method is an override to the install method. It allows for installation
     # based on a custom key set in the custom settings. This allows app nursery to use the same code to process the request
-    override_key = app.get_custom_setting('github_bypass_key')
-    print(override_key, request.GET.get('custom_key'))
+    override_key = get_override_key()
     if(request.GET.get('custom_key') == override_key):
         return run_git_install_main(request)
     else:

@@ -102,12 +102,6 @@ class AppStore(TethysAppBase):
                 description='Sudo password for server',
                 required=False
             ),
-            CustomSetting(
-                name='github_bypass_key',
-                type=CustomSetting.TYPE_STRING,
-                description='Bypass requirement of API Token if this key is provided.',
-                required=False
-            ),
         )
 
         return custom_settings
