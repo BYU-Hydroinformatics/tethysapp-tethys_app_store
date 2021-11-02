@@ -6,6 +6,7 @@ import subprocess
 from argparse import Namespace
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.cache import cache
+from pathlib import Path
 
 import tethys_apps
 
@@ -82,7 +83,14 @@ def restart_server(data, channel_layer, run_collect_all=True):
             logger.error(e)
             logger.info("No SUDO. Docker container implied. Restarting without SUDO")
             # Error encountered while running sudo. Let's try without sudo
-            p = os.system(command)
+            # Check if the restart dir exists. If yes then use that dir instead of
+            RESTART_FILE_PATH = "/var/lib/tethys_persist/restart"
+
+            if os.path.isdir(RESTART_FILE_PATH):
+                logger.info("Restart Directory found. Creating restart file.")
+                Path(os.path.join(RESTART_FILE_PATH, 'restart')).touch()
+            else:
+                p = os.system(command)
 
 
 def continueAfterInstall(installData, channel_layer):
