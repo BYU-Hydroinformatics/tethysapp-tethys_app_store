@@ -70,6 +70,11 @@ class AppStore(TethysAppBase):
                 name='git_get_logs_override',
                 url='app-store/install/git/logs_override',
                 controller='app_store.controllers.get_logs_override',
+            ),
+            UrlMap(
+                name='scaffold_app',
+                url='app-store/scaffold',
+                controller='app_store.controllers.scaffold_command',
             )
 
         )

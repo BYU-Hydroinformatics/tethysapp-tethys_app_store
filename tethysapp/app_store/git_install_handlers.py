@@ -11,8 +11,9 @@ from tethys_cli.install_commands import (
 from tethys_sdk.workspaces import app_workspace
 
 from rest_framework.authentication import TokenAuthentication
-from rest_framework.decorators import api_view, authentication_classes
+from rest_framework.decorators import api_view, authentication_classes, permission_classes
 from rest_framework.exceptions import ValidationError, ParseError
+from rest_framework.permissions import AllowAny
 
 from django.http import JsonResponse, Http404, HttpResponse
 from django.views.decorators.csrf import csrf_exempt
@@ -22,7 +23,6 @@ from argparse import Namespace
 from pathlib import Path
 from subprocess import (call, Popen, PIPE, STDOUT)
 from datetime import datetime
-from django.conf import settings
 
 from .app import AppStore as app
 from .helpers import *
@@ -239,14 +239,6 @@ def get_status_main(request):
         raise Http404("No Install with id: " + install_id + " exists")
 
 
-def get_override_key():
-    try:
-        return settings.GITHUB_OVERRIDE_VALUE
-    except AttributeError as e:
-        # Setting not defined.
-        return None
-
-
 @ api_view(['GET'])
 @ authentication_classes((TokenAuthentication,))
 def get_status(request):
@@ -254,6 +246,7 @@ def get_status(request):
     get_status_main(request)
 
 
+@ api_view(['GET'])
 @csrf_exempt
 def get_status_override(request):
     # This method is an override to the get status method. It allows for installation
@@ -287,6 +280,7 @@ def get_logs(request):
     get_logs_main(request)
 
 
+@ api_view(['GET'])
 @csrf_exempt
 def get_logs_override(request):
     # This method is an override to the get status method. It allows for installation
@@ -406,6 +400,8 @@ def run_git_install(request):
     run_git_install_main(request)
 
 
+@ api_view(['POST'])
+@permission_classes([AllowAny])
 @csrf_exempt
 def run_git_install_override(request):
     # This method is an override to the install method. It allows for installation

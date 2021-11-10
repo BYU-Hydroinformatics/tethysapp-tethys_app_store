@@ -28,6 +28,14 @@ logger.setLevel(logging.INFO)
 CACHE_KEY = "warehouse_github_app_resources"
 
 
+def get_override_key():
+    try:
+        return settings.GITHUB_OVERRIDE_VALUE
+    except AttributeError as e:
+        # Setting not defined.
+        return None
+
+
 def check_all_present(string, substrings):
     result = True
     for substring in substrings:
@@ -158,6 +166,8 @@ def parse_setup_py(file_location):
                     break
                 else:
                     parts = line.split("=")
+                    if len(parts) < 2:
+                        continue
                     value = parts[1].strip()
                     if(value[-1] == ","):
                         value = value[:-1]
