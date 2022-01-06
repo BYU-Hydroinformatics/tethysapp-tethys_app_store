@@ -141,7 +141,6 @@ def write_logs(logger, output, subHeading):
 
 
 def continue_install(logger, status_file_path, install_options, app_name):
-    update_status_file(status_file_path, True, "setupPy")
     process = Popen(['tethys', 'db', 'sync'], stdout=PIPE, stderr=STDOUT)
     write_logs(logger, process.stdout, 'Tethys DB Sync : ')
     exitcode = process.wait()
@@ -163,6 +162,7 @@ def continue_install(logger, status_file_path, install_options, app_name):
             logger.info("Post Script Result: {}".format(stdout))
 
     update_status_file(status_file_path, True, "post")
+    update_status_file(status_file_path, True, "setupPy")
     logger.info("Install completed")
     clear_github_cache_list()
     restart_server({"restart_type": "gInstall", "name": app_name}, None)
@@ -293,6 +293,20 @@ def get_logs_override(request):
 
 
 def run_git_install_main(request):
+
+    # Get workspace since @app_workspace doesn't work with api request?
+    app_workspace = app.get_app_workspace()
+    workspace_directory = app_workspace.path
+    install_logs_dir = os.path.join(
+        workspace_directory, 'logs', 'github_install')
+    install_status_dir = os.path.join(
+        workspace_directory, 'install_status', 'github')
+
+    # Set InstallRunning File in workspace directory
+    # This file prevents the file-watcher from restarting the container in case this is running in the App Nursery
+
+    Path(os.path.join(workspace_directory, 'install_status', 'installRunning')).touch()
+
     received_json_data = json.loads(request.body)
     if 'url' in received_json_data:
         repo_url = received_json_data.get('url', '')
@@ -304,14 +318,6 @@ def run_git_install_main(request):
 
     url_end = repo_url.split("/")[-1]
     url_end = url_end.replace(".git", "")
-
-    # Get workspace since @app_workspace doesn't work with api request?
-    app_workspace = app.get_app_workspace()
-    workspace_directory = app_workspace.path
-    install_logs_dir = os.path.join(
-        workspace_directory, 'logs', 'github_install')
-    install_status_dir = os.path.join(
-        workspace_directory, 'install_status', 'github')
 
     if not os.path.exists(install_logs_dir):
         os.makedirs(install_logs_dir)

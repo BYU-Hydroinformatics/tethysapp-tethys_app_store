@@ -46,6 +46,13 @@ def get_service_options(service_type):
 
 def restart_server(data, channel_layer, run_collect_all=True):
 
+    # Check if Install Running file is present and delete it
+    app_workspace = app.get_app_workspace()
+    workspace_directory = app_workspace.path
+    install_running_path = os.path.join(workspace_directory, 'install_status', 'installRunning')
+    if os.path.exists(install_running_path):
+        os.remove(install_running_path)
+
     manage_path = get_manage_path({})
     if data["restart_type"] == "install" or data["restart_type"] == "update":
         # Run SyncStores
@@ -62,7 +69,7 @@ def restart_server(data, channel_layer, run_collect_all=True):
             f.write("import os")
 
     else:
-        if run_collect_all and (data["restart_type"] == "install" or data["restart_type"] == "gInstall"):
+        if run_collect_all and (data["restart_type"] == "install" or data["restart_type"] == "gInstall" or data["restart_type"] == "update"):
 
             logger.info("Running Tethys Collectall")
             intermediate_process = ['python', manage_path, 'pre_collectstatic']
