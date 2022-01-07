@@ -305,6 +305,9 @@ def run_git_install_main(request):
     # Set InstallRunning File in workspace directory
     # This file prevents the file-watcher from restarting the container in case this is running in the App Nursery
 
+    if not os.path.exists(install_status_dir):
+        os.makedirs(install_status_dir)
+
     Path(os.path.join(workspace_directory, 'install_status', 'installRunning')).touch()
 
     received_json_data = json.loads(request.body)
@@ -321,9 +324,6 @@ def run_git_install_main(request):
 
     if not os.path.exists(install_logs_dir):
         os.makedirs(install_logs_dir)
-
-    if not os.path.exists(install_status_dir):
-        os.makedirs(install_status_dir)
 
     install_run_id = str(uuid.uuid4())
 
