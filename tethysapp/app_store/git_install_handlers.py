@@ -168,7 +168,7 @@ def continue_install(logger, status_file_path, install_options, app_name):
     restart_server({"restart_type": "gInstall", "name": app_name}, None)
 
 
-def install_worker(workspace_apps_path, status_file_path, logger, install_run_id):
+def install_worker(workspace_apps_path, status_file_path, logger, install_run_id, develop):
     # Install Dependencies
     logger.info("Installing dependencies...")
     file_path = Path(os.path.join(workspace_apps_path, 'install.yml'))
@@ -203,7 +203,10 @@ def install_worker(workspace_apps_path, status_file_path, logger, install_run_id
 
     # Run Setup.py
     logger.info("Running application install....")
-    process = Popen(['python', 'setup.py', 'install'],
+    command = "install"
+    if develop:
+        command = "develop"
+    process = Popen(['python', 'setup.py', command],
                     cwd=workspace_apps_path, stdout=PIPE, stderr=STDOUT)
     write_logs(logger, process.stdout, 'Python Install SubProcess: ')
     exitcode = process.wait()
@@ -319,6 +322,10 @@ def run_git_install_main(request):
         repo_url = request.POST.get('url', '')
         branch = request.POST.get('branch', 'master')
 
+    develop = "false"
+    if 'develop' in received_json_data:
+        develop = received_json_data.get('develop', False)
+
     url_end = repo_url.split("/")[-1]
     url_end = url_end.replace(".git", "")
 
@@ -393,7 +400,7 @@ def run_git_install_main(request):
 
     # Run command in new thread
     install_thread = threading.Thread(target=install_worker, name="InstallApps",
-                                      args=(workspace_apps_path, statusfile_location, git_install_logger, install_run_id))
+                                      args=(workspace_apps_path, statusfile_location, git_install_logger, install_run_id, develop))
     # install_thread.setDaemon(True)
     install_thread.start()
 

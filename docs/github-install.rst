@@ -13,7 +13,8 @@ You will need to provide the following information as a POST request. The Branch
 
     {
         url: "Your GitHub Repository URL",
-        branch: "GitHub Branch to be installed"
+        branch: "GitHub Branch to be installed",
+        develop: True //Optional Parameter. By default the application is NOT installed in develop mode. 
     }
 
 
