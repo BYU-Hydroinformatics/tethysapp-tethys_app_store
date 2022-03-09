@@ -106,7 +106,8 @@ def process_resources(resources, app_workspace):
                 "license").replace("', '", '", "').replace("': '", '": "').replace("'}", '"}').replace("{'", '{"'))
             app['metadata'] = add_if_exists(license_metadata, app['metadata'], [
                 'author', 'description', 'license', 'author_email', 'keywords'])
-            app['metadata']['dev_url'] = license_metadata["url"]
+            if "url" in license_metadata:
+                app['metadata']['dev_url'] = license_metadata["url"]
 
         except (ValueError, TypeError) as e:
             # There wasn't json found in license. Get Metadata from downloading the file

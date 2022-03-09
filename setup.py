@@ -29,7 +29,7 @@ dependencies = []
 
 setup(
     name=release_package,
-    version='1.0.8',
+    version='1.0.9',
     description='Tethys App Store',
     long_description='This application allows you to discover, install, manage and configure Tethys Applications.',
     keywords='Tethys, Warehouse, Conda',
