@@ -1,14 +1,40 @@
 import os
 import re
+import json
+import shutil
 
+from jinja2 import Template
+from subprocess import (call, Popen, PIPE, STDOUT)
+
+from .git_install_handlers import write_logs
 from .helpers import logger, get_override_key
-from tethys_cli.scaffold_commands import APP_PATH, APP_PREFIX, get_random_color
+from tethys_cli.scaffold_commands import APP_PATH, APP_PREFIX, get_random_color, render_path, TEMPLATE_SUFFIX
 
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny
 
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse, HttpResponse
+from .app import AppStore as app
+
+
+def install_app(app_path):
+    logger.info("Running scaffolded application install....")
+    process = Popen(['python', 'setup.py', "develop"],
+                    cwd=app_path, stdout=PIPE, stderr=STDOUT)
+    write_logs(logger, process.stdout, 'Python Install SubProcess: ')
+    exitcode = process.wait()
+    logger.info("Python Application install exited with: " + str(exitcode))
+
+
+def get_develop_dir():
+    app_workspace = app.get_app_workspace()
+    workspace_directory = app_workspace.path
+    dev_dir = os.path.join(workspace_directory, 'develop')
+    if not os.path.exists(dev_dir):
+        os.mkdir(dev_dir)
+
+    return dev_dir
 
 
 def proper_name_validator(value, default):
@@ -54,7 +80,8 @@ def scaffold_command(request):
                 tags: "",
                 author_name: "",
                 author_email: "",
-                license_name: ""
+                license_name: "",
+                overwrite: true/false (defaults to false)
     }
 
     """
@@ -67,7 +94,6 @@ def scaffold_command(request):
 
     # Get template dirs
     logger.debug('APP_PATH: {}'.format(APP_PATH))
-
     template_name = 'default'
     template_root = os.path.join(APP_PATH, 'default')
 
@@ -78,7 +104,7 @@ def scaffold_command(request):
         return JsonResponse({'status': 'false', 'message': 'Error: "{}" is not a valid template.'.format(template_name)}, status=400)
 
     # Validate project name
-    project_name = received_json_data.name
+    project_name = received_json_data.get('name')
 
     # Only lowercase
     contains_uppers = False
@@ -141,72 +167,58 @@ def scaffold_command(request):
 
     logger.debug('Template context: {}'.format(context))
 
-    # # Create root directory
-    # project_root = os.path.join(os.getcwd(), project_dir)
-    # log.debug('Project root path: {}'.format(project_root))
+    # Create root directory
+    dev_dir = get_develop_dir()
+    project_root = os.path.join(dev_dir, project_dir)
+    logger.debug('Project root path: {}'.format(project_root))
 
-    # if os.path.isdir(project_root):
-    #     if not args.overwrite:
-    #         valid = False
-    #         negative_choices = ['n', 'no', '']
-    #         valid_choices = ['y', 'n', 'yes', 'no']
-    #         default = 'y'
-    #         response = ''
+    overwrite_if_exists = received_json_data.get("overwrite", False)
 
-    #         while not valid:
-    #             try:
-    #                 response = input('Directory "{}" already exists. '
-    #                                  'Would you like to overwrite it? [Y/n]: '.format(project_root)) or default
-    #             except (KeyboardInterrupt, SystemExit):
-    #                 write_pretty_output('\nScaffolding cancelled.', FG_YELLOW)
-    #                 exit(1)
+    if os.path.isdir(project_root):
+        if overwrite_if_exists:
+            try:
+                shutil.rmtree(project_root)
+            except OSError:
+                error_msg = ('Error: Unable to overwrite "{}". '
+                             'Please remove the directory and try again.'.format(project_root))
+                return JsonResponse({'status': 'false', 'message': error_msg}, status=400)
+        else:
+            error_msg = ('Error: App directory exists "{}". '
+                         'and Overwrite was not permitted. Please remove the directory and try again.'.format(project_root))
+            return JsonResponse({'status': 'false', 'message': error_msg}, status=400)
 
-    #             if response.lower() in valid_choices:
-    #                 valid = True
+    # Walk the template directory, creating the templates and directories in the new project as we go
+    for curr_template_root, dirs, template_files in os.walk(template_root):
+        curr_project_root = curr_template_root.replace(template_root, project_root)
+        curr_project_root = render_path(curr_project_root, context)
 
-    #         if response.lower() in negative_choices:
-    #             write_pretty_output('Scaffolding cancelled.', FG_YELLOW)
-    #             exit(0)
+        # Create Root Directory
+        os.makedirs(curr_project_root)
 
-    #     try:
-    #         shutil.rmtree(project_root)
-    #     except OSError:
-    #         write_pretty_output('Error: Unable to overwrite "{}". '
-    #                             'Please remove the directory and try again.'.format(project_root), FG_YELLOW)
-    #         exit(1)
+        # Create Files
+        for template_file in template_files:
+            template_file_path = os.path.join(curr_template_root, template_file)
+            project_file = template_file.replace(TEMPLATE_SUFFIX, '')
+            project_file_path = os.path.join(curr_project_root, project_file)
 
-    # # Walk the template directory, creating the templates and directories in the new project as we go
-    # for curr_template_root, dirs, template_files in os.walk(template_root):
-    #     curr_project_root = curr_template_root.replace(template_root, project_root)
-    #     curr_project_root = render_path(curr_project_root, context)
+            # Load the template
+            logger.debug('Loading template: "{}"'.format(template_file_path))
 
-    #     # Create Root Directory
-    #     os.makedirs(curr_project_root)
-    #     write_pretty_output('Created: "{}"'.format(curr_project_root), FG_WHITE)
+            try:
+                with open(template_file_path, 'r') as tfp:
+                    template = Template(tfp.read())
+            except UnicodeDecodeError:
+                with open(template_file_path, 'br') as tfp:
+                    with open(project_file_path, 'bw') as pfp:
+                        pfp.write(tfp.read())
+                continue
 
-    #     # Create Files
-    #     for template_file in template_files:
-    #         template_file_path = os.path.join(curr_template_root, template_file)
-    #         project_file = template_file.replace(TEMPLATE_SUFFIX, '')
-    #         project_file_path = os.path.join(curr_project_root, project_file)
+            # Render template if loaded
+            logger.debug('Rendering template: "{}"'.format(template_file_path))
+            if template:
+                with open(project_file_path, 'w') as pfp:
+                    pfp.write(template.render(context))
 
-    #         # Load the template
-    #         log.debug('Loading template: "{}"'.format(template_file_path))
+    install_app(project_root)
 
-    #         try:
-    #             with open(template_file_path, 'r') as tfp:
-    #                 template = Template(tfp.read())
-    #         except UnicodeDecodeError:
-    #             with open(template_file_path, 'br') as tfp:
-    #                 with open(project_file_path, 'bw') as pfp:
-    #                     pfp.write(tfp.read())
-    #             continue
-
-    #         # Render template if loaded
-    #         log.debug('Rendering template: "{}"'.format(template_file_path))
-    #         if template:
-    #             with open(project_file_path, 'w') as pfp:
-    #                 pfp.write(template.render(context))
-    #             write_pretty_output('Created: "{}"'.format(project_file_path), FG_WHITE)
-
-    # write_pretty_output('Successfully scaffolded new project "{}"'.format(project_name), FG_WHITE)
+    return JsonResponse({'status': 'true', 'message': "App Scaffolded"}, status=200)
