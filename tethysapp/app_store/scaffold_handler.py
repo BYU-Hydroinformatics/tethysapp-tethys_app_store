@@ -90,6 +90,11 @@ def scaffold_command(request):
     if(request.GET.get('custom_key') != override_key):
         return HttpResponse('Unauthorized', status=401)
 
+    # Set ScaffoldRunning file to prevent auto restart from the filewatchers
+    app_workspace = app.get_app_workspace()
+    workspace_directory = app_workspace.path
+    Path(os.path.join(workspace_directory, 'install_status', 'scaffoldRunning')).touch()
+
     received_json_data = json.loads(request.body)
 
     # Get template dirs

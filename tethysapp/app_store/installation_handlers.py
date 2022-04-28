@@ -53,6 +53,11 @@ def restart_server(data, channel_layer, run_collect_all=True):
     if os.path.exists(install_running_path):
         os.remove(install_running_path)
 
+    # Check if Scaffold Running file is present and delete it
+    scaffold_running_path = os.path.join(workspace_directory, 'install_status', 'scaffoldRunning')
+    if os.path.exists(scaffold_running_path):
+        os.remove(scaffold_running_path)
+
     manage_path = get_manage_path({})
     if data["restart_type"] == "install" or data["restart_type"] == "update":
         # Run SyncStores
