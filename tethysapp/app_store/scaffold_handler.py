@@ -5,6 +5,7 @@ import shutil
 
 from jinja2 import Template
 from subprocess import (call, Popen, PIPE, STDOUT)
+from pathlib import Path
 
 from .git_install_handlers import write_logs
 from .helpers import logger, get_override_key
