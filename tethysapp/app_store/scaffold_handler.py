@@ -233,4 +233,9 @@ def scaffold_command(request):
 
     install_app(project_root)
 
+    # Check if Scaffold Running file is present and delete it
+    scaffold_running_path = os.path.join(workspace_directory, 'install_status', 'scaffoldRunning')
+    if os.path.exists(scaffold_running_path):
+        os.remove(scaffold_running_path)
+
     return JsonResponse({'status': 'true', 'message': "App Scaffolded"}, status=200)
