@@ -94,6 +94,12 @@ def scaffold_command(request):
     # Set ScaffoldRunning file to prevent auto restart from the filewatchers
     app_workspace = app.get_app_workspace()
     workspace_directory = app_workspace.path
+
+    install_status_dir = os.path.join(workspace_directory, 'install_status')
+
+    if not os.path.exists(install_status_dir):
+        os.makedirs(install_status_dir)
+
     Path(os.path.join(workspace_directory, 'install_status', 'scaffoldRunning')).touch()
 
     received_json_data = json.loads(request.body)
