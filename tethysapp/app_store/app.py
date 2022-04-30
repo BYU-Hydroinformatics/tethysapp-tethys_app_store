@@ -75,6 +75,11 @@ class AppStore(TethysAppBase):
                 name='scaffold_app',
                 url='app-store/scaffold',
                 controller='app_store.controllers.scaffold_command',
+            ),
+            UrlMap(
+                name='scaffold_submit',
+                url='app-store/scaffold_submit',
+                controller='app_store.controllers.run_submit_nursery_app',
             )
 
         )
