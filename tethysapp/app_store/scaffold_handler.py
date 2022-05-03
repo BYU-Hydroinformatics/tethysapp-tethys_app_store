@@ -10,6 +10,7 @@ from pathlib import Path
 from .git_install_handlers import write_logs
 from .helpers import logger, get_override_key
 from tethys_cli.scaffold_commands import APP_PATH, APP_PREFIX, get_random_color, render_path, TEMPLATE_SUFFIX
+from tethys_cli.cli_helpers import get_manage_path
 
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny
@@ -26,6 +27,17 @@ def install_app(app_path):
     write_logs(logger, process.stdout, 'Python Install SubProcess: ')
     exitcode = process.wait()
     logger.info("Python Application install exited with: " + str(exitcode))
+
+    manage_path = get_manage_path({})
+    logger.info("Running Tethys Collectall")
+    intermediate_process = ['python', manage_path, 'pre_collectstatic']
+    run_process(intermediate_process)
+    # Setup for main collectstatic
+    intermediate_process = ['python', manage_path, 'collectstatic', '--noinput']
+    run_process(intermediate_process)
+    # Run collectworkspaces command
+    intermediate_process = ['python', manage_path, 'collectworkspaces',  '--force']
+    run_process(intermediate_process)
 
 
 def get_develop_dir():
