@@ -18,6 +18,7 @@ from rest_framework.permissions import AllowAny
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse, HttpResponse
 from .app import AppStore as app
+from tethys_sdk.routing import controller
 
 
 def install_app(app_path):
@@ -40,8 +41,7 @@ def install_app(app_path):
     run_process(intermediate_process)
 
 
-def get_develop_dir():
-    app_workspace = app.get_app_workspace()
+def get_develop_dir(app_workspace):
     workspace_directory = app_workspace.path
     dev_dir = os.path.join(workspace_directory, 'develop')
     if not os.path.exists(dev_dir):
@@ -79,7 +79,12 @@ def proper_name_validator(value, default):
 @ api_view(['POST'])
 @permission_classes([AllowAny])
 @csrf_exempt
-def scaffold_command(request):
+@controller(
+    name='scaffold_app',
+    url='app-store/scaffold',
+    app_workspace=True,
+)
+def scaffold_command(request, app_workspace):
     """
     Create a new Tethys app projects in the workspace dir. based on an API Call to the app store
     Need to have the custom GitHub API Key present
@@ -104,7 +109,6 @@ def scaffold_command(request):
         return HttpResponse('Unauthorized', status=401)
 
     # Set ScaffoldRunning file to prevent auto restart from the filewatchers
-    app_workspace = app.get_app_workspace()
     workspace_directory = app_workspace.path
 
     install_status_dir = os.path.join(workspace_directory, 'install_status')
@@ -192,7 +196,7 @@ def scaffold_command(request):
     logger.debug('Template context: {}'.format(context))
 
     # Create root directory
-    dev_dir = get_develop_dir()
+    dev_dir = get_develop_dir(app_workspace)
     project_root = os.path.join(dev_dir, project_dir)
     logger.debug('Project root path: {}'.format(project_root))
 

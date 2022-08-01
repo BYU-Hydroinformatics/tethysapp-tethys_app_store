@@ -8,7 +8,7 @@ import json
 
 from tethys_cli.install_commands import (
     install_command, open_file, validate_schema)
-from tethys_sdk.workspaces import app_workspace
+from tethys_sdk.routing import controller
 
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
@@ -48,8 +48,12 @@ def run_pending_installs():
     # it's completely done and the server is ready.
     time.sleep(10)
     logger.info("Checking for Pending Installs")
-    app_workspace = app.get_app_workspace()
-    workspace_directory = app_workspace.path
+
+    from tethys_sdk.workspaces import TethysWorkspace
+    project_directory = "/home/tethys/tethysdev/tethysapp-tethys_app_store/tethysapp/app_store"
+    workspace_directory = os.path.join(project_directory, 'workspaces', 'app_workspace')
+    app_workspace = TethysWorkspace(workspace_directory)
+    
     install_status_dir = os.path.join(
         workspace_directory, 'install_status', 'github')
     if not os.path.exists(install_status_dir):
@@ -64,7 +68,6 @@ def run_pending_installs():
                 if data["status"]["setupPy"] == "Running":
                     logger.info("Continuing Install for " + data["installID"])
                     # Create logging handler
-                    app_workspace = app.get_app_workspace()
                     workspace_directory = app_workspace.path
                     install_logs_dir = os.path.join(
                         workspace_directory, 'logs', 'github_install')
@@ -82,7 +85,7 @@ def run_pending_installs():
                         app_name = install_options['name']
 
                     continue_install(git_install_logger,
-                                     file_path, install_options, app_name)
+                                     file_path, install_options, app_name, app_workspace)
 
 
 def update_status_file(path, status, status_key, error_msg=""):
@@ -140,7 +143,7 @@ def write_logs(logger, output, subHeading):
             logger.info(subHeading + cleaned_line)
 
 
-def continue_install(logger, status_file_path, install_options, app_name):
+def continue_install(logger, status_file_path, install_options, app_name, app_workspace):
     process = Popen(['tethys', 'db', 'sync'], stdout=PIPE, stderr=STDOUT)
     write_logs(logger, process.stdout, 'Tethys DB Sync : ')
     exitcode = process.wait()
@@ -165,10 +168,10 @@ def continue_install(logger, status_file_path, install_options, app_name):
     update_status_file(status_file_path, True, "setupPy")
     logger.info("Install completed")
     clear_github_cache_list()
-    restart_server({"restart_type": "gInstall", "name": app_name}, None)
+    restart_server({"restart_type": "gInstall", "name": app_name}, None, app_workspace)
 
 
-def install_worker(workspace_apps_path, status_file_path, logger, install_run_id, develop):
+def install_worker(workspace_apps_path, status_file_path, logger, install_run_id, develop, app_workspace):
     # Install Dependencies
     logger.info("Installing dependencies...")
     file_path = Path(os.path.join(workspace_apps_path, 'install.yml'))
@@ -213,25 +216,23 @@ def install_worker(workspace_apps_path, status_file_path, logger, install_run_id
     logger.info("Python Application install exited with: " + str(exitcode))
 
     # This step might cause a server restart and will not have the rest of the code execute.
-    continue_install(logger, status_file_path, install_options, app_name)
+    continue_install(logger, status_file_path, install_options, app_name, app_workspace)
 
 
-def get_log_file(id):
+def get_log_file(id, app_workspace):
     # Find LogFile
-    app_workspace = app.get_app_workspace()
     workspace_directory = app_workspace.path
     install_logs_dir = os.path.join(
         workspace_directory, 'logs', 'github_install')
     logfile_location = os.path.join(install_logs_dir, install_run_id + '.log')
 
 
-def get_status_main(request):
+def get_status_main(request, app_workspace):
     install_id = request.GET.get('install_id')
     if install_id is None:
         raise ValidationError({"install_id": "Missing Value"})
 
     # Find the file in the
-    app_workspace = app.get_app_workspace()
     status_file_path = os.path.join(
         app_workspace.path, 'install_status', 'github', install_id + '.json')
     if os.path.exists(status_file_path):
@@ -242,15 +243,24 @@ def get_status_main(request):
         raise Http404("No Install with id: " + install_id + " exists")
 
 
-@ api_view(['GET'])
-@ authentication_classes((TokenAuthentication,))
-def get_status(request):
+@api_view(['GET'])
+@authentication_classes((TokenAuthentication,))
+@controller(
+    name='git_get_status',
+    url='app-store/install/git/status',
+    app_workspace=True,
+)
+def get_status(request, app_workspace):
     # This method is a wrapper function to protect the actual method from being accessed without auth
-    get_status_main(request)
+    get_status_main(request, app_workspace)
 
 
-@ api_view(['GET'])
+@api_view(['GET'])
 @csrf_exempt
+@controller(
+    name='git_get_status_override',
+    url='app-store/install/git/status_override',
+)
 def get_status_override(request):
     # This method is an override to the get status method. It allows for installation
     # based on a custom key set in the custom settings. This allows app nursery to use the same code to process the request
@@ -261,13 +271,12 @@ def get_status_override(request):
         return HttpResponse('Unauthorized', status=401)
 
 
-def get_logs_main(request):
+def get_logs_main(request, app_workspace):
     install_id = request.GET.get('install_id')
     if install_id is None:
         raise ValidationError({"install_id": "Missing Value"})
 
     # Find the file in the
-    app_workspace = app.get_app_workspace()
     file_path = os.path.join(app_workspace.path, 'logs',
                              'github_install', install_id + '.log')
     if os.path.exists(file_path):
@@ -279,12 +288,21 @@ def get_logs_main(request):
 
 @ api_view(['GET'])
 @ authentication_classes((TokenAuthentication,))
-def get_logs(request):
-    get_logs_main(request)
+@controller(
+    name='git_get_logs',
+    url='app-store/install/git/logs',
+    app_workspace=True,
+)
+def get_logs(request, app_workspace):
+    get_logs_main(request, app_workspace)
 
 
 @ api_view(['GET'])
 @csrf_exempt
+@controller(
+    name='git_get_logs_override',
+    url='app-store/install/git/logs_override',
+)
 def get_logs_override(request):
     # This method is an override to the get status method. It allows for installation
     # based on a custom key set in the custom settings. This allows app nursery to use the same code to process the request
@@ -295,10 +313,14 @@ def get_logs_override(request):
         return HttpResponse('Unauthorized', status=401)
 
 
-def run_git_install_main(request):
+@controller(
+    name='install_git',
+    url='app-store/install/git',
+    app_workspace=True,
+)
+def run_git_install_main(request, app_workspace):
 
     # Get workspace since @app_workspace doesn't work with api request?
-    app_workspace = app.get_app_workspace()
     workspace_directory = app_workspace.path
     install_logs_dir = os.path.join(
         workspace_directory, 'logs', 'github_install')
@@ -400,7 +422,7 @@ def run_git_install_main(request):
 
     # Run command in new thread
     install_thread = threading.Thread(target=install_worker, name="InstallApps",
-                                      args=(workspace_apps_path, statusfile_location, git_install_logger, install_run_id, develop))
+                                      args=(workspace_apps_path, statusfile_location, git_install_logger, install_run_id, develop, app_workspace))
     # install_thread.setDaemon(True)
     install_thread.start()
 
@@ -416,6 +438,10 @@ def run_git_install(request):
 @ api_view(['POST'])
 @permission_classes([AllowAny])
 @csrf_exempt
+@controller(
+    name='install_git_override',
+    url='app-store/install/git_override',
+)
 def run_git_install_override(request):
     # This method is an override to the install method. It allows for installation
     # based on a custom key set in the custom settings. This allows app nursery to use the same code to process the request

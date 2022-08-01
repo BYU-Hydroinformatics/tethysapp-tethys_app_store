@@ -162,9 +162,8 @@ def conda_install(app_metadata, app_version, channel_layer):
     send_notification("Conda install completed in %.2f seconds." % (time.time() - start_time), channel_layer)
 
 
-def begin_install(installData, channel_layer):
+def begin_install(installData, channel_layer, app_workspace):
 
-    app_workspace = app.get_app_workspace()
     resource = get_resource(installData["name"], app_workspace)
 
     send_notification("Starting installation of app: " + resource['name'], channel_layer)

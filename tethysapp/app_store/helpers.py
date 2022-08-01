@@ -193,11 +193,10 @@ def find_string_in_line(line):
             return matches[0]
 
 
-def get_github_install_metadata():
+def get_github_install_metadata(app_workspace):
 
     if (cache.get(CACHE_KEY) is None):
         logger.info("GitHub Apps list cache miss")
-        app_workspace = app.get_app_workspace()
         workspace_directory = app_workspace.path
         workspace_apps_path = os.path.join(
             workspace_directory, 'apps', 'installed')
@@ -252,8 +251,8 @@ def get_github_install_metadata():
         return cache.get(CACHE_KEY)
 
 
-def check_github_install(app_name):
-    possible_apps = get_github_install_metadata()
+def check_github_install(app_name, app_workspace):
+    possible_apps = get_github_install_metadata(app_workspace)
     print(possible_apps)
 
 

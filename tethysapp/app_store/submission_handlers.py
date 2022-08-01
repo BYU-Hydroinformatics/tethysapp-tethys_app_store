@@ -15,6 +15,7 @@ from rest_framework.decorators import api_view, permission_classes
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.permissions import AllowAny
 from django.http import JsonResponse, HttpResponse
+from tethys_sdk.routing import controller
 
 from pathlib import Path
 
@@ -30,20 +31,24 @@ LOCAL_DEBUG_MODE = False
 @api_view(['POST'])
 @permission_classes([AllowAny])
 @csrf_exempt
-def run_submit_nursery_app(request):
+@controller(
+    name='scaffold_submit',
+    url='app-store/scaffold_submit',
+    app_workspace=True,
+)
+def run_submit_nursery_app(request, app_workspace):
     override_key = get_override_key()
     if(request.GET.get('custom_key') == override_key):
         received_json_data = json.loads(request.body)
-        return submit_nursery_app(received_json_data.get('app_path'), received_json_data.get('email', ''))
+        return submit_nursery_app(received_json_data.get('app_path'), received_json_data.get('email', ''), app_workspace)
         return HttpResponse('Unauthorized', status=401)
 
 
-def submit_nursery_app(app_path, requester_email):
+def submit_nursery_app(app_path, requester_email, app_workspace):
 
     # Ensure there is no slash at the end.
     app_name = app_path.split('/')[-1]
 
-    app_workspace = app.get_app_workspace()
     github_dir = os.path.join(app_workspace.path, 'gitsubmission')
 
     # create if github Dir does not exist
@@ -304,10 +309,9 @@ def repo_exists(repo_name, organization):
         return False
 
 
-def pull_git_repo(install_data, channel_layer):
+def pull_git_repo(install_data, channel_layer, app_workspace):
     github_url = install_data.get("url")
     app_name = github_url.split("/")[-1].replace(".git", "")
-    app_workspace = app.get_app_workspace()
     github_dir = os.path.join(app_workspace.path, 'gitsubmission')
     # create if github Dir does not exist
     if not os.path.exists(github_dir):

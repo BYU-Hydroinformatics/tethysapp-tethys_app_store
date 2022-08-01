@@ -1,10 +1,10 @@
-{% load staticfiles %}
-<div class="modal fade" id="custom-settings-modal" style="z-index:2000; margin-top:10%;" tabindex="-1" role="dialog" aria-labelledby="custom-settings-modal-label">
+{% load static %}
+<div class="modal" id="custom-settings-modal" style="z-index:2000; margin-top:10%;" tabindex="-1" role="dialog" aria-labelledby="custom-settings-modal-label">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h5 class="modal-title" id="custom-settings-modal-label">Define Custom Settings</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body" id="custom-settings-container">
             </div>
@@ -12,7 +12,7 @@
                 <div id="customSettingLoader" hidden>
                     <img width="100px" src="{% static 'app_store/images/loader.gif' %}" />
                 </div>
-                <button class="btn btn-danger" data-dismiss="modal" aria-hidden="true" id="skipConfigButton"> Skip Configuration </button>
+                <button class="btn btn-danger" data-bs-dismiss="modal" aria-hidden="true" id="skipConfigButton"> Skip Configuration </button>
             </div>
         </div>
     </div>

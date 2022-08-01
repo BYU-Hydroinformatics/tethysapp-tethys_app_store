@@ -9,7 +9,7 @@ class AppStore(TethysAppBase):
     """
 
     name = 'Tethys App Store'
-    index = 'app_store:home'
+    index = 'home'
     icon = 'app_store/images/appicon.png'
     package = 'app_store'
     root_url = 'app-store'
@@ -18,73 +18,76 @@ class AppStore(TethysAppBase):
     tags = 'Tethys,AppStore,Conda,Github'
     enable_feedback = True
     feedback_emails = ["rohitkh@byu.edu"]
+    
+    controller_modules = ['controllers', 'notifications', 'git_install_handlers', 'scaffold_handler', ]
 
-    def url_maps(self):
-        """
-        Add controllers
-        """
-        UrlMap = url_map_maker(self.root_url)
+    # def url_maps(self):
+    #     """
+    #     Add controllers
+    #     """
+    #     UrlMap = url_map_maker(self.root_url)
 
-        url_maps = (
-            UrlMap(
-                name='home',
-                url='app-store',
-                controller='app_store.controllers.home'
-            ),
-            UrlMap(
-                name='get_resources',
-                url='app-store/get_resources',
-                controller='app_store.controllers.get_resources'
-            ),
-            UrlMap(
-                name='install_notifications',
-                url='app-store/install/notifications',
-                controller='app_store.controllers.notificationsConsumer',
-                protocol='websocket'
-            ),
-            UrlMap(
-                name='install_git',
-                url='app-store/install/git',
-                controller='app_store.controllers.run_git_install',
-            ),
-            UrlMap(
-                name='git_get_status',
-                url='app-store/install/git/status',
-                controller='app_store.controllers.get_status',
-            ),
-            UrlMap(
-                name='git_get_logs',
-                url='app-store/install/git/logs',
-                controller='app_store.controllers.get_logs',
-            ), UrlMap(
-                name='install_git_override',
-                url='app-store/install/git_override',
-                controller='app_store.controllers.run_git_install_override',
-            ),
-            UrlMap(
-                name='git_get_status_override',
-                url='app-store/install/git/status_override',
-                controller='app_store.controllers.get_status_override',
-            ),
-            UrlMap(
-                name='git_get_logs_override',
-                url='app-store/install/git/logs_override',
-                controller='app_store.controllers.get_logs_override',
-            ),
-            UrlMap(
-                name='scaffold_app',
-                url='app-store/scaffold',
-                controller='app_store.controllers.scaffold_command',
-            ),
-            UrlMap(
-                name='scaffold_submit',
-                url='app-store/scaffold_submit',
-                controller='app_store.controllers.run_submit_nursery_app',
-            )
+    #     url_maps = (
+    #         # UrlMap(
+    #         #     name='home',
+    #         #     url='app-store',
+    #         #     controller='app_store.controllers.home'
+    #         # ),
+    #         # UrlMap(
+    #         #     name='get_resources',
+    #         #     url='app-store/get_resources',
+    #         #     controller='app_store.controllers.get_resources'
+    #         # ),
+    #         # UrlMap(
+    #         #     name='install_notifications',
+    #         #     url='app-store/install/notifications',
+    #         #     controller='app_store.controllers.notificationsConsumer',
+    #         #     protocol='websocket'
+    #         # ),
+    #         # UrlMap(
+    #         #     name='install_git',
+    #         #     url='app-store/install/git',
+    #         #     controller='app_store.controllers.run_git_install',
+    #         # ),
+    #         # UrlMap(
+    #         #     name='git_get_status',
+    #         #     url='app-store/install/git/status',
+    #         #     controller='app_store.controllers.get_status',                EJones
+    #         # ),
+    #         # UrlMap(
+    #         #     name='git_get_logs',
+    #         #     url='app-store/install/git/logs',
+    #         #     controller='app_store.controllers.get_logs',                  EJones
+    #         # ),
+    #         # UrlMap(
+    #         #     name='install_git_override',
+    #         #     url='app-store/install/git_override',
+    #         #     controller='app_store.controllers.run_git_install_override',  EJones
+    #         # ),
+    #         # UrlMap(
+    #         #     name='git_get_status_override',
+    #         #     url='app-store/install/git/status_override',
+    #         #     controller='app_store.controllers.get_status_override',       EJones
+    #         # ),
+    #         # UrlMap(
+    #         #     name='git_get_logs_override',
+    #         #     url='app-store/install/git/logs_override',
+    #         #     controller='app_store.controllers.get_logs_override',         EJones
+    #         # ),
+    #         # UrlMap(
+    #         #     name='scaffold_app',
+    #         #     url='app-store/scaffold',
+    #         #     controller='app_store.controllers.scaffold_command',          EJones
+    #         # ),
+    #         # UrlMap(
+    #         #     name='scaffold_submit',
+    #         #     url='app-store/scaffold_submit',
+    #         #     controller='app_store.controllers.run_submit_nursery_app',    EJones
+    #         # )
 
-        )
+    #     )
 
-        return url_maps
+    #     return url_maps
 
     def permissions(self):
         """

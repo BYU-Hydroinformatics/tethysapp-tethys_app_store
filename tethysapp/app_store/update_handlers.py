@@ -69,8 +69,7 @@ def conda_update(app_name, app_version, app_channel, channel_layer):
     send_update_msg("Conda update completed in %.2f seconds." % (time.time() - start_time), channel_layer)
 
 
-def update_app(data, channel_layer):
-    app_workspace = app.get_app_workspace()
+def update_app(data, channel_layer, app_workspace):
     resource = get_resource(data["name"], app_workspace)
 
     # Commenting out back up settings code for now, since only updating the conda package seems to preserve the original settings

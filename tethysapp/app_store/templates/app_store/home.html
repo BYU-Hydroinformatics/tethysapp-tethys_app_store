@@ -1,11 +1,11 @@
 {% extends "app_store/base.html" %}
-{% load staticfiles tethys_gizmos tags %}
+{% load static tethys_gizmos tags %}
 
 
 {% block styles %}
 {{ block.super }}
 <link href="{% static 'tethys_apps/css/app_library.css' %}" rel="stylesheet"/>
-<link href="https://unpkg.com/bootstrap-table@1.16.0/dist/bootstrap-table.min.css" rel="stylesheet">
+<link href="https://unpkg.com/bootstrap-table@1.20.2/dist/bootstrap-table.min.css" rel="stylesheet">
 {% endblock %}
 
 {% block import_gizmos %}
@@ -14,17 +14,27 @@
 
 
 {% block header_buttons %}
-<div class="header-button glyphicon-button" data-toggle="tooltip" data-placement="bottom" title="Help">
-    <a target="_blank" href="//tethys-app-store.readthedocs.io"><span class="glyphicon glyphicon-question-sign"></span></a>
+<div class="header-button" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Help">
+    <a target="_blank" href="//tethys-app-store.readthedocs.io">
+        <!-- <span class="glyphicon glyphicon-question-sign"></span> -->
+        <i class="bi bi-question-circle-fill"></i>
+    </a>
 </div>
-<div class="header-button glyphicon-button" data-toggle="tooltip" data-placement="bottom" title="Add App">
-    <a data-toggle="modal" data-target="#add-app-modal"><span class="glyphicon glyphicon-plus-sign"></span></a>
+<div class="header-button" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Add App">
+    <a data-bs-toggle="modal" data-bs-target="#add-app-modal">
+        <!-- <span class="glyphicon glyphicon-plus-sign"></span> -->
+        <i class="bi bi-plus-lg"></i>
+    </a>
 </div>
-<div class="header-button glyphicon-button" data-toggle="tooltip" data-placement="bottom" title="Refresh Apps">
-    <a href="#" onclick="reloadCacheRefresh()"><span class="glyphicon glyphicon-refresh"></span></a>
+<div class="header-button" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Refresh Apps">
+    <a href="#" onclick="reloadCacheRefresh()">
+        <!-- <span class="glyphicon glyphicon-refresh"></span> -->
+        <i class="bi bi-arrow-clockwise"></i>
+    </a>
 </div>
-<!-- <div class="header-button glyphicon-button" data-toggle="tooltip" data-placement="bottom" title="Refresh Server">
-    <a id="serverRefresh"><span class="glyphicon glyphicon-off"></span></a>
+<!-- <div class="header-button glyphicon-button" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Refresh Server"> -->
+    <!-- <a id="serverRefresh"><span class="glyphicon glyphicon-off"></span></a> -->
+    <!-- <i class="bi bi-power"></i>
 </div> -->
 {% endblock %}
 
@@ -45,7 +55,7 @@
 <div class="card card-default main-app-list hidden">
     <div class="card-header">Available Tethys Applications</div>
     <div class="card-body">
-        <table data-search="true" data-show-search-clear-button="true" data-toolbar="#toolbar" data-show-columns="true" id="mainAppsTable" data-show-toggle="true" data-pagination="true" data-detail-view="true" data-detail-formatter="detailFormatter">
+        <table data-search="true" data-show-search-clear-button="true" data-bs-toolbar="#toolbar" data-show-columns="true" id="mainAppsTable" data-show-toggle="true" data-pagination="true" data-detail-view="true" data-detail-formatter="detailFormatter">
             <thead>
                 <tr>
                     <th data-field="name">Tethys App Name</th>
@@ -63,7 +73,7 @@
 <div class="card card-default installed-app-list hidden">
     <div class="card-header">Installed Tethys Applications</div>
     <div class="card-body">
-        <table data-search="true" data-show-search-clear-button="true" data-toolbar="#toolbar" data-show-columns="true" id="installedAppsTable" data-show-toggle="true" data-pagination="true"  data-detail-view="true" data-detail-formatter="detailFormatterInstalledApps">
+        <table data-search="true" data-show-search-clear-button="true" data-bs-toolbar="#toolbar" data-show-columns="true" id="installedAppsTable" data-show-toggle="true" data-pagination="true"  data-detail-view="true" data-detail-formatter="detailFormatterInstalledApps">
             <thead>
                 <tr>
                     <th data-field="name">Tethys App Name</th>
@@ -104,9 +114,9 @@
 
 {% block scripts %}
 {{ block.super }}
-<script src="https://unpkg.com/bootstrap-table@1.16.0/dist/bootstrap-table.min.js"></script>
-<script src="{% static 'tethys_apps/vendor/imagesloaded.min.js' %}" type="text/javascript"></script>
-<script src="{% static 'tethys_apps/vendor/masonry.min.js' %}" type="text/javascript"></script>
+<script src="https://unpkg.com/bootstrap-table@1.20.2/dist/bootstrap-table.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/imagesloaded@5.0.0/imagesloaded.min.js" type="text/javascript"></script>
+<script src="{% static 'app_store/vendor/masonry.min.js' %}" type="text/javascript"></script>
 <script src="{% static 'tethys_apps/js/app_library.js' %}" type="text/javascript"></script>
-<script src="{% static 'tethys_apps/js/isotope.pkgd.min.js' %}" type="text/javascript"></script>
+<script src="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.min.js"></script>
 {% endblock %}

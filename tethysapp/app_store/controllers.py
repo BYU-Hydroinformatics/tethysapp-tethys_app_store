@@ -1,7 +1,6 @@
-from django.shortcuts import render
-from tethys_sdk.permissions import login_required, permission_required
-from tethys_sdk.workspaces import app_workspace
 from django.http import JsonResponse
+from django.shortcuts import render
+from tethys_sdk.routing import controller
 
 import json
 
@@ -17,15 +16,21 @@ ALL_RESOURCES = []
 CACHE_KEY = "warehouse_app_resources"
 
 
-@login_required()
-@permission_required('use_app_store')
+@controller(
+    name='home',
+    url='app-store',
+    permissions_required='use_app_store',
+)
 def home(request):
     return render(request, 'app_store/home.html', {})
 
 
-@login_required()
-@permission_required('use_app_store')
-@app_workspace
+@controller(
+    name='get_resources',
+    url='app-store/get_resources',
+    permissions_required='use_app_store',
+    app_workspace=True,
+)
 def get_resources(request, app_workspace):
     require_refresh = request.GET.get('refresh', '') == "true"
     # Always require refresh
@@ -41,7 +46,7 @@ def get_resources(request, app_workspace):
             available_apps.append(resource)
 
     # Get any apps installed via GitHub install process
-    github_apps = get_github_install_metadata()
+    github_apps = get_github_install_metadata(app_workspace)
 
     context = {
         'availableApps': available_apps,

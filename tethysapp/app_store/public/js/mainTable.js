@@ -64,10 +64,10 @@ function detailFormatterInstalledApps(index, row) {
 function operateFormatter(value, row, index) {
   return [
     '<a class="install button-spaced" href="javascript:void(0)" title="Install">',
-    `<button type="button" class="btn btn-info btn-default btn-xs">Install</button>`,
+    `<button type="button" class="btn btn-info btn-outline-secondary btn-xs">Install</button>`,
     "</a>",
     '<a class="github button-spaced" href="javascript:void(0)" title="Github">',
-    `<button type="button" class="btn btn-primary btn-default btn-xs">Github</button>`,
+    `<button type="button" class="btn btn-primary btn-outline-secondary btn-xs">Github</button>`,
     "</a>"
   ].join("")
 }
@@ -78,7 +78,7 @@ function operateFormatter2(value, row, index) {
     `<button type="button" class="btn btn-info btn-warning btn-xs">Uninstall</button>`,
     "</a>"
     // '<a class="reconfigure button-spaced" href="javascript:void(0)" title="Configure">',
-    // `<button type="button" class="btn btn-info btn-default btn-xs">Configure</button>`,
+    // `<button type="button" class="btn btn-info btn-outline-secondary btn-xs">Configure</button>`,
     // "</a>"
   ]
 
@@ -101,6 +101,7 @@ window.operateEvents = {
     let n_content = $("#notification .lead")
     n_content.empty()
     n_div.modal({ backdrop: "static", keyboard: false })
+    n_div.modal('show')
     $("#goToAppButton").hide()
     notifCount = 0
     // Setup Versions
@@ -136,6 +137,7 @@ window.operateEvents = {
     $("#uninstall_processing_label").empty()
     $("#uninstallNotices").empty()
     $("#uninstall-app-modal").modal({ backdrop: "static", keyboard: false })
+    $("#uninstall-app-modal").modal("show")
   },
 
   "click .update": function(e, value, row, index) {
@@ -160,7 +162,7 @@ window.operateEvents = {
     $("#no-update").show()
     $("#update-processing-label").empty()
     $("#update-notices").empty()
-    $("#update-app-modal").modal({ backdrop: "static", keyboard: false })
+    $("#update-app-modal").modal({ backdrop: "static", keyboard: false, show: true })
   }
 }
 
