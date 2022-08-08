@@ -316,7 +316,7 @@ const update = () => {
 
 $(document).ready(function() {
     // Hide the nav
-    $("#app-content-wrapper").removeClass("show-nav")
+    $(".toggle-nav").hide(); 
 
     // Get Main Data and load the table
     $.ajax({

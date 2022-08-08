@@ -84,9 +84,7 @@ function operateFormatter2(value, row, index) {
 
   if (row.updateAvailable) {
     buttons.push(
-      `<a class="update button-spaced" href="javascript:void(0)" title="Update">
-      <button type="button" class="btn btn-primary btn-success btn-xs">Update</button>
-      </a>`
+      `<a class="update button-spaced" href="javascript:void(0)" title="Update"><button type="button" class="btn btn-primary btn-success btn-xs">Update</button></a>`
     )
   }
 
@@ -162,7 +160,8 @@ window.operateEvents = {
     $("#no-update").show()
     $("#update-processing-label").empty()
     $("#update-notices").empty()
-    $("#update-app-modal").modal({ backdrop: "static", keyboard: false, show: true })
+    $("#update-app-modal").modal({ backdrop: "static", keyboard: false, })
+    $("#update-app-modal").modal("show")
   }
 }
 
