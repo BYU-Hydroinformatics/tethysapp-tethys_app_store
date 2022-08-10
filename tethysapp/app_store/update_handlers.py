@@ -91,4 +91,4 @@ def update_app(data, channel_layer, app_workspace):
 
     # Since all settings are preserved, continue to standard cleanup/restart command
 
-    restart_server({"restart_type": "update", "name": data["name"]}, None)
+    restart_server({"restart_type": "update", "name": data["name"]}, app_workspace)

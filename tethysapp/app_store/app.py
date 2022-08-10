@@ -1,3 +1,8 @@
+import os
+import sys
+
+from tethys_apps.base.workspace import _get_app_workspace
+from tethys_sdk.workspaces import TethysWorkspace
 from tethys_sdk.base import TethysAppBase, url_map_maker
 from tethys_sdk.app_settings import CustomSetting
 from tethys_sdk.permissions import Permission, PermissionGroup
@@ -50,3 +55,7 @@ class AppStore(TethysAppBase):
         )
 
         return custom_settings
+
+    @classmethod
+    def get_app_workspace(cls):
+        return _get_app_workspace(cls)

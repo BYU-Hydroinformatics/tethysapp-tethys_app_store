@@ -49,10 +49,8 @@ def run_pending_installs():
     time.sleep(10)
     logger.info("Checking for Pending Installs")
 
-    from tethys_sdk.workspaces import TethysWorkspace
-    project_directory = "/home/tethys/tethysdev/tethysapp-tethys_app_store/tethysapp/app_store"
-    workspace_directory = os.path.join(project_directory, 'workspaces', 'app_workspace')
-    app_workspace = TethysWorkspace(workspace_directory)
+    app_workspace = app.get_app_workspace()
+    workspace_directory = app_workspace.path
     
     install_status_dir = os.path.join(
         workspace_directory, 'install_status', 'github')
@@ -168,7 +166,7 @@ def continue_install(logger, status_file_path, install_options, app_name, app_wo
     update_status_file(status_file_path, True, "setupPy")
     logger.info("Install completed")
     clear_github_cache_list()
-    restart_server({"restart_type": "gInstall", "name": app_name}, None, app_workspace)
+    restart_server({"restart_type": "gInstall", "name": app_name}, app_workspace)
 
 
 def install_worker(workspace_apps_path, status_file_path, logger, install_run_id, develop, app_workspace):
