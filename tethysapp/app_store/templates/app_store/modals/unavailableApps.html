@@ -1,0 +1,33 @@
+{% load static %}
+<div class="modal" id="unavailable-apps-modal" style="z-index:2000; " tabindex="-1" role="dialog" aria-labelledby="custom-settings-modal-label">
+    <div class="modal-dialog modal-dialog-centered" style="max-width:80%;" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="unavailable-apps-modal-label">Unavailable Apps (Does not satisfy installation requirements)</h5>
+                <button type="button" class="btn-close" onclick="$('#unavailable-apps-modal').hide();" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="unavailable-apps-container">
+                <div class="card card-default installed-app-list hidden">
+                    <div class="card-header">Unavailable Applications</div>
+                    <div class="card-body">
+                        <table id="unavailableAppsTable" data-search="true" data-show-search-clear-button="true" data-bs-toolbar="#toolbar" data-show-columns="true" data-show-toggle="true" data-pagination="true"  data-detail-view="true">
+                            <thead>
+                                <tr>
+                                    <th data-field="name">Tethys App Name</th>
+                                    <th data-field="latestVersion">App Latest Version</th>
+                                    <th data-field="tethys_version">Tethys Portal Version</th>
+                                    <th data-field="metadata.author">Developer</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                    <div class="card-footer ">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer"> 
+                <button class="btn btn-secondary" onclick="$('#unavailable-apps-modal').hide();" aria-hidden="true"> Close </button>
+            </div>
+        </div>
+    </div>
+</div>

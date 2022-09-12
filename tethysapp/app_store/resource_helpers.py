@@ -53,7 +53,8 @@ def fetch_resources(app_workspace, refresh=False):
                     'versionURLs': [],
                     'channel': CHANNEL_NAME,
                     'timestamp': conda_search_result[conda_package][-1]["timestamp"]
-                }
+                },
+                'tethys_version': '<4.0.0'  # assume smaller than version 4 to begin with (see license_metadata tethys_version conditional)  # noqa: E501
             }
 
             if "license" in conda_search_result[conda_package][-1]:
@@ -108,6 +109,8 @@ def process_resources(resources, app_workspace):
                 'author', 'description', 'license', 'author_email', 'keywords'])
             if "url" in license_metadata:
                 app['metadata']['dev_url'] = license_metadata["url"]
+            if "tethys_version" in license_metadata:
+                app['tethys_version'] = license_metadata["tethys_version"]
 
         except (ValueError, TypeError) as e:
             # There wasn't json found in license. Get Metadata from downloading the file

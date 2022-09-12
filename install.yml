@@ -1,4 +1,5 @@
 version: 1.0.0
+tethys_version: 4
 name: app_store
 
 requirements:
@@ -9,6 +10,7 @@ requirements:
       - pygithub
       - gitpython=3.1.18
       - requests
+      - semver
 
 post:
    - setup_tethys_channel.sh

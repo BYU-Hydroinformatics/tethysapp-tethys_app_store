@@ -17,7 +17,7 @@ jobs:
         run: |
           python ./conda.recipes/getChannels.py > build_command.txt
       - name: publish-to-conda
-        uses: rfun/conda-package-publish-action@master
+        uses: tethysapp/conda-package-publish-action@master
         with:
           subDir: "conda.recipes"
           AnacondaToken: $${{ secrets.ANACONDA_TOKEN }}

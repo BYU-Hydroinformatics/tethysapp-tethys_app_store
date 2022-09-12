@@ -44,7 +44,7 @@ def get_service_options(service_type):
     return existing_services
 
 
-def restart_server(data, app_workspace, run_collect_all=True):
+def restart_server(data, channel_layer, app_workspace, run_collect_all=True):
 
     # Check if Install Running file is present and delete it
     workspace_directory = app_workspace.path

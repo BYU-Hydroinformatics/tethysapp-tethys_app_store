@@ -61,6 +61,21 @@ function detailFormatterInstalledApps(index, row) {
   return html.join("")
 }
 
+function customButtons () {
+  return {
+    viewAllApps: {
+      text: 'View All Apps',
+      icon: 'bi-shop',
+      event: function () {
+        $("#unavailable-apps-modal").show();
+      },
+      attributes: {
+        title: 'View all apps'
+      }
+    }
+  }
+}
+
 function operateFormatter(value, row, index) {
   return [
     '<a class="install button-spaced" href="javascript:void(0)" title="Install">',
@@ -168,6 +183,7 @@ window.operateEvents = {
 function initMainTables() {
   $("#installedAppsTable").bootstrapTable({ data: installedApps })
   $("#mainAppsTable").bootstrapTable({ data: availableApps })
+  $("#unavailableAppsTable").bootstrapTable({ data: unavailableApps })
   $(".main-app-list").removeClass("hidden")
   $(".installed-app-list").removeClass("hidden")
 }

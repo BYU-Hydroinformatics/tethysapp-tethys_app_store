@@ -117,8 +117,13 @@ def submit_nursery_app(app_path, requester_email, app_workspace):
         logger.error("Error ocurred while formatting keywords from setup.py")
         logger.error(err)
 
+    install_yml = os.path.join(app_github_dir, 'install.yml')    
+    with open(install_yml) as f:
+        install_yml_file = yaml.safe_load(f)
+        metadata_dict = {**setup_py_data, "tethys_version": install_yml_file.get('tethys_version', '<4.0.0')}
+
     template_data = {
-        'metadataObj': json.dumps(setup_py_data).replace('"', "'")
+        'metadataObj': json.dumps(metadata_dict).replace('"', "'")
     }
 
     apply_template(source, template_data, destination)
@@ -416,9 +421,14 @@ def process_branch(install_data, channel_layer):
     except Exception as err:
         logger.error("Error ocurred while formatting keywords from setup.py")
         logger.error(err)
+        
+    install_yml = os.path.join(install_data['github_dir'], 'install.yml')    
+    with open(install_yml) as f:
+        install_yml_file = yaml.safe_load(f)
+        metadata_dict = {**setup_py_data, "tethys_version": install_yml_file.get('tethys_version', '<4.0.0')}
 
     template_data = {
-        'metadataObj': json.dumps(setup_py_data).replace('"', "'")
+        'metadataObj': json.dumps(metadata_dict).replace('"', "'")
     }
 
     apply_template(source, template_data, destination)

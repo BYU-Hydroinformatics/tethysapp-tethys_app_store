@@ -316,7 +316,8 @@ const update = () => {
 
 $(document).ready(function() {
     // Hide the nav
-    $(".toggle-nav").hide(); 
+    $("#app-content-wrapper").removeClass('show-nav');
+    $(".toggle-nav").removeClass('toggle-nav');
 
     // Get Main Data and load the table
     $.ajax({
@@ -326,6 +327,7 @@ $(document).ready(function() {
         .done(function(data) {
             availableApps = data.availableApps
             installedApps = data.installedApps
+            unavailableApps = data.unavailableApps
             $("#mainAppLoader").hide()
             initMainTables()
         })
