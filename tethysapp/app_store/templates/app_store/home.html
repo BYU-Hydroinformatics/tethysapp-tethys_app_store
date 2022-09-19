@@ -48,40 +48,70 @@
   </div>
 </div>
 
+<div class="card card-default tethys-platform-version">
+    <div class="card-header" id="tethysPlatformVersionHeader" style="font-weight:700"></div>
+</div>
+
 <div class="card card-default main-app-list hidden">
-    <div class="card-header">Available Tethys Applications</div>
-    <div class="card-body">
-        <table id="mainAppsTable" data-search="true" data-show-search-clear-button="true" data-bs-toolbar="#toolbar" data-show-columns="true" data-show-toggle="true" data-pagination="true" data-detail-view="true" data-detail-formatter="detailFormatter" data-buttons= "customButtons">
-            <thead>
-                <tr>
-                    <th data-field="name">Tethys App Name</th>
-                    <th data-field="latestVersion">App Latest Version</th>
-                    <th data-field="tethys_version">Tethys Portal Version</th>
-                    <th data-field="metadata.author">Developer</th>
-                    <th data-field="operate" data-formatter="operateFormatter" data-events="operateEvents">Actions</th>
-                </tr>
-            </thead>
-        </table>
-    </div>
-    <div class="card-footer ">
+    <div class="card-header showHandIcon" data-bs-toggle="collapse" href="#mainApps">Available Tethys Applications</div>
+    <div class="collapse show" id="mainApps">
+        <div class="card-body">
+            <table id="mainAppsTable" data-search="true" data-show-search-clear-button="true" data-bs-toolbar="#toolbar" data-show-columns="true" data-show-toggle="true" data-pagination="true" data-detail-view="true" data-detail-formatter="detailFormatter">
+                <thead>
+                    <tr>
+                        <th data-field="name">Tethys App Name</th>
+                        <th data-field="latestVersion">App Latest Version</th>
+                        <!--<th data-field="tethys_version">Tethys Portal Version</th>-->
+                        <th data-field="metadata.author">Developer</th>
+                        <th data-field="operate" data-formatter="operateFormatter" data-events="operateEvents">Actions</th>
+                    </tr>
+                </thead>
+            </table>
+            <div>An asterisk (*) in the 'App Latest Version' column indicates that the latest version is not compatible with your installed Tethys Platform Version.</div>
+        </div>
+        <div class="card-footer ">
+        </div>
     </div>
 </div>
 
 <div class="card card-default installed-app-list hidden">
-    <div class="card-header">Installed Tethys Applications</div>
-    <div class="card-body">
-        <table data-search="true" data-show-search-clear-button="true" data-bs-toolbar="#toolbar" data-show-columns="true" id="installedAppsTable" data-show-toggle="true" data-pagination="true"  data-detail-view="true" data-detail-formatter="detailFormatterInstalledApps">
-            <thead>
-                <tr>
-                    <th data-field="name">Tethys App Name</th>
-                    <th data-field="installedVersion">Installed Version</th>
-                    <th data-field="latestVersion">Latest Version</th>
-                    <th data-field="operate" data-formatter="operateFormatter2" data-events="operateEvents">Actions</th>
-                </tr>
-            </thead>
-        </table>
+    <div class="card-header showHandIcon" data-bs-toggle="collapse" href="#incompatibleApps">Incompatible Applications</div>
+    <div class="collapse " id="incompatibleApps">
+        <div class="card-body">
+            <table id="incompatibleAppsTable" data-search="true" data-show-search-clear-button="true" data-bs-toolbar="#toolbar" data-show-columns="true" data-show-toggle="true" data-pagination="true"  data-detail-view="true">
+                <thead>
+                    <tr>
+                        <th data-field="name">Tethys App Name</th>
+                        <th data-field="latestVersion">App Latest Version</th>
+                        <!--<th data-field="tethys_version">Tethys Portal Version</th>-->
+                        <th data-field="metadata.author">Developer</th>
+                        <th data-field="operate" data-formatter="operateFormatter" data-events="operateEvents">Actions</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+        <div class="card-footer ">
+        </div>
     </div>
-    <div class="card-footer ">
+</div>
+
+<div class="card card-default installed-app-list hidden">
+    <div class="card-header showHandIcon" data-bs-toggle="collapse" href="#installedApps">Installed Tethys Applications</div>
+    <div class="collapse show" id="installedApps">
+        <div class="card-body">
+            <table data-search="true" data-show-search-clear-button="true" data-bs-toolbar="#toolbar" data-show-columns="true" id="installedAppsTable" data-show-toggle="true" data-pagination="true"  data-detail-view="true" data-detail-formatter="detailFormatterInstalledApps">
+                <thead>
+                    <tr>
+                        <th data-field="name">Tethys App Name</th>
+                        <th data-field="installedVersion">Installed Version</th>
+                        <th data-field="latestVersion">Latest Version</th>
+                        <th data-field="operate" data-formatter="operateFormatter2" data-events="operateEvents">Actions</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+        <div class="card-footer ">
+        </div>
     </div>
 </div>
 
@@ -97,7 +127,6 @@
 {% include "app_store/modals/addToWarehouse.html" %}
 {% include "app_store/modals/uninstall.html" %}
 {% include "app_store/modals/update.html" %}
-{% include "app_store/modals/unavailableApps.html" %}
 {% endblock %}
 
 

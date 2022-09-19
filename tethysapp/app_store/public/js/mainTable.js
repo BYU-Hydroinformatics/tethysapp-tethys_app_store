@@ -61,21 +61,6 @@ function detailFormatterInstalledApps(index, row) {
   return html.join("")
 }
 
-function customButtons () {
-  return {
-    viewAllApps: {
-      text: 'View All Apps',
-      icon: 'bi-shop',
-      event: function () {
-        $("#unavailable-apps-modal").show();
-      },
-      attributes: {
-        title: 'View all apps'
-      }
-    }
-  }
-}
-
 function operateFormatter(value, row, index) {
   return [
     '<a class="install button-spaced" href="javascript:void(0)" title="Install">',
@@ -106,26 +91,45 @@ function operateFormatter2(value, row, index) {
   return buttons.join("")
 }
 
+function writeTethysPlatformCompatibility(e, row) {
+  let appList = $(e.target).attr("class").includes("incompatible-app") ? incompatibleApps : availableApps
+  // Get the currently selected app
+  let appName = getResourceValueByName("name", row.name, appList)
+  // Get the currently selected version
+  let selectedVersion = $("#versions option:selected").val()
+  // Get the compatibility for that version
+  let tethysCompatibility = updateTethysPlatformCompatibility(appName, selectedVersion, appList)
+}
+
 window.operateEvents = {
   "click .install": function(e, value, row, index) {
     $("#mainCancel").show()
 
     let n_div = $("#notification")
     let n_content = $("#notification .lead")
+    let isUsingIncompatible = $(e.target).attr("class").includes("incompatible-app")
+    let appList = isUsingIncompatible ? incompatibleApps : availableApps
+    //let appList = $(e.target).attr("class").includes("incompatible-app") ? incompatibleApps : availableApps
     n_content.empty()
     n_div.modal({ backdrop: "static", keyboard: false })
     n_div.modal('show')
     $("#goToAppButton").hide()
     notifCount = 0
     // Setup Versions
-    let appName = getResourceValueByName("name", row.name, availableApps)
+    let appName = getResourceValueByName("name", row.name, appList)
     $("#installingAppName").text(appName)
     installData["name"] = appName
-    let versionHTML = getVersionsHTML(appName, availableApps)
-    n_content.append(htmlHelpers.versions(appName))
+    let versionHTML = getVersionsHTML(appName, appList)
+    n_content.append(htmlHelpers.versions(appName, isUsingIncompatible))
     n_content.find("#selectVersion").append(versionHTML)
     $("#versions").select2()
+    writeTethysPlatformCompatibility(e, row)
   },
+
+  //$('#versions').on('select2:select', function (e, _, row, _) {
+  //"click .versions": function (e, _, row, _) {
+  //  writeTethysPlatformCompatibility(e, row)
+  //},
 
   "click .github": function(e, value, row, index) {
     let githubURL = getResourceValueByName("dev_url", row.name, availableApps)
@@ -181,9 +185,12 @@ window.operateEvents = {
 }
 
 function initMainTables() {
+  $("#tethysPlatformVersionHeader").text("Tethys Platform Version " + tethysVersion)
   $("#installedAppsTable").bootstrapTable({ data: installedApps })
   $("#mainAppsTable").bootstrapTable({ data: availableApps })
-  $("#unavailableAppsTable").bootstrapTable({ data: unavailableApps })
+  $("#incompatibleAppsTable").bootstrapTable({ data: incompatibleApps })
+  $("#incompatibleAppsTable").find(".install>button").removeClass("btn-info btn-outline-secondary")
+  $("#incompatibleAppsTable").find(".install>button").addClass("incompatible-app btn-danger")
   $(".main-app-list").removeClass("hidden")
   $(".installed-app-list").removeClass("hidden")
 }

@@ -9,6 +9,7 @@ var uninstallRunning = false
 var availableApps = {}
 var installedApps = {}
 var updateData = {}
+var tethysVersion = ""
 
 // End Vars
 const settingsHelper = {
@@ -218,6 +219,22 @@ const getVersionsHTML = (selectedApp, allResources) => {
     }
 }
 
+const updateTethysPlatformCompatibility = (selectedApp, selectedVersion, allResources) => {
+    let app = allResources.filter((resource) => resource.name == selectedApp)
+    let platform_compatibility = '<=3.4.4'
+    if (app.length > 0) {
+        let keys = Object.keys(app[0].metadata.compatibility)
+        if (keys.includes(selectedVersion)) {
+            platform_compatibility = app[0].metadata.compatibility[selectedVersion]
+        }
+        
+    } else {
+        console.log("No App found with that name and version. Check input params")
+    }
+    
+    $("#tethysPlatformVersion").text('Tethys Platform Compatibility: ' + platform_compatibility)
+}
+
 const startInstall = (appName) => {
     showLoader()
     let version = $("#versions").select2("data")[0].text
@@ -233,6 +250,12 @@ const startInstall = (appName) => {
             type: `begin_install`
         })
     )
+}
+
+const updateTethysPlatformVersion = (appName, isUsingIncompatible) => {
+    let selectedVersion = $("#versions").select2("data")[0].text
+    let appList = isUsingIncompatible ? incompatibleApps : availableApps
+    updateTethysPlatformCompatibility(appName, selectedVersion, appList)
 }
 
 const createNewService = (settingType) => {
@@ -327,7 +350,8 @@ $(document).ready(function() {
         .done(function(data) {
             availableApps = data.availableApps
             installedApps = data.installedApps
-            unavailableApps = data.unavailableApps
+            incompatibleApps = data.incompatibleApps
+            tethysVersion = data.tethysVersion
             $("#mainAppLoader").hide()
             initMainTables()
         })

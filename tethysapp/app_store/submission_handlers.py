@@ -120,7 +120,7 @@ def submit_nursery_app(app_path, requester_email, app_workspace):
     install_yml = os.path.join(app_github_dir, 'install.yml')    
     with open(install_yml) as f:
         install_yml_file = yaml.safe_load(f)
-        metadata_dict = {**setup_py_data, "tethys_version": install_yml_file.get('tethys_version', '<4.0.0')}
+        metadata_dict = {**setup_py_data, "tethys_version": install_yml_file.get('tethys_version', '<=3.4.4')}
 
     template_data = {
         'metadataObj': json.dumps(metadata_dict).replace('"', "'")
@@ -425,7 +425,7 @@ def process_branch(install_data, channel_layer):
     install_yml = os.path.join(install_data['github_dir'], 'install.yml')    
     with open(install_yml) as f:
         install_yml_file = yaml.safe_load(f)
-        metadata_dict = {**setup_py_data, "tethys_version": install_yml_file.get('tethys_version', '<4.0.0')}
+        metadata_dict = {**setup_py_data, "tethys_version": install_yml_file.get('tethys_version', '<=3.4.4')}
 
     template_data = {
         'metadataObj': json.dumps(metadata_dict).replace('"', "'")

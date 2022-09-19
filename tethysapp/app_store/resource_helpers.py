@@ -1,6 +1,10 @@
 from django.core.cache import cache
 from packaging import version
 
+import ast
+import semver
+from tethys_portal import __version__ as tethys_version
+
 import os
 import json
 import urllib
@@ -52,9 +56,9 @@ def fetch_resources(app_workspace, refresh=False):
                     'versions': [],
                     'versionURLs': [],
                     'channel': CHANNEL_NAME,
-                    'timestamp': conda_search_result[conda_package][-1]["timestamp"]
-                },
-                'tethys_version': '<4.0.0'  # assume smaller than version 4 to begin with (see license_metadata tethys_version conditional)  # noqa: E501
+                    'timestamp': conda_search_result[conda_package][-1]["timestamp"],
+                    'compatibility': {}
+                }
             }
 
             if "license" in conda_search_result[conda_package][-1]:
@@ -83,8 +87,26 @@ def process_resources(resources, app_workspace):
         if not os.path.exists(workspace_folder):
             os.makedirs(workspace_folder)
 
+        tethys_version_regex = re.search(r'([\d.]+[\d])', tethys_version).group(1)
         # Set Latest Version
         app["latestVersion"] = app.get("metadata").get("versions")[-1]
+
+        # Check if latest version is compatible. If not, append an asterisk
+        license = app.get("metadata").get("license")
+        comp_dict = None
+        compatible = None
+        try:
+            comp_dict = ast.literal_eval(license)
+        except Exception:
+            pass
+        if comp_dict and 'tethys_version' in comp_dict:
+            compatible = comp_dict['tethys_version']
+
+        if compatible is None:
+            compatible = "<=3.4.4"
+
+        if not semver.match(tethys_version_regex, compatible):
+            app["latestVersion"] = app["latestVersion"] + "*"
 
         # if(app['installed']):
         #     app["updateAvailable"] = version.parse(app['installedVersion']) < version.parse(app['latestVersion'])
@@ -110,7 +132,7 @@ def process_resources(resources, app_workspace):
             if "url" in license_metadata:
                 app['metadata']['dev_url'] = license_metadata["url"]
             if "tethys_version" in license_metadata:
-                app['tethys_version'] = license_metadata["tethys_version"]
+                app.get("metadata").get("compatibility")[license_metadata['version']] = license_metadata['tethys_version']  # noqa: E501
 
         except (ValueError, TypeError) as e:
             # There wasn't json found in license. Get Metadata from downloading the file

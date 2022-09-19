@@ -59,7 +59,7 @@
 	z-index: 1100;
 }
 
-.main-app-list {
+.tethys-platform-version, .main-app-list {
 	width: 70%;
 	margin-left: 15%;
 }
@@ -196,6 +196,9 @@
 	animation-name: loading-text;
 	animation-duration: 3s;
 	animation-iteration-count: infinite;
+}
+.showHandIcon:hover {
+	cursor: pointer;
 }
 
 @keyframes loader {
