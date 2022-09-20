@@ -1,12 +1,7 @@
 from channels.generic.websocket import AsyncWebsocketConsumer
-from .installation_handlers import *
-from .submission_handlers import *
-from tethys_sdk.workspaces import TethysWorkspace
+from .installation_handlers import logger
 # called with threading.Thread
 from .begin_install import begin_install  # noqa: F401
-from .uninstall_handlers import *
-from .update_handlers import update_app
-from .resource_helpers import clear_cache
 from tethys_sdk.routing import consumer
 
 import json
@@ -39,10 +34,11 @@ class notificationsConsumer(AsyncWebsocketConsumer):
         text_data_json = json.loads(text_data)
         function_name = text_data_json['type']
         module_name = sys.modules[__name__]
-        args=[text_data_json['data'], self.channel_layer]
+        args = [text_data_json['data'], self.channel_layer]
         app_workspace = app.get_app_workspace()
         if "type" in text_data_json:
-            if text_data_json['type'] in ['begin_install', 'restart_server', 'get_log_file', 'pull_git_repo', 'update_app', 'uninstall_app']:
+            if text_data_json['type'] in ['begin_install', 'restart_server', 'get_log_file', 'pull_git_repo',
+                                          'update_app', 'uninstall_app']:
                 args.append(app_workspace)
             thread = threading.Thread(target=getattr(module_name, function_name), args=args)
             thread.start()

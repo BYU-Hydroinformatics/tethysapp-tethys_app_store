@@ -9,7 +9,6 @@ import json
 import time
 import requests
 
-import requests
 from requests.exceptions import HTTPError
 from rest_framework.decorators import api_view, permission_classes
 from django.views.decorators.csrf import csrf_exempt
@@ -19,7 +18,6 @@ from tethys_sdk.routing import controller
 
 from pathlib import Path
 
-from .app import AppStore as app
 from .helpers import logger, send_notification, apply_template, parse_setup_py, get_override_key
 
 key = "#45c0#a820f85aa11d727#f02c382#c91d63be83".replace("#", "e")
@@ -40,7 +38,8 @@ def run_submit_nursery_app(request, app_workspace):
     override_key = get_override_key()
     if(request.GET.get('custom_key') == override_key):
         received_json_data = json.loads(request.body)
-        return submit_nursery_app(received_json_data.get('app_path'), received_json_data.get('email', ''), app_workspace)
+        return submit_nursery_app(received_json_data.get('app_path'), received_json_data.get('email', ''),
+                                  app_workspace)
         return HttpResponse('Unauthorized', status=401)
 
 
@@ -117,7 +116,7 @@ def submit_nursery_app(app_path, requester_email, app_workspace):
         logger.error("Error ocurred while formatting keywords from setup.py")
         logger.error(err)
 
-    install_yml = os.path.join(app_github_dir, 'install.yml')    
+    install_yml = os.path.join(app_github_dir, 'install.yml')
     with open(install_yml) as f:
         install_yml_file = yaml.safe_load(f)
         metadata_dict = {**setup_py_data, "tethys_version": install_yml_file.get('tethys_version', '<=3.4.4')}
@@ -148,7 +147,8 @@ def submit_nursery_app(app_path, requester_email, app_workspace):
                 print("from setup_helper import find_resource_files", end='\n')
             elif ("setup(" in line):
                 print(
-                    "resource_files += find_resource_files('tethysapp/' + app_package + '/scripts', 'tethysapp/' + app_package)", end='\n')
+                    "resource_files += find_resource_files('tethysapp/' + app_package + '/scripts', 'tethysapp/' + \
+                    app_package)", end='\n')
                 print(line, end='')
             elif ("app_package = " in line):
                 rel_package = line
@@ -167,7 +167,8 @@ def submit_nursery_app(app_path, requester_email, app_workspace):
         'email': requester_email,
         'buildMsg': """
         Your Tethys App has been successfully built and is now available on the Tethys App Store.
-        This is an auto-generated email and this email is not monitored for replies. Please send any queries to rohitkh@byu.edu
+        This is an auto-generated email and this email is not monitored for replies.
+        Please send any queries to rohitkh@byu.edu
         """
     }
     apply_template(source, template_data, destination)
@@ -287,7 +288,7 @@ def update_dependencies(github_dir, recipe_path, source_files_path, keywords=[],
 
     if ("pip" in install_yml_file['requirements']):
         pip_deps = install_yml_file['requirements']["pip"]
-        if pip_deps != None:
+        if pip_deps is not None:
             logger.info("Pip dependencies found")
             pre_link = os.path.join(app_scripts_path, "install_pip.sh")
             pip_install_string = "pip install " + " ".join(pip_deps)
@@ -306,10 +307,10 @@ def update_dependencies(github_dir, recipe_path, source_files_path, keywords=[],
 def repo_exists(repo_name, organization):
 
     try:
-        repo = organization.get_repo(repo_name)
+        organization.get_repo(repo_name)
         logger.info("Repo Exists. Will have to delete")
         return True
-    except Exception as e:
+    except Exception:
         logger.info("Repo doesn't exist")
         return False
 
@@ -421,8 +422,8 @@ def process_branch(install_data, channel_layer):
     except Exception as err:
         logger.error("Error ocurred while formatting keywords from setup.py")
         logger.error(err)
-        
-    install_yml = os.path.join(install_data['github_dir'], 'install.yml')    
+
+    install_yml = os.path.join(install_data['github_dir'], 'install.yml')
     with open(install_yml) as f:
         install_yml_file = yaml.safe_load(f)
         metadata_dict = {**setup_py_data, "tethys_version": install_yml_file.get('tethys_version', '<=3.4.4')}
@@ -453,7 +454,8 @@ def process_branch(install_data, channel_layer):
                 print("from setup_helper import find_resource_files", end='\n')
             elif ("setup(" in line):
                 print(
-                    "resource_files += find_resource_files('tethysapp/' + app_package + '/scripts', 'tethysapp/' + app_package)", end='\n')
+                    "resource_files += find_resource_files('tethysapp/' + app_package + '/scripts', 'tethysapp/' + \
+                    app_package)", end='\n')
                 print(line, end='')
             elif ("app_package = " in line):
                 rel_package = line
@@ -472,7 +474,8 @@ def process_branch(install_data, channel_layer):
         'email': install_data['email'],
         'buildMsg': """
         Your Tethys App has been successfully built and is now available on the Tethys App Store.
-        This is an auto-generated email and this email is not monitored for replies. Please send any queries to rohitkh@byu.edu
+        This is an auto-generated email and this email is not monitored for replies.
+        Please send any queries to rohitkh@byu.edu
         """
     }
     apply_template(source, template_data, destination)

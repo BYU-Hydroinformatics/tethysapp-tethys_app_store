@@ -1,5 +1,6 @@
 import os
 
+
 def find_resource_files(directory, relative_to=None):
     paths = []
     for (path, directories, filenames) in os.walk(directory):
@@ -9,4 +10,3 @@ def find_resource_files(directory, relative_to=None):
             else:
                 paths.append(os.path.join('..', path, filename))
     return paths
-

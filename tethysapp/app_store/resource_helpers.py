@@ -1,7 +1,7 @@
 from django.core.cache import cache
-from packaging import version
 
 import ast
+import re
 import semver
 from tethys_portal import __version__ as tethys_version
 
@@ -12,7 +12,7 @@ import shutil
 import yaml
 import subprocess
 
-from .helpers import *
+from .helpers import add_if_exists, check_if_app_installed, logger
 
 CACHE_KEY = "warehouse_app_resources"
 CHANNEL_NAME = 'tethysapp'
@@ -35,7 +35,7 @@ def fetch_resources(app_workspace, refresh=False):
     #     }
     # }
 
-    all_resources = cache.get(CACHE_KEY)
+    cache.get(CACHE_KEY)
     if (cache.get(CACHE_KEY) is None) or refresh:
 
         # Look for packages:
@@ -134,10 +134,10 @@ def process_resources(resources, app_workspace):
             if "tethys_version" in license_metadata:
                 app.get("metadata").get("compatibility")[license_metadata['version']] = license_metadata['tethys_version']  # noqa: E501
 
-        except (ValueError, TypeError) as e:
+        except (ValueError, TypeError):
             # There wasn't json found in license. Get Metadata from downloading the file
             download_path = os.path.join(workspace_folder, file_name[-1])
-            extract_path = os.path.join(workspace_folder, file_name[-1])
+            # extract_path = os.path.join(workspace_folder, file_name[-1])
             output_path = os.path.join(workspace_folder, folder_name)
             if not os.path.exists(download_path):
                 logger.info("License field metadata not found. Downloading: " + file_name[-1])

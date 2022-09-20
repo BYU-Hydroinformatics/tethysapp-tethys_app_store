@@ -6,26 +6,24 @@ import logging
 import uuid
 import json
 
-from tethys_cli.install_commands import (
-    install_command, open_file, validate_schema)
+from tethys_cli.install_commands import (open_file, validate_schema)
 from tethys_sdk.routing import controller
 
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
-from rest_framework.exceptions import ValidationError, ParseError
+from rest_framework.exceptions import ValidationError
 from rest_framework.permissions import AllowAny
 
 from django.http import JsonResponse, Http404, HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 
 from django.core.cache import cache
-from argparse import Namespace
 from pathlib import Path
-from subprocess import (call, Popen, PIPE, STDOUT)
+from subprocess import (Popen, PIPE, STDOUT)
 from datetime import datetime
 
 from .app import AppStore as app
-from .helpers import *
+from .helpers import Commands, conda_run, get_override_key, logger
 from .installation_handlers import restart_server
 
 FNULL = open(os.devnull, 'w')
@@ -51,7 +49,7 @@ def run_pending_installs():
 
     app_workspace = app.get_app_workspace()
     workspace_directory = app_workspace.path
-    
+
     install_status_dir = os.path.join(
         workspace_directory, 'install_status', 'github')
     if not os.path.exists(install_status_dir):
@@ -94,7 +92,7 @@ def update_status_file(path, status, status_key, error_msg=""):
     data["status"][status_key] = status
 
     # Check if all status is set to true
-    if all(value == True for value in data["status"].values()):
+    if all(value is True for value in data["status"].values()):
         # Install is completed
         data["installCompletedTime"] = datetime.now().strftime(
             '%Y-%m-%dT%H:%M:%S.%f')
@@ -123,8 +121,7 @@ def install_packages(conda_config, logger, status_file_path):
         install_args.extend(['--freeze-installed'])
         install_args.extend(conda_config['packages'])
         logger.info("Running conda installation tasks...")
-        [resp, err, code] = conda_run(
-            Commands.INSTALL, *install_args, use_exception_handler=False)
+        [resp, err, code] = conda_run(Commands.INSTALL, *install_args, use_exception_handler=False)
         if code != 0:
             error_msg = 'Warning: Packages installation ran into an error. Please try again or a manual install'
             logger.error(error_msg)
@@ -222,7 +219,7 @@ def get_log_file(id, app_workspace):
     workspace_directory = app_workspace.path
     install_logs_dir = os.path.join(
         workspace_directory, 'logs', 'github_install')
-    logfile_location = os.path.join(install_logs_dir, install_run_id + '.log')
+    os.path.join(install_logs_dir, id + '.log')
 
 
 def get_status_main(request, app_workspace):
@@ -261,7 +258,8 @@ def get_status(request, app_workspace):
 )
 def get_status_override(request):
     # This method is an override to the get status method. It allows for installation
-    # based on a custom key set in the custom settings. This allows app nursery to use the same code to process the request
+    # based on a custom key set in the custom settings.
+    # This allows app nursery to use the same code to process the request
     override_key = get_override_key()
     if(request.GET.get('custom_key') == override_key):
         return get_status_main(request)
@@ -303,7 +301,8 @@ def get_logs(request, app_workspace):
 )
 def get_logs_override(request):
     # This method is an override to the get status method. It allows for installation
-    # based on a custom key set in the custom settings. This allows app nursery to use the same code to process the request
+    # based on a custom key set in the custom settings.
+    # This allows app nursery to use the same code to process the request
     override_key = get_override_key()
     if(request.GET.get('custom_key') == override_key):
         return get_logs_main(request)
@@ -420,7 +419,8 @@ def run_git_install_main(request, app_workspace):
 
     # Run command in new thread
     install_thread = threading.Thread(target=install_worker, name="InstallApps",
-                                      args=(workspace_apps_path, statusfile_location, git_install_logger, install_run_id, develop, app_workspace))
+                                      args=(workspace_apps_path, statusfile_location, git_install_logger,
+                                            install_run_id, develop, app_workspace))
     # install_thread.setDaemon(True)
     install_thread.start()
 
@@ -442,7 +442,8 @@ def run_git_install(request):
 )
 def run_git_install_override(request):
     # This method is an override to the install method. It allows for installation
-    # based on a custom key set in the custom settings. This allows app nursery to use the same code to process the request
+    # based on a custom key set in the custom settings. This allows app nursery to use the same code to process the
+    # request
     override_key = get_override_key()
     if(request.GET.get('custom_key') == override_key):
         return run_git_install_main(request)

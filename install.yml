@@ -13,4 +13,4 @@ requirements:
       - semver
 
 post:
-   - setup_tethys_channel.sh
+  - setup_tethys_channel.sh

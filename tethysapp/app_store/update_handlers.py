@@ -1,14 +1,8 @@
 import subprocess
 import os
 import time
-import copy
-
-from tethys_apps.utilities import get_app_settings
-from tethys_cli.cli_helpers import load_apps
-
 
 from .helpers import logger, send_notification, check_all_present
-from .app import AppStore as app
 from .resource_helpers import get_resource
 from .installation_handlers import restart_server
 
@@ -63,7 +57,7 @@ def conda_update(app_name, app_version, app_channel, channel_layer):
                 send_update_msg("Conda install found conflicts."
                                 "Please try running the following command in your terminal's"
                                 "conda environment to attempt a manual installation : "
-                                "conda install -c " + app_metadata['metadata']['channel'] + " " + app_name,
+                                "conda install -c " + app_channel + " " + app_name,
                                 channel_layer)
 
     send_update_msg("Conda update completed in %.2f seconds." % (time.time() - start_time), channel_layer)
@@ -72,7 +66,8 @@ def conda_update(app_name, app_version, app_channel, channel_layer):
 def update_app(data, channel_layer, app_workspace):
     resource = get_resource(data["name"], app_workspace)
 
-    # Commenting out back up settings code for now, since only updating the conda package seems to preserve the original settings
+    # Commenting out back up settings code for now, since only updating the conda package seems to preserve the original
+    # settings
     # app_settings = get_app_settings(data["name"])
 
     # if app_settings is None:

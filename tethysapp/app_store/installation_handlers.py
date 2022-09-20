@@ -5,12 +5,8 @@ import subprocess
 
 from argparse import Namespace
 from django.core.exceptions import ObjectDoesNotExist
-from django.core.cache import cache
 from pathlib import Path
 
-import tethys_apps
-
-from django.utils.autoreload import trigger_reload
 from conda.cli.python_api import run_command as conda_run, Commands
 from tethys_apps.models import CustomSetting, TethysApp
 from tethys_apps.utilities import (get_app_settings, link_service_to_app_setting)
@@ -20,7 +16,7 @@ from tethys_cli.services_commands import services_list_command
 
 from .app import AppStore as app
 from .begin_install import detect_app_dependencies
-from .helpers import *
+from .helpers import get_app_instance_from_path, logger, run_process, send_notification
 
 
 def get_service_options(service_type):
@@ -73,7 +69,8 @@ def restart_server(data, channel_layer, app_workspace, run_collect_all=True):
             f.write("import os")
 
     else:
-        if run_collect_all and (data["restart_type"] == "install" or data["restart_type"] == "gInstall" or data["restart_type"] == "update"):
+        if run_collect_all and (data["restart_type"] == "install" or data["restart_type"] == "gInstall" or
+                                data["restart_type"] == "update"):
 
             logger.info("Running Tethys Collectall")
             intermediate_process = ['python', manage_path, 'pre_collectstatic']
@@ -89,7 +86,7 @@ def restart_server(data, channel_layer, app_workspace, run_collect_all=True):
             command = 'supervisorctl restart all'
             subprocess.run(['sudo'], check=True)
             sudoPassword = app.get_custom_setting('sudo_server_pass')
-            p = os.system('echo %s|sudo -S %s' % (sudoPassword, command))
+            os.system('echo %s|sudo -S %s' % (sudoPassword, command))
         except Exception as e:
             logger.error(e)
             logger.info("No SUDO. Docker container implied. Restarting without SUDO")
@@ -101,7 +98,7 @@ def restart_server(data, channel_layer, app_workspace, run_collect_all=True):
                 logger.info("Restart Directory found. Creating restart file.")
                 Path(os.path.join(RESTART_FILE_PATH, 'restart')).touch()
             else:
-                p = os.system(command)
+                os.system(command)
 
 
 def continueAfterInstall(installData, channel_layer):

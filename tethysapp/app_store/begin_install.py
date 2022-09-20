@@ -1,20 +1,13 @@
 import os
-import yaml
 import time
-import json
 import importlib
-import sys
 import subprocess
-import asyncio
-import functools
 
 from django.core.cache import cache
-from conda.cli.python_api import run_command as conda_run, Commands
 
 from subprocess import call
 
-from .app import AppStore as app
-from .helpers import *
+from .helpers import check_all_present, get_app_instance_from_path, logger, send_notification
 from .resource_helpers import get_resource
 
 
@@ -115,8 +108,8 @@ def detect_app_dependencies(app_name, app_version, channel_layer, notification_m
 def conda_install(app_metadata, app_version, channel_layer):
 
     start_time = time.time()
-    send_notification(
-        "Conda install may take a couple minutes to complete depending on how complicated the environment is. Please wait....", channel_layer)
+    send_notification("Conda install may take a couple minutes to complete depending on how complicated the "
+                      "environment is. Please wait....", channel_layer)
 
     latest_version = app_metadata['metadata']['versions'][-1]
     if not app_version:

@@ -5,16 +5,10 @@ from django.http import JsonResponse
 from django.shortcuts import render
 from tethys_sdk.routing import controller
 
-import json
 import copy
 
-from .notifications import *
 from .resource_helpers import fetch_resources
-from .helpers import logger, get_github_install_metadata
-from .model import *
-from .git_install_handlers import run_git_install, get_status, get_logs, run_git_install_override, get_logs_override, get_status_override
-from .scaffold_handler import scaffold_command
-from .submission_handlers import run_submit_nursery_app
+from .helpers import get_github_install_metadata
 
 ALL_RESOURCES = []
 CACHE_KEY = "warehouse_app_resources"
@@ -50,7 +44,7 @@ def get_resources(request, app_workspace):
         else:
             # tethys_version_regex = '4.0.0'
             tethys_version_regex = re.search(r'([\d.]+[\d])', tethys_version).group(1)
-            
+
             add_compatible = False
             add_incompatible = False
             new_compatible_app = copy.deepcopy(resource)

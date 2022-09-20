@@ -1,9 +1,5 @@
-import os
-import sys
-
 from tethys_apps.base.workspace import _get_app_workspace
-from tethys_sdk.workspaces import TethysWorkspace
-from tethys_sdk.base import TethysAppBase, url_map_maker
+from tethys_sdk.base import TethysAppBase
 from tethys_sdk.app_settings import CustomSetting
 from tethys_sdk.permissions import Permission, PermissionGroup
 
@@ -19,11 +15,12 @@ class AppStore(TethysAppBase):
     package = 'app_store'
     root_url = 'app-store'
     color = '#2b7ac0'
-    description = 'The Tethys App Store enables you to discover, install, manage and configure Tethys Applications for your Tethys portal.'
+    description = 'The Tethys App Store enables you to discover, install, manage and configure Tethys Applications '
+    'for your Tethys portal.'
     tags = 'Tethys,AppStore,Conda,Github'
     enable_feedback = True
     feedback_emails = ["rohitkh@byu.edu"]
-    
+
     controller_modules = ['controllers', 'notifications', 'git_install_handlers', 'scaffold_handler', ]
 
     def permissions(self):
@@ -53,8 +50,6 @@ class AppStore(TethysAppBase):
                 required=False
             ),
         )
-
-        return custom_settings
 
     @classmethod
     def get_app_workspace(cls):

@@ -4,7 +4,6 @@ import sys
 import importlib
 import logging
 import json
-import fileinput
 import shutil
 import os
 import re
@@ -17,10 +16,9 @@ from django.core.cache import cache
 from asgiref.sync import async_to_sync
 from conda.cli.python_api import run_command as conda_run, Commands
 from string import Template
-from subprocess import PIPE, run
-from .app import AppStore as app
+from subprocess import run
 
-logger = logging.getLogger(f'tethys.apps.app_store')
+logger = logging.getLogger('tethys.apps.app_store')
 # Ensure that this logger is putting everything out.
 # @TODO: Change this back to the default later
 logger.setLevel(logging.INFO)
@@ -31,7 +29,7 @@ CACHE_KEY = "warehouse_github_app_resources"
 def get_override_key():
     try:
         return settings.GITHUB_OVERRIDE_VALUE
-    except AttributeError as e:
+    except AttributeError:
         # Setting not defined.
         return None
 
@@ -67,7 +65,7 @@ def check_if_app_installed(app_name):
                 return conda_search_result[0]["version"]
             else:
                 return False
-    except RuntimeError as err:
+    except RuntimeError:
         err_string = str(err)
         if "Path not found" in err_string and "tethysapp_warehouse" in err_string:
             # Old instance of warehouse files present. Need to cleanup
@@ -222,7 +220,7 @@ def get_github_install_metadata(app_workspace):
             setup_path = os.path.join(possible_app, 'setup.py')
             with open(setup_path, 'rt') as myfile:
                 for myline in myfile:
-                    if 'app_package' in myline and 'find_resource_files' not in myline and 'release_package' not in myline:
+                    if 'app_package' in myline and 'find_resource_files' not in myline and 'release_package' not in myline: # noqa e501
                         installed_app["name"] = find_string_in_line(myline)
                         continue
                     if 'version' in myline:
