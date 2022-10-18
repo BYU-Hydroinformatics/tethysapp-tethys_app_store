@@ -1,4 +1,3 @@
-from tethys_apps.base.workspace import _get_app_workspace
 from tethys_sdk.base import TethysAppBase
 from tethys_sdk.app_settings import CustomSetting
 from tethys_sdk.permissions import Permission, PermissionGroup
@@ -50,7 +49,3 @@ class AppStore(TethysAppBase):
                 required=False
             ),
         )
-
-    @classmethod
-    def get_app_workspace(cls):
-        return _get_app_workspace(cls)

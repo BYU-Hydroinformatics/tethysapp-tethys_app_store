@@ -8,7 +8,7 @@ import json
 
 from tethys_cli.install_commands import (open_file, validate_schema)
 from tethys_sdk.routing import controller
-
+from tethys_sdk.workspaces import get_app_workspace
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
 from rest_framework.exceptions import ValidationError
@@ -47,7 +47,7 @@ def run_pending_installs():
     time.sleep(10)
     logger.info("Checking for Pending Installs")
 
-    app_workspace = app.get_app_workspace()
+    app_workspace = get_app_workspace(app)
     workspace_directory = app_workspace.path
 
     install_status_dir = os.path.join(
@@ -163,7 +163,7 @@ def continue_install(logger, status_file_path, install_options, app_name, app_wo
     update_status_file(status_file_path, True, "setupPy")
     logger.info("Install completed")
     clear_github_cache_list()
-    restart_server({"restart_type": "gInstall", "name": app_name}, app_workspace)
+    restart_server({"restart_type": "gInstall", "name": app_name}, channel_layer=None, app_workspace=app_workspace)
 
 
 def install_worker(workspace_apps_path, status_file_path, logger, install_run_id, develop, app_workspace):
@@ -282,8 +282,8 @@ def get_logs_main(request, app_workspace):
         raise Http404("No Install with id: " + install_id + " exists")
 
 
-@ api_view(['GET'])
-@ authentication_classes((TokenAuthentication,))
+@api_view(['GET'])
+@authentication_classes((TokenAuthentication,))
 @controller(
     name='git_get_logs',
     url='app-store/install/git/logs',
@@ -293,7 +293,7 @@ def get_logs(request, app_workspace):
     get_logs_main(request, app_workspace)
 
 
-@ api_view(['GET'])
+@api_view(['GET'])
 @csrf_exempt
 @controller(
     name='git_get_logs_override',
@@ -310,15 +310,12 @@ def get_logs_override(request):
         return HttpResponse('Unauthorized', status=401)
 
 
-@controller(
-    name='install_git',
-    url='app-store/install/git',
-    app_workspace=True,
-)
+
 def run_git_install_main(request, app_workspace):
 
     # Get workspace since @app_workspace doesn't work with api request?
     workspace_directory = app_workspace.path
+    
     install_logs_dir = os.path.join(
         workspace_directory, 'logs', 'github_install')
     install_status_dir = os.path.join(
@@ -426,14 +423,19 @@ def run_git_install_main(request, app_workspace):
 
     return JsonResponse({'status': "InstallRunning", 'install_id': install_run_id})
 
+@controller(
+    name='install_git',
+    url='app-store/install/git',
+    app_workspace=True,
+)
+@api_view(['POST'])
+@authentication_classes((TokenAuthentication,))
+# @permission_classes([])
+def run_git_install(request, app_workspace):
+    run_git_install_main(request, app_workspace)
 
-@ api_view(['POST'])
-@ authentication_classes((TokenAuthentication,))
-def run_git_install(request):
-    run_git_install_main(request)
 
-
-@ api_view(['POST'])
+@api_view(['POST'])
 @permission_classes([AllowAny])
 @csrf_exempt
 @controller(
