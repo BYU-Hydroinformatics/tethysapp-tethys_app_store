@@ -163,7 +163,7 @@ def continue_install(logger, status_file_path, install_options, app_name, app_wo
     update_status_file(status_file_path, True, "setupPy")
     logger.info("Install completed")
     clear_github_cache_list()
-    restart_server({"restart_type": "gInstall", "name": app_name}, channel_layer=None, app_workspace=app_workspace)
+    restart_server({"restart_type": "github_install", "name": app_name}, channel_layer=None, app_workspace=app_workspace)
 
 
 def install_worker(workspace_apps_path, status_file_path, logger, install_run_id, develop, app_workspace):
@@ -310,12 +310,15 @@ def get_logs_override(request):
         return HttpResponse('Unauthorized', status=401)
 
 
-
+@controller(
+    name='install_git',
+    url='app-store/install/git',
+    app_workspace=True,
+)
+@api_view(['POST'])
+@authentication_classes((TokenAuthentication,))
 def run_git_install_main(request, app_workspace):
-
-    # Get workspace since @app_workspace doesn't work with api request?
     workspace_directory = app_workspace.path
-    
     install_logs_dir = os.path.join(
         workspace_directory, 'logs', 'github_install')
     install_status_dir = os.path.join(
@@ -358,7 +361,7 @@ def run_git_install_main(request, app_workspace):
 
     # TODO: Validation on the GitHUB URL
     workspace_apps_path = os.path.join(
-        workspace_directory, 'apps', 'installed', url_end)
+        workspace_directory, 'apps', 'github_installed', url_end)
 
     # Create new statusFile
 
@@ -422,17 +425,6 @@ def run_git_install_main(request, app_workspace):
     install_thread.start()
 
     return JsonResponse({'status': "InstallRunning", 'install_id': install_run_id})
-
-@controller(
-    name='install_git',
-    url='app-store/install/git',
-    app_workspace=True,
-)
-@api_view(['POST'])
-@authentication_classes((TokenAuthentication,))
-# @permission_classes([])
-def run_git_install(request, app_workspace):
-    run_git_install_main(request, app_workspace)
 
 
 @api_view(['POST'])

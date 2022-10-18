@@ -52,9 +52,9 @@ def restart_server(data, channel_layer, app_workspace, run_collect_all=True):
     scaffold_running_path = os.path.join(workspace_directory, 'install_status', 'scaffoldRunning')
     if os.path.exists(scaffold_running_path):
         os.remove(scaffold_running_path)
-
+    
     manage_path = get_manage_path({})
-    if data["restart_type"] == "install" or data["restart_type"] == "update":
+    if "install" in data["restart_type"] or "update" in data["restart_type"]:
         # Run SyncStores
         logger.info("Running Syncstores for app: " + data["name"])
         intermediate_process = ['python', manage_path, 'syncstores', data["name"],  '-f']
@@ -69,7 +69,7 @@ def restart_server(data, channel_layer, app_workspace, run_collect_all=True):
             f.write("import os")
 
     else:
-        if run_collect_all and (data["restart_type"] == "install" or data["restart_type"] == "gInstall" or
+        if run_collect_all and (data["restart_type"] == "install" or data["restart_type"] == "github_install" or
                                 data["restart_type"] == "update"):
 
             logger.info("Running Tethys Collectall")
