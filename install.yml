@@ -8,7 +8,7 @@ requirements:
       - conda-forge
     packages:
       - pygithub
-      - gitpython=3.1.18
+      - gitpython==3.1.18
       - requests
       - semver
 
