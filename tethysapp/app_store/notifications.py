@@ -4,6 +4,7 @@ from .installation_handlers import logger
 from .begin_install import begin_install  # noqa: F401
 from tethys_sdk.routing import consumer
 from tethys_sdk.workspaces import get_app_workspace
+from asgiref.sync import sync_to_async
 
 import json
 import sys
@@ -36,7 +37,8 @@ class notificationsConsumer(AsyncWebsocketConsumer):
         function_name = text_data_json['type']
         module_name = sys.modules[__name__]
         args = [text_data_json['data'], self.channel_layer]
-        app_workspace = get_app_workspace(app)
+        app_workspace = await sync_to_async(get_app_workspace, thread_sensitive=True)(app)
+        # app_workspace = get_app_workspace(app)
         if "type" in text_data_json:
             if text_data_json['type'] in ['begin_install', 'restart_server', 'get_log_file', 'pull_git_repo',
                                           'update_app', 'uninstall_app']:
