@@ -1,5 +1,5 @@
 from channels.generic.websocket import AsyncWebsocketConsumer
-from .installation_handlers import logger
+from .installation_handlers import logger, continueAfterInstall, restart_server # noqa: F401
 # called with threading.Thread
 from .begin_install import begin_install  # noqa: F401
 from tethys_sdk.routing import consumer
