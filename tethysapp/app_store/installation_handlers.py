@@ -84,9 +84,10 @@ def restart_server(data, channel_layer, app_workspace, run_collect_all=True):
 
         try:
             # command = 'supervisorctl restart all'
-            subprocess.run(['sudo','-h'], check=True)
+            # subprocess.run(['sudo','-h'], check=True)
             sudoPassword = app.get_custom_setting('sudo_server_pass')
-            subprocess.call(["sudo", "-S", "supervisorctl", "restart", "all"])
+            subprocess.Popen(['sudo', '-S', 'supervisorctl', 'restart','all'], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE).communicate(input=f'{sudoPassword}\n')
+            # subprocess.run(["sudo", "-S", "supervisorctl", "restart", "all"])
             # os.system('echo %s|sudo -S %s' % (sudoPassword, command))
         except Exception as e:
             logger.error(e)
