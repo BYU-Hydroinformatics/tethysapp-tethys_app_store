@@ -90,7 +90,7 @@ def detect_app_dependencies(app_name, app_version, channel_layer, notification_m
         for setting in custom_settings() or []:
             setting = {"name": getattr(setting, "name"),
                        "description": getattr(setting, "description"),
-                       "default": getattr(setting, "default"),
+                       "default": str(getattr(setting, "default")),
                        }
             custom_settings_json.append(setting)
 
