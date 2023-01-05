@@ -33,6 +33,7 @@ class notificationsConsumer(AsyncWebsocketConsumer):
 
     async def install_notifications(self, event):
         message = event['message']
+        logger.info(f"print message {message} at {self.channel_name}")
         await self.send(text_data=json.dumps({'message': message, }))
         logger.info(f"Got message {event} at {self.channel_name}")
 
