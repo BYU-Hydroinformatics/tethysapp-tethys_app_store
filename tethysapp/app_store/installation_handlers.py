@@ -83,10 +83,11 @@ def restart_server(data, channel_layer, app_workspace, run_collect_all=True):
             run_process(intermediate_process)
 
         try:
-            command = 'supervisorctl restart all'
+            # command = 'supervisorctl restart all'
             subprocess.run(['sudo','-h'], check=True)
             sudoPassword = app.get_custom_setting('sudo_server_pass')
-            os.system('echo %s|sudo -S %s' % (sudoPassword, command))
+            subprocess.call(["sudo", "-S", "supervisorctl", "restart", "all"])
+            # os.system('echo %s|sudo -S %s' % (sudoPassword, command))
         except Exception as e:
             logger.error(e)
             logger.info("No SUDO. Docker container implied. Restarting without SUDO")
