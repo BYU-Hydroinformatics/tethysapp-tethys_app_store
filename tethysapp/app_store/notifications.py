@@ -1,5 +1,5 @@
 from channels.generic.websocket import AsyncWebsocketConsumer
-from .installation_handlers import logger, continueAfterInstall, restart_server # noqa: F401
+from .installation_handlers import logger, continueAfterInstall, restart_server, set_custom_settings # noqa: F401
 from .uninstall_handlers import uninstall_app # noqa: F401
 from .git_install_handlers import get_log_file # noqa: F401
 from .submission_handlers import pull_git_repo # noqa: F401
