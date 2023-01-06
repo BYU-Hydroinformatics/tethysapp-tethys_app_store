@@ -57,6 +57,7 @@ def restart_server(data, channel_layer, app_workspace, run_collect_all=True):
     if "install" in data["restart_type"] or "update" in data["restart_type"]:
         # Run SyncStores
         logger.info("Running Syncstores for app: " + data["name"])
+        send_notification("Running Syncstores for app: " + data["name"], channel_layer)
         intermediate_process = ['python', manage_path, 'syncstores', data["name"],  '-f']
         run_process(intermediate_process)
 
@@ -73,6 +74,7 @@ def restart_server(data, channel_layer, app_workspace, run_collect_all=True):
                                 data["restart_type"] == "update"):
 
             logger.info("Running Tethys Collectall")
+            send_notification("Running Tethys Collectall for app: " + data["name"], channel_layer)
             intermediate_process = ['python', manage_path, 'pre_collectstatic']
             run_process(intermediate_process)
             # Setup for main collectstatic
@@ -83,6 +85,7 @@ def restart_server(data, channel_layer, app_workspace, run_collect_all=True):
             run_process(intermediate_process)
 
         try:
+            send_notification("Server Restarting . . .", channel_layer)
             command = 'supervisorctl restart all'
             subprocess.run(['sudo','-h'], check=True)
             sudoPassword = app.get_custom_setting('sudo_server_pass')
