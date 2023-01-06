@@ -108,7 +108,7 @@ def detect_app_dependencies(app_name, app_version, channel_layer, notification_m
 def conda_install(app_metadata, app_version, channel_layer):
 
     start_time = time.time()
-    send_notification("Conda install may take a couple minutes to complete depending on how complicated the "
+    send_notification("Mamba install may take a couple minutes to complete depending on how complicated the "
                       "environment is. Please wait....", channel_layer)
 
     latest_version = app_metadata['metadata']['versions'][-1]
@@ -143,16 +143,16 @@ def conda_install(app_metadata, app_version, channel_layer):
             if(check_all_present(str_output, ['All requested packages already installed.'])):
                 send_notification("Application package is already installed in this conda environment.",
                                   channel_layer)
-            if(check_all_present(str_output, ['Conda Install Complete'])):
+            if(check_all_present(str_output, ['Mamba Install Complete'])):
                 break
             if(check_all_present(str_output, ['Found conflicts!'])):
-                send_notification("Conda install found conflicts."
+                send_notification("Mamba install found conflicts."
                                   "Please try running the following command in your terminal's"
                                   "conda environment to attempt a manual installation : "
-                                  "conda install -c " + app_metadata['metadata']['channel'] + " " + app_name,
+                                  "mamba install -c " + app_metadata['metadata']['channel'] + " " + app_name,
                                   channel_layer)
 
-    send_notification("Conda install completed in %.2f seconds." % (time.time() - start_time), channel_layer)
+    send_notification("Mamba install completed in %.2f seconds." % (time.time() - start_time), channel_layer)
 
 
 def begin_install(installData, channel_layer, app_workspace):
