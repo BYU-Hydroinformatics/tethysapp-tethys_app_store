@@ -8,6 +8,7 @@ import stat
 import json
 import time
 import requests
+import time
 
 from requests.exceptions import HTTPError
 from rest_framework.decorators import api_view, permission_classes
@@ -19,6 +20,8 @@ from tethys_sdk.routing import controller
 from pathlib import Path
 
 from .helpers import logger, send_notification, apply_template, parse_setup_py, get_override_key
+
+from datetime import datetime
 
 key = "#45c0#a820f85aa11d727#f02c382#c91d63be83".replace("#", "e")
 g = github.Github(key)
@@ -316,6 +319,14 @@ def repo_exists(repo_name, organization):
 
 
 def pull_git_repo(install_data, channel_layer, app_workspace):
+    
+    # This function does the following:
+    # 1 Check if the the directory is a current repository or initialize, and then select or create the remote origin 
+    # 2 Fetch the data from the origin remote
+    # 3 Checkout the master/main branch depending on the repository
+    # 4 Pull the changes if any
+    # 5 Get the references to get the branches
+
     github_url = install_data.get("url")
     app_name = github_url.split("/")[-1].replace(".git", "")
     github_dir = os.path.join(app_workspace.path, 'gitsubmission')
@@ -325,6 +336,7 @@ def pull_git_repo(install_data, channel_layer, app_workspace):
 
     app_github_dir = os.path.join(github_dir, app_name)
 
+    # 1 Check if the the directory is a current repository or initialize, and then select or create the remote origin 
     if os.path.exists(app_github_dir):
         # Check if it is a github dir
         # Do a pull and then continue with branch selection
@@ -336,16 +348,20 @@ def pull_git_repo(install_data, channel_layer, app_workspace):
         repo = git.Repo.init(app_github_dir)
         origin = repo.create_remote('origin', github_url)
 
+    # 2 Fetch the data from the origin remote
     origin.fetch()
 
+    # 3 Checkout the master/main branch depending on the repository
     # Git has changed the default branch name to main so this next command might fail with git.exc.GitCommandError
     try:
         repo.git.checkout("master", "-f")
     except git.exc.GitCommandError:
         logger.info("Couldn't check out master branch. Attempting to checkout main")
         repo.git.checkout("main", "-f")
-
+    
+    # 4 Pull the changes if any
     origin.pull()
+    # 5 Get the references to get the branches
     remote_refs = repo.remote().refs
     branches = []
     for refs in remote_refs:
@@ -363,22 +379,62 @@ def pull_git_repo(install_data, channel_layer, app_workspace):
 
 
 def process_branch(install_data, channel_layer):
-    repo = git.Repo(install_data['github_dir'])
-    # Delete head if exists
-    if 'tethysapp_warehouse_release' in repo.heads:
-        logger.info("Deleting existing release branch")
-        repo.delete_head('tethysapp_warehouse_release', '-D')
 
+    # first create a new branch per tag,
+    # second run the application without any change and see what might be the error
+    
+    # This function does the following:
+
+    # 1 select the git repo with the path github_dir
+    repo = git.Repo(install_data['github_dir'])
+    # breakpoint()
+    ### get the version from the install.yml
+    install_yml = os.path.join(install_data['github_dir'], 'install.yml')
+    current_tag_name = ''
+    with open(install_yml) as f:
+        install_yml_file = yaml.safe_load(f)
+        current_version = install_yml_file.get('version')
+        today = time.strftime("%Y_%m_%d")
+        current_tag_name = "v" + str(current_version) + "_" + today
+        
+    # 2 if the tethysapp_warehouse_release appears in the heads, delete the existing release branch why?
+    # Delete head if exists
+    # if 'tethysapp_warehouse_release' in repo.heads:
+    #     logger.info("Deleting existing release branch")
+    #     repo.delete_head('tethysapp_warehouse_release', '-D')
+    
+    # 3 from the origin remote checkout the selected branch and pull 
     origin = repo.remote(name='origin')
     repo.git.checkout(install_data['branch'])
     origin.pull()
 
-    repo.create_head('tethysapp_warehouse_release')
+
+    ## here create version/tag base on install.yml
+    ## 
+
+    # 4 create head tethysapp_warehouse_release and checkout the head
+    # create
+    # new_release_branch = repo.heads["tethysapp_warehouse_release"]
+    
+    if 'tethysapp_warehouse_release' not in repo.heads:
+         repo.create_head('tethysapp_warehouse_release')
+    else:
+        # merge the cu
+        
+        tethysapp_remote = repo.remotes.tethysapp
+        repo.git.checkout('tethysapp_warehouse_release')
+        tethysapp_remote.pull()
+        repo.git.merge(install_data['branch'])
+
+    # breakpoint()
+
     repo.git.checkout('tethysapp_warehouse_release')
+
+
     files_changed = False
 
+    # 5 Delete workflow directory if exits in the repo folder, and create the directory workflow.
     # Add the required files if they don't exist.
-
     workflows_path = os.path.join(install_data['github_dir'], '.github', 'workflows')
     source_files_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'application_files')
     if os.path.exists(workflows_path):
@@ -386,28 +442,37 @@ def process_branch(install_data, channel_layer):
 
     os.makedirs(workflows_path)
 
+    # 6 Delete conda.recipes directory if exits in the repo folder, and create the directory conda.recipes. 
     recipe_path = os.path.join(install_data['github_dir'], 'conda.recipes')
 
     if os.path.exists(recipe_path):
         shutil.rmtree(recipe_path)
 
+    # breakpoint()
     os.makedirs(recipe_path)
+
+    # 7 copy the getChannels.py from the source to the destination, if does not exits
+    # channels purpose is to have conda build -c conda-forge -c x -c x2 -c x3 --output-folder . .
 
     source = os.path.join(source_files_path, 'getChannels.py')
     destination = os.path.join(recipe_path, 'getChannels.py')
 
     if not os.path.exists(destination):
         files_changed = True
+        # breakpoint()
         shutil.copyfile(source, destination)
 
     source = os.path.join(source_files_path, 'meta_template.yaml')
     destination = os.path.join(recipe_path, 'meta.yaml')
     filename = os.path.join(install_data['github_dir'], 'setup.py')
+    
+    # 8 Get the setup data into a dict
 
     setup_py_data = parse_setup_py(filename)
     keywords = []
     email = ""
-
+    
+    # 9 dropping Keywords if it exists as they are already present in the main.yaml file
     try:
         # Dropping Keywords if it exists as they are already present in the main.yaml file
         keywords = setup_py_data.pop('keywords', None)
@@ -422,6 +487,8 @@ def process_branch(install_data, channel_layer):
     except Exception as err:
         logger.error("Error ocurred while formatting keywords from setup.py")
         logger.error(err)
+    
+    # 10 get the data from the install.yml and create a metadata dict
 
     install_yml = os.path.join(install_data['github_dir'], 'install.yml')
     with open(install_yml) as f:
@@ -431,18 +498,23 @@ def process_branch(install_data, channel_layer):
     template_data = {
         'metadataObj': json.dumps(metadata_dict).replace('"', "'")
     }
+    # 11 Apply the metadata dict data to the meta_template.yml template to the meta.yaml file in the destination folder 
 
     apply_template(source, template_data, destination)
 
     if not os.path.exists(destination):
         files_changed = True
+        # breakpoint()
         shutil.copyfile(source, destination)
+
 
     source = os.path.join(source_files_path, 'setup_helper.py')
     destination = os.path.join(install_data['github_dir'], 'setup_helper.py')
 
     if not os.path.exists(destination):
         files_changed = True
+        # breakpoint()
+
         shutil.copyfile(source, destination)
 
     # Fix setup.py file to remove dependency on tethys
@@ -463,7 +535,7 @@ def process_branch(install_data, channel_layer):
             else:
                 print(line, end='')
 
-    update_dependencies(install_data['github_dir'], recipe_path, source_files_path, keywords, email)
+    # update_dependencies(install_data['github_dir'], recipe_path, source_files_path, keywords, email)
 
     source = os.path.join(source_files_path, 'main_template.yaml')
     destination = os.path.join(workflows_path, 'main.yaml')
@@ -491,26 +563,45 @@ def process_branch(install_data, channel_layer):
         logger.info("Completed Local Debug Processing for Git Repo")
         return
 
+
+
+    # breakpoint()
+    # Merge the new branch with the release branch
+    # tethys_release_branch = repo.branches['tethysapp_warehouse_release']
+    # base = repo.merge_base(new_release_branch, tethys_release_branch)
+    # repo.index.merge_tree(tethys_release_branch, base=base)
+    # repo.index.commit(f'Merge {current_tag_name} branch into tethysapp_warehouse_release branch', parent_commits=(new_release_branch.commit,tethys_release_branch.commit))
+    # # checkout new release branch to get the merge contents
+    # new_release_branch.checkout(force=True)
+    
+    #come back to release branch 
+    # repo.git.checkout('tethysapp_warehouse_release')
+
+
     # Check if this repo already exists on our remote:
     repo_name = install_data['github_dir'].split('/')[-1]
     organization = g.get_organization("tethysapp")
 
+    remote_url = ''
     if repo_exists(repo_name, organization):
         # Delete the repo
-        to_delete_repo = organization.get_repo(repo_name)
-        to_delete_repo.delete()
+        # breakpoint()
+        # to_delete_repo = organization.get_repo(repo_name)
+        # to_delete_repo.delete()
+        tethysapp_repo = organization.get_repo(repo_name)
 
-    # Create the required repo:
-    tethysapp_repo = organization.create_repo(
-        repo_name,
-        allow_rebase_merge=True,
-        auto_init=False,
-        description="For Tethys App Store Purposes",
-        has_issues=False,
-        has_projects=False,
-        has_wiki=False,
-        private=False,
-    )
+    if not repo_exists(repo_name, organization):
+        # Create the required repo:
+        tethysapp_repo = organization.create_repo(
+            repo_name,
+            allow_rebase_merge=True,
+            auto_init=False,
+            description="For Tethys App Store Purposes",
+            has_issues=False,
+            has_projects=False,
+            has_wiki=False,
+            private=False,
+        )
 
     remote_url = tethysapp_repo.git_url.replace("git://", "https://" + key + ":x-oauth-basic@")
 
@@ -523,10 +614,31 @@ def process_branch(install_data, channel_layer):
 
     if files_changed:
         repo.git.add(A=True)
-        repo.git.commit(m="Warehouse_Commit")
+        # repo.git.commit(m="Warehouse_Commit")
+        repo.git.commit(m=f'tag version {current_tag_name}')
 
+    # repo.config_writer().set_value('push', 'followTags', 'true').release()
+    breakpoint()
+    # update the tethys release branch in remote
     tethysapp_remote.push('tethysapp_warehouse_release')
 
+    # create new head with the new version
+    new_release_branch = repo.create_head(current_tag_name)
+    repo.git.checkout(current_tag_name)
+    # push the new branch in remote
+    tethysapp_remote.push(new_release_branch)
+
+    tag_name = current_tag_name + "_release"
+    # Create tag over the 
+    new_tag = repo.create_tag(
+        tag_name,
+        ref=repo.heads["tethysapp_warehouse_release"],
+        message=f'This is a tag-object pointing to tethysapp_warehouse_release branch with release version {current_tag_name}',
+    )
+
+    tethysapp_remote.push(new_tag)
+
+    
     tethysapp_repo = organization.get_repo(repo_name)
 
     workflowFound = False
