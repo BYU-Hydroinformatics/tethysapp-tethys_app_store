@@ -524,19 +524,28 @@ def process_branch(install_data, channel_layer):
     with fileinput.FileInput(filename, inplace=True) as f:
         for line in f:
             logger.info(line)
+
             if "tethys_apps.app_installation" in line:
-                print("from setup_helper import find_resource_files", end='\n')
+                # print("from setup_helper import find_resource_files", end='\n')
+                print("from setup_helper import find_all_resource_files", end='\n')
+
             elif ("setup(" in line):
-                print(
-                    "resource_files += find_resource_files('tethysapp/' + app_package + '/scripts', 'tethysapp/' + \
-                    app_package)", end='\n')
+                # print(
+                #     "resource_files += find_resource_files('tethysapp/' + app_package + '/scripts', 'tethysapp/' + \
+                #     app_package)", end='\n')
+                print("resource_files = find_all_resource_files(app_package,'tethysapp')", end='\n')
                 print(line, end='')
+                # logger.info("here")
+                # logger.info(line)
+
             elif ("app_package = " in line):
                 rel_package = line
                 print(line, end='')
+            elif "from tethys_apps.base.app_base import TethysAppBase" in line:
+                print('', end='\n')
             else:
                 print(line, end='')
-            
+        
     # update_dependencies(install_data['github_dir'], recipe_path, source_files_path, keywords, email)
 
     source = os.path.join(source_files_path, 'main_template.yaml')
