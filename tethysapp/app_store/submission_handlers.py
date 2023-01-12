@@ -523,26 +523,47 @@ def process_branch(install_data, channel_layer):
     rel_package = ""
     with fileinput.FileInput(filename, inplace=True) as f:
         for line in f:
-            logger.info(line)
+            # logger.info(line)
 
-            if "tethys_apps.app_installation" in line:
-                # print("from setup_helper import find_resource_files", end='\n')
+            if "import find_all_resource_files" in line or "import find_resource_files" in line:
                 print("from setup_helper import find_all_resource_files", end='\n')
 
+            # elif "import find_resource_files" in line:
+            #     print("from setup_helper import find_resource_files", end='\n')
+            
             elif ("setup(" in line):
                 # print(
                 #     "resource_files += find_resource_files('tethysapp/' + app_package + '/scripts', 'tethysapp/' + \
                 #     app_package)", end='\n')
-                print("resource_files = find_all_resource_files(app_package,'tethysapp')", end='\n')
+                # print("resource_files = find_all_resource_files(app_package,'tethysapp')", end='\n')
                 print(line, end='')
                 # logger.info("here")
                 # logger.info(line)
+            elif "namespace =" in line:
+                print('', end='\n')
 
             elif ("app_package = " in line):
                 rel_package = line
+                print("namespace = 'tethysapp'")
                 print(line, end='')
+
             elif "from tethys_apps.base.app_base import TethysAppBase" in line:
                 print('', end='\n')
+
+            # elif "release_package" in line:
+            #     # print(f'tethysapp-{rel_package}')
+            #     print('', end='\n')
+            
+            elif "TethysAppBase.package_namespace" in line:
+                new_replace_line = line.replace("TethysAppBase.package_namespace","namespace")
+                print(new_replace_line, end='\n')
+
+            elif "resource_files = find_resource_files" in line:
+                print("resource_files = find_all_resource_files(app_package, namespace)", end='\n')
+            
+            elif "resource_files += find_resource_files" in line:
+                print('', end='\n')
+            
             else:
                 print(line, end='')
         
