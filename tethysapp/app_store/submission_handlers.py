@@ -318,6 +318,14 @@ def repo_exists(repo_name, organization):
         return False
 
 
+## get new function called checking_for_existing_application
+## this function will let the user now that there is already a package with that name 
+## needs to check:
+### is the github URL the same: then it is the same app, do you want to update it?
+### is the github URL different and the app name already exist in the tethysapp anaconda and github: then please consider doing a pull request to the original app, or change the app_package name to not reference this app
+### is tje github url nor found: then proceed to install indicating that it is a new package.
+
+
 def pull_git_repo(install_data, channel_layer, app_workspace):
     
     # This function does the following:
@@ -579,7 +587,7 @@ def process_branch(install_data, channel_layer):
         'buildMsg': """
         Your Tethys App has been successfully built and is now available on the Tethys App Store.
         This is an auto-generated email and this email is not monitored for replies.
-        Please send any queries to rohitkh@byu.edu
+        Please send any queries to gromero@aquaveo.com
         """
     }
     apply_template(source, template_data, destination)
