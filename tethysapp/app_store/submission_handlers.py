@@ -567,7 +567,7 @@ def process_branch(install_data, channel_layer):
             else:
                 print(line, end='')
         
-    # update_dependencies(install_data['github_dir'], recipe_path, source_files_path, keywords, email)
+    update_dependencies(install_data['github_dir'], recipe_path, source_files_path, keywords, email)
 
     source = os.path.join(source_files_path, 'main_template.yaml')
     destination = os.path.join(workflows_path, 'main.yaml')
@@ -650,7 +650,7 @@ def process_branch(install_data, channel_layer):
         repo.git.commit(m=f'tag version {current_tag_name}')
 
     # repo.config_writer().set_value('push', 'followTags', 'true').release()
-    breakpoint()
+    # breakpoint()
     # update the tethys release branch in remote
     tethysapp_remote.push('tethysapp_warehouse_release')
 
