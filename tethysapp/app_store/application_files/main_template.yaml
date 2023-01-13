@@ -46,6 +46,6 @@ jobs:
           password: $${{secrets.EMAIL_PASSWORD}}
           subject: 'Tethys App Store: Build Failed for test_app_store_aquaveo'
           # Literal body:
-          body: $${{ github.job }} job in workflow $${{ github.workflow }} of $${{ github.repository }} has $${{ job.status }}. Check the logs at $${{ github.server_url }}/$${{ github.repository }}/actions/runs/$${{ github.run_id }}
+          body: $${{ github.workflow }} of the application at github repository $${{ github.repository }} has failed. Check the logs of the publish job at $${{ github.server_url }}/$${{ github.repository }}/actions/runs/$${{ github.run_id }}
           to: $email
           from: Tethys App Warehouse
