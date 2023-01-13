@@ -503,8 +503,8 @@ def process_branch(install_data, channel_layer):
         install_yml_file = yaml.safe_load(f)
         current_version = install_yml_file.get('version')
         today = time.strftime("%Y_%m_%d")
-        current_tag_name = "v" + str(current_version) + "_" + today
-        
+        ## change this to grab the version from the setup.py not the install.yml, because there is an override of the package in the conda channel
+        current_tag_name = "v" + str(current_version) + "_" + today 
     # 2 if the tethysapp_warehouse_release appears in the heads, delete the existing release branch why?
     # Delete head if exists
     # if 'tethysapp_warehouse_release' in repo.heads:
