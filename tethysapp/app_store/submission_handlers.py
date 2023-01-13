@@ -9,6 +9,8 @@ import json
 import time
 import requests
 import time
+import requests
+import base64
 
 from requests.exceptions import HTTPError
 from rest_framework.decorators import api_view, permission_classes
@@ -325,6 +327,104 @@ def repo_exists(repo_name, organization):
 ### is the github URL different and the app name already exist in the tethysapp anaconda and github: then please consider doing a pull request to the original app, or change the app_package name to not reference this app
 ### is tje github url nor found: then proceed to install indicating that it is a new package.
 
+# def checking_for_existing_application(install_data, channel_layer):
+#     github_url = install_data.get("url")
+#     repo_name = github_url.split("/")[-1].replace(".git", "")
+#     user = github_url.split("/")[-2]
+
+#     # organization = g.get_organization("tethysapp")
+#     # if repo_exists(repo_name, organization):
+#     #     pass
+#     # pass
+#     url = f'https://api.github.com/repos/{user}/{repo_name}/contents/setup.py'
+#     req = requests.get(url)
+
+#     if req.status_code == requests.codes.ok:
+#         req = req.json()  # the response is a JSON
+#         # req is now a dict with keys: name, encoding, url, size ...
+#         # and content. But it is encoded with base64.
+#         content = base64.b64decode(req['content'])
+#         jsonString = content.decode('utf-8')
+#         finalJson = json.loads(jsonString)
+#         print(finalJson)
+#         app_package_name = finalJson['app_package']
+#         print(app_package_name)
+
+
+
+# def checking_for_existing_application(install_data,refresh=False):
+#     # github_url = 'https://github.com/BYU-Hydroinformatics/Water-Data-Explorer.git'
+#     github_url = 'https://github.com/Aquaveo/Water-Data-Explorer.git'
+#     #github_url = install_data.get("url")
+#     repo_name = github_url.split("/")[-1].replace(".git", "")
+#     user = github_url.split("/")[-2]
+
+#     url = f'https://api.github.com/repos/{user}/{repo_name}/contents/setup.py'
+#     req = requests.get(url)
+#     app_package_name = ''
+#     json_response = {}
+
+#     if req.status_code == requests.codes.ok:
+#         req = req.json()  # the response is a JSON
+#         # req is now a dict with keys: name, encoding, url, size ...
+#         # and content. But it is encoded with base64.
+#         content = base64.b64decode(req['content'])
+#         # print(content)
+#         jsonString = content.decode('utf-8')
+#         # print(jsonString)
+#         # result = re.search('app_package;release_package',jsonString )
+#         left = 'app_package'
+#         right = 'release_package'
+#         susbstring = jsonString[jsonString.index(left)+len(left):jsonString.index(right)]
+#         app_package_name = susbstring.strip().replace("'","").split('=')[1].strip(' ')
+#         print(app_package_name)
+#         # installed_version = check_if_app_installed(conda_package)
+#         # if installed_version:
+#         #     json_response['installed'] = True
+#         #     newPackage["installedVersion"] = installed_version
+    
+#         conda_search_result = subprocess.run(['conda', 'search', "-c", CHANNEL_NAME, "--override-channels","-i", "--json"], stdout=subprocess.PIPE)
+
+#         conda_search_result = json.loads(conda_search_result.stdout)
+#         json_response["isNewApplication"]= True
+
+#         for conda_package in conda_search_result:
+#             if app_package_name in conda_package:
+#                 # print(app_package_name, conda_package)
+#                 json_response["isNewApplication"]= False
+#                 if "license" in conda_search_result[conda_package][-1]:
+#                     json_response["latest_github_url"] = ast.literal_eval(conda_search_result[conda_package][-1]["license"])["url"]
+#                     json_response["github_urls"] = []
+#                     json_response["versions"] = []
+#                     ## CHECK if the submitted api is a fork of this one here
+
+#                     repo_name = json_response["latest_github_url"].split("/")[-1].replace(".git", "")
+#                     user = json_response["latest_github_url"].split("/")[-2]
+#                     url = f'https://api.github.com/repos/{user}/{repo_name}/forks?sort=stargazers'
+#                     forks_search = subprocess.run(['curl', '-sq', f'{url}', '|', 'jq','".[]|.html_url"'], stdout=subprocess.PIPE)
+#                     #https://stackoverflow.com/questions/54494271/how-to-list-all-fork-git-urls-via-github-api
+#                     forks_search_json = json.loads(forks_search.stdout)
+#                     # print(forks_search_json)
+#                     for x in forks_search_json:
+#                         if x["html_url"] == github_url.replace(".git",""):
+#                             print("i found it!")
+#                             json_response['fork_url'] = x["html_url"]
+#                             break
+#                         print("Your repository is a fork, Please submit a pull request to the original app repository at{html_url}, and ask the owner to submit it, Bad")
+                    
+#                     # json_response['fork_url'] = ''
+#                     # CHECK if the github url submitted is the same or not
+#                     if json_response["latest_github_url"] == github_url.replace(".git",""):
+#                         json_response["package_found"] = True
+#                         print("It is an update of the same package, Good")
+
+#                     for conda_version in conda_search_result[conda_package]:
+#                         json_response.get("versions").append(conda_version.get('version'))
+#                         # json_response.get("metadata").get("license").get('url').append(conda_version.get('version'))
+#                         json_response.get("github_urls").append(ast.literal_eval(conda_version.get('license')).get('url'))
+
+#         print(json_response)
+
 
 def pull_git_repo(install_data, channel_layer, app_workspace):
     
@@ -429,9 +529,16 @@ def process_branch(install_data, channel_layer):
     else:
         # merge the cu
         
-        tethysapp_remote = repo.remotes.tethysapp
+        # tethysapp_remote = repo.remotes.tethysapp
+        
+        # organization = g.get_organization("tethysapp")
+        # repo_name = install_data['github_dir'].split('/')[-1]
+        # tethysapp_repo = organization.get_repo(repo_name)
+        # remote_url = tethysapp_repo.git_url.replace("git://", "https://" + key + ":x-oauth-basic@")
+        # tethysapp_remote.set_url(remote_url)
+        
         repo.git.checkout('tethysapp_warehouse_release')
-        tethysapp_remote.pull()
+        # tethysapp_remote.pull()
         repo.git.merge(install_data['branch'])
 
     # breakpoint()
@@ -628,7 +735,9 @@ def process_branch(install_data, channel_layer):
         # breakpoint()
         # to_delete_repo = organization.get_repo(repo_name)
         # to_delete_repo.delete()
+
         tethysapp_repo = organization.get_repo(repo_name)
+
 
     if not repo_exists(repo_name, organization):
         # Create the required repo:
