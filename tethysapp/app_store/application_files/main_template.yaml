@@ -36,3 +36,16 @@ jobs:
           body: '$buildMsg'
           to: $email
           from: Tethys App Warehouse
+      - name: Send mail for failure
+        uses: dawidd6/action-send-mail@v2
+        if: failure()
+        with:
+          server_address: smtp.gmail.com
+          server_port: 465
+          username: $${{secrets.EMAIL_USERNAME}}
+          password: $${{secrets.EMAIL_PASSWORD}}
+          subject: 'Tethys App Store: Build Failed for test_app_store_aquaveo'
+          # Literal body:
+          body: $${{ github.job }} job in workflow $${{ github.workflow }} of $${{ github.repository }} has $${{ job.status }}. Check the logs at $${{ github.server_url }}/$${{ github.repository }}/actions/runs/$${{ github.run_id }}
+          to: $email
+          from: Tethys App Warehouse
