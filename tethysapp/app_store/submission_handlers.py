@@ -469,7 +469,7 @@ def validate_git_repo(install_data,channel_layer):
                             if x["html_url"] == github_url.replace(".git",""):
                                 # print("i found it!")
                                 json_response['fork_url'] = x["html_url"]
-                                mssge_string = f'<p>Your repository is a fork, Please submit a pull request to the original app repository <a href="{json_response["fork_url"]}">Here</a>, and ask the owner to submit the app to the app store later.</p>'                    
+                                mssge_string = f'<p>Your repository is a fork, Please submit a pull request to the original app repository <a href="{json_response["latest_github_url"].replace(".git", "")}">Here</a>, and ask the owner to submit the app to the app store later.</p>'                    
                                 json_response['next_move'] = False
                                 get_data_json = {
                                     "data": {
