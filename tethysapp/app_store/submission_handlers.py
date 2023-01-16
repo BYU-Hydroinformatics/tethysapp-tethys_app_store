@@ -374,6 +374,8 @@ def validate_git_repo(install_data,channel_layer):
 
         if version_install != version_setup:
             mssge_string = f'<p>The version in the setup.py and install.yml are not the same. The version should be the same in both files. Please change it and try again</p>'                    
+            json_response['next_move'] = False
+            
             get_data_json = {
                 "data": {
                     "mssge_string": mssge_string,
@@ -400,6 +402,7 @@ def validate_git_repo(install_data,channel_layer):
         # print(url_setup)
         if url_setup == '':
             mssge_string = f'<p>Your application does not have a <b>url</b> in the setup portion in the <b>setup.py</b> file, please add a url, push it to github, and try again</p>'                    
+            json_response['next_move'] = False
             get_data_json = {
                 "data": {
                     "mssge_string": mssge_string,
@@ -443,6 +446,8 @@ def validate_git_repo(install_data,channel_layer):
                     # breakpoint()
                     if version_setup in json_response["versions"]:
                         mssge_string = f'<p>The current version of your application is {version_setup}, and it was already submitted.</p><p>Current versions of your application are: {string_versions}</p> <p>Please use a new version in the <b>setup.py</b> and <b>install.yml</b> files</p>'                                            
+                        json_response['next_move'] = False
+                        
                         get_data_json = {
                             "data": {
                                 "mssge_string": mssge_string,
@@ -486,15 +491,37 @@ def validate_git_repo(install_data,channel_layer):
                         json_response["package_found"] = True
                         mssge_string = "<p>The submitted Github url is an update of an existing application, The app store will proceed to pull the repository</p>"
                         json_response['next_move'] = True
-
+                        mssge_string = f'<p>The current version of your application is {version_setup}, and it was already submitted.</p><p>Current versions of your application are: {string_versions}</p> <p>Please use a new version in the <b>setup.py</b> and <b>install.yml</b> files</p>'                                            
+                        get_data_json = {
+                            "data": {
+                                "mssge_string": mssge_string,
+                                "metadata": json_response
+                            },
+                            "jsHelperFunction": "validationResults",
+                            "helper": "addModalHelper"
+                        }
+                        send_notification(get_data_json, channel_layer)
+                        return 
                     else:
                         json_response["package_found"] = True
                         mssge_string = f'<p>The app_package name <b>{app_package_name}</b> of the submitted <a href="{github_url.replace(".git","")}">GitHub url</a> was found at an already submitted application.</p> <ul><li>If the application is the same, please open a pull request</li><li>If the application is not the same, please change the name of the app_package found at the setup.py, app.py and other files</li></ul>'
                         json_response['next_move'] = False
-
+                        mssge_string = f'<p>The current version of your application is {version_setup}, and it was already submitted.</p><p>Current versions of your application are: {string_versions}</p> <p>Please use a new version in the <b>setup.py</b> and <b>install.yml</b> files</p>'                                            
+                        get_data_json = {
+                            "data": {
+                                "mssge_string": mssge_string,
+                                "metadata": json_response
+                            },
+                            "jsHelperFunction": "validationResults",
+                            "helper": "addModalHelper"
+                        }
+                        send_notification(get_data_json, channel_layer)
+                        return 
 
 
         print(json_response)
+        json_response['next_move'] = True
+        mssge_string = f'<p>The application {repo_name} is a new application, the version {version_setup} will be submitted to the app store'
         get_data_json = {
             "data": {
                 "mssge_string": mssge_string,
