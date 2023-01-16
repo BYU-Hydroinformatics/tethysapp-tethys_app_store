@@ -443,7 +443,6 @@ def validate_git_repo(install_data,channel_layer):
 
                     string_versions += '</ul>'    
                     ## CHECK if it is a new version or not
-                    # breakpoint()
                     if version_setup in json_response["versions"]:
                         mssge_string = f'<p>The current version of your application is {version_setup}, and it was already submitted.</p><p>Current versions of your application are: {string_versions}</p> <p>Please use a new version in the <b>setup.py</b> and <b>install.yml</b> files</p>'                                            
                         json_response['next_move'] = False
@@ -487,11 +486,11 @@ def validate_git_repo(install_data,channel_layer):
                                 send_notification(get_data_json, channel_layer)
                                 return 
                     # CHECK if the github url submitted is the same or not
+                    breakpoint()
                     if json_response["latest_github_url"] == github_url.replace(".git",""):
                         json_response["package_found"] = True
                         mssge_string = "<p>The submitted Github url is an update of an existing application, The app store will proceed to pull the repository</p>"
                         json_response['next_move'] = True
-                        mssge_string = f'<p>The current version of your application is {version_setup}, and it was already submitted.</p><p>Current versions of your application are: {string_versions}</p> <p>Please use a new version in the <b>setup.py</b> and <b>install.yml</b> files</p>'                                            
                         get_data_json = {
                             "data": {
                                 "mssge_string": mssge_string,
@@ -506,7 +505,6 @@ def validate_git_repo(install_data,channel_layer):
                         json_response["package_found"] = True
                         mssge_string = f'<p>The app_package name <b>{app_package_name}</b> of the submitted <a href="{github_url.replace(".git","")}">GitHub url</a> was found at an already submitted application.</p> <ul><li>If the application is the same, please open a pull request</li><li>If the application is not the same, please change the name of the app_package found at the setup.py, app.py and other files</li></ul>'
                         json_response['next_move'] = False
-                        mssge_string = f'<p>The current version of your application is {version_setup}, and it was already submitted.</p><p>Current versions of your application are: {string_versions}</p> <p>Please use a new version in the <b>setup.py</b> and <b>install.yml</b> files</p>'                                            
                         get_data_json = {
                             "data": {
                                 "mssge_string": mssge_string,
