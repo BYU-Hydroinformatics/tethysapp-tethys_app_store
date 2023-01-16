@@ -329,28 +329,6 @@ def repo_exists(repo_name, organization):
 ### is the github URL different and the app name already exist in the tethysapp anaconda and github: then please consider doing a pull request to the original app, or change the app_package name to not reference this app
 ### is tje github url nor found: then proceed to install indicating that it is a new package.
 
-# def checking_for_existing_application(install_data, channel_layer):
-#     github_url = install_data.get("url")
-#     repo_name = github_url.split("/")[-1].replace(".git", "")
-#     user = github_url.split("/")[-2]
-
-#     # organization = g.get_organization("tethysapp")
-#     # if repo_exists(repo_name, organization):
-#     #     pass
-#     # pass
-#     url = f'https://api.github.com/repos/{user}/{repo_name}/contents/setup.py'
-#     req = requests.get(url)
-
-#     if req.status_code == requests.codes.ok:
-#         req = req.json()  # the response is a JSON
-#         # req is now a dict with keys: name, encoding, url, size ...
-#         # and content. But it is encoded with base64.
-#         content = base64.b64decode(req['content'])
-#         jsonString = content.decode('utf-8')
-#         finalJson = json.loads(jsonString)
-#         print(finalJson)
-#         app_package_name = finalJson['app_package']
-#         print(app_package_name)
 
 
 
@@ -362,12 +340,14 @@ def validate_git_repo(install_data,channel_layer):
     user = github_url.split("/")[-2]
 
     url = f'https://api.github.com/repos/{user}/{repo_name}/contents/setup.py'
+    install_yml_url = f'https://api.github.com/repos/{user}/{repo_name}/contents/install.yml'
     req = requests.get(url)
+    req_install_yml = requests.get(install_yml_url)
     app_package_name = ''
     json_response = {}
     mssge_string = ''
     json_response['submission_github_url'] = github_url
-    if req.status_code == requests.codes.ok:
+    if req.status_code == requests.codes.ok and req_install_yml.status_code == requests.codes.ok:
 
         req = req.json()  # the response is a JSON
         # req is now a dict with keys: name, encoding, url, size ...
@@ -377,19 +357,47 @@ def validate_git_repo(install_data,channel_layer):
         jsonString = content.decode('utf-8')
         # print(jsonString)
         # result = re.search('app_package;release_package',jsonString )
+
+        req_install_yml = req_install_yml.json()  
+        content_install = base64.b64decode(req_install_yml['content'])
+        jsonString_install = content_install.decode('utf-8')
+        install_yml_dict = yaml.safe_load(jsonString_install)
+        version_install = install_yml_dict['version']
+        
+        # breakpoint()
+        left0 = 'version'
+        right0 = 'description'
+        susbstring0 = jsonString[jsonString.index(left0)+len(left0):jsonString.index(right0)]
+        # print(susbstring0)
+        version_setup = susbstring0.strip().replace("'","").replace(",","").split('=')[1]
+        # print(version_setup)
+
+        if version_install != version_setup:
+            mssge_string = f'<p>The version in the setup.py and install.yml are not the same. The version should be the same in both files. Please change it and try again</p>'                    
+            get_data_json = {
+                "data": {
+                    "mssge_string": mssge_string,
+                    "metadata": json_response
+                },
+                "jsHelperFunction": "validationResults",
+                "helper": "addModalHelper"
+            }
+            send_notification(get_data_json, channel_layer)
+            return
+
         left = 'app_package'
         right = 'release_package'
         susbstring = jsonString[jsonString.index(left)+len(left):jsonString.index(right)]
         app_package_name = susbstring.strip().replace("'","").split('=')[1].strip(' ')
-        print(app_package_name)
+        # print(app_package_name)
         # breakpoint()
 
         left2 = 'url'
         right2 = 'license'
         susbstring2 = jsonString[jsonString.index(left2)+len(left2):jsonString.index(right2)]
-        print(susbstring2)
+        # print(susbstring2)
         url_setup = susbstring2.strip().replace("'","").replace(",","").split('=')[1]
-        print(url_setup)
+        # print(url_setup)
         if url_setup == '':
             mssge_string = f'<p>Your application does not have a <b>url</b> in the setup portion in the <b>setup.py</b> file, please add a url, push it to github, and try again</p>'                    
             get_data_json = {
@@ -422,6 +430,29 @@ def validate_git_repo(install_data,channel_layer):
                     json_response["latest_github_url"] = ast.literal_eval(conda_search_result[conda_package][-1]["license"])["url"]
                     json_response["github_urls"] = []
                     json_response["versions"] = []
+
+                    string_versions = '<ul>'
+                    for conda_version in conda_search_result[conda_package]:
+                        json_response.get("versions").append(conda_version.get('version'))
+                        # json_response.get("metadata").get("license").get('url').append(conda_version.get('version'))
+                        json_response.get("github_urls").append(ast.literal_eval(conda_version.get('license')).get('url'))
+                        string_versions += f'<li>{conda_version.get("version")}</li>'
+
+                    string_versions += '</ul>'    
+                    ## CHECK if it is a new version or not
+                    # breakpoint()
+                    if version_setup in json_response["versions"]:
+                        mssge_string = f'<p>The current version of your application is {version_setup}, and it was already submitted.</p><p>Current versions of your application are: {string_versions}</p> <p>Please use a new version in the <b>setup.py</b> and <b>install.yml</b> files</p>'                                            
+                        get_data_json = {
+                            "data": {
+                                "mssge_string": mssge_string,
+                                "metadata": json_response
+                            },
+                            "jsHelperFunction": "validationResults",
+                            "helper": "addModalHelper"
+                        }
+                        send_notification(get_data_json, channel_layer)
+                        return 
 
                     ## CHECK if the submitted api is a fork of this one here
                     if json_response["latest_github_url"] is not '':
@@ -461,10 +492,7 @@ def validate_git_repo(install_data,channel_layer):
                         mssge_string = f'<p>The app_package name <b>{app_package_name}</b> of the submitted <a href="{github_url.replace(".git","")}">GitHub url</a> was found at an already submitted application.</p> <ul><li>If the application is the same, please open a pull request</li><li>If the application is not the same, please change the name of the app_package found at the setup.py, app.py and other files</li></ul>'
                         json_response['next_move'] = False
 
-                    for conda_version in conda_search_result[conda_package]:
-                        json_response.get("versions").append(conda_version.get('version'))
-                        # json_response.get("metadata").get("license").get('url').append(conda_version.get('version'))
-                        json_response.get("github_urls").append(ast.literal_eval(conda_version.get('license')).get('url'))
+
 
         print(json_response)
         get_data_json = {
