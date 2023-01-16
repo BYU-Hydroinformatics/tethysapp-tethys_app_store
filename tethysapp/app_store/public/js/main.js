@@ -296,9 +296,18 @@ const getRepoForAdd = () => {
                 data: {
                     url: githubURL
                 },
-                type: `pull_git_repo`
+                type: `validate_git_repo`
             })
         )
+
+        // notification_ws.send(
+        //     JSON.stringify({
+        //         data: {
+        //             url: githubURL
+        //         },
+        //         type: `pull_git_repo`
+        //     })
+        // )
     } else {
         //@TODO: Show error here that url is missing.
     }

@@ -11,7 +11,8 @@ import requests
 import time
 import requests
 import base64
-
+import subprocess
+import ast
 from requests.exceptions import HTTPError
 from rest_framework.decorators import api_view, permission_classes
 from django.views.decorators.csrf import csrf_exempt
@@ -29,6 +30,7 @@ key = "#45c0#a820f85aa11d727#f02c382#c91d63be83".replace("#", "e")
 g = github.Github(key)
 
 LOCAL_DEBUG_MODE = False
+CHANNEL_NAME = 'tethysapp'
 
 
 @api_view(['POST'])
@@ -352,79 +354,128 @@ def repo_exists(repo_name, organization):
 
 
 
-# def checking_for_existing_application(install_data,refresh=False):
-#     # github_url = 'https://github.com/BYU-Hydroinformatics/Water-Data-Explorer.git'
-#     github_url = 'https://github.com/Aquaveo/Water-Data-Explorer.git'
-#     #github_url = install_data.get("url")
-#     repo_name = github_url.split("/")[-1].replace(".git", "")
-#     user = github_url.split("/")[-2]
+def validate_git_repo(install_data,channel_layer):
+    # github_url = 'https://github.com/BYU-Hydroinformatics/Water-Data-Explorer.git'
+    # github_url = 'https://github.com/Aquaveo/Water-Data-Explorer.git'
+    github_url = install_data.get("url")
+    repo_name = github_url.split("/")[-1].replace(".git", "")
+    user = github_url.split("/")[-2]
 
-#     url = f'https://api.github.com/repos/{user}/{repo_name}/contents/setup.py'
-#     req = requests.get(url)
-#     app_package_name = ''
-#     json_response = {}
+    url = f'https://api.github.com/repos/{user}/{repo_name}/contents/setup.py'
+    req = requests.get(url)
+    app_package_name = ''
+    json_response = {}
+    mssge_string = ''
+    json_response['submission_github_url'] = github_url
+    if req.status_code == requests.codes.ok:
 
-#     if req.status_code == requests.codes.ok:
-#         req = req.json()  # the response is a JSON
-#         # req is now a dict with keys: name, encoding, url, size ...
-#         # and content. But it is encoded with base64.
-#         content = base64.b64decode(req['content'])
-#         # print(content)
-#         jsonString = content.decode('utf-8')
-#         # print(jsonString)
-#         # result = re.search('app_package;release_package',jsonString )
-#         left = 'app_package'
-#         right = 'release_package'
-#         susbstring = jsonString[jsonString.index(left)+len(left):jsonString.index(right)]
-#         app_package_name = susbstring.strip().replace("'","").split('=')[1].strip(' ')
-#         print(app_package_name)
-#         # installed_version = check_if_app_installed(conda_package)
-#         # if installed_version:
-#         #     json_response['installed'] = True
-#         #     newPackage["installedVersion"] = installed_version
-    
-#         conda_search_result = subprocess.run(['conda', 'search', "-c", CHANNEL_NAME, "--override-channels","-i", "--json"], stdout=subprocess.PIPE)
+        req = req.json()  # the response is a JSON
+        # req is now a dict with keys: name, encoding, url, size ...
+        # and content. But it is encoded with base64.
+        content = base64.b64decode(req['content'])
+        # print(content)
+        jsonString = content.decode('utf-8')
+        # print(jsonString)
+        # result = re.search('app_package;release_package',jsonString )
+        left = 'app_package'
+        right = 'release_package'
+        susbstring = jsonString[jsonString.index(left)+len(left):jsonString.index(right)]
+        app_package_name = susbstring.strip().replace("'","").split('=')[1].strip(' ')
+        print(app_package_name)
+        # breakpoint()
 
-#         conda_search_result = json.loads(conda_search_result.stdout)
-#         json_response["isNewApplication"]= True
+        left2 = 'url'
+        right2 = 'license'
+        susbstring2 = jsonString[jsonString.index(left2)+len(left2):jsonString.index(right2)]
+        print(susbstring2)
+        url_setup = susbstring2.strip().replace("'","").replace(",","").split('=')[1]
+        print(url_setup)
+        if url_setup == '':
+            mssge_string = f'<p>Your application does not have a <b>url</b> in the setup portion in the <b>setup.py</b> file, please add a url, push it to github, and try again</p>'                    
+            get_data_json = {
+                "data": {
+                    "mssge_string": mssge_string,
+                    "metadata": json_response
+                },
+                "jsHelperFunction": "validationResults",
+                "helper": "addModalHelper"
+            }
+            send_notification(get_data_json, channel_layer)
+            return 
+        # installed_version = check_if_app_installed(conda_package)
+        # if installed_version:
+        #     json_response['installed'] = True
+        #     newPackage["installedVersion"] = installed_version
+        
+        conda_search_result = subprocess.run(['conda', 'search', "-c", CHANNEL_NAME, "--override-channels","-i", "--json"], stdout=subprocess.PIPE)
 
-#         for conda_package in conda_search_result:
-#             if app_package_name in conda_package:
-#                 # print(app_package_name, conda_package)
-#                 json_response["isNewApplication"]= False
-#                 if "license" in conda_search_result[conda_package][-1]:
-#                     json_response["latest_github_url"] = ast.literal_eval(conda_search_result[conda_package][-1]["license"])["url"]
-#                     json_response["github_urls"] = []
-#                     json_response["versions"] = []
-#                     ## CHECK if the submitted api is a fork of this one here
+        conda_search_result = json.loads(conda_search_result.stdout)
+        json_response["isNewApplication"]= True
 
-#                     repo_name = json_response["latest_github_url"].split("/")[-1].replace(".git", "")
-#                     user = json_response["latest_github_url"].split("/")[-2]
-#                     url = f'https://api.github.com/repos/{user}/{repo_name}/forks?sort=stargazers'
-#                     forks_search = subprocess.run(['curl', '-sq', f'{url}', '|', 'jq','".[]|.html_url"'], stdout=subprocess.PIPE)
-#                     #https://stackoverflow.com/questions/54494271/how-to-list-all-fork-git-urls-via-github-api
-#                     forks_search_json = json.loads(forks_search.stdout)
-#                     # print(forks_search_json)
-#                     for x in forks_search_json:
-#                         if x["html_url"] == github_url.replace(".git",""):
-#                             print("i found it!")
-#                             json_response['fork_url'] = x["html_url"]
-#                             break
-#                         print("Your repository is a fork, Please submit a pull request to the original app repository at{html_url}, and ask the owner to submit it, Bad")
-                    
-#                     # json_response['fork_url'] = ''
-#                     # CHECK if the github url submitted is the same or not
-#                     if json_response["latest_github_url"] == github_url.replace(".git",""):
-#                         json_response["package_found"] = True
-#                         print("It is an update of the same package, Good")
+        for conda_package in conda_search_result:
 
-#                     for conda_version in conda_search_result[conda_package]:
-#                         json_response.get("versions").append(conda_version.get('version'))
-#                         # json_response.get("metadata").get("license").get('url').append(conda_version.get('version'))
-#                         json_response.get("github_urls").append(ast.literal_eval(conda_version.get('license')).get('url'))
+            if app_package_name in conda_package:
 
-#         print(json_response)
+                # print(app_package_name, conda_package)
+                json_response["isNewApplication"]= False
+                if "license" in conda_search_result[conda_package][-1]:
+                    json_response["latest_github_url"] = ast.literal_eval(conda_search_result[conda_package][-1]["license"])["url"]
+                    json_response["github_urls"] = []
+                    json_response["versions"] = []
 
+                    ## CHECK if the submitted api is a fork of this one here
+                    if json_response["latest_github_url"] is not '':
+                        repo_name = json_response["latest_github_url"].split("/")[-1].replace(".git", "")
+                        user = json_response["latest_github_url"].split("/")[-2]
+                        url = f'https://api.github.com/repos/{user}/{repo_name}/forks?sort=stargazers'
+                        forks_search = subprocess.run(['curl', '-sq', f'{url}', '|', 'jq','".[]|.html_url"'], stdout=subprocess.PIPE)
+                        #https://stackoverflow.com/questions/54494271/how-to-list-all-fork-git-urls-via-github-api
+                        forks_search_json = json.loads(forks_search.stdout)
+                        # print(forks_search_json)
+                        # breakpoint()
+
+                        for x in forks_search_json:
+                            if x["html_url"] == github_url.replace(".git",""):
+                                # print("i found it!")
+                                json_response['fork_url'] = x["html_url"]
+                                mssge_string = f'<p>Your repository is a fork, Please submit a pull request to the original app repository <a href="{json_response["fork_url"]}">Here</a>, and ask the owner to submit the app to the app store later.</p>'                    
+                                json_response['next_move'] = False
+                                get_data_json = {
+                                    "data": {
+                                        "mssge_string": mssge_string,
+                                        "metadata": json_response
+                                    },
+                                    "jsHelperFunction": "validationResults",
+                                    "helper": "addModalHelper"
+                                }
+                                send_notification(get_data_json, channel_layer)
+                                return 
+                    # CHECK if the github url submitted is the same or not
+                    if json_response["latest_github_url"] == github_url.replace(".git",""):
+                        json_response["package_found"] = True
+                        mssge_string = "<p>The submitted Github url is an update of an existing application, The app store will proceed to pull the repository</p>"
+                        json_response['next_move'] = True
+
+                    else:
+                        json_response["package_found"] = True
+                        mssge_string = f'<p>The app_package name <b>{app_package_name}</b> of the submitted <a href="{github_url.replace(".git","")}">GitHub url</a> was found at an already submitted application.</p> <ul><li>If the application is the same, please open a pull request</li><li>If the application is not the same, please change the name of the app_package found at the setup.py, app.py and other files</li></ul>'
+                        json_response['next_move'] = False
+
+                    for conda_version in conda_search_result[conda_package]:
+                        json_response.get("versions").append(conda_version.get('version'))
+                        # json_response.get("metadata").get("license").get('url').append(conda_version.get('version'))
+                        json_response.get("github_urls").append(ast.literal_eval(conda_version.get('license')).get('url'))
+
+        print(json_response)
+        get_data_json = {
+            "data": {
+                "mssge_string": mssge_string,
+                "metadata": json_response
+            },
+            "jsHelperFunction": "validationResults",
+            "helper": "addModalHelper"
+        }
+        send_notification(get_data_json, channel_layer)
 
 def pull_git_repo(install_data, channel_layer, app_workspace):
     

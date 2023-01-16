@@ -2,10 +2,9 @@ from channels.generic.websocket import AsyncWebsocketConsumer
 from .installation_handlers import logger, continueAfterInstall, restart_server, set_custom_settings # noqa: F401
 from .uninstall_handlers import uninstall_app # noqa: F401
 from .git_install_handlers import get_log_file # noqa: F401
-from .submission_handlers import pull_git_repo # noqa: F401
 from .update_handlers import update_app # noqa: F401
 from .resource_helpers import clear_cache # noqa: F401
-from .submission_handlers import process_branch # noqa: F401
+from .submission_handlers import process_branch, validate_git_repo, pull_git_repo # noqa: F401
 # called with threading.Thread
 from .begin_install import begin_install  # noqa: F401
 from tethys_sdk.routing import consumer

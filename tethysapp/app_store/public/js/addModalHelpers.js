@@ -1,4 +1,26 @@
 const addModalHelper = {
+  validationResults: (validationData,content, completeMessage, ws ) =>{
+    if(!validationData.metadata['next_move']){
+      $("#failMessage").html(validationData.mssge_string)
+      $("#failMessage").show()
+      $("#loaderEllipsis").hide()
+      $("#loadingTextAppSubmit").text("")
+      $("#fetchRepoButton").prop("disabled", false)
+    }
+    else{
+      $("#failMessage").html(validationData.mssge_string)
+      $("#failMessage").show()
+      notification_ws.send(
+          JSON.stringify({
+              data: {
+                  url: validationData.metadata['submission_github_url']
+              },
+              type: `pull_git_repo`
+          })
+      )
+    }
+
+  },
   showBranches: (branchesData, content, completeMessage, ws) => {
     // Clear loader and button:
 
@@ -65,6 +87,8 @@ const addModalHelper = {
       )
     })
     $("#processBranchButton").show()
+    $("#failMessage").hide()
+
   },
   addComplete: (addData, content, completeMessage, ws) => {
     $("#loaderEllipsis").hide()
@@ -81,5 +105,7 @@ const addModalHelper = {
     }
     $("#doneAddButton").show()
     $("#successMessage").show()
+    $("#failMessage").hide()
+
   }
 }
