@@ -6,7 +6,8 @@
             "main"
          ],
          "github_organization":"tethysapp",
-         "github_token":"#45c0#a820f85aa11d727#f02c382#c91d63be83"
+         "github_token":"#45c0#a820f85aa11d727#f02c382#c91d63be83",
+         "default": true
       },
       {
          "conda_channel":"elkingio",
@@ -15,7 +16,8 @@
             "dev"
          ],
          "github_organization":"lost_tribe",
-         "github_token":"#45c0#a820f85aa11d727#f02c382#c91d63be83"
+         "github_token":"#45c0#a820f85aa11d727#f02c382#c91d63be83",
+         "default": false
       }
    ]
 }

@@ -1,5 +1,7 @@
 import re
 import semver
+import os
+import json
 from tethys_portal import __version__ as tethys_version
 from django.http import JsonResponse
 from django.shortcuts import render
@@ -18,9 +20,20 @@ CACHE_KEY = "warehouse_app_resources"
     name='home',
     url='app-store',
     permissions_required='use_app_store',
+    app_workspace=True,
 )
-def home(request):
-    return render(request, 'app_store/home.html', {})
+def home(request,app_workspace):
+    available_stores_json_path = os.path.join(app_workspace.path, 'stores.json')
+    available_stores_data_dict = {}
+    with open(available_stores_json_path) as available_stores_json_file:
+        available_stores_data_dict = json.load(available_stores_json_file)['stores']
+    print(available_stores_data_dict)
+    context = {
+        'storesData':available_stores_data_dict,
+        'show_stores': True if len(available_stores_data_dict) > 1 else False
+    }
+
+    return render(request, 'app_store/home.html', context)
 
 
 @controller(
@@ -70,11 +83,15 @@ def get_resources(request, app_workspace):
     # Get any apps installed via GitHub install process
     github_apps = get_github_install_metadata(app_workspace)
 
+    ## Get available stores from json 
+
+
     context = {
         'availableApps': available_apps,
         'installedApps': installed_apps + github_apps,
         'incompatibleApps': incompatible_apps,
-        'tethysVersion': tethys_version_regex
+        'tethysVersion': tethys_version_regex,
+        # 'storesData':available_stores_data_dict
     }
 
     return JsonResponse(context)

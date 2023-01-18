@@ -322,13 +322,6 @@ def repo_exists(repo_name, organization):
         return False
 
 
-## get new function called checking_for_existing_application
-## this function will let the user now that there is already a package with that name 
-## needs to check:
-### is the github URL the same: then it is the same app, do you want to update it?
-### is the github URL different and the app name already exist in the tethysapp anaconda and github: then please consider doing a pull request to the original app, or change the app_package name to not reference this app
-### is tje github url nor found: then proceed to install indicating that it is a new package.
-
 
 
 ## we may need to select the branches for each store 
@@ -414,138 +407,9 @@ def validate_git_repo(install_data,channel_layer):
         send_notification(get_data_json, channel_layer)
 
 
-def get_app_name_and_version(user,repo_name,branch):
-    github_object_api = github.Github()
-    github_submit_repo = github_object_api.get_repo(f'{user}/{repo_name}')
-    setup_content_object = github_submit_repo.get_contents('setup.py',ref=branch)
-    setup_content = setup_content_object.decoded_content.decode('utf-8')
-    app_package_name = ''
-    version_setup = ''
-
-    left0 = 'version'
-    right0 = 'description'
-    susbstring0 = setup_content[setup_content.index(left0)+len(left0):setup_content.index(right0)]
-    version_setup = susbstring0.strip().replace("'","").replace(",","").split('=')[1]
 
 
-    left = 'app_package'
-    right = 'release_package'
-    susbstring = setup_content[setup_content.index(left)+len(left):setup_content.index(right)]
-    app_package_name = susbstring.strip().replace("'","").split('=')[1].strip(' ')
-
-    return app_package_name, version_setup
-
-def validation_is_setup_complete(user,repo_name,branch,json_response):
-    github_object_api = github.Github()
-    github_submit_repo = github_object_api.get_repo(f'{user}/{repo_name}')
-    setup_content_object = github_submit_repo.get_contents('setup.py',ref=branch)
-    setup_content = setup_content_object.decoded_content.decode()
-    
-    prejson_string = setup_content.split("setup(")[-1].replace("\n","").replace(",    ",",").replace("dependencies,)","dependencies").strip().split(",")
-    # json_dict = {}
-    array_emptyness = []
-    string_fields = '<ul>'
-    get_data_json = {}
-
-    for line in prejson_string:
-        property_name = line.split("=")[0].strip()
-        property_value = line.split("=")[1].strip().replace("'","")
-        if property_value == '':
-            array_emptyness.append(property_name)
-            string_fields += f'<li>{property_name}</li>'
-        # json_dict[property_name] = property_value
-
-    string_fields += '</ul>'
-    if array_emptyness:
-        mssge_string = f'<p>The setup.py of your repository contain the following fields empty: {string_fields}</p>'                    
-        json_response['next_move'] = False
-        get_data_json = {
-            "data": {
-                "mssge_string": mssge_string,
-                "metadata": json_response
-            },
-            "jsHelperFunction": "validationResults",
-            "helper": "addModalHelper"
-        }
-
-    return get_data_json
-
-def validation_is_a_fork(user,repo_name,json_response):
-    get_data_json = {}
-    github_object_api = github.Github()
-    github_submit_repo = github_object_api.get_repo(f'{user}/{repo_name}')
-    if github_submit_repo.fork:
-        parent_repo = github_submit_repo.parent.html_url
-        mssge_string = f'<p>Your repository is a fork, Please submit a pull request to the original app repository <a href="{parent_repo}">Here</a>, and ask the owner to submit the app to the app store later.</p>'                    
-        json_response['next_move'] = False
-        get_data_json = {
-            "data": {
-                "mssge_string": mssge_string,
-                "metadata": json_response
-            },
-            "jsHelperFunction": "validationResults",
-            "helper": "addModalHelper"
-        }
-        # send_notification(get_data_json, channel_layer)
-    return get_data_json
-
-def validation_is_new_app(github_url,app_package_name, json_response):
-    get_data_json = {}
-    if json_response["latest_github_url"] == github_url.replace(".git",""):
-        mssge_string = "<p>The submitted Github url is an update of an existing application, The app store will proceed to pull the repository</p>"
-        json_response['next_move'] = True
-        get_data_json = {
-            "data": {
-                "mssge_string": mssge_string,
-                "metadata": json_response
-            },
-            "jsHelperFunction": "validationResults",
-            "helper": "addModalHelper"
-        }
-
-    else:
-        mssge_string = f'<p>The app_package name <b>{app_package_name}</b> of the submitted <a href="{github_url.replace(".git","")}">GitHub url</a> was found at an already submitted application.</p> <ul><li>If the application is the same, please open a pull request</li><li>If the application is not the same, please change the name of the app_package found at the setup.py, app.py and other files</li></ul>'
-        json_response['next_move'] = False
-        get_data_json = {
-            "data": {
-                "mssge_string": mssge_string,
-                "metadata": json_response
-            },
-            "jsHelperFunction": "validationResults",
-            "helper": "addModalHelper"
-        }
-    return get_data_json
-
-def validation_is_new_version(conda_search_result_package,version_setup,json_response):
-    get_data_json = {}
-    json_response["latest_github_url"] = ast.literal_eval(conda_search_result_package[-1]['license'])['dev_url']
-
-    # json_response["github_urls"] = []
-    json_response["versions"] = []
-
-    string_versions = '<ul>'
-    for conda_version in conda_search_result_package:
-        json_response.get("versions").append(conda_version.get('version'))
-        # json_response.get("metadata").get("license").get('url').append(conda_version.get('version'))
-        # json_response.get("github_urls").append(ast.literal_eval(conda_version.get('license')).get('dev_url'))
-        string_versions += f'<li>{conda_version.get("version")}</li>'
-
-    string_versions += '</ul>'    
-    ## CHECK if it is a new version or not
-    if version_setup in json_response["versions"]:
-        mssge_string = f'<p>The current version of your application is {version_setup}, and it was already submitted.</p><p>Current versions of your application are: {string_versions}</p> <p>Please use a new version in the <b>setup.py</b> and <b>install.yml</b> files</p>'                                            
-        json_response['next_move'] = False
-        
-        get_data_json = {
-            "data": {
-                "mssge_string": mssge_string,
-                "metadata": json_response
-            },
-            "jsHelperFunction": "validationResults",
-            "helper": "addModalHelper"
-        }
-    
-    return  get_data_json
+# def show_remote_branches()
 
 
 def pull_git_repo(install_data, channel_layer, app_workspace):
@@ -959,3 +823,138 @@ def process_branch(install_data, channel_layer):
         "helper": "addModalHelper"
     }
     send_notification(get_data_json, channel_layer)
+
+
+
+def get_app_name_and_version(user,repo_name,branch):
+    github_object_api = github.Github()
+    github_submit_repo = github_object_api.get_repo(f'{user}/{repo_name}')
+    setup_content_object = github_submit_repo.get_contents('setup.py',ref=branch)
+    setup_content = setup_content_object.decoded_content.decode('utf-8')
+    app_package_name = ''
+    version_setup = ''
+
+    left0 = 'version'
+    right0 = 'description'
+    susbstring0 = setup_content[setup_content.index(left0)+len(left0):setup_content.index(right0)]
+    version_setup = susbstring0.strip().replace("'","").replace(",","").split('=')[1]
+
+
+    left = 'app_package'
+    right = 'release_package'
+    susbstring = setup_content[setup_content.index(left)+len(left):setup_content.index(right)]
+    app_package_name = susbstring.strip().replace("'","").split('=')[1].strip(' ')
+
+    return app_package_name, version_setup
+
+def validation_is_setup_complete(user,repo_name,branch,json_response):
+    github_object_api = github.Github()
+    github_submit_repo = github_object_api.get_repo(f'{user}/{repo_name}')
+    setup_content_object = github_submit_repo.get_contents('setup.py',ref=branch)
+    setup_content = setup_content_object.decoded_content.decode()
+    
+    prejson_string = setup_content.split("setup(")[-1].replace("\n","").replace(",    ",",").replace("dependencies,)","dependencies").strip().split(",")
+    # json_dict = {}
+    array_emptyness = []
+    string_fields = '<ul>'
+    get_data_json = {}
+
+    for line in prejson_string:
+        property_name = line.split("=")[0].strip()
+        property_value = line.split("=")[1].strip().replace("'","")
+        if property_value == '':
+            array_emptyness.append(property_name)
+            string_fields += f'<li>{property_name}</li>'
+        # json_dict[property_name] = property_value
+
+    string_fields += '</ul>'
+    if array_emptyness:
+        mssge_string = f'<p>The setup.py of your repository contain the following fields empty: {string_fields}</p>'                    
+        json_response['next_move'] = False
+        get_data_json = {
+            "data": {
+                "mssge_string": mssge_string,
+                "metadata": json_response
+            },
+            "jsHelperFunction": "validationResults",
+            "helper": "addModalHelper"
+        }
+
+    return get_data_json
+
+def validation_is_a_fork(user,repo_name,json_response):
+    get_data_json = {}
+    github_object_api = github.Github()
+    github_submit_repo = github_object_api.get_repo(f'{user}/{repo_name}')
+    if github_submit_repo.fork:
+        parent_repo = github_submit_repo.parent.html_url
+        mssge_string = f'<p>Your repository is a fork, Please submit a pull request to the original app repository <a href="{parent_repo}">Here</a>, and ask the owner to submit the app to the app store later.</p>'                    
+        json_response['next_move'] = False
+        get_data_json = {
+            "data": {
+                "mssge_string": mssge_string,
+                "metadata": json_response
+            },
+            "jsHelperFunction": "validationResults",
+            "helper": "addModalHelper"
+        }
+        # send_notification(get_data_json, channel_layer)
+    return get_data_json
+
+def validation_is_new_app(github_url,app_package_name, json_response):
+    get_data_json = {}
+    if json_response["latest_github_url"] == github_url.replace(".git",""):
+        mssge_string = "<p>The submitted Github url is an update of an existing application, The app store will proceed to pull the repository</p>"
+        json_response['next_move'] = True
+        get_data_json = {
+            "data": {
+                "mssge_string": mssge_string,
+                "metadata": json_response
+            },
+            "jsHelperFunction": "validationResults",
+            "helper": "addModalHelper"
+        }
+
+    else:
+        mssge_string = f'<p>The app_package name <b>{app_package_name}</b> of the submitted <a href="{github_url.replace(".git","")}">GitHub url</a> was found at an already submitted application.</p> <ul><li>If the application is the same, please open a pull request</li><li>If the application is not the same, please change the name of the app_package found at the setup.py, app.py and other files</li></ul>'
+        json_response['next_move'] = False
+        get_data_json = {
+            "data": {
+                "mssge_string": mssge_string,
+                "metadata": json_response
+            },
+            "jsHelperFunction": "validationResults",
+            "helper": "addModalHelper"
+        }
+    return get_data_json
+
+def validation_is_new_version(conda_search_result_package,version_setup,json_response):
+    get_data_json = {}
+    json_response["latest_github_url"] = ast.literal_eval(conda_search_result_package[-1]['license'])['dev_url']
+
+    # json_response["github_urls"] = []
+    json_response["versions"] = []
+
+    string_versions = '<ul>'
+    for conda_version in conda_search_result_package:
+        json_response.get("versions").append(conda_version.get('version'))
+        # json_response.get("metadata").get("license").get('url').append(conda_version.get('version'))
+        # json_response.get("github_urls").append(ast.literal_eval(conda_version.get('license')).get('dev_url'))
+        string_versions += f'<li>{conda_version.get("version")}</li>'
+
+    string_versions += '</ul>'    
+    ## CHECK if it is a new version or not
+    if version_setup in json_response["versions"]:
+        mssge_string = f'<p>The current version of your application is {version_setup}, and it was already submitted.</p><p>Current versions of your application are: {string_versions}</p> <p>Please use a new version in the <b>setup.py</b> and <b>install.yml</b> files</p>'                                            
+        json_response['next_move'] = False
+        
+        get_data_json = {
+            "data": {
+                "mssge_string": mssge_string,
+                "metadata": json_response
+            },
+            "jsHelperFunction": "validationResults",
+            "helper": "addModalHelper"
+        }
+    
+    return  get_data_json

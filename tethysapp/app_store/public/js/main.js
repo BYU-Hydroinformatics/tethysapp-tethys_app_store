@@ -10,7 +10,7 @@ var availableApps = {}
 var installedApps = {}
 var updateData = {}
 var tethysVersion = ""
-
+// var storesData = {}
 // End Vars
 const settingsHelper = {
     processCustomSettings: (settingsData, n_content, completeMessage, ws) => {
@@ -291,23 +291,23 @@ const getRepoForAdd = () => {
         $("#githubURL").prop("disabled", true)
         $("#loadingTextAppSubmit").text("Please wait. Fetching GitHub Repo")
 
-        notification_ws.send(
-            JSON.stringify({
-                data: {
-                    url: githubURL
-                },
-                type: `validate_git_repo`
-            })
-        )
-
         // notification_ws.send(
         //     JSON.stringify({
         //         data: {
         //             url: githubURL
         //         },
-        //         type: `pull_git_repo`
+        //         type: `validate_git_repo`
         //     })
         // )
+
+        notification_ws.send(
+            JSON.stringify({
+                data: {
+                    url: githubURL
+                },
+                type: `pull_git_repo`
+            })
+        )
     } else {
         //@TODO: Show error here that url is missing.
     }
@@ -361,6 +361,8 @@ $(document).ready(function() {
             installedApps = data.installedApps
             incompatibleApps = data.incompatibleApps
             tethysVersion = data.tethysVersion
+            // storesData = data.storesData
+            // console.log(storesData)
             $("#mainAppLoader").hide()
             initMainTables()
         })

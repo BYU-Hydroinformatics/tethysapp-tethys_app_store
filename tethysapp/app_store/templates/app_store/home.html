@@ -51,6 +51,34 @@
 <div class="card card-default tethys-platform-version">
     <div class="card-header" id="tethysPlatformVersionHeader" style="font-weight:700"></div>
 </div>
+{% if show_stores %}
+
+<div class="card card-default tethys-platform-version">
+    <div class="card-header" id="tethys_stores" style="font-weight:700">Available Stores</div>
+    <div class="card-body" id="table_header_alike">
+        <ul class="nav nav-pills nav-fill" id="pills-tab" role="tablist">
+            {% if storesData %}
+                {% for store in storesData %}
+                    {% if store.default %}
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">{{ store.conda_channel }}</button>
+                        </li>
+                    {% else %}
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">{{ store.conda_channel }}</button>
+                    </li>
+                    {% endif %}
+                {% empty %}
+                {% endfor %}
+            {% endif %}
+
+        </ul>
+
+    </div>
+
+</div>
+{% endif %}
+
 
 <div class="card card-default main-app-list hidden">
     <div class="card-header showHandIcon" data-bs-toggle="collapse" href="#mainApps">Available Tethys Applications</div>

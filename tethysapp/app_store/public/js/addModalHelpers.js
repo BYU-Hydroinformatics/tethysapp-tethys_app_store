@@ -49,6 +49,14 @@ const addModalHelper = {
         `Please wait. Processing branch: ${branchesData["branches"][0]}`
       )
 
+      // notification_ws.send(
+      //   JSON.stringify({
+      //       data: {
+      //           url: githubURL
+      //       },
+      //       type: `validate_git_repo`
+      //   })
+      // )
       notification_ws.send(
         JSON.stringify({
           data: {
