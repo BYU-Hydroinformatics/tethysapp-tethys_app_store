@@ -346,10 +346,32 @@ const update = () => {
     )
 }
 
-const create_content_for_channel= () => {
+const get_resources_for_channel= (default_store) => {
 
+    $.ajax({
+        url: `${warehouseHomeUrl}get_resources`,
+        dataType: "json",
+        data: default_store
+    })
+        .done(function(data) {
+            availableApps = data.availableApps
+            installedApps = data.installedApps
+            incompatibleApps = data.incompatibleApps
+            tethysVersion = data.tethysVersion
+            // storesDataList = data.storesDataList
+            // console.log(storesData)
+            $("#mainAppLoader").hide()
+            initMainTables()
+            // create_content_for_channel(storesDataList)
+        })
+        .fail(function(err) {
+            console.log(err)
+            location.reload()
+        })
 
 }
+
+
 
 $(document).ready(function() {
     // Hide the nav
@@ -368,26 +390,36 @@ $(document).ready(function() {
         console.log(default_store)
         // console.log("current_channel", default_conda_channel)
         // Get Main Data and load the table
-        $.ajax({
-            url: `${warehouseHomeUrl}get_resources`,
-            dataType: "json",
-            data: default_store
+        storesDataList.forEach(function(store_single){
+            $(`#pills-${store_single['conda_channel']}-tab`).click(function(){
+                console.log(store_single)
+                get_resources_for_channel(store_single)
+
+            })
         })
-            .done(function(data) {
-                availableApps = data.availableApps
-                installedApps = data.installedApps
-                incompatibleApps = data.incompatibleApps
-                tethysVersion = data.tethysVersion
-                // storesDataList = data.storesDataList
-                // console.log(storesData)
-                $("#mainAppLoader").hide()
-                initMainTables()
-                // create_content_for_channel(storesDataList)
-            })
-            .fail(function(err) {
-                console.log(err)
-                location.reload()
-            })
+        
+        get_resources_for_channel(default_store)
+
+        // $.ajax({
+        //     url: `${warehouseHomeUrl}get_resources`,
+        //     dataType: "json",
+        //     data: default_store
+        // })
+        //     .done(function(data) {
+        //         availableApps = data.availableApps
+        //         installedApps = data.installedApps
+        //         incompatibleApps = data.incompatibleApps
+        //         tethysVersion = data.tethysVersion
+        //         // storesDataList = data.storesDataList
+        //         // console.log(storesData)
+        //         $("#mainAppLoader").hide()
+        //         initMainTables()
+        //         // create_content_for_channel(storesDataList)
+        //     })
+        //     .fail(function(err) {
+        //         console.log(err)
+        //         location.reload()
+        //     })
 
 
     }).fail(function(err) {
