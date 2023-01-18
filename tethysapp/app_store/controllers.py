@@ -84,14 +84,18 @@ def get_resources(request, app_workspace):
     github_apps = get_github_install_metadata(app_workspace)
 
     ## Get available stores from json 
-
+    available_stores_json_path = os.path.join(app_workspace.path, 'stores.json')
+    available_stores_data_dict = {}
+    with open(available_stores_json_path) as available_stores_json_file:
+        available_stores_data_dict = json.load(available_stores_json_file)['stores']
+    print(available_stores_data_dict)
 
     context = {
         'availableApps': available_apps,
         'installedApps': installed_apps + github_apps,
         'incompatibleApps': incompatible_apps,
         'tethysVersion': tethys_version_regex,
-        # 'storesData':available_stores_data_dict
+        'storesDataList':available_stores_data_dict
     }
 
     return JsonResponse(context)

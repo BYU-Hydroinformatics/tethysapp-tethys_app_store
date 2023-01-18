@@ -61,11 +61,11 @@
                 {% for store in storesData %}
                     {% if store.default %}
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">{{ store.conda_channel }}</button>
+                            <button class="nav-link active" id="pills-{{ store.conda_channel }}-tab" data-bs-toggle="pill" data-bs-target="#pills-{{ store.conda_channel }}" type="button" role="tab" aria-controls="pills-{{ store.conda_channel }}" aria-selected="true">{{ store.conda_channel }}</button>
                         </li>
                     {% else %}
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">{{ store.conda_channel }}</button>
+                        <button class="nav-link" id="pills-{{ store.conda_channel }}-tab" data-bs-toggle="pill" data-bs-target="#pills-{{ store.conda_channel }}" type="button" role="tab" aria-controls="pills-{{ store.conda_channel }}" aria-selected="true">{{ store.conda_channel }}</button>
                     </li>
                     {% endif %}
                 {% empty %}

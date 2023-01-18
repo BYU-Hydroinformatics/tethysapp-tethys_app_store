@@ -10,7 +10,7 @@ var availableApps = {}
 var installedApps = {}
 var updateData = {}
 var tethysVersion = ""
-// var storesData = {}
+var storesDataList = []
 // End Vars
 const settingsHelper = {
     processCustomSettings: (settingsData, n_content, completeMessage, ws) => {
@@ -346,11 +346,20 @@ const update = () => {
     )
 }
 
+const create_content_for_channel= () => {
+
+
+}
+
 $(document).ready(function() {
     // Hide the nav
     $("#app-content-wrapper").removeClass('show-nav');
     $(".toggle-nav").removeClass('toggle-nav');
+    // create ajax function to get the stores now and call the get_resources for each one of the stores, you will need to send channel as a parameter :/
 
+
+    // var default_conda_channel = storesData2[0]['conda_channel']
+    // console.log("current_channel", default_conda_channel)
     // Get Main Data and load the table
     $.ajax({
         url: `${warehouseHomeUrl}get_resources`,
@@ -361,10 +370,11 @@ $(document).ready(function() {
             installedApps = data.installedApps
             incompatibleApps = data.incompatibleApps
             tethysVersion = data.tethysVersion
-            // storesData = data.storesData
+            storesDataList = data.storesDataList
             // console.log(storesData)
             $("#mainAppLoader").hide()
             initMainTables()
+            create_content_for_channel(storesDataList)
         })
         .fail(function(err) {
             console.log(err)
