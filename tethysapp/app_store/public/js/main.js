@@ -356,30 +356,46 @@ $(document).ready(function() {
     $("#app-content-wrapper").removeClass('show-nav');
     $(".toggle-nav").removeClass('toggle-nav');
     // create ajax function to get the stores now and call the get_resources for each one of the stores, you will need to send channel as a parameter :/
-
-
-    // var default_conda_channel = storesData2[0]['conda_channel']
-    // console.log("current_channel", default_conda_channel)
-    // Get Main Data and load the table
+    storesDataList = []
     $.ajax({
-        url: `${warehouseHomeUrl}get_resources`,
+        url: `${warehouseHomeUrl}get_available_stores`,
         dataType: "json"
+    }).done(function(data){
+        storesDataList = data['stores']
+        console.log(storesDataList)
+
+        var default_store = storesDataList.filter((x) => x.default == true)[0]
+        console.log(default_store)
+        // console.log("current_channel", default_conda_channel)
+        // Get Main Data and load the table
+        $.ajax({
+            url: `${warehouseHomeUrl}get_resources`,
+            dataType: "json",
+            data: default_store
+        })
+            .done(function(data) {
+                availableApps = data.availableApps
+                installedApps = data.installedApps
+                incompatibleApps = data.incompatibleApps
+                tethysVersion = data.tethysVersion
+                // storesDataList = data.storesDataList
+                // console.log(storesData)
+                $("#mainAppLoader").hide()
+                initMainTables()
+                // create_content_for_channel(storesDataList)
+            })
+            .fail(function(err) {
+                console.log(err)
+                location.reload()
+            })
+
+
+    }).fail(function(err) {
+        storesDataList = []
+        console.log(err)
     })
-        .done(function(data) {
-            availableApps = data.availableApps
-            installedApps = data.installedApps
-            incompatibleApps = data.incompatibleApps
-            tethysVersion = data.tethysVersion
-            storesDataList = data.storesDataList
-            // console.log(storesData)
-            $("#mainAppLoader").hide()
-            initMainTables()
-            create_content_for_channel(storesDataList)
-        })
-        .fail(function(err) {
-            console.log(err)
-            location.reload()
-        })
+    // console.log(storesDataList)
+
 
     let n_div = $("#notification")
     let n_content = $("#notification .lead")

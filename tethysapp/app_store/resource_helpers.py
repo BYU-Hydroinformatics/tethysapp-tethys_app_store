@@ -15,14 +15,15 @@ import subprocess
 from .helpers import add_if_exists, check_if_app_installed, logger
 
 CACHE_KEY = "warehouse_app_resources"
-CHANNEL_NAME = 'tethysapp'
+# CHANNEL_NAME = 'tethysapp'
 
 
 def clear_cache(data, channel_layer):
     cache.delete(CACHE_KEY)
 
 
-def fetch_resources(app_workspace, refresh=False):
+def fetch_resources(app_workspace, refresh=False, conda_package="tethysapp"):
+    CHANNEL_NAME = conda_package
 
     # Fields that are required
     # resource_metadata_template = {
