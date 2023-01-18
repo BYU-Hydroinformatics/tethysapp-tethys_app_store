@@ -54,7 +54,9 @@ const addModalHelper = {
           data: {
             branch: branchesData["branches"][0],
             github_dir: branchesData["github_dir"],
-            email: $("#notifEmail").val()
+            email: $("#notifEmail").val(),
+            dev_url: $("#githubURL").val()
+
           },
           type: `process_branch`
         })
