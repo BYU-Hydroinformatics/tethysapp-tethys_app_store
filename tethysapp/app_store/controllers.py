@@ -1,5 +1,7 @@
 import re
 import semver
+import os
+import json
 from tethys_portal import __version__ as tethys_version
 from django.http import JsonResponse
 from django.shortcuts import render
@@ -18,11 +20,37 @@ CACHE_KEY = "warehouse_app_resources"
     name='home',
     url='app-store',
     permissions_required='use_app_store',
+    app_workspace=True,
 )
-def home(request):
-    return render(request, 'app_store/home.html', {})
+def home(request,app_workspace):
+    available_stores_json_path = os.path.join(app_workspace.path, 'stores.json')
+    available_stores_data_dict = {}
+    with open(available_stores_json_path) as available_stores_json_file:
+        available_stores_data_dict = json.load(available_stores_json_file)['stores']
+    print(available_stores_data_dict)
+    context = {
+        'storesData':available_stores_data_dict,
+        'show_stores': True if len(available_stores_data_dict) > 1 else False
+    }
 
+    return render(request, 'app_store/home.html', context)
 
+@controller(
+    name='get_available_stores',
+    url='app-store/get_available_stores',
+    permissions_required='use_app_store',
+    app_workspace=True,
+)
+def get_available_stores(request,app_workspace):
+    # breakpoint()
+    available_stores_json_path = os.path.join(app_workspace.path, 'stores.json')
+    available_stores_data_dict = {}
+    with open(available_stores_json_path) as available_stores_json_file:
+        available_stores_data_dict = json.load(available_stores_json_file)
+
+    return JsonResponse(available_stores_data_dict)
+
+ 
 @controller(
     name='get_resources',
     url='app-store/get_resources',
@@ -30,9 +58,13 @@ def home(request):
     app_workspace=True,
 )
 def get_resources(request, app_workspace):
+    # breakpoint()
+    conda_package = request.GET.get('conda_channel')
     require_refresh = request.GET.get('refresh', '') == "true"
     # Always require refresh
-    all_resources = fetch_resources(app_workspace, require_refresh)
+    cache_key = f'{conda_package}_app_resources'
+    all_resources = fetch_resources(app_workspace, require_refresh, conda_package,cache_key)
+    # all_resources = fetch_resources(app_workspace, require_refresh)
 
     installed_apps = []
     available_apps = []
@@ -70,11 +102,13 @@ def get_resources(request, app_workspace):
     # Get any apps installed via GitHub install process
     github_apps = get_github_install_metadata(app_workspace)
 
+
+
     context = {
         'availableApps': available_apps,
         'installedApps': installed_apps + github_apps,
         'incompatibleApps': incompatible_apps,
-        'tethysVersion': tethys_version_regex
+        'tethysVersion': tethys_version_regex,
     }
 
     return JsonResponse(context)

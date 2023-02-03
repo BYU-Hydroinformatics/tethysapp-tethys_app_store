@@ -10,7 +10,7 @@ var availableApps = {}
 var installedApps = {}
 var updateData = {}
 var tethysVersion = ""
-
+var storesDataList = []
 // End Vars
 const settingsHelper = {
     processCustomSettings: (settingsData, n_content, completeMessage, ws) => {
@@ -291,6 +291,15 @@ const getRepoForAdd = () => {
         $("#githubURL").prop("disabled", true)
         $("#loadingTextAppSubmit").text("Please wait. Fetching GitHub Repo")
 
+        // notification_ws.send(
+        //     JSON.stringify({
+        //         data: {
+        //             url: githubURL
+        //         },
+        //         type: `validate_git_repo`
+        //     })
+        // )
+
         notification_ws.send(
             JSON.stringify({
                 data: {
@@ -337,28 +346,88 @@ const update = () => {
     )
 }
 
-$(document).ready(function() {
-    // Hide the nav
-    $("#app-content-wrapper").removeClass('show-nav');
-    $(".toggle-nav").removeClass('toggle-nav');
+const get_resources_for_channel= (default_store) => {
 
-    // Get Main Data and load the table
     $.ajax({
         url: `${warehouseHomeUrl}get_resources`,
-        dataType: "json"
+        dataType: "json",
+        data: default_store
     })
         .done(function(data) {
             availableApps = data.availableApps
             installedApps = data.installedApps
             incompatibleApps = data.incompatibleApps
             tethysVersion = data.tethysVersion
+            // storesDataList = data.storesDataList
+            // console.log(storesData)
             $("#mainAppLoader").hide()
             initMainTables()
+            // create_content_for_channel(storesDataList)
         })
         .fail(function(err) {
             console.log(err)
             location.reload()
         })
+
+}
+
+
+
+$(document).ready(function() {
+    // Hide the nav
+    $("#app-content-wrapper").removeClass('show-nav');
+    $(".toggle-nav").removeClass('toggle-nav');
+    // create ajax function to get the stores now and call the get_resources for each one of the stores, you will need to send channel as a parameter :/
+    storesDataList = []
+    $.ajax({
+        url: `${warehouseHomeUrl}get_available_stores`,
+        dataType: "json"
+    }).done(function(data){
+        storesDataList = data['stores']
+        console.log(storesDataList)
+
+        var default_store = storesDataList.filter((x) => x.default == true)[0]
+        console.log(default_store)
+        // console.log("current_channel", default_conda_channel)
+        // Get Main Data and load the table
+        storesDataList.forEach(function(store_single){
+            $(`#pills-${store_single['conda_channel']}-tab`).click(function(){
+                console.log(store_single)
+                get_resources_for_channel(store_single)
+
+            })
+        })
+        
+        get_resources_for_channel(default_store)
+
+        // $.ajax({
+        //     url: `${warehouseHomeUrl}get_resources`,
+        //     dataType: "json",
+        //     data: default_store
+        // })
+        //     .done(function(data) {
+        //         availableApps = data.availableApps
+        //         installedApps = data.installedApps
+        //         incompatibleApps = data.incompatibleApps
+        //         tethysVersion = data.tethysVersion
+        //         // storesDataList = data.storesDataList
+        //         // console.log(storesData)
+        //         $("#mainAppLoader").hide()
+        //         initMainTables()
+        //         // create_content_for_channel(storesDataList)
+        //     })
+        //     .fail(function(err) {
+        //         console.log(err)
+        //         location.reload()
+        //     })
+
+
+    }).fail(function(err) {
+        storesDataList = []
+        console.log(err)
+    })
+    // console.log(storesDataList)
+
 
     let n_div = $("#notification")
     let n_content = $("#notification .lead")

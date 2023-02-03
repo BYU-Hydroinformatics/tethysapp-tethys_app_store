@@ -57,6 +57,7 @@ def restart_server(data, channel_layer, app_workspace, run_collect_all=True):
     if "install" in data["restart_type"] or "update" in data["restart_type"]:
         # Run SyncStores
         logger.info("Running Syncstores for app: " + data["name"])
+        send_notification("Running Syncstores for app: " + data["name"], channel_layer)
         intermediate_process = ['python', manage_path, 'syncstores', data["name"],  '-f']
         run_process(intermediate_process)
 
@@ -73,6 +74,7 @@ def restart_server(data, channel_layer, app_workspace, run_collect_all=True):
                                 data["restart_type"] == "update"):
 
             logger.info("Running Tethys Collectall")
+            send_notification("Running Tethys Collectall for app: " + data["name"], channel_layer)
             intermediate_process = ['python', manage_path, 'pre_collectstatic']
             run_process(intermediate_process)
             # Setup for main collectstatic
@@ -83,9 +85,17 @@ def restart_server(data, channel_layer, app_workspace, run_collect_all=True):
             run_process(intermediate_process)
 
         try:
+            send_notification("Server Restarting . . .", channel_layer)
             command = 'supervisorctl restart all'
-            subprocess.run(['sudo'], check=True)
+            subprocess.run(['sudo','-h'], check=True)
             sudoPassword = app.get_custom_setting('sudo_server_pass')
+            dir_path = os.path.dirname(os.path.realpath(__file__))
+            # script_path = os.path.join(dir_path, "scripts", "restart2.sh")
+            # subprocess.Popen(['sudo', '-S', 'supervisorctl', 'restart','all'], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE).communicate(input=f'{sudoPassword}\n')
+            # subprocess.run(["sudo", "-S", "supervisorctl", "restart", "all"])
+            # subprocess.run([script_path])
+            # logger.info("pass info")
+
             os.system('echo %s|sudo -S %s' % (sudoPassword, command))
         except Exception as e:
             logger.error(e)
