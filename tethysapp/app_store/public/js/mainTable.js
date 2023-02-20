@@ -186,8 +186,13 @@ window.operateEvents = {
 
 function initMainTables() {
   $("#tethysPlatformVersionHeader").text("Tethys Platform Version " + tethysVersion)
+  $("#installedAppsTable").bootstrapTable("destroy")
+
   $("#installedAppsTable").bootstrapTable({ data: installedApps })
+  $("#mainAppsTable").bootstrapTable("destroy")
   $("#mainAppsTable").bootstrapTable({ data: availableApps })
+  $("#incompatibleAppsTable").bootstrapTable("destroy")
+
   $("#incompatibleAppsTable").bootstrapTable({ data: incompatibleApps })
   $("#incompatibleAppsTable").find(".install>button").removeClass("btn-info btn-outline-secondary")
   $("#incompatibleAppsTable").find(".install>button").addClass("incompatible-app btn-danger")
