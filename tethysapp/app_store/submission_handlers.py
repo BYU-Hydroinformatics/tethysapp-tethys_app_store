@@ -483,14 +483,14 @@ def process_branch(install_data, channel_layer):
     repo = git.Repo(install_data['github_dir'])
     # breakpoint()
     ### get the version from the install.yml
-    install_yml = os.path.join(install_data['github_dir'], 'install.yml')
+    # install_yml = os.path.join(install_data['github_dir'], 'install.yml')
     current_tag_name = ''
-    with open(install_yml) as f:
-        install_yml_file = yaml.safe_load(f)
-        current_version = install_yml_file.get('version')
-        today = time.strftime("%Y_%m_%d")
-        ## change this to grab the version from the setup.py not the install.yml, because there is an override of the package in the conda channel
-        current_tag_name = "v" + str(current_version) + "_" + today 
+    # with open(install_yml) as f:
+    #     install_yml_file = yaml.safe_load(f)
+    #     current_version = install_yml_file.get('version')
+    #     today = time.strftime("%Y_%m_%d")
+    #     ## change this to grab the version from the setup.py not the install.yml, because there is an override of the package in the conda channel
+    #     current_tag_name = "v" + str(current_version) + "_" + today 
     # 2 if the tethysapp_warehouse_release appears in the heads, delete the existing release branch why?
     # Delete head if exists
     # if 'tethysapp_warehouse_release' in repo.heads:
@@ -500,9 +500,10 @@ def process_branch(install_data, channel_layer):
     filename = os.path.join(install_data['github_dir'], 'setup.py')
     
     # 8 Get the setup data into a dict
+    today = time.strftime("%Y_%m_%d")
 
     setup_py_data = parse_setup_py(filename)
-    current_version = setup_py_data["author_email"]
+    current_version = setup_py_data["version"]
     current_tag_name = "v" + str(current_version) + "_" + today
 
     # 3 from the origin remote checkout the selected branch and pull 
@@ -574,6 +575,16 @@ def process_branch(install_data, channel_layer):
     source = os.path.join(source_files_path, 'meta_template.yaml')
     destination = os.path.join(recipe_path, 'meta.yaml')
     # filename = os.path.join(install_data['github_dir'], 'setup.py')
+
+    # extra step custom labels when uploading
+    breakpoint()
+    label = {'label_string':'dev'}
+    if os.path.exists(os.path.join(recipe_path, 'upload_command.txt')):
+        os.remove(os.path.join(recipe_path, 'upload_command.txt'))
+    
+    shutil.copyfile(os.path.join(source_files_path, 'upload_command.txt'), os.path.join(recipe_path, 'upload_command.txt'))
+
+    apply_template(os.path.join(source_files_path, 'upload_command.txt'),label, os.path.join(recipe_path, 'upload_command.txt'))
     
     # 8 Get the setup data into a dict
 
@@ -823,7 +834,6 @@ def process_branch(install_data, channel_layer):
         "helper": "addModalHelper"
     }
     send_notification(get_data_json, channel_layer)
-
 
 
 def get_app_name_and_version(user,repo_name,branch):

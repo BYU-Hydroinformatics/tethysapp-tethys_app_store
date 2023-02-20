@@ -13,14 +13,14 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
-          python-version: "3.x"
+          python-version: '3.x'
       - name: Install dependencies
         run: python -m pip install --upgrade pyyaml
       - name: Gen Build Command
         run: |
           python ./conda.recipes/getChannels.py > build_command.txt
       - name: publish-to-conda
-        uses: rfun/conda-package-publish-action@master
+        uses: romer8/conda-package-publish-action@master
         with:
-          subDir: "conda.recipes"
+          subDir: 'conda.recipes'
           AnacondaToken: ${{ secrets.ANACONDA_TOKEN }}

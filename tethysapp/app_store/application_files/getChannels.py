@@ -8,8 +8,8 @@ try:
             channels.insert(0, "conda-forge")
         for channel in channels:
             channelString = channelString + " -c " + channel
-        buildCommand = "conda build" + channelString + " --output-folder . ."
+        buildCommand = "conda mambabuild" + channelString + " --output-folder . ."
         print(buildCommand)
 except Exception:
     # print(e)
-    print("conda build -c conda-forge --output-folder . .")
+    print("conda mambabuild -c conda-forge --output-folder . .")

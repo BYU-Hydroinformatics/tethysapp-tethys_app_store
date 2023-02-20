@@ -1,0 +1,1 @@
+anaconda upload --force --label $label_string noarch/*.tar.bz2
