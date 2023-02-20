@@ -84,3 +84,17 @@ htmlHelpers.getBranches = (branches) => {
     return `<div class="form-group">
     <label for="add_branch">Please select the branch you would like to use:</label>${sel}</div>`
 }
+
+htmlHelpers.getLabels = (labels) => {
+    let sel = `<select  class="form-control"  name="add_label" id="add_label">`
+    let options_str = ""
+
+    labels.forEach(
+        (label) => (options_str += `<option value='${label}'>${label}</option>`)
+    )
+
+    sel = `${sel}${options_str}</select>`
+
+    return `<div class="form-group">
+    <label for="add_label">Please select the label you would like to use:</label>${sel}</div>`
+}

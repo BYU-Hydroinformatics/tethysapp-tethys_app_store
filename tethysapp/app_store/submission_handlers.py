@@ -464,7 +464,7 @@ def pull_git_repo(install_data, channel_layer, app_workspace):
     get_data_json = {
         "data": {
             "branches": branches,
-            "github_dir": app_github_dir,
+            "github_dir": app_github_dir
         },
         "jsHelperFunction": "showBranches",
         "helper": "addModalHelper"
@@ -577,7 +577,6 @@ def process_branch(install_data, channel_layer):
     # filename = os.path.join(install_data['github_dir'], 'setup.py')
 
     # extra step custom labels when uploading
-    breakpoint()
     label = {'label_string':'dev'}
     if os.path.exists(os.path.join(recipe_path, 'upload_command.txt')):
         os.remove(os.path.join(recipe_path, 'upload_command.txt'))
