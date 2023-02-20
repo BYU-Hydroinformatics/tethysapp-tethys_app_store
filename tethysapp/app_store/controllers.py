@@ -12,6 +12,8 @@ import copy
 from .resource_helpers import fetch_resources
 from .helpers import get_github_install_metadata
 
+from .app import AppStore as app
+from .utilities import decrypt
 ALL_RESOURCES = []
 CACHE_KEY = "warehouse_app_resources"
 
@@ -23,11 +25,18 @@ CACHE_KEY = "warehouse_app_resources"
     app_workspace=True,
 )
 def home(request,app_workspace):
-    available_stores_json_path = os.path.join(app_workspace.path, 'stores.json')
-    available_stores_data_dict = {}
-    with open(available_stores_json_path) as available_stores_json_file:
-        available_stores_data_dict = json.load(available_stores_json_file)['stores']
+    available_stores_data_dict = app.get_custom_setting("stores_settings")['stores']
+    encryption_key = app.get_custom_setting("encryption_key")
+    for store in available_stores_data_dict:
+        store['github_token'] = decrypt(store['github_token'],encryption_key)
+
+    # available_stores_json_path = os.path.join(app_workspace.path, 'stores.json')
+    # available_stores_data_dict = {}
+    # with open(available_stores_json_path) as available_stores_json_file:
+    #     available_stores_data_dict = json.load(available_stores_json_file)['stores']
+    
     print(available_stores_data_dict)
+    
     context = {
         'storesData':available_stores_data_dict,
         'show_stores': True if len(available_stores_data_dict) > 1 else False
@@ -43,10 +52,15 @@ def home(request,app_workspace):
 )
 def get_available_stores(request,app_workspace):
     # breakpoint()
-    available_stores_json_path = os.path.join(app_workspace.path, 'stores.json')
-    available_stores_data_dict = {}
-    with open(available_stores_json_path) as available_stores_json_file:
-        available_stores_data_dict = json.load(available_stores_json_file)
+    available_stores_data_dict = app.get_custom_setting("stores_settings")
+    encryption_key = app.get_custom_setting("encryption_key")
+    for store in available_stores_data_dict['stores']:
+        store['github_token'] = decrypt(store['github_token'],encryption_key)
+
+    # available_stores_json_path = os.path.join(app_workspace.path, 'stores.json')
+    # available_stores_data_dict = {}
+    # with open(available_stores_json_path) as available_stores_json_file:
+    #     available_stores_data_dict = json.load(available_stores_json_file)
 
     return JsonResponse(available_stores_data_dict)
 
