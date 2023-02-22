@@ -11,7 +11,6 @@ var installedApps = {}
 var updateData = {}
 var tethysVersion = ""
 var storesDataList = []
-var active_store = ""
 
 // End Vars
 const settingsHelper = {
@@ -306,7 +305,7 @@ const getRepoForAdd = () => {
             JSON.stringify({
                 data: {
                     url: githubURL,
-                    store: active_store
+                    stores: active_store
                 },
                 type: `pull_git_repo`
             })
@@ -388,11 +387,12 @@ $(document).ready(function() {
         url: `${warehouseHomeUrl}get_available_stores`,
         dataType: "json"
     }).done(function(data){
-
+        console.log(data)
         storesDataList = data['stores']
         console.log(storesDataList)
+        create_request_obj(storesDataList)
+
         let storessMenuHtml = createStoresMenusHtml(storesDataList)
-        console.log(storessMenuHtml)
         $("#storeList").html(storessMenuHtml)
 
         addFunctionalityStores(storesDataList)

@@ -193,9 +193,13 @@ $("#labelList").html("hol")
 
 const createStoreMenuHtml = (store) => {
   let html_labels = createStoreLabelsHtml(store)
+  let isDefault = ""
+  if (active_stores[`${store.conda_channel}`]['default']){
+    isDefault = 'checked'
+  }
   var html_store_string = `<div class="dropdown-check-list-channels">
     <ul class="items">
-      <li><input type="checkbox" id="${store.conda_channel}"  name= "${store.conda_channel}" value= "${store.conda_channel}" >
+      <li><input type="checkbox" id="${store.conda_channel}"  name= "${store.conda_channel}" value= "${store.conda_channel}" ${isDefault} >
         <label for="${store.conda_channel}">
           <span class="label-anaconda">${store.conda_channel}</span>  
           <span ></span>          
@@ -207,16 +211,25 @@ const createStoreMenuHtml = (store) => {
 }
 
 const createStoreLabelsHtml = (store) => {
-  let check_box = `<div id="${store.conda_channel}_label" class="dropdown-check-list d-none" tabindex="100"> <span class="anchor">Select Labels</span><ul class="items">`
+  let isDefault = "d-none"
+  let store_labels_len = store['conda_labels'].length;
+
+  if (active_stores[`${store.conda_channel}`]['default'] && store_labels_len > 1){
+    isDefault = ""
+  }
+  let check_box = `<div id="${store.conda_channel}_label" class="dropdown-check-list ${isDefault}" tabindex="100"> <span class="anchor">Labels</span><ul class="items">`
   let options_str = ""
-  console.log(store['conda_labels'])
-  store['conda_labels'].forEach(
-      (label) => (options_str += `<li> <input id= "${store.conda_channel}__${label}" type="checkbox" value='${label}' /><label for ="${store.conda_channel}__${label}"><span>${label}</span><span></span></label> </li>`)
-  )
+  store['conda_labels'].forEach(function(label){
+    // let isMain = ''
+    // if(label == 'main'){
+    //   isMain = 'checked'
+    // }
+    options_str += `<li> <input id= "${store.conda_channel}__${label}" type="checkbox" value='${label}' /><label for ="${store.conda_channel}__${label}"><span>${label}</span><span></span></label> </li>`
+  })
 
   sel = `${check_box}${options_str}</ul></div>`
 
-  console.log(sel)
+  
   return sel
 }
 
@@ -231,31 +244,86 @@ const createStoresMenusHtml = (stores) =>{
 
 const addFunctionalitySingleStores = (store) =>{
   
-
-  
   var checkList = document.getElementById(`${store.conda_channel}_label`);
   
   checkList.getElementsByClassName('anchor')[0].onclick = function(evt) {
-    if (checkList.classList.contains('visible'))
+    console.log(active_stores)
+
+    if (checkList.classList.contains('visible')){
       checkList.classList.remove('visible');
-    else
-      checkList.classList.add('visible');
-  }
-  // console.log("hi")
-  var checkListStore = document.getElementById(`${store.conda_channel}`);
-  checkListStore.onchange = function(evt){
-    if(this.checked){
-      checkList.classList.remove('d-none')
     }
+      
     else{
-      checkList.classList.add('d-none')
+      checkList.classList.add('visible');
+
+    }
+  }
+  
+  var checkListStore = document.getElementById(`${store.conda_channel}`);
+    checkListStore.onchange = function(evt){
+      
+      if(this.checked){
+        // if(store.conda_labels.lenght > 1) {
+          checkList.classList.remove('d-none')
+        // }
+        active_stores[this.value]['active'] = true  
+      }
+      else{
+        // if(store.conda_labels.lenght > 1) {
+          checkList.classList.add('d-none')
+        // }
+        active_stores[this.value]['active'] = false
+      }
     }
 
-  }
+  store.conda_labels.forEach(function(label){
+    var checkListLabel = document.getElementById(`${store.conda_channel}__${label}`);
+    checkListLabel.onchange = function(evt){
+      console.log(this.checked)
+      if(this.checked){
+        if(!active_stores[`${store.conda_channel}`]['conda_labels'].includes(this.value)){
+          active_stores[`${store.conda_channel}`]['conda_labels'].push(this.value);
+          console.log(active_stores[`${store.conda_channel}`]['conda_labels']);
+        }
+      }
+      else{
+        if(active_stores[`${store.conda_channel}`]['conda_labels'].includes(this.value)){
+          const index = active_stores[`${store.conda_channel}`]['conda_labels'].indexOf(this.value);
+          active_stores[`${store.conda_channel}`]['conda_labels'].splice(index, 1);
+          console.log(active_stores[`${store.conda_channel}`]['conda_labels'])
+        }
+      }
+    }
+
+    
+  })
 
 }
-addFunctionalityStores = (stores) =>{
+const addFunctionalityStores = (stores) =>{
   stores.forEach(
     (store) => addFunctionalitySingleStores(store)
   )
+}
+
+const create_request_obj = (storesDataList) =>{
+  storesDataList.forEach(function(store){
+    active_stores[`${store.conda_channel}`] = Object.assign({}, store);
+    
+    if (active_stores[`${store.conda_channel}`].hasOwnProperty(`${store.conda_channel}`)){
+        delete active_stores[`${store.conda_channel}`][`${store.conda_channel}`]
+    }
+    let labels_selected = []
+    if(active_stores[`${store.conda_channel}`]['conda_labels'].length < 2){
+      labels_selected.push(active_stores[`${store.conda_channel}`]['conda_labels'][0])
+    }
+    // active_stores[`${store.conda_channel}`]['conda_labels'].forEach(function(label){
+      
+    //   if(active_stores[`${store.conda_channel}`]['conda_labels'].includes('main') && !labels_selected.includes('main')){
+    //     labels_selected.push('main')
+    //   }
+
+    // })
+    active_stores[`${store.conda_channel}`]['active'] = active_stores[`${store.conda_channel}`]['default'];
+    active_stores[`${store.conda_channel}`]['conda_labels'] = labels_selected
+  })
 }
