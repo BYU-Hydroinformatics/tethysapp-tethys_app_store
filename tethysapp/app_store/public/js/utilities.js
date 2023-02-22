@@ -197,8 +197,8 @@ const createStoreMenuHtml = (store) => {
     <ul class="items">
       <li><input type="checkbox" id="${store.conda_channel}"  name= "${store.conda_channel}" value= "${store.conda_channel}" >
         <label for="${store.conda_channel}">
-          <span>${store.conda_channel}</span>  
-          <span></span>          
+          <span class="label-anaconda">${store.conda_channel}</span>  
+          <span ></span>          
         </label>
       </li>
     </ul>
