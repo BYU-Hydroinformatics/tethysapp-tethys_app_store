@@ -11,6 +11,8 @@ var installedApps = {}
 var updateData = {}
 var tethysVersion = ""
 var storesDataList = []
+var active_store = ""
+
 // End Vars
 const settingsHelper = {
     processCustomSettings: (settingsData, n_content, completeMessage, ws) => {
@@ -303,7 +305,8 @@ const getRepoForAdd = () => {
         notification_ws.send(
             JSON.stringify({
                 data: {
-                    url: githubURL
+                    url: githubURL,
+                    store: active_store
                 },
                 type: `pull_git_repo`
             })
@@ -389,13 +392,14 @@ $(document).ready(function() {
 
         var default_store = storesDataList.filter((x) => x.default == true)[0]
         console.log(default_store)
+        active_store = default_store['github_organization']
         // console.log("current_channel", default_conda_channel)
         // Get Main Data and load the table
         storesDataList.forEach(function(store_single){
             $(`#pills-${store_single['conda_channel']}-tab`).click(function(){
                 console.log(store_single)
                 get_resources_for_channel(store_single)
-
+                active_store = store_single['github_organization']
             })
         })
         

@@ -26,6 +26,8 @@ from .helpers import logger, send_notification, apply_template, parse_setup_py, 
 
 from datetime import datetime
 
+from .app import AppStore as app
+
 key = "#45c0#a820f85aa11d727#f02c382#c91d63be83".replace("#", "e")
 g = github.Github(key)
 
@@ -422,8 +424,11 @@ def pull_git_repo(install_data, channel_layer, app_workspace):
     # 5 Get the references to get the branches
 
     github_url = install_data.get("url")
+    active_store = install_data.get("store")
     app_name = github_url.split("/")[-1].replace(".git", "")
-    github_dir = os.path.join(app_workspace.path, 'gitsubmission')
+    github_dir = os.path.join(app_workspace.path, active_store, 'gitsubmission')
+
+
     # create if github Dir does not exist
     if not os.path.exists(github_dir):
         os.makedirs(github_dir)
