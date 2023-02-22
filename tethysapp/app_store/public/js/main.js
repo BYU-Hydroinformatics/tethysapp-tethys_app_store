@@ -383,12 +383,19 @@ $(document).ready(function() {
     $(".toggle-nav").removeClass('toggle-nav');
     // create ajax function to get the stores now and call the get_resources for each one of the stores, you will need to send channel as a parameter :/
     storesDataList = []
+
     $.ajax({
         url: `${warehouseHomeUrl}get_available_stores`,
         dataType: "json"
     }).done(function(data){
+
         storesDataList = data['stores']
         console.log(storesDataList)
+        let storessMenuHtml = createStoresMenusHtml(storesDataList)
+        console.log(storessMenuHtml)
+        $("#storeList").html(storessMenuHtml)
+
+        addFunctionalityStores(storesDataList)
 
         var default_store = storesDataList.filter((x) => x.default == true)[0]
         console.log(default_store)

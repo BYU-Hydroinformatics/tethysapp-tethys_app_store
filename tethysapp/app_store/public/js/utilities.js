@@ -185,3 +185,77 @@ function startWS(websocketServerLocation, n_content) {
     }, 1000)
   }
 }
+
+
+var labels_options_str = `<select>` 
+$("#labelList").html("hol")
+
+
+const createStoreMenuHtml = (store) => {
+  let html_labels = createStoreLabelsHtml(store)
+  var html_store_string = `<div class="dropdown-check-list-channels">
+    <ul class="items">
+      <li><input type="checkbox" id="${store.conda_channel}"  name= "${store.conda_channel}" value= "${store.conda_channel}" >
+        <label for="${store.conda_channel}">
+          <span>${store.conda_channel}</span>  
+          <span></span>          
+        </label>
+      </li>
+    </ul>
+  </div>`
+  return `${html_store_string}${html_labels}`
+}
+
+const createStoreLabelsHtml = (store) => {
+  let check_box = `<div id="${store.conda_channel}_label" class="dropdown-check-list d-none" tabindex="100"> <span class="anchor">Select Labels</span><ul class="items">`
+  let options_str = ""
+  console.log(store['conda_labels'])
+  store['conda_labels'].forEach(
+      (label) => (options_str += `<li> <input id= "${store.conda_channel}__${label}" type="checkbox" value='${label}' /><label for ="${store.conda_channel}__${label}"><span>${label}</span><span></span></label> </li>`)
+  )
+
+  sel = `${check_box}${options_str}</ul></div>`
+
+  console.log(sel)
+  return sel
+}
+
+const createStoresMenusHtml = (stores) =>{
+  let storesMenuHtml = ''
+  stores.forEach(
+    (store) => storesMenuHtml += createStoreMenuHtml(store)
+    
+  )
+  return storesMenuHtml
+}
+
+const addFunctionalitySingleStores = (store) =>{
+  
+
+  
+  var checkList = document.getElementById(`${store.conda_channel}_label`);
+  
+  checkList.getElementsByClassName('anchor')[0].onclick = function(evt) {
+    if (checkList.classList.contains('visible'))
+      checkList.classList.remove('visible');
+    else
+      checkList.classList.add('visible');
+  }
+  // console.log("hi")
+  var checkListStore = document.getElementById(`${store.conda_channel}`);
+  checkListStore.onchange = function(evt){
+    if(this.checked){
+      checkList.classList.remove('d-none')
+    }
+    else{
+      checkList.classList.add('d-none')
+    }
+
+  }
+
+}
+addFunctionalityStores = (stores) =>{
+  stores.forEach(
+    (store) => addFunctionalitySingleStores(store)
+  )
+}
