@@ -305,9 +305,9 @@ const getRepoForAdd = () => {
             JSON.stringify({
                 data: {
                     url: githubURL,
-                    stores: active_store
+                    stores: active_stores
                 },
-                type: `pull_git_repo`
+                type: `pull_git_repo_all`
             })
         )
     } else {

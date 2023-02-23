@@ -28,8 +28,8 @@ from datetime import datetime
 
 from .app import AppStore as app
 
-key = "#45c0#a820f85aa11d727#f02c382#c91d63be83".replace("#", "e")
-g = github.Github(key)
+# key = "#45c0#a820f85aa11d727#f02c382#c91d63be83".replace("#", "e")
+# g = github.Github(key)
 
 LOCAL_DEBUG_MODE = False
 CHANNEL_NAME = 'tethysapp'
@@ -413,8 +413,16 @@ def validate_git_repo(install_data,channel_layer):
 
 # def show_remote_branches()
 
+def pull_git_repo_all(install_data, channel_layer, app_workspace):
+    
+    github_url = install_data.get("url")
+    active_stores = install_data.get("stores")
+    for store_name in active_stores:
+        if(active_stores[store_name]['active']):
+            pull_git_repo(github_url,active_stores[store_name], channel_layer, app_workspace)
 
-def pull_git_repo(install_data, channel_layer, app_workspace):
+# def pull_git_repo(install_data, channel_layer, app_workspace):
+def pull_git_repo(github_url,active_store, channel_layer, app_workspace):
     
     # This function does the following:
     # 1 Check if the the directory is a current repository or initialize, and then select or create the remote origin 
@@ -423,10 +431,9 @@ def pull_git_repo(install_data, channel_layer, app_workspace):
     # 4 Pull the changes if any
     # 5 Get the references to get the branches
 
-    github_url = install_data.get("url")
-    active_store = install_data.get("store")
+    # github_url = install_data.get("url")
     app_name = github_url.split("/")[-1].replace(".git", "")
-    github_dir = os.path.join(app_workspace.path, active_store, 'gitsubmission')
+    github_dir = os.path.join(app_workspace.path, 'gitsubmission',active_store['conda_channel'])
 
 
     # create if github Dir does not exist
@@ -465,11 +472,15 @@ def pull_git_repo(install_data, channel_layer, app_workspace):
     branches = []
     for refs in remote_refs:
         branches.append(refs.name.replace("origin/", ""))
+    
+    breakpoint()
 
     get_data_json = {
         "data": {
             "branches": branches,
-            "github_dir": app_github_dir
+            "github_dir": app_github_dir,
+            "github_token": active_store['github_token'],
+            "conda_labels": active_store['conda_labels']
         },
         "jsHelperFunction": "showBranches",
         "helper": "addModalHelper"
@@ -482,9 +493,19 @@ def process_branch(install_data, channel_layer):
     # first create a new branch per tag,
     # second run the application without any change and see what might be the error
     
+    key  = install_data["github_token"].replace("#", "e") 
+    g = github.Github(key)
+    conda_labels = install_data["conda_labels"]
+    labels_string = '';
+    for i in range(len(conda_labels)):
+        if i < 1:
+           labels_string += conda_labels[i]
+        else:
+            labels_string += f' --label {conda_labels[i]}'
     # This function does the following:
 
     # 1 select the git repo with the path github_dir
+
     repo = git.Repo(install_data['github_dir'])
     # breakpoint()
     ### get the version from the install.yml
@@ -582,7 +603,16 @@ def process_branch(install_data, channel_layer):
     # filename = os.path.join(install_data['github_dir'], 'setup.py')
 
     # extra step custom labels when uploading
-    label = {'label_string':'dev'}
+    labels_string = '';
+    for i in range(len(conda_labels)):
+        if i < 1:
+           labels_string += conda_labels[i]
+        else:
+            labels_string += f' --label {conda_labels[i]}'
+
+    # label = {'label_string':'dev'}
+    label = {'label_string': labels_string }
+
     if os.path.exists(os.path.join(recipe_path, 'upload_command.txt')):
         os.remove(os.path.join(recipe_path, 'upload_command.txt'))
     

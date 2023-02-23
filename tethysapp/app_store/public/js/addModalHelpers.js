@@ -57,11 +57,14 @@ const addModalHelper = {
       //       type: `validate_git_repo`
       //   })
       // )
+
       notification_ws.send(
         JSON.stringify({
           data: {
             branch: branchesData["branches"][0],
             github_dir: branchesData["github_dir"],
+            github_token: branchesData["github_token"],
+            conda_labels: branchesData["conda_labels"],
             email: $("#notifEmail").val(),
             dev_url: $("#githubURL").val()
 
@@ -90,6 +93,8 @@ const addModalHelper = {
           data: {
             branch: branchName,
             github_dir: branchesData["github_dir"],
+            github_token: branchesData["github_token"],
+            conda_labels: branchesData["conda_labels"],
             email: $("#notifEmail").val()
           },
           type: `process_branch`
