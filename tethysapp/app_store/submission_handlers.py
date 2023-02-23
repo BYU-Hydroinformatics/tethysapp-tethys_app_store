@@ -473,8 +473,6 @@ def pull_git_repo(github_url,active_store, channel_layer, app_workspace):
     for refs in remote_refs:
         branches.append(refs.name.replace("origin/", ""))
     
-    breakpoint()
-
     get_data_json = {
         "data": {
             "branches": branches,
@@ -811,21 +809,43 @@ def process_branch(install_data, channel_layer):
     tethysapp_remote.push('tethysapp_warehouse_release')
 
     # create new head with the new version
-    new_release_branch = repo.create_head(current_tag_name)
-    repo.git.checkout(current_tag_name)
-    # push the new branch in remote
-    tethysapp_remote.push(new_release_branch)
+    heads_names_list = []
+    for ref in repo.references:
+        heads_names_list.append(ref.name)
+
+    breakpoint()
+
+    if current_tag_name not in heads_names_list:
+        new_release_branch = repo.create_head(current_tag_name)
+        repo.git.checkout(current_tag_name)
+        # push the new branch in remote
+        tethysapp_remote.push(new_release_branch)
+    else:
+        repo.git.checkout(current_tag_name)
+        # push the new branch in remote
+        tethysapp_remote.push(current_tag_name)
+
 
     tag_name = current_tag_name + "_release"
-    # Create tag over the 
-    new_tag = repo.create_tag(
-        tag_name,
-        ref=repo.heads["tethysapp_warehouse_release"],
-        message=f'This is a tag-object pointing to tethysapp_warehouse_release branch with release version {current_tag_name}',
-    )
+    if tag_name not in heads_names_list:
 
-    tethysapp_remote.push(new_tag)
+        # Create tag over the 
+        new_tag = repo.create_tag(
+            tag_name,
+            ref=repo.heads["tethysapp_warehouse_release"],
+            message=f'This is a tag-object pointing to tethysapp_warehouse_release branch with release version {current_tag_name}',
+        )
+        tethysapp_remote.push(new_tag)
 
+    else:
+        repo.git.tag('-d', tag_name)  # remove locally
+        tethysapp_remote.push(refspec=(':%s' % (tag_name)))  # remove from remote
+        new_tag = repo.create_tag(
+            tag_name,
+            ref=repo.heads["tethysapp_warehouse_release"],
+            message=f'This is a tag-object pointing to tethysapp_warehouse_release branch with release version {current_tag_name}',
+        )
+        tethysapp_remote.push(new_tag)
     
     tethysapp_repo = organization.get_repo(repo_name)
 
