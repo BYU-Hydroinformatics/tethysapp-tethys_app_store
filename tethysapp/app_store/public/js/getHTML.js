@@ -71,8 +71,10 @@ htmlHelpers.getServiceCard = (settingName, service) => {
             </div>`
 }
 
-htmlHelpers.getBranches = (branches) => {
-    let sel = `<select  class="form-control"  name="add_branch" id="add_branch">`
+htmlHelpers.getBranches = (conda_channel,branches) => {
+    let sel = `<select  class="form-control"  name="add_branch" id="${conda_channel}_add_branch">`
+    // let sel = `<select  class="form-control add_branch"  name="add_branch" >`
+
     let options_str = ""
 
     branches.forEach(

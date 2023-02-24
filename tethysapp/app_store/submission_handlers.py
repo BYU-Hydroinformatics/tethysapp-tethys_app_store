@@ -477,6 +477,7 @@ def pull_git_repo(github_url,active_store, channel_layer, app_workspace):
         "data": {
             "branches": branches,
             "github_dir": app_github_dir,
+            "conda_channel": active_store['conda_channel'],
             "github_token": active_store['github_token'],
             "conda_labels": active_store['conda_labels'],
             "github_organization": active_store['github_organization']

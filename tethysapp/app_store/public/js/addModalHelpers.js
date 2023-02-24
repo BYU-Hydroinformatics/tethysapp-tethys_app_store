@@ -31,7 +31,9 @@ const addModalHelper = {
     if (!("branches" in branchesData)) {
       sendNotification(
         "Error while checking the repo for branches. Please ensure the repo is public.",
-        $("#branchesList")
+        // $("#branchesList")
+        $(".branchesList")
+
       )
       return
     }
@@ -41,7 +43,9 @@ const addModalHelper = {
         `One branch found. Continuing packaging with ${
           branchesData["branches"][0]
         } branch.`,
-        $("#branchesList")
+        // $("#branchesList")
+        $(".branchesList")
+
       )
       $("#loaderEllipsis").show()
       $("#processBranchButton").prop("disabled", true)
@@ -77,11 +81,14 @@ const addModalHelper = {
     }
 
     // More than one branch available. Ask user for option:
-    let branchesHTML = htmlHelpers.getBranches(branchesData["branches"])
-    $("#branchesList").append(branchesHTML)
+    let branchesHTML = htmlHelpers.getBranches(branchesData["conda_channel"], branchesData["branches"])
+    // $("#branchesList").append(branchesHTML)
+    $(`#${branchesData["conda_channel"]}_branchesList`).append(branchesHTML)
 
     $("#processBranchButton").click((e) => {
-      let branchName = $("#add_branch").val()
+      let branchName = $(`#${branchesData["conda_channel"]}_add_branch`).val()
+      // let branchName = $("#add_branch").val()
+
 
       $("#loaderEllipsis").show()
       $("#processBranchButton").prop("disabled", true)

@@ -217,7 +217,9 @@ const createStoreMenuHtml = (store) => {
       </li>
     </ul>
   </div>`
-  return `<div class="row_store_submission">${html_store_string}${html_labels}</div>`
+  
+
+  return `<div class="row_store_submission">${html_store_string}${html_labels}<div id="${store.conda_channel}_branchesList"></div></div>`
 }
 
 const createStoreLabelsHtml = (store) => {
