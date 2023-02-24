@@ -478,7 +478,8 @@ def pull_git_repo(github_url,active_store, channel_layer, app_workspace):
             "branches": branches,
             "github_dir": app_github_dir,
             "github_token": active_store['github_token'],
-            "conda_labels": active_store['conda_labels']
+            "conda_labels": active_store['conda_labels'],
+            "github_organization": active_store['github_organization']
         },
         "jsHelperFunction": "showBranches",
         "helper": "addModalHelper"
@@ -491,7 +492,10 @@ def process_branch(install_data, channel_layer):
     # first create a new branch per tag,
     # second run the application without any change and see what might be the error
     
-    key  = install_data["github_token"].replace("#", "e") 
+    # key  = install_data["github_token"].replace("#", "e")
+    github_organization = install_data["github_organization"]
+    key = install_data["github_token"]
+     
     g = github.Github(key)
     conda_labels = install_data["conda_labels"]
     labels_string = '';
@@ -528,7 +532,8 @@ def process_branch(install_data, channel_layer):
 
     setup_py_data = parse_setup_py(filename)
     current_version = setup_py_data["version"]
-    current_tag_name = "v" + str(current_version) + "_" + today
+    
+    # current_tag_name = "v" + str(current_version) + "_" + today
 
     # 3 from the origin remote checkout the selected branch and pull 
     origin = repo.remote(name='origin')
@@ -763,8 +768,13 @@ def process_branch(install_data, channel_layer):
 
 
     # Check if this repo already exists on our remote:
+    breakpoint()
+
     repo_name = install_data['github_dir'].split('/')[-1]
-    organization = g.get_organization("tethysapp")
+    # github_organization
+    organization = g.get_organization(github_organization)
+
+    # organization = g.get_organization("tethysapp")
 
     remote_url = ''
     if repo_exists(repo_name, organization):
@@ -791,12 +801,29 @@ def process_branch(install_data, channel_layer):
 
     remote_url = tethysapp_repo.git_url.replace("git://", "https://" + key + ":x-oauth-basic@")
 
-    if 'tethysapp' in repo.remotes:
+    dev_attempt = 0
+    current_tag_name = "v" + str(current_version) + "_" + str(dev_attempt) + "_" + today
+    
+    heads_names_list = []
+    
+    for ref in repo.references:
+        heads_names_list.append(ref.name)
+    
+    if current_tag_name in heads_names_list:
+        dev_attempt += 1
+    
+    current_tag_name = "v" + str(current_version) + "_" + str(dev_attempt) + "_" + today
+
+
+    # if 'tethysapp' in repo.remotes:
+    if github_organization in repo.remotes:
         logger.info("Remote already exists")
-        tethysapp_remote = repo.remotes.tethysapp
+        tethysapp_remote = repo.remotes[github_organization]
+        # tethysapp_remote = repo.remotes.tethysapp
         tethysapp_remote.set_url(remote_url)
     else:
-        tethysapp_remote = repo.create_remote('tethysapp', remote_url)
+        # tethysapp_remote = repo.create_remote('tethysapp', remote_url)
+        tethysapp_remote = repo.create_remote(github_organization, remote_url)
 
     if files_changed:
         repo.git.add(A=True)
@@ -809,11 +836,10 @@ def process_branch(install_data, channel_layer):
     tethysapp_remote.push('tethysapp_warehouse_release')
 
     # create new head with the new version
-    heads_names_list = []
-    for ref in repo.references:
-        heads_names_list.append(ref.name)
+    # heads_names_list = []
+    # for ref in repo.references:
+    #     heads_names_list.append(ref.name)
 
-    breakpoint()
 
     if current_tag_name not in heads_names_list:
         new_release_branch = repo.create_head(current_tag_name)
@@ -861,7 +887,9 @@ def process_branch(install_data, channel_layer):
                 logger.info("Obtained Workflow for Submission. Getting Job URL")
 
                 try:
-                    response = requests.get(tethysapp_repo.get_workflow_runs()[0].jobs_url, auth=('tethysapp', key))
+                    # response = requests.get(tethysapp_repo.get_workflow_runs()[0].jobs_url, auth=('tethysapp', key))
+                    response = requests.get(tethysapp_repo.get_workflow_runs()[0].jobs_url, auth=(github_organization, key))
+
                     response.raise_for_status()
                     jsonResponse = response.json()
                     workflowFound = jsonResponse["total_count"] > 0
