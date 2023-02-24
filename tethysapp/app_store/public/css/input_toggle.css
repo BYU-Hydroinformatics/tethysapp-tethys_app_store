@@ -1,8 +1,8 @@
 :root {
     --white: #e8e9ed;
-    --gray: #434257;
+    --gray: #337ab7;
     --blue: #18172c;
-    --green: #00d084;
+    --green: #5bc0de;
     --pink: #ff4b77;
   }
   
@@ -46,6 +46,8 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: 10px;
+
   }
   
   .dropdown-check-list-channels ul.items li label span:last-child {
@@ -77,6 +79,7 @@
     right: 8px;
     width: 12px;
     height: 12px;
+    color:#fff;
     transform: translateY(-50%);
     background: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/162656/uncheck-switcher.svg);
     background-size: 12px 12px;
@@ -99,6 +102,7 @@
   .dropdown-check-list-channels .items {
     width: 100%;
     display: block;
+    padding: 0;
   }
 
 
@@ -117,6 +121,6 @@
     padding: 0.25rem 0.5rem;
     /* font-size: 11px; */
     /* font-size: .6875rem; */
-    background-color: #43b02a;
+    background-color:  var(--blue);
     color: #fff;
 }

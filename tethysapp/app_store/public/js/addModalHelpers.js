@@ -65,6 +65,7 @@ const addModalHelper = {
             github_dir: branchesData["github_dir"],
             github_token: branchesData["github_token"],
             conda_labels: branchesData["conda_labels"],
+            github_organization: branchesData["github_organization"],
             email: $("#notifEmail").val(),
             dev_url: $("#githubURL").val()
 
@@ -95,6 +96,7 @@ const addModalHelper = {
             github_dir: branchesData["github_dir"],
             github_token: branchesData["github_token"],
             conda_labels: branchesData["conda_labels"],
+            github_organization: branchesData["github_organization"],
             email: $("#notifEmail").val()
           },
           type: `process_branch`

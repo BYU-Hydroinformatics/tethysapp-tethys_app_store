@@ -200,14 +200,17 @@ const createStoreMenuHtml = (store) => {
   var html_store_string = `<div class="dropdown-check-list-channels">
     <ul class="items">
       <li><input type="checkbox" id="${store.conda_channel}"  name= "${store.conda_channel}" value= "${store.conda_channel}" ${isDefault} >
+        
         <label for="${store.conda_channel}">
-          <span class="label-anaconda">${store.conda_channel}</span>  
-          <span ></span>          
+          <span span class="label-anaconda">${store.conda_channel}</span>
+
+          <span ></span>
         </label>
+
       </li>
     </ul>
   </div>`
-  return `${html_store_string}${html_labels}`
+  return `<div class="row_store_submission">${html_store_string}${html_labels}</div>`
 }
 
 const createStoreLabelsHtml = (store) => {
