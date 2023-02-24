@@ -240,3 +240,8 @@
   align-content: center;
   align-items: center;
 } */
+
+.loader_and_title{
+  display: flex;
+  gap:10px;
+}
