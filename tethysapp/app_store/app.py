@@ -1,5 +1,5 @@
 from tethys_sdk.base import TethysAppBase
-from tethys_sdk.app_settings import CustomSimpleSetting,CustomJSONSetting,CustomSecretSetting
+from tethys_sdk.app_settings import CustomSetting,JSONCustomSetting,SecretCustomSetting
 from tethys_sdk.permissions import Permission, PermissionGroup
 
 
@@ -42,18 +42,18 @@ class AppStore(TethysAppBase):
 
     def custom_settings(self):
         return (
-            CustomSimpleSetting(
+            CustomSetting(
                 name='sudo_server_pass',
-                type=CustomSimpleSetting.TYPE_STRING,
+                type=CustomSetting.TYPE_STRING,
                 description='Sudo password for server',
                 required=False
             ),
-            CustomJSONSetting(
+            JSONCustomSetting(
                 name='stores_settings',
                 description='Json Containing the different credentials for Github and Anaconda',
                 required=False
             ),
-            CustomSecretSetting(
+            SecretCustomSetting(
                 name='encryption_key',
                 description='encryption_key for github token in the json',
                 required=False
