@@ -905,7 +905,7 @@ def process_branch(install_data, channel_layer):
     except AttributeError:
         logger.info("Unable to obtain Workflow Run")
         job_url = None
-    breakpoint()
+    # breakpoint()
     get_data_json = {
         "data": {
             "githubURL": tethysapp_repo.git_url.replace("git:", "https:"),

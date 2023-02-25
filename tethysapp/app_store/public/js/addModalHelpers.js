@@ -45,6 +45,8 @@ const addModalHelper = {
     }
 
     if (branchesData["branches"].length == 1) {
+      $(`#${branchesData["conda_channel"]}_spinner`).show(); 
+
       sendNotification(
         `One branch found. Continuing packaging with ${
           branchesData["branches"][0]
@@ -93,9 +95,10 @@ const addModalHelper = {
     $(`#${branchesData["conda_channel"]}_branchesList`).append(branchesHTML)
 
     $("#processBranchButton").click((e) => {
+      $(`#${branchesData["conda_channel"]}_spinner`).show(); 
+
       let branchName = $(`#${branchesData["conda_channel"]}_add_branch`).val()
       // let branchName = $("#add_branch").val()
-      $(`#${branchesData["conda_channel"]}_spinner`).show(); 
 
       $("#loaderEllipsis").show()
       $("#processBranchButton").prop("disabled", true)
@@ -148,7 +151,7 @@ const addModalHelper = {
     }
     $("#doneAddButton").show()
     // $("#successMessage").show()
-    $(`#${addData.conda_channel}_successMessage`).show()
+    $(`#${addData.conda_channel}_successMessage`).show();
 
     // $("#failMessage").hide()
     $(`#${addData.conda_channel}_failMessage`).hide()

@@ -203,7 +203,7 @@ const createStoreMenuHtml = (store) => {
 
         <label for="${store.conda_channel}">
           <div class="loader_and_title">
-            <div id="${store.conda_channel}_spinner" class="spinner-border spinner-border-sm text-info d-none" role="status">
+            <div id="${store.conda_channel}_spinner" class="spinner-border spinner-border-sm text-info" style="display:none;" role="status">
               <span class="visually-hidden">Loading...</span>
             </div>  
             <p class="label-anaconda">
