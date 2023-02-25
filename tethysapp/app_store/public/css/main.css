@@ -245,3 +245,11 @@
   display: flex;
   gap:10px;
 }
+
+.branches-form{
+  padding-top: 10px;
+}
+
+#processBranchButton{
+  margin-top: 10px;
+}

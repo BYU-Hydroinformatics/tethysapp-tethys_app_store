@@ -769,8 +769,6 @@ def process_branch(install_data, channel_layer):
 
 
     # Check if this repo already exists on our remote:
-    breakpoint()
-
     repo_name = install_data['github_dir'].split('/')[-1]
     # github_organization
     organization = g.get_organization(github_organization)
@@ -907,11 +905,12 @@ def process_branch(install_data, channel_layer):
     except AttributeError:
         logger.info("Unable to obtain Workflow Run")
         job_url = None
-
+    breakpoint()
     get_data_json = {
         "data": {
             "githubURL": tethysapp_repo.git_url.replace("git:", "https:"),
-            "job_url": job_url
+            "job_url": job_url,
+            "conda_channel": install_data['conda_channel']
         },
         "jsHelperFunction": "addComplete",
         "helper": "addModalHelper"

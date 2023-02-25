@@ -203,7 +203,7 @@ const createStoreMenuHtml = (store) => {
 
         <label for="${store.conda_channel}">
           <div class="loader_and_title">
-            <div class="spinner-border spinner-border-sm text-info d-none" role="status">
+            <div id="${store.conda_channel}_spinner" class="spinner-border spinner-border-sm text-info d-none" role="status">
               <span class="visually-hidden">Loading...</span>
             </div>  
             <p class="label-anaconda">
@@ -218,8 +218,12 @@ const createStoreMenuHtml = (store) => {
     </ul>
   </div>`
   
-
-  return `<div class="row_store_submission">${html_store_string}${html_labels}<div id="${store.conda_channel}_branchesList"></div></div>`
+  var success_string = `<div id="${store.conda_channel}_successMessage" style="display:none;margin-top:10px;" class="p-3 mb-2 bg-success text-white">
+      <p>Your Tethys Application has been successfully queued for processing.You will be notified via email when you application is available on the Tethys App Store. <span id="${store.conda_channel}_SuccessLinkMessage">Click <span id="${store.conda_channel}_addSuccessLink">here</span> to follow the processing logs and inspect it for errors.</span>
+    </p>
+  </div>`
+  var fail_string =`<div id="${store.conda_channel}_failMessage" style="display:none;margin-top:10px;" class="p-3 mb-2 bg-info text-white"></div>`
+  return `<div class="row_store_submission">${html_store_string}${html_labels}<div id="${store.conda_channel}_branchesList"></div>${success_string}${fail_string}</div>`
 }
 
 const createStoreLabelsHtml = (store) => {
@@ -239,7 +243,7 @@ const createStoreLabelsHtml = (store) => {
     options_str += `<li> <input id= "${store.conda_channel}__${label}" type="checkbox" value='${label}' /><label for ="${store.conda_channel}__${label}"><span>${label}</span><span></span></label> </li>`
   })
 
-  sel = `${check_box}${options_str}</ul></div>`
+  sel = `<p class="${isDefault}">Please select the labels you would like to use:</p>${check_box}${options_str}</ul></div>`
 
   
   return sel
