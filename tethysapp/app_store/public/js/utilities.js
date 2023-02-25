@@ -233,17 +233,17 @@ const createStoreLabelsHtml = (store) => {
   if (active_stores[`${store.conda_channel}`]['default'] && store_labels_len > 1){
     isDefault = ""
   }
-  let check_box = `<div id="${store.conda_channel}_label" class="dropdown-check-list ${isDefault}" tabindex="100"> <span class="anchor">Labels</span><ul class="items">`
+  let check_box = `<div id="${store.conda_channel}_label" class="dropdown-check-list ${isDefault}" tabindex="100"> <div><span>Please select the labels to use:</span> <span class="anchor">Labels</span></div><ul class="items">`
   let options_str = ""
   store['conda_labels'].forEach(function(label){
     // let isMain = ''
     // if(label == 'main'){
     //   isMain = 'checked'
     // }
-    options_str += `<li> <input id= "${store.conda_channel}__${label}" type="checkbox" value='${label}' /><label for ="${store.conda_channel}__${label}"><span>${label}</span><span></span></label> </li>`
+    options_str += `<li><input id= "${store.conda_channel}__${label}" type="checkbox" value='${label}' /><label for ="${store.conda_channel}__${label}"><span>${label}</span><span></span></label> </li>`
   })
 
-  sel = `<p class="${isDefault}">Please select the labels you would like to use:</p>${check_box}${options_str}</ul></div>`
+  sel = `${check_box}${options_str}</ul></div>`
 
   
   return sel
@@ -277,16 +277,19 @@ const addFunctionalitySingleStores = (store) =>{
   
   var checkListStore = document.getElementById(`${store.conda_channel}`);
     checkListStore.onchange = function(evt){
-      
+    var branch_select = document.getElementById(`${store.conda_channel}_branchesList`);
       if(this.checked){
         // if(store.conda_labels.lenght > 1) {
           checkList.classList.remove('d-none')
+          branch_select.classList.remove('d-none')
         // }
         active_stores[this.value]['active'] = true  
       }
       else{
         // if(store.conda_labels.lenght > 1) {
           checkList.classList.add('d-none')
+          branch_select.classList.add('d-none')
+
         // }
         active_stores[this.value]['active'] = false
       }

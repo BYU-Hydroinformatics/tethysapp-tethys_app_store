@@ -136,7 +136,7 @@
   
   
   .dropdown-check-list.visible .anchor {
-    color: #0094ff;
+    color: var(--blue);
   }
   
   .dropdown-check-list.visible .items {
