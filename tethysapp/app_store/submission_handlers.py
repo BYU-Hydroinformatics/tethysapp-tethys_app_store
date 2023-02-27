@@ -409,8 +409,6 @@ def validate_git_repo(install_data,channel_layer):
         send_notification(get_data_json, channel_layer)
 
 
-
-
 # def show_remote_branches()
 
 def pull_git_repo_all(install_data, channel_layer, app_workspace):
@@ -1050,3 +1048,461 @@ def validation_is_new_version(conda_search_result_package,version_setup,json_res
         }
     
     return  get_data_json
+
+
+
+# some ideas of how to refactor the code here for testing
+def generate_label_strings(conda_labels):
+    labels_string = '';
+    for i in range(len(conda_labels)):
+        if i < 1:
+           labels_string += conda_labels[i]
+        else:
+            labels_string += f' --label {conda_labels[i]}'
+    return labels_string
+
+def create_tethysapp_warehouse_release(repo,branch):
+    if 'tethysapp_warehouse_release' not in repo.heads:
+        repo.create_head('tethysapp_warehouse_release')
+    else:
+        repo.git.checkout('tethysapp_warehouse_release')
+        repo.git.merge(branch)
+    
+def generate_current_version(setup_py_data):
+    current_version = setup_py_data["version"]
+    return current_version
+
+def reset_folder(file_path):
+    if os.path.exists(file_path):
+        shutil.rmtree(file_path)
+
+    os.makedirs(file_path)
+
+def copy_files_for_recipe(source,destination,files_changed):
+    if not os.path.exists(destination):
+        files_changed = True
+        shutil.copyfile(source, destination)
+    return files_changed
+def create_upload_command(labels_string,source_files_path,recipe_path):
+    label = {'label_string': labels_string }
+    if os.path.exists(os.path.join(recipe_path, 'upload_command.txt')):
+        os.remove(os.path.join(recipe_path, 'upload_command.txt'))
+    
+    shutil.copyfile(os.path.join(source_files_path, 'upload_command.txt'), os.path.join(recipe_path, 'upload_command.txt'))
+
+    apply_template(os.path.join(source_files_path, 'upload_command.txt'),label, os.path.join(recipe_path, 'upload_command.txt'))
+
+def drop_keywords(setup_py_data):
+    # setup_py_data = parse_setup_py(filename)
+    keywords = []
+    email = ""
+    try:
+        keywords = setup_py_data.pop('keywords', None)
+        email = setup_py_data["author_email"]
+
+        # Clean up keywords
+        keywords = keywords.replace('"', '').replace("'", '')
+        if ',' in keywords:
+            keywords = keywords.split(',')
+        keywords = list(map(lambda x: x.strip(), keywords))
+
+    except Exception as err:
+        logger.error("Error ocurred while formatting keywords from setup.py")
+        logger.error(err) 
+    return keywords, email
+
+def create_template_data_for_install(install_data,setup_py_data):
+    install_yml = os.path.join(install_data['github_dir'], 'install.yml')
+    with open(install_yml) as f:
+        install_yml_file = yaml.safe_load(f)
+        metadata_dict = {**setup_py_data, "tethys_version": install_yml_file.get('tethys_version', '<=3.4.4'),"dev_url": f'{install_data["dev_url"]}' }
+
+    template_data = {
+        'metadataObj': json.dumps(metadata_dict).replace('"', "'")
+    }
+    return template_data
+
+def fix_setup(filename):
+    rel_package = ""
+    with fileinput.FileInput(filename, inplace=True) as f:
+        for line in f:
+            # logger.info(line)
+
+            if "import find_all_resource_files" in line or "import find_resource_files" in line:
+                print("from setup_helper import find_all_resource_files", end='\n')
+            
+            elif ("setup(" in line):
+                print(line, end='')
+            elif "namespace =" in line:
+                print('', end='\n')
+            elif ("app_package = " in line):
+                rel_package = line
+                print("namespace = 'tethysapp'")
+                print(line, end='')
+
+            elif "from tethys_apps.base.app_base import TethysAppBase" in line:
+                print('', end='\n')
+
+            elif "TethysAppBase.package_namespace" in line:
+                new_replace_line = line.replace("TethysAppBase.package_namespace","namespace")
+                print(new_replace_line, end='\n')
+
+            elif "resource_files = find_resource_files" in line:
+                print("resource_files = find_all_resource_files(app_package, namespace)", end='\n')
+            
+            elif "resource_files += find_resource_files" in line:
+                print('', end='\n')
+            else:
+                print(line, end='')
+    return rel_package
+
+def remove_init_file(install_data):
+    init_path = os.path.join(install_data['github_dir'], '__init__.py')
+
+    if os.path.exists(init_path):
+        os.remove(init_path)
+
+def apply_main_yml_template(source_files_path,workflows_path,rel_package,install_data):
+    source = os.path.join(source_files_path, 'main_template.yaml')
+    destination = os.path.join(workflows_path, 'main.yaml')
+    app_name = rel_package.replace("app_package", '').replace("=", '').replace("'", "").strip()
+    template_data = {
+        'subject': "Tethys App Store: Build complete for " + app_name,
+        'email': install_data['email'],
+        'buildMsg': """
+        Your Tethys App has been successfully built and is now available on the Tethys App Store.
+        This is an auto-generated email and this email is not monitored for replies.
+        Please send any queries to gromero@aquaveo.com
+        """
+    }
+    apply_template(source, template_data, destination)
+
+def check_repo_exists_remote(repo_name,organization):
+    if repo_exists(repo_name, organization):
+        tethysapp_repo = organization.get_repo(repo_name)
+
+    if not repo_exists(repo_name, organization):
+        # Create the required repo:
+        tethysapp_repo = organization.create_repo(
+            repo_name,
+            allow_rebase_merge=True,
+            auto_init=False,
+            description="For Tethys App Store Purposes",
+            has_issues=False,
+            has_projects=False,
+            has_wiki=False,
+            private=False,
+        )
+    return tethysapp_repo
+def get_head_names(repo):
+    heads_names_list = []
+    
+    for ref in repo.references:
+        heads_names_list.append(ref.name)
+    return heads_names_list
+
+def create_current_tag_version(current_version,heads_names_list):
+    current_tag_name = ''
+    today = time.strftime("%Y_%m_%d")
+    dev_attempt = 0
+    current_tag_name = "v" + str(current_version) + "_" + str(dev_attempt) + "_" + today
+
+    if current_tag_name in heads_names_list:
+        dev_attempt += 1
+    
+    current_tag_name = "v" + str(current_version) + "_" + str(dev_attempt) + "_" + today
+    return current_tag_name
+
+def check_if_organization_in_remote(repo, github_organization,remote_url):
+    
+    # if 'tethysapp' in repo.remotes:
+    if github_organization in repo.remotes:
+        logger.info("Remote already exists")
+        tethysapp_remote = repo.remotes[github_organization]
+        # tethysapp_remote = repo.remotes.tethysapp
+        tethysapp_remote.set_url(remote_url)
+    else:
+        # tethysapp_remote = repo.create_remote('tethysapp', remote_url)
+        tethysapp_remote = repo.create_remote(github_organization, remote_url)
+    return tethysapp_remote
+
+def add_and_commit_if_files_changed(repo,files_changed,current_tag_name):
+    if files_changed:
+        repo.git.add(A=True)
+        repo.git.commit(m=f'tag version {current_tag_name}')
+
+def push_to_warehouse_release_remote_branch(repo,tethysapp_remote,current_tag_name,files_changed):
+    add_and_commit_if_files_changed(repo,files_changed,current_tag_name)
+    tethysapp_remote.push('tethysapp_warehouse_release')
+
+def create_head_current_version(repo,current_tag_name,heads_names_list,tethysapp_remote):
+    if current_tag_name not in heads_names_list:
+        new_release_branch = repo.create_head(current_tag_name)
+        repo.git.checkout(current_tag_name)
+        # push the new branch in remote
+        tethysapp_remote.push(new_release_branch)
+    else:
+        repo.git.checkout(current_tag_name)
+        # push the new branch in remote
+        tethysapp_remote.push(current_tag_name)
+
+def create_tags_for_current_version(repo,current_tag_name,heads_names_list,tethysapp_remote):
+    tag_name = current_tag_name + "_release"
+    if tag_name not in heads_names_list:
+
+        # Create tag over the 
+        new_tag = repo.create_tag(
+            tag_name,
+            ref=repo.heads["tethysapp_warehouse_release"],
+            message=f'This is a tag-object pointing to tethysapp_warehouse_release branch with release version {current_tag_name}',
+        )
+        tethysapp_remote.push(new_tag)
+
+    else:
+        repo.git.tag('-d', tag_name)  # remove locally
+        tethysapp_remote.push(refspec=(':%s' % (tag_name)))  # remove from remote
+        new_tag = repo.create_tag(
+            tag_name,
+            ref=repo.heads["tethysapp_warehouse_release"],
+            message=f'This is a tag-object pointing to tethysapp_warehouse_release branch with release version {current_tag_name}',
+        )
+        tethysapp_remote.push(new_tag)
+
+def get_workflow_job_url(tethysapp_repo,github_organization,key):
+    workflowFound = False
+
+    # Sometimes due to weird conda versioning issues the get_workflow_runs is not found
+    # In that case return no value for the job_url and handle it in JS
+    try:
+        while not workflowFound:
+            time.sleep(4)
+            if tethysapp_repo.get_workflow_runs().totalCount > 0:
+                logger.info("Obtained Workflow for Submission. Getting Job URL")
+
+                try:
+                    # response = requests.get(tethysapp_repo.get_workflow_runs()[0].jobs_url, auth=('tethysapp', key))
+                    response = requests.get(tethysapp_repo.get_workflow_runs()[0].jobs_url, auth=(github_organization, key))
+
+                    response.raise_for_status()
+                    jsonResponse = response.json()
+                    workflowFound = jsonResponse["total_count"] > 0
+
+                except HTTPError as http_err:
+                    logger.error(f'HTTP error occurred while getting Jobs from GITHUB API: {http_err}')
+                except Exception as err:
+                    logger.error(f'Other error occurred while getting jobs from GITHUB API: {err}')
+
+            if workflowFound:
+                job_url = jsonResponse["jobs"][0]["html_url"]
+
+        logger.info("Obtained Job URL: " + job_url)
+    except AttributeError:
+        logger.info("Unable to obtain Workflow Run")
+        job_url = None
+
+    return job_url
+
+def git_processing(repo,install_data,github_organization,g,key,current_version,files_changed):
+    # 2. From the origin remote checkout the selected branch and pull 
+    origin = repo.remote(name='origin')
+    repo.git.checkout(install_data['branch'])
+    origin.pull()
+
+    # 3. create head tethysapp_warehouse_release and checkout the head
+    create_tethysapp_warehouse_release(repo,install_data['branch'])
+    repo.git.checkout('tethysapp_warehouse_release')
+
+    # 15. Check if this repo already exists on our remote:
+    repo_name = install_data['github_dir'].split('/')[-1]
+    organization = g.get_organization(github_organization)
+    tethysapp_repo =check_repo_exists_remote(repo_name,organization)
+    
+    heads_names_list =get_head_names(repo)
+    current_tag_name =create_current_tag_version(current_version,heads_names_list)
+    remote_url = tethysapp_repo.git_url.replace("git://", "https://" + key + ":x-oauth-basic@")
+    tethysapp_remote =check_if_organization_in_remote(repo, github_organization,remote_url)
+
+    # 16. add, commit, and push to the tethysapp_warehouse_release remote branch
+    push_to_warehouse_release_remote_branch(repo,tethysapp_remote,current_tag_name,files_changed)
+
+    # 17 create/ push current tag branch to remote
+    create_head_current_version(repo,current_tag_name,heads_names_list,tethysapp_remote)
+    # 18. create/push tag for current tag version in remote 
+    create_tags_for_current_version(repo,current_tag_name,heads_names_list,tethysapp_remote)
+    return tethysapp_repo
+
+def preprocessing_files(install_data,setup_py_data,labels_string,filename):
+    # 4. Delete workflow directory if exits in the repo folder, and create the directory workflow. Add the required files if they don't exist.
+    workflows_path = os.path.join(install_data['github_dir'], '.github', 'workflows')
+    source_files_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'application_files')
+    reset_folder(workflows_path)
+
+    # 5. Delete conda.recipes directory if exits in the repo folder, and create the directory conda.recipes. 
+    recipe_path = os.path.join(install_data['github_dir'], 'conda.recipes')
+    reset_folder(recipe_path)
+
+    # 6. copy the getChannels.py from the source to the destination, if does not exits Channels purpose is to have conda build -c conda-forge -c x -c x2 -c x3 --output-folder . .
+    source = os.path.join(source_files_path, 'getChannels.py')
+    destination = os.path.join(recipe_path, 'getChannels.py')
+    files_changed = copy_files_for_recipe(source,destination,files_changed)
+    
+    # 7. Create the label string to upload to multiple labels a conda package
+    source = os.path.join(source_files_path, 'meta_template.yaml')
+    destination = os.path.join(recipe_path, 'meta.yaml')
+    create_upload_command(labels_string,source_files_path,recipe_path)    
+    
+    # 8. Drop keywords from setup.py
+    keywords, email = drop_keywords(setup_py_data)
+
+    # 9 get the data from the install.yml and create a metadata dict
+    template_data = create_template_data_for_install(install_data,setup_py_data)
+    apply_template(source, template_data, destination)
+    files_changed = copy_files_for_recipe(source,destination,files_changed)
+
+    # 10. Copy the setup_helper.py
+    source = os.path.join(source_files_path, 'setup_helper.py')
+    destination = os.path.join(install_data['github_dir'], 'setup_helper.py')
+    files_changed = copy_files_for_recipe(source,destination,files_changed)
+
+    # 11. Fix setup.py file to remove dependency on tethys
+    rel_package=fix_setup(filename)
+
+    # 12. Update the dependencies of the package
+    update_dependencies(install_data['github_dir'], recipe_path, source_files_path, keywords, email)
+
+    # 13. apply data to the main.yml for the github action
+    apply_main_yml_template(source_files_path,workflows_path,rel_package,install_data)
+
+    # 14. remove __init__.py file if present at top level
+    remove_init_file(install_data)
+
+def process_branch_refactor2(install_data, channel_layer):
+    # 1. Get Variables
+    github_organization = install_data["github_organization"]
+    key = install_data["github_token"]
+    g = github.Github(key)
+    repo = git.Repo(install_data['github_dir'])
+    filename = os.path.join(install_data['github_dir'], 'setup.py')
+    conda_labels = install_data["conda_labels"]
+    labels_string = generate_label_strings(conda_labels)
+    setup_py_data = parse_setup_py(filename)
+    current_version = generate_current_version(setup_py_data)
+    files_changed = False
+    preprocessing_files(install_data,setup_py_data,labels_string,filename)
+    tethysapp_repo = git_processing(repo,install_data,github_organization,g,key,current_version,files_changed)
+    job_url = get_workflow_job_url(tethysapp_repo,github_organization,key)
+    get_data_json = {
+        "data": {
+            "githubURL": tethysapp_repo.git_url.replace("git:", "https:"),
+            "job_url": job_url,
+            "conda_channel": install_data['conda_channel']
+        },
+        "jsHelperFunction": "addComplete",
+        "helper": "addModalHelper"
+    }
+    send_notification(get_data_json, channel_layer)
+
+def process_branch_refactor(install_data, channel_layer):
+    # 1. Get Variables
+    github_organization = install_data["github_organization"]
+    key = install_data["github_token"]
+    g = github.Github(key)
+    repo = git.Repo(install_data['github_dir'])
+    filename = os.path.join(install_data['github_dir'], 'setup.py')
+    conda_labels = install_data["conda_labels"]
+    labels_string = generate_label_strings(conda_labels)
+    setup_py_data = parse_setup_py(filename)
+    current_version = generate_current_version(setup_py_data)
+    files_changed = False
+
+    # 2. From the origin remote checkout the selected branch and pull 
+    origin = repo.remote(name='origin')
+    repo.git.checkout(install_data['branch'])
+    origin.pull()
+
+    # 3. create head tethysapp_warehouse_release and checkout the head
+    create_tethysapp_warehouse_release(repo,install_data['branch'])
+    repo.git.checkout('tethysapp_warehouse_release')
+
+
+    # 4. Delete workflow directory if exits in the repo folder, and create the directory workflow. Add the required files if they don't exist.
+    workflows_path = os.path.join(install_data['github_dir'], '.github', 'workflows')
+    source_files_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'application_files')
+    reset_folder(workflows_path)
+
+    # 5. Delete conda.recipes directory if exits in the repo folder, and create the directory conda.recipes. 
+    recipe_path = os.path.join(install_data['github_dir'], 'conda.recipes')
+    reset_folder(recipe_path)
+
+    # 6. copy the getChannels.py from the source to the destination, if does not exits Channels purpose is to have conda build -c conda-forge -c x -c x2 -c x3 --output-folder . .
+    source = os.path.join(source_files_path, 'getChannels.py')
+    destination = os.path.join(recipe_path, 'getChannels.py')
+    files_changed = copy_files_for_recipe(source,destination,files_changed)
+    
+    # 7. Create the label string to upload to multiple labels a conda package
+    source = os.path.join(source_files_path, 'meta_template.yaml')
+    destination = os.path.join(recipe_path, 'meta.yaml')
+    create_upload_command(labels_string,source_files_path,recipe_path)    
+    
+    # 8. Drop keywords from setup.py
+    keywords, email = drop_keywords(setup_py_data)
+
+    # 9 get the data from the install.yml and create a metadata dict
+    template_data = create_template_data_for_install(install_data,setup_py_data)
+    apply_template(source, template_data, destination)
+    files_changed = copy_files_for_recipe(source,destination,files_changed)
+
+    # 10. Copy the setup_helper.py
+    source = os.path.join(source_files_path, 'setup_helper.py')
+    destination = os.path.join(install_data['github_dir'], 'setup_helper.py')
+    files_changed = copy_files_for_recipe(source,destination,files_changed)
+
+    # 11. Fix setup.py file to remove dependency on tethys
+    rel_package=fix_setup(filename)
+
+    # 12. Update the dependencies of the package
+    update_dependencies(install_data['github_dir'], recipe_path, source_files_path, keywords, email)
+
+    # 13. apply data to the main.yml for the github action
+    apply_main_yml_template(source_files_path,workflows_path,rel_package,install_data)
+
+    # 14. remove __init__.py file if present at top level
+    remove_init_file(install_data)
+
+    if LOCAL_DEBUG_MODE:
+        logger.info("Completed Local Debug Processing for Git Repo")
+        return
+
+    # 15. Check if this repo already exists on our remote:
+    repo_name = install_data['github_dir'].split('/')[-1]
+    organization = g.get_organization(github_organization)
+    tethysapp_repo =check_repo_exists_remote(repo_name,organization)
+    
+    heads_names_list =get_head_names(repo)
+    current_tag_name =create_current_tag_version(current_version,heads_names_list)
+    remote_url = tethysapp_repo.git_url.replace("git://", "https://" + key + ":x-oauth-basic@")
+    tethysapp_remote =check_if_organization_in_remote(repo, github_organization,remote_url)
+
+    # 16. add, commit, and push to the tethysapp_warehouse_release remote branch
+    push_to_warehouse_release_remote_branch(repo,tethysapp_remote,current_tag_name,files_changed)
+
+
+    # 17 create/ push current tag branch to remote
+    create_head_current_version(repo,current_tag_name,heads_names_list,tethysapp_remote)
+    # 18. create/push tag for current tag version in remote 
+    create_tags_for_current_version(repo,current_tag_name,heads_names_list,tethysapp_remote)
+
+    
+    # 19. return workflow job url:
+    job_url = get_workflow_job_url(tethysapp_repo,github_organization,key)
+
+    get_data_json = {
+        "data": {
+            "githubURL": tethysapp_repo.git_url.replace("git:", "https:"),
+            "job_url": job_url,
+            "conda_channel": install_data['conda_channel']
+        },
+        "jsHelperFunction": "addComplete",
+        "helper": "addModalHelper"
+    }
+    send_notification(get_data_json, channel_layer)
