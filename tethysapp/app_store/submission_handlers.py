@@ -488,6 +488,12 @@ def pull_git_repo(github_url,active_store, channel_layer, app_workspace):
 
 def process_branch(install_data, channel_layer):
 
+    # 3 from the origin remote checkout the selected branch and pull
+    repo = git.Repo(install_data['github_dir']) 
+    origin = repo.remote(name='origin')
+    repo.git.checkout(install_data['branch'])
+    origin.pull()
+
     # first create a new branch per tag,
     # second run the application without any change and see what might be the error
     
@@ -507,7 +513,6 @@ def process_branch(install_data, channel_layer):
 
     # 1 select the git repo with the path github_dir
 
-    repo = git.Repo(install_data['github_dir'])
     # breakpoint()
     ### get the version from the install.yml
     # install_yml = os.path.join(install_data['github_dir'], 'install.yml')
@@ -534,10 +539,6 @@ def process_branch(install_data, channel_layer):
     
     # current_tag_name = "v" + str(current_version) + "_" + today
 
-    # 3 from the origin remote checkout the selected branch and pull 
-    origin = repo.remote(name='origin')
-    repo.git.checkout(install_data['branch'])
-    origin.pull()
 
 
     ## here create version/tag base on install.yml
@@ -651,6 +652,7 @@ def process_branch(install_data, channel_layer):
         install_yml_file = yaml.safe_load(f)
         metadata_dict = {**setup_py_data, "tethys_version": install_yml_file.get('tethys_version', '<=3.4.4'),"dev_url": f'{install_data["dev_url"]}' }
 
+    # breakpoint()
     template_data = {
         'metadataObj': json.dumps(metadata_dict).replace('"', "'")
     }
@@ -1303,10 +1305,10 @@ def get_workflow_job_url(tethysapp_repo,github_organization,key):
     return job_url
 
 def git_processing(repo,install_data,github_organization,g,key,current_version,files_changed):
-    # 2. From the origin remote checkout the selected branch and pull 
-    origin = repo.remote(name='origin')
-    repo.git.checkout(install_data['branch'])
-    origin.pull()
+    # # 2. From the origin remote checkout the selected branch and pull 
+    # origin = repo.remote(name='origin')
+    # repo.git.checkout(install_data['branch'])
+    # origin.pull()
 
     # 3. create head tethysapp_warehouse_release and checkout the head
     create_tethysapp_warehouse_release(repo,install_data['branch'])
@@ -1377,11 +1379,16 @@ def preprocessing_files(install_data,setup_py_data,labels_string,filename):
     remove_init_file(install_data)
 
 def process_branch_refactor2(install_data, channel_layer):
-    # 1. Get Variables
+    # 1. From the origin remote checkout the selected branch and pull
+    repo = git.Repo(install_data['github_dir']) 
+    origin = repo.remote(name='origin')
+    repo.git.checkout(install_data['branch'])
+    origin.pull()
+
+    # 2. Get Variables
     github_organization = install_data["github_organization"]
     key = install_data["github_token"]
     g = github.Github(key)
-    repo = git.Repo(install_data['github_dir'])
     filename = os.path.join(install_data['github_dir'], 'setup.py')
     conda_labels = install_data["conda_labels"]
     labels_string = generate_label_strings(conda_labels)

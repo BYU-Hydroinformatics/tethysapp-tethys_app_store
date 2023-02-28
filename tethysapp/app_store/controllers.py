@@ -90,7 +90,7 @@ def get_resources(request, app_workspace):
         else:
             # tethys_version_regex = '4.0.0'
             tethys_version_regex = re.search(r'([\d.]+[\d])', tethys_version).group(1)
-
+            # breakpoint()
             add_compatible = False
             add_incompatible = False
             new_compatible_app = copy.deepcopy(resource)
