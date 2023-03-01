@@ -82,7 +82,7 @@ function operateFormatter(value, row, index) {
     var html = ''
     for (const [key, value2] of Object.entries(object_row)) {
 
-      html += `<div class="labels_container"> <p class="btn btn-outline-secondary btn-xs"> ${key}</p>
+      html += `<div class="labels_container"> <p class="btn btn-outline-secondary btn-xs"> #${key}</p>
         <p>
           <a class="install button-spaced" href="javascript:void(0)" title="Install">
             <button type="button" class="btn btn-info btn-outline-secondary btn-xs">Install</button>
@@ -152,14 +152,14 @@ function fieldsFormatter(value, row, index){
           !Array.isArray(value2) &&
           value2 !== null
         ){
-          html += `<div class="labels_container"> <p class="btn btn-outline-secondary btn-xs"> ${key} </p> <p>${value2}</p></div>`
+          html += `<div class="labels_container"> <p class="btn btn-outline-secondary btn-xs"> #${key} </p> <p>${value2}</p></div>`
         }
         else{
           if(value2.author != ""){
-            html += `<div class="labels_container"> <p class="btn btn-outline-secondary btn-xs"> ${key} </p> <p>${value2.author}</p></div>`
+            html += `<div class="labels_container"> <p class="btn btn-outline-secondary btn-xs"> #${key} </p> <p>${value2.author}</p></div>`
           }
           else{
-            html += `<div class="labels_container"> <p class="btn  btn-outline-secondary btn-xs"> ${key} </p> No Data Provided</p></div>`
+            html += `<div class="labels_container"> <p class="btn  btn-outline-secondary btn-xs"> #${key} </p> No Data Provided</p></div>`
           }
 
         }
