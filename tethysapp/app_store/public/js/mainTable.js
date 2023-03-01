@@ -4,18 +4,38 @@ const keyLookup = {
   keywords: "Tags",
   description: "Description",
   license: "License",
-  author_email: "App Developer Email"
+  author_email: "App Developer Email",
+  
 }
 
+
 function getResourceValue(key, index, apps) {
+  var return_val;
+  // return return_val
   if (apps) {
     if (apps[index]) {
       let app = apps[index]
       if (key in app) {
-        return app[key]
+        return_val = app[key]
+        return return_val
       }
       if (key in app["metadata"]) {
-        return app["metadata"][key]
+        return_val = app["metadata"][key]
+        return return_val
+      }
+
+      else{
+
+        var return_val = ""
+        Object.keys(app["metadata"]).forEach(function(storeName){
+          if(key in app["metadata"][storeName]){
+            var val_attr = app["metadata"][storeName][key]
+            if (val_attr){
+              return_val += `${val_attr}`
+            }
+          }
+        })
+        return return_val
       }
     }
   }
@@ -92,17 +112,8 @@ function operateFormatter(value, row, index) {
           </a>
         </p>
       </div>`
-      // html.push(`<div class="labels_container"> <p class="btn btn-info btn-outline-secondary btn-xs"> ${key}</p>`);
-      // var second_part =['<p><a class="install button-spaced" href="javascript:void(0)" title="Install">',
-      // `<button type="button" class="btn btn-info btn-outline-secondary btn-xs">Install</button>`,
-      // "</a>",
-      // '<a class="github button-spaced" href="javascript:void(0)" title="Github">',
-      // `<button type="button" class="btn btn-primary btn-outline-secondary btn-xs">Github</button>`,
-      // "</a>", 
-      // `</p></div>`]
-      // html.concat(second_part);
+
     } 
-    // return html.join("")
     return html
 
   }

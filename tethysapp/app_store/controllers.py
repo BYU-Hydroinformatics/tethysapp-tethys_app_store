@@ -163,7 +163,6 @@ def get_resources_multiple_stores(request, app_workspace):
     require_refresh = request.GET.get('refresh', '') == "true"
 
     pre_processing_dict = preprocess_single_store(conda_packages,require_refresh,app_workspace)
-
     return_object = {
         'availableApps': [],
         'installedApps': [],
