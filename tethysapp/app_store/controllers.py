@@ -67,28 +67,61 @@ def get_available_stores(request,app_workspace):
 # went through the pull request comments, refactored code, corrected bugs, and create new tests
 # solved a bug with the versioning in the submissions, and working on the installation of apps with multiple stores.
 
-def return_merge_stores(store,resources_list, merged_list,type_list_resource):
-    for available_app in resources_list[type_list_resource]:
-        store_available_object = {}
-        for key in available_app:
-            if key is not 'name':
-                if not any(x.name == available_app['name'] for x in merged_list[type_list_resource]):
-                    store_available_object[key]= []
-                    obj_re = {f'{store}': available_app[key]}
-                    store_available_object[key].append(obj_re)
-                    merged_list[type_list_resource].append(store_available_object)
-                else:
-                    index_app = next((i for i, d in enumerate(merged_list[type_list_resource]) if d['name'] == available_app['name']), None)
-                    obj_re = {f'{store}': available_app[key]}
-                    merged_list[type_list_resource][index_app].append(obj_re)
-            else:
-                store_available_object[key] = available_app[key]
-                merged_list[type_list_resource].append(store_available_object)
+# create list of all apps in stores without repetitive values
+def find_apps_in_stores(stores, app_list):
+    for store in stores:
+        for app in store:
+            if app['name'] not in app_list:
+                app_list.append(app['name'])
+    return app_list
 
+def generate_empty_multi_store_apps_object(app_list):
+    return_obj = {}
+    for app in app_list:
+        return_obj[app] = {
+            'name': {},
+            'installed': {},
+            'metadata': {},
+            'latestVersion':{}
+        }
 
-def get_resources_multiple_stores(request, app_workspace):
-    conda_packages = request.GET.get('conda_channels')
-    require_refresh = request.GET.get('refresh', '') == "true"
+    return return_obj
+
+def populate_multi_store_apps_object(stores, multi_store_apps_object):
+    # breakpoint()
+    for store in stores:
+        for app in store:
+            for key in app:
+                if key in multi_store_apps_object[app['name']]: 
+                    multi_store_apps_object[app['name']][key][app['metadata']['channel']] = app[key]
+
+    return multi_store_apps_object
+
+def object_to_list(request_obj):
+    return_list = []
+    for key in request_obj:
+        return_list.append(request_obj[key])
+    return return_list
+
+def get_multi_store_obj_list(stores):
+    app_list = []
+    # breakpoint()
+    app_list = find_apps_in_stores(stores, app_list)
+    multi_store_apps_object = generate_empty_multi_store_apps_object(app_list)
+    multi_store_apps_object = populate_multi_store_apps_object(stores, multi_store_apps_object)
+    multi_store_apps_object = make_single_name(multi_store_apps_object)
+    multi_store_apps_list = object_to_list(multi_store_apps_object)
+    return multi_store_apps_list
+
+def make_single_name(multi_store_apps_object):
+    for key in multi_store_apps_object:
+        # breakpoint()
+        for store_name in multi_store_apps_object[key]['name']:
+            multi_store_apps_object[key]['name'] = multi_store_apps_object[key]['name'][store_name]
+            break
+    return multi_store_apps_object
+
+def preprocess_single_store(conda_packages,require_refresh,app_workspace):
     pre_processing_dict = {
         'availableApps': [],
         'installedApps': [],
@@ -99,10 +132,53 @@ def get_resources_multiple_stores(request, app_workspace):
     for conda_package in conda_packages:
         cache_key = f'{conda_package}_app_resources'
         resources_single_store = get_resources_single_store(app_workspace, require_refresh, conda_package,cache_key)
-        return_merge_stores(conda_package,resources_single_store,pre_processing_dict,'availableApps')
-        return_merge_stores(conda_package,resources_single_store,pre_processing_dict,'installedApps')
-        return_merge_stores(conda_package,resources_single_store,pre_processing_dict,'incompatibleApps')
-        return_merge_stores(conda_package,resources_single_store,pre_processing_dict,'tethysVersion')
+        # breakpoint()
+        pre_processing_dict['availableApps'].append(resources_single_store['availableApps'])
+        pre_processing_dict['installedApps'].append(resources_single_store['installedApps'])
+        pre_processing_dict['incompatibleApps'].append(resources_single_store['incompatibleApps'])
+        pre_processing_dict['tethysVersion'].append({f'{conda_package}':resources_single_store['tethysVersion']})
+    
+    return pre_processing_dict
+# def return_merge_stores(store,resources_list, merged_list,type_list_resource):
+#     for available_app in resources_list[type_list_resource]:
+#         store_available_object = {}
+#         if any(x['name'] == available_app['name'] for x in merged_list[type_list_resource]):
+#             for key in available_app:
+#                 if 'name' != key:
+#                     # breakpoint()
+#                     index_app = next((i for i, d in enumerate(merged_list[type_list_resource]) if d['name'] == available_app['name']), None)
+#                     channel_name = merged_list[index_app]['channel']
+#                     last_channels_val  = {channel_name: merged_list[index_app]['key']}
+#                     obj_re = {f'{store}': available_app[key]}
+#                     breakpoint()
+#                     merged_list[type_list_resource][index_app][key].append(obj_re)
+@controller(
+    name='get_merged_resources',
+    url='app-store/get_merged_resources',
+    permissions_required='use_app_store',
+    app_workspace=True,
+)
+def get_resources_multiple_stores(request, app_workspace):
+    conda_packages = request.GET.getlist('conda_channels[]')
+    require_refresh = request.GET.get('refresh', '') == "true"
+
+    pre_processing_dict = preprocess_single_store(conda_packages,require_refresh,app_workspace)
+
+    return_object = {
+        'availableApps': [],
+        'installedApps': [],
+        'incompatibleApps': [],
+        'tethysVersion': [],
+    }
+    # breakpoint()
+    return_object['availableApps'] = get_multi_store_obj_list(pre_processing_dict['availableApps'])
+    return_object['installedApps'] = get_multi_store_obj_list(pre_processing_dict['installedApps'])
+    return_object['incompatibleApps'] = get_multi_store_obj_list(pre_processing_dict['incompatibleApps'])
+    return_object['tethysVersion'] = pre_processing_dict['tethysVersion']
+
+    return JsonResponse(return_object)
+
+        # return_merge_stores(conda_package,resources_single_store,pre_processing_dict,'tethysVersion')
 
         # for available_app in resources_single_store['availableApps']:
         #     store_available_object = {}
@@ -121,7 +197,7 @@ def get_resources_multiple_stores(request, app_workspace):
         #             store_available_object[key] = available_app[key]
         #             pre_processing_dict['availableApps'].append(store_available_object)
             
-    return JsonResponse(pre_processing_dict)
+    # return JsonResponse(pre_processing_dict)
 
  
 def get_resources_single_store(app_workspace, require_refresh, conda_package,cache_key):
@@ -191,7 +267,7 @@ def get_resources(request, app_workspace):
     available_apps = []
     incompatible_apps = []
 
-    breakpoint()
+    # breakpoint()
     for resource in all_resources:
         if resource["installed"]:
             installed_apps.append(resource)
@@ -223,7 +299,7 @@ def get_resources(request, app_workspace):
 
     # Get any apps installed via GitHub install process
     github_apps = get_github_install_metadata(app_workspace)
-    breakpoint()
+    # breakpoint()
     context = {
         'availableApps': available_apps,
         'installedApps': installed_apps + github_apps,

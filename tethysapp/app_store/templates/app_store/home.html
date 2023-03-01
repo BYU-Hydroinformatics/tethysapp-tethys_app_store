@@ -58,10 +58,13 @@
     <div class="card-body" id="table_header_alike">
         <ul class="nav nav-pills nav-fill" id="pills-tab" role="tablist">
             {% if storesData %}
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="pills-all-tab" data-bs-toggle="pill" data-bs-target="#pills-all" type="button" role="tab" aria-controls="pills-all" aria-selected="true">All Stores</button>
+                </li>
                 {% for store in storesData %}
                     {% if store.default %}
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link active" id="pills-{{ store.conda_channel }}-tab" data-bs-toggle="pill" data-bs-target="#pills-{{ store.conda_channel }}" type="button" role="tab" aria-controls="pills-{{ store.conda_channel }}" aria-selected="true">{{ store.conda_channel }}</button>
+                            <button class="nav-link" id="pills-{{ store.conda_channel }}-tab" data-bs-toggle="pill" data-bs-target="#pills-{{ store.conda_channel }}" type="button" role="tab" aria-controls="pills-{{ store.conda_channel }}" aria-selected="true">{{ store.conda_channel }}</button>
                         </li>
                     {% else %}
                     <li class="nav-item" role="presentation">
@@ -88,10 +91,10 @@
                 <thead>
                     <tr>
                         <th data-field="name">Tethys App Name</th>
-                        <th data-field="latestVersion">App Latest Version</th>
+                        <th data-field="latestVersion" data-formatter="fieldsFormatter">App Latest Version</th>
                         <!--<th data-field="tethys_version">Tethys Portal Version</th>-->
-                        <th data-field="metadata.author">Developer</th>
-                        <th data-field="operate" data-formatter="operateFormatter" data-events="operateEvents">Actions</th>
+                        <th data-field="metadata" data-formatter="fieldsFormatter" >Developer</th>
+                        <th data-field="latestVersion" data-formatter="operateFormatter" data-events="operateEvents">Actions</th>
                     </tr>
                 </thead>
             </table>

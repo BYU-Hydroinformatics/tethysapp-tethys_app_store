@@ -62,14 +62,51 @@ function detailFormatterInstalledApps(index, row) {
 }
 
 function operateFormatter(value, row, index) {
-  return [
-    '<a class="install button-spaced" href="javascript:void(0)" title="Install">',
-    `<button type="button" class="btn btn-info btn-outline-secondary btn-xs">Install</button>`,
-    "</a>",
-    '<a class="github button-spaced" href="javascript:void(0)" title="Github">',
-    `<button type="button" class="btn btn-primary btn-outline-secondary btn-xs">Github</button>`,
-    "</a>"
-  ].join("")
+
+  if (
+    typeof value != 'object' &&
+    !Array.isArray(value) &&
+    value !== null
+  ){
+    return [
+      '<a class="install button-spaced" href="javascript:void(0)" title="Install">',
+      `<button type="button" class="btn btn-info btn-outline-secondary btn-xs">Install</button>`,
+      "</a>",
+      '<a class="github button-spaced" href="javascript:void(0)" title="Github">',
+      `<button type="button" class="btn btn-primary btn-outline-secondary btn-xs">Github</button>`,
+      "</a>"
+    ].join("")
+  }
+  else{
+    var object_row = value;
+    var html = ''
+    for (const [key, value2] of Object.entries(object_row)) {
+
+      html += `<div class="labels_container"> <p class="btn btn-outline-secondary btn-xs"> ${key}</p>
+        <p>
+          <a class="install button-spaced" href="javascript:void(0)" title="Install">
+            <button type="button" class="btn btn-info btn-outline-secondary btn-xs">Install</button>
+          </a>
+          <a class="github button-spaced" href="javascript:void(0)" title="Github">
+            <button type="button" class="btn btn-primary btn-outline-secondary btn-xs">Github</button>
+          </a>
+        </p>
+      </div>`
+      // html.push(`<div class="labels_container"> <p class="btn btn-info btn-outline-secondary btn-xs"> ${key}</p>`);
+      // var second_part =['<p><a class="install button-spaced" href="javascript:void(0)" title="Install">',
+      // `<button type="button" class="btn btn-info btn-outline-secondary btn-xs">Install</button>`,
+      // "</a>",
+      // '<a class="github button-spaced" href="javascript:void(0)" title="Github">',
+      // `<button type="button" class="btn btn-primary btn-outline-secondary btn-xs">Github</button>`,
+      // "</a>", 
+      // `</p></div>`]
+      // html.concat(second_part);
+    } 
+    // return html.join("")
+    return html
+
+  }
+
 }
 
 function operateFormatter2(value, row, index) {
@@ -89,6 +126,50 @@ function operateFormatter2(value, row, index) {
   }
 
   return buttons.join("")
+}
+
+function fieldsFormatter(value, row, index){
+  // console.log(value)
+  if (
+    typeof value != 'object' &&
+    !Array.isArray(value) &&
+    value !== null
+  ) {
+    return value
+
+  }
+  else{
+    if ("author" in value){
+      return value.author
+    }
+    else{
+      var html = '<div class="multiple_stores_labels">'
+      var object_row = value
+      // console.log(object_row)
+      for (const [key, value2] of Object.entries(object_row)) {
+        if (
+          typeof value2 != 'object' &&
+          !Array.isArray(value2) &&
+          value2 !== null
+        ){
+          html += `<div class="labels_container"> <p class="btn btn-outline-secondary btn-xs"> ${key} </p> <p>${value2}</p></div>`
+        }
+        else{
+          if(value2.author != ""){
+            html += `<div class="labels_container"> <p class="btn btn-outline-secondary btn-xs"> ${key} </p> <p>${value2.author}</p></div>`
+          }
+          else{
+            html += `<div class="labels_container"> <p class="btn  btn-outline-secondary btn-xs"> ${key} </p> No Data Provided</p></div>`
+          }
+
+        }
+      }
+      html += '</div>'
+    }
+
+  }
+  return html
+
 }
 
 function writeTethysPlatformCompatibility(e, row) {

@@ -253,3 +253,21 @@
 #processBranchButton{
   margin-top: 10px;
 }
+
+.multiple_stores_labels{
+  display: flex;
+  flex-direction: column;
+}
+.labels_container{
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  width: 100%;
+}
+
+.labels_container:first-child{
+  flex: 1 1 20%;
+}
+.labels_container:last-child{
+  flex: 1 1 80%;
+}

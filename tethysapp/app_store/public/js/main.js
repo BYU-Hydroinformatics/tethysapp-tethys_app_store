@@ -375,6 +375,31 @@ const get_resources_for_channel= (default_store) => {
 }
 
 
+const get_merged_resources = (stores) => {
+
+    $.ajax({
+        url: `${warehouseHomeUrl}get_merged_resources`,
+        dataType: "json",
+        data: stores
+    })
+        .done(function(data) {
+            
+            availableApps = data.availableApps
+            installedApps = data.installedApps
+            incompatibleApps = data.incompatibleApps
+            tethysVersion = data.tethysVersion
+            $("#mainAppLoader").hide()
+            console.log(data)
+            initMainTables()
+        })
+        .fail(function(err) {
+            console.log(err)
+            location.reload()
+        })
+
+}
+
+
 
 $(document).ready(function() {
     // Hide the nav
@@ -400,9 +425,11 @@ $(document).ready(function() {
         var default_store = storesDataList.filter((x) => x.default == true)[0]
         console.log(default_store)
         active_store = default_store['github_organization']
+        var stores_list = []
         // console.log("current_channel", default_conda_channel)
         // Get Main Data and load the table
         storesDataList.forEach(function(store_single){
+            stores_list.push(store_single['conda_channel']);
             $(`#pills-${store_single['conda_channel']}-tab`).click(function(){
                 console.log(store_single)
                 get_resources_for_channel(store_single)
@@ -410,8 +437,14 @@ $(document).ready(function() {
             })
         })
         
-        get_resources_for_channel(default_store)
-
+        $(`#pills-all-tab`).click(function(){
+            active_store = "all"
+            get_merged_resources({"conda_channels":stores_list})
+        })
+        console.log(stores_list)
+        // get_resources_for_channel(default_store)
+        active_store = "all"
+        get_merged_resources({"conda_channels":stores_list})
         // $.ajax({
         //     url: `${warehouseHomeUrl}get_resources`,
         //     dataType: "json",
