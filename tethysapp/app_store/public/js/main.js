@@ -356,7 +356,7 @@ const get_resources_for_channel= (default_store) => {
         data: default_store
     })
         .done(function(data) {
-            
+            console.log(data)
             availableApps = data.availableApps
             installedApps = data.installedApps
             incompatibleApps = data.incompatibleApps

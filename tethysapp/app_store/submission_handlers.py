@@ -324,25 +324,6 @@ def repo_exists(repo_name, organization):
         return False
 
 
-
-
-## we may need to select the branches for each store 
-### here  we need to make this function to be validate_git_repo_single to do it for one channel
-### let the user know in the interface with a checkbox to which stores it want to push:
-### let the user know in the interface which labels in the conda channel it wants (e.g.["main","develop","etc"])
-### Run a validate_git_repo_single for each store, and concatenate the mssge string
-### let the user know if the store has failed the validation or not
-### let the user proceed
-### Let the user know which stores have fail and succeded
-
-
-## we might need to create multiple branches for each store 
-## we might need to add multiple remotes
-
-### we might just delete the repo in a loop
-### we might just follow the same steps that we are doing with a single one in a loop
-### we might delete the repo at the end
-
 def validate_git_repo(install_data,channel_layer):
 
     github_url = install_data.get("url")

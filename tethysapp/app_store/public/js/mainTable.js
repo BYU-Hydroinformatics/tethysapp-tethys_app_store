@@ -162,7 +162,9 @@ function operateFormatter2(value, row, index) {
 }
 
 function fieldsFormatter(value, row, index){
-  // console.log(value)
+  console.log(value)
+  console.log(row)
+  console.log(index)
   if (
     typeof value != 'object' &&
     !Array.isArray(value) &&
