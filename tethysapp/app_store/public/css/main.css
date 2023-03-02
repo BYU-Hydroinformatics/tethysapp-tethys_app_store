@@ -257,17 +257,25 @@
 .multiple_stores_labels{
   display: flex;
   flex-direction: column;
+  gap: 10px;
+
 }
 .labels_container{
   display: flex;
   flex-direction: row;
   gap: 10px;
   width: 100%;
+  justify-content: space-between;
+
 }
 
-.labels_container:first-child{
-  flex: 1 1 20%;
+.store_label{
+  text-align: center;
+  border: 1px solid black;
+  width: 80px;
 }
-.labels_container:last-child{
-  flex: 1 1 80%;
+.store_label_val{
+  flex: 1 1 70%;
+  text-align: left;
+
 }
