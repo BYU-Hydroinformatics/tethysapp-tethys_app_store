@@ -1,5 +1,18 @@
 var $table = $("#mainAppsTable")
 
+function label_styles(index){
+  var list_styles = [
+    "success",
+    "danger",
+    "warning",
+    "primary",
+    "secondary",
+    "info",
+    "dark",
+  ]
+  return list_styles[index]
+}
+
 const keyLookup = {
   keywords: "Tags",
   description: "Description",
@@ -100,9 +113,9 @@ function operateFormatter(value, row, index) {
   else{
     var object_row = value;
     var html = ''
+    var index_label_color = 0
     for (const [key, value2] of Object.entries(object_row)) {
-
-      html += `<div class="labels_container"> <p class="store_label btn-outline-secondary btn-xs"> #${key}</p>
+      html += `<div class="labels_container"> <p class="store_label btn btn-outline-${label_styles(index_label_color)} btn-xs"> #${key}</p>
         <p class="store_label_val">
           <a class="install button-spaced" href="javascript:void(0)" title="Install">
             <button type="button" class="btn btn-info btn-outline-secondary btn-xs">Install</button>
@@ -112,6 +125,7 @@ function operateFormatter(value, row, index) {
           </a>
         </p>
       </div>`
+      index_label_color += 1;
 
     } 
     return html
@@ -157,24 +171,27 @@ function fieldsFormatter(value, row, index){
       var html = '<div class="multiple_stores_labels">'
       var object_row = value
       // console.log(object_row)
+
+      var index_label_color = 0
       for (const [key, value2] of Object.entries(object_row)) {
         if (
           typeof value2 != 'object' &&
           !Array.isArray(value2) &&
           value2 !== null
         ){
-          html += `<div class="labels_container"> <span class="store_label btn-outline-secondary btn-xs"> #${key} </span> <span class="store_label_val">${value2}</span></div>`        
+          html += `<div class="labels_container"> <span class="store_label btn btn-outline-${label_styles(index_label_color)} btn-xs"> #${key} </span> <span class="store_label_val">${value2}</span></div>`        
         }
         else{
           if(value2.author != ""){
-            html += `<div class="labels_container"> <span class="store_label btn-outline-secondary btn-xs"> #${key} </span> <span class="store_label_val">${value2.author}</span></div>`
+            html += `<div class="labels_container"> <span class="store_label btn btn-outline-${label_styles(index_label_color)} btn-xs"> #${key} </span> <span class="store_label_val">${value2.author}</span></div>`
           }
-          else{
-            html += `<div class="labels_container"> <span class="store_label btn-outline-secondary btn-xs"> #${key} </span > <span class="store_label_val"> No Data Provided</span></div>`
-          }
-
+          // else{
+          //   html += `<div class="labels_container"> <span class="store_label btn-outline-secondary btn-xs"> #${key} </span > <span class="store_label_val"> No Data Provided</span></div>`
+          // }
         }
+        index_label_color += 1;
       }
+
       html += '</div>'
     }
 
