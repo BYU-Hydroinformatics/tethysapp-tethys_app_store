@@ -23,6 +23,7 @@ const keyLookup = {
 
 
 function getResourceValue(key, index, apps) {
+
   var return_val;
   // return return_val
   if (apps) {
@@ -65,6 +66,13 @@ function getResourceValueByName(key, name, apps) {
       if (key in app["metadata"]) {
         return app["metadata"][key]
       }
+      if(name in app["metadata"]){
+        if(key in app["metadata"][name]){
+          return app["metadata"][name][key]
+        }
+      }
+
+      
     }
   }
 }
@@ -120,7 +128,7 @@ function operateFormatter(value, row, index) {
           <a class="install button-spaced" href="javascript:void(0)" title="Install">
             <button type="button" class="btn btn-info btn-outline-secondary btn-xs">Install</button>
           </a>
-          <a class="github button-spaced" href="javascript:void(0)" title="Github">
+          <a class="github_${key} button-spaced" href="${row['metadata'][key]['dev_url']}" target="_blank" title="Github">
             <button type="button" class="btn btn-primary btn-outline-secondary btn-xs">Github</button>
           </a>
         </p>
@@ -241,6 +249,7 @@ window.operateEvents = {
   //},
 
   "click .github": function(e, value, row, index) {
+    
     let githubURL = getResourceValueByName("dev_url", row.name, availableApps)
     if (githubURL) window.open(githubURL, "_blank")
   },
