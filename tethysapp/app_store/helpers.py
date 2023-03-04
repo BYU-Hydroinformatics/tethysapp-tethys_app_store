@@ -88,6 +88,19 @@ def add_if_exists(a, b, keys):
             b[key] = a[key]
     return b
 
+def add_if_exists_keys(a, final_a, keys,channel,label):
+    if not a:
+        return final_a
+    for key in keys:
+        if key not in final_a:
+            final_a[key] = {}
+            if channel not in final_a[key]:
+                final_a[key][channel] = {}
+                if label not in final_a[key][channel] and key in a:
+                    final_a[key][channel][label] = a[key]
+
+    return final_a
+    
 
 def get_app_instance_from_path(paths):
     app_instance = None

@@ -1,0 +1,24 @@
+{
+   "stores": [
+     {
+       "default": true,
+       "conda_labels": [
+         "main",
+         "dev"
+       ],
+       "github_token": "gAAAAABj-CqGQzM2cZga_ISIPgyOFcR-uxHxtfqnqSs96XN210wAP4dPgKHWueKphMu3cXqMaIOpx49VzEblsJVkwhgUbphZ9WaSIKqEmqk2Bi_mf_hLgDX4EnvIpKqs5iDxOqo25vXi",
+       "conda_channel": "tethysapp",
+       "github_organization": "tethysapp"
+     },
+     {
+       "default": false,
+       "conda_labels": [
+         "main",
+         "dev"
+       ],
+       "github_token": "gAAAAABj-CmE_mVfnxczhCIt_aZdljUaEqz58Uu3YNEPtgqIQXC8_wFEou4U48m8qenTRbjimTFdMS7DffN6R9SLi0oRAu1XywQKNim0T13ezkQDhAtwQGlfIGpZHL90m0Ipj5sjcPMEcO8Mg8tM1utityrwJ8mgWdg2mLr06vDmw0v1jR-w3VjO2NUb6EppEKvqnMOkLt6M",
+       "conda_channel": "elkingio",
+       "github_organization": "lost-melancholic-tribe"
+     }
+   ]
+ }
