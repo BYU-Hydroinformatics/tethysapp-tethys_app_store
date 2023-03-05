@@ -45,7 +45,10 @@ def get_new_stores_reformated_by_labels(object_stores):
         list_labels_store = list(object_stores[store].keys())
         list_type_apps = list(object_stores[store][list_labels_store[0]].keys())
         for type_app  in list_type_apps:
-            new_store_reformatted[store][type_app] = merge_labels_single_store(object_stores[store],store,type_app)
+            breakpoint()
+            if type_app != 'tethysVersion':
+                new_store_reformatted[store][type_app] = merge_labels_single_store(object_stores[store],store,type_app)
+
     return new_store_reformatted
 
 def get_stores_reformatted(app_workspace, refresh=False):
@@ -66,25 +69,36 @@ def get_app_label_obj_for_store(store,type_apps):
                 apps_label[app].append(label)
             else:
                 apps_label[app] = []
+                apps_label[app].append(label)
     return apps_label
 
 def merge_labels_for_app_in_store(apps_label,store,channel,type_apps):
     new_store_label_obj = {}
     for app in apps_label:
         if app not in new_store_label_obj:
-            new_store_label_obj[app] = {
-                channel:{}
-            }
+            new_store_label_obj[app] = {}
         for label in store:
+            # if len(apps_label[app]) > 1:
+            #     breakpoint()
             if label not in apps_label[app]:
+                # breakpoint()
                 continue
             for key in store[label][type_apps][app]:
-                for label_app in store[label][type_apps][app][key][channel]:
-                    new_store_label_obj[app][channel][label_app] = store[label][type_apps][app][key][channel][label_app]
+                if key != 'name':
+                    if key not in  new_store_label_obj[app]:
+                        new_store_label_obj[app][key] = {
+                            channel:{}
+                        }
+                    try:
+                        for label_app in store[label][type_apps][app][key][channel]:
+                            new_store_label_obj[app][key][channel][label_app] = store[label][type_apps][app][key][channel][label_app]
+                    except TypeError:
+                        breakpoint()
+                        x  = "hi error"
     return new_store_label_obj
 
 def merge_labels_single_store(store,channel,type_apps):
-    breakpoint()
+    # breakpoint()
     apps_labels = get_app_label_obj_for_store(store,type_apps)
     merged_label_store = merge_labels_for_app_in_store(apps_labels,store,channel,type_apps)
     return merged_label_store
@@ -332,7 +346,13 @@ def process_resources_new(resources, app_workspace,conda_channel, conda_label):
         #     app["updateAvailable"] = version.parse(app['installedVersion']) < version.parse(app['latestVersion'])
         # FOR Debugging only. @TODO: Remove
         if(app['installed']):
-            app["updateAvailable"] = True
+            # app["updateAvailable"][conda_channel][conda_label] = True
+            app["updateAvailable"] = {
+                conda_channel: {
+                    conda_label: True
+                }
+            }
+
 
         latest_version_url = app.get("versionURLs").get(f"{conda_channel}").get(f"{conda_label}")[-1]
         file_name = latest_version_url.split('/')
@@ -381,7 +401,12 @@ def process_resources_new(resources, app_workspace,conda_channel, conda_label):
 
                 shutil.unpack_archive(download_path, output_path)
 
-            app["filepath"] = output_path
+            # app["filepath"] = output_path
+            app["filepath"] = {
+                conda_channel: {
+                    conda_label: output_path
+                }
+            }
 
             # Get Meta.Yaml for this file
             try:
