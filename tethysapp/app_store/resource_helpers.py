@@ -45,19 +45,98 @@ def get_new_stores_reformated_by_labels(object_stores):
         list_labels_store = list(object_stores[store].keys())
         list_type_apps = list(object_stores[store][list_labels_store[0]].keys())
         for type_app  in list_type_apps:
-            breakpoint()
+            # breakpoint()
             if type_app != 'tethysVersion':
                 new_store_reformatted[store][type_app] = merge_labels_single_store(object_stores[store],store,type_app)
-
     return new_store_reformatted
 
 def get_stores_reformatted(app_workspace, refresh=False):
-    # breakpoint()
+    breakpoint()
     object_stores_raw = create_pre_multiple_stores_labels_obj(app_workspace, refresh)
     object_stores_formatted_by_label = get_new_stores_reformated_by_labels(object_stores_raw)
     ## reformat for stores now
-    
-    return object_stores_formatted_by_label
+    object_stores_formatted_by_channel = get_stores_reformated_by_channel(object_stores_formatted_by_label)
+    # breakpoint()
+    return object_stores_formatted_by_channel
+
+def get_stores_reformated_by_channel(stores):
+    app_channel_obj = get_app_channel_for_stores(stores)
+    merged_channels_app = merge_channels_of_apps(app_channel_obj,stores)
+    return merged_channels_app
+
+def merge_channels_of_apps(app_channel_obj,stores):
+    merged_channels_app = {}
+    for channel in stores:
+        for type_app in stores[channel]:
+            if type_app not in merged_channels_app:
+                merged_channels_app[type_app] = {}
+            for app in stores[channel][type_app]:
+                if app not in merged_channels_app[type_app]:
+                    merged_channels_app[type_app][app] = {}
+                if app not in app_channel_obj[type_app]:
+                    continue
+                for key in stores[channel][type_app][app]:
+                    if key not in merged_channels_app[type_app][app]:
+                        merged_channels_app[type_app][app][key] = {}
+                    if channel in app_channel_obj[type_app][app]:
+                         merged_channels_app[type_app][app][key][channel] = stores[channel][type_app][app][key][channel]
+
+    return merged_channels_app
+
+
+def get_app_channel_for_stores(stores):
+    app_channel_obj = {}
+    for channel in stores:
+        for type_apps in stores[channel]:
+            if type_apps not in app_channel_obj:
+                app_channel_obj[type_apps] ={}
+            for app in stores[channel][type_apps]:
+                if app not in app_channel_obj[type_apps]:
+                    app_channel_obj[type_apps][app] = []
+                    app_channel_obj[type_apps][app].append(channel)
+                else:
+                    if channel not in app_channel_obj[type_apps][app]:
+                        app_channel_obj[type_apps][app].append(channel)
+    return app_channel_obj
+
+def get_app_level_for_store(store,type_apps):
+    # breakpoint()
+    apps_levels = {}
+    levels = list(store.keys())
+    for level in levels:
+        apps = list(store[level][type_apps].keys())
+        for app in apps:
+            if app in apps_levels:
+                apps_levels[app].append(level)
+            else:
+                apps_levels[app] = []
+                apps_levels[app].append(level)
+    return apps_levels
+
+def merge_levels_for_app_in_store(apps_channels,store,channel,type_apps):
+    new_store_label_obj = {}
+    for app in apps_channels:
+        if app not in new_store_label_obj:
+            new_store_label_obj[app] = {}
+        for label in store:
+
+            if label not in apps_channels[app]:
+                # breakpoint()
+                continue
+            for key in store[label][type_apps][app]:
+                if key != 'name':
+                    if key not in  new_store_label_obj[app]:
+                        new_store_label_obj[app][key] = {
+                            channel:{}
+                        }
+                    # try:
+                    for label_app in store[label][type_apps][app][key][channel]:
+                        new_store_label_obj[app][key][channel][label_app] = store[label][type_apps][app][key][channel][label_app]
+                    # except TypeError:
+                    #     breakpoint()
+                    #     x  = "hi error"
+    return new_store_label_obj
+
 
 def get_app_label_obj_for_store(store,type_apps):
     apps_label = {}
@@ -89,12 +168,12 @@ def merge_labels_for_app_in_store(apps_label,store,channel,type_apps):
                         new_store_label_obj[app][key] = {
                             channel:{}
                         }
-                    try:
-                        for label_app in store[label][type_apps][app][key][channel]:
-                            new_store_label_obj[app][key][channel][label_app] = store[label][type_apps][app][key][channel][label_app]
-                    except TypeError:
-                        breakpoint()
-                        x  = "hi error"
+                    # try:
+                    for label_app in store[label][type_apps][app][key][channel]:
+                        new_store_label_obj[app][key][channel][label_app] = store[label][type_apps][app][key][channel][label_app]
+                    # except TypeError:
+                    #     breakpoint()
+                    #     x  = "hi error"
     return new_store_label_obj
 
 def merge_labels_single_store(store,channel,type_apps):
@@ -122,6 +201,11 @@ def get_resources_single_store(app_workspace, require_refresh, conda_package,con
             new_compatible_app['versions'][conda_package][conda_label] = []
             new_incompatible_app = copy.deepcopy(new_compatible_app)
             for version in resource['versions'][conda_package][conda_label]:
+                # debugging
+                # if resource['name'] == 'test1app' and conda_label == 'dev':
+                #     breakpoint()
+                #     x = 'hola'
+
                 # Assume if not found, that it is compatible with Tethys Platform 3.4.4
                 compatible_tethys_version = "<=3.4.4"
                 if version in resource['compatibility'][conda_package][conda_label]:
@@ -153,7 +237,6 @@ def get_resources_single_store(app_workspace, require_refresh, conda_package,con
     }
 
     return return_object
-
 
 
 
@@ -221,6 +304,11 @@ def fetch_resources_new(app_workspace, refresh=False, conda_package="tethysapp",
                     conda_package:{
                         conda_label: None
                     }
+                },
+                'licenses':{
+                    conda_package:{
+                        conda_label: []
+                    }
                 }
                 
             }
@@ -237,6 +325,17 @@ def fetch_resources_new(app_workspace, refresh=False, conda_package="tethysapp",
             for conda_version in conda_search_result[app_package]:
                 newPackage.get("versions").get(f"{conda_package}").get(f"{conda_label}").append(conda_version.get('version'))
                 newPackage.get("versionURLs").get(f"{conda_package}").get(f"{conda_label}").append(conda_version.get('url'))
+                # breakpoint()
+
+                if "license" in conda_version:
+                    try:
+                        license_json = json.loads(conda_version['license'].replace("', '", '", "').replace("': '", '": "').replace("'}", '"}').replace("{'", '{"'))
+                        if 'tethys_version' in license_json:
+                            # breakpoint()
+                            newPackage["compatibility"][conda_package][conda_label][conda_version.get('version')] = license_json.get('tethys_version')
+                            # newPackage.get("compatibility").get(f"{conda_package}").get(f"{conda_label}").append(conda_version.get('license'))
+                    except (ValueError, TypeError):
+                        pass
 
             resource_metadata.append(newPackage)
 
@@ -379,9 +478,9 @@ def process_resources_new(resources, app_workspace,conda_channel, conda_label):
                 }
                 app['dev_url'][conda_channel][conda_label] = license_metadata["url"]
 
-            if "tethys_version" in license_metadata:
-                # breakpoint()
-                app.get("compatibility").get(f"{conda_channel}").get(f"{conda_label}")[license_metadata['version']] = license_metadata['tethys_version']  # noqa: E501
+            # if "tethys_version" in license_metadata:
+            #     # breakpoint()
+            #     app.get("compatibility").get(f"{conda_channel}").get(f"{conda_label}")[license_metadata['version']] = license_metadata['tethys_version']  # noqa: E501
 
         except (ValueError, TypeError):
             # There wasn't json found in license. Get Metadata from downloading the file
