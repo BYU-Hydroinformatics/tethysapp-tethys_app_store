@@ -70,24 +70,59 @@
     flex-direction: row;
     gap: 10px;
     width: 100%;
-    justify-content: space-between;
+    /* justify-content: space-between; */
+}
+.channels_centered{
+    display: flex;
+    align-items: center;
 }
 .labels_container{
     display: flex;
     gap: 10px;
-    justify-content: space-between;
+    /* justify-content: space-between; */
 }
 
 .store_label{
     text-align: center;
     width: 100px;
   }
+.store_label_val{
+    display: flex;
+    flex-direction: row;    
+    text-align: center;
+}
+.actions_label_container{
+    display: flex;
+    gap: 10px;
+}
+.label-outline-xs {
+    padding: 1px 5px;
+    font-size: 11px;
+    line-height: 1.5;
+    border-radius: 3px;
+}
+.label-outline-s {
+    padding: 5px 10px;
+    font-size: 12px;
+    line-height: 1.5;
+    border-radius: 3px;
+}
+.actions_channel_container{
+    display: flex;
+    gap: 10px;
+    flex-direction: column;
+
+}
 
 /* blue outline label */
 .label-outline-blue {
     color:  var(--bs-orange);
     border-color:  var(--bs-orange);
 }
+.label_label{
+    text-align: center;
+    width: 60px;
+  }
 
 .label-outline-blue:hover {
     color: var(--bs-white);
@@ -314,16 +349,62 @@
     border-color:  var(--bs-dark);
 }
 
-.label-outline-light:hover {
+.label-outline-dark:hover {
     color: var(--bs-white);
     background-color: var(--bs-dark);
     border-color: var(--bs-dark);
 }
 
-.label-outline-xs {
-    padding: 1px 5px;
-    font-size: 12px;
-    line-height: 1.5;
-    border-radius: 3px;
+ /* dark outline label */
+ .label-outline-dark {
+    color:  var(--bs-dark);
+    border-color:  var(--bs-dark);
 }
+
+.label-outline-dark:hover {
+    color: var(--bs-white);
+    background-color: var(--bs-dark);
+    border-color: var(--bs-dark);
+}
+
+ /* gray color label */
+.label-color-gray {
+    color: var(--bs-white);
+    background-color: var(--bs-gray);
+    border-color: var(--bs-gray);
+}
+
+.label-color-gray:hover {
+    color: var(--bs-white);
+    background-color: var(--bs-gray-dark);
+    border-color: var(--bs-gray-dark);
+}
+
+
+.label-color-info {
+    color: var(--bs-white);
+    background-color: var(--bs-info);
+    border-color: var(--bs-info);
+}
+
+.label-color-info:hover {
+    color: var(--bs-white);
+    background-color: var(--bs-gray);
+    border-color: var(--bs-gray);
+}
+
+.label-color-primary {
+    color: var(--bs-white);
+    background-color: var(--bs-primary);
+    border-color: var(--bs-primary);
+}
+
+.label-color-primary:hover {
+    color: var(--bs-white);
+    background-color: var(--bs-gray);
+    border-color: var(--bs-gray);
+}
+
+
+
 

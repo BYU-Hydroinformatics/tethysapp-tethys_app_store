@@ -158,9 +158,9 @@ function mergedFieldsFormatter(value, row, index){
     for (label in value[channel]){
       if (value[channel][label] !== null && value[channel][label] !== ""){
         if(!wasAdded){
-          html_str += `<div class="channels_container"> <span class="store_label btn label-outline-${labels_style_dict[channel]} label-outline-xs"> <i class="bi bi-shop"></i> ${channel} </span><span class="labels_container"> `;
+          html_str += `<div class="channels_container"> <div><span class="store_label btn label-outline-${labels_style_dict[channel]} label-outline-xs"> <i class="bi bi-shop"></i> ${channel} </span></div><span class="labels_container"> `;
         }
-        html_str += `<span class="custom-label label-outline-${labels_style_dict[label]} label-outline-xs"><i class="bi bi-tags"></i> ${label}</span><span>${value[channel][label]}</span>`
+        html_str += `<div><span class="custom-label label-outline-${labels_style_dict[label]} label-outline-xs"><i class="bi bi-tags"></i> ${label}</span></div><div><span class="custom-label label-outline-xs label-color-gray">${value[channel][label]}</span></div>`
         wasAdded = true
       }
     }
@@ -171,25 +171,23 @@ function mergedFieldsFormatter(value, row, index){
 }
 function mergedOperateFormatter(value, row, index){
 
-
-  var html_str = '<div>';
-  var index_label_color = 0
+  var html_str = '<div class="actions_channel_container">';
   for(channel in value){
     // html_str += `<div class="multiple_stores_labels">`
-    html_str += `<div class="labels_container"> <span class="store_label btn btn-outline-${label_styles(index_label_color)} btn-xs"> #${channel} </span><div> `;
+    html_str += `<div class="channels_container"> <div class="channels_centered"><span class="store_label custom-label label-outline-${labels_style_dict[channel]} label-outline-xs"> <i class="bi bi-shop"></i> ${channel} </span></div><div> `;
     for (label in value[channel]){
       if (value[channel][label] !== null || value[channel][label] !== ""){
-        html_str += `<span class="btn btn-outline-dark">${label}</span>
+        html_str += `<div class="actions_label_container"><div><span class="label_label custom-label label-outline-${labels_style_dict[label]} label-outline-xs"><i class="bi bi-tags"></i>${label}</span></div>
         <span>
           <p class="store_label_val">
             <a class="install button-spaced" href="javascript:void(0)" title="Install">
-              <button type="button" class="btn btn-info btn-outline-secondary btn-xs">Install</button>
+              <button type="button" class="custom-label label-color-primary label-outline-xs">Install</button>
             </a>
             <a class="github_type button-spaced" href=" target="_blank" title="Github">
-              <button type="button" class="btn btn-primary btn-outline-secondary btn-xs">Github</button>
+              <button type="button" class="custom-label label-color-info label-outline-xs">Github</button>
             </a>
           </p>
-        </span>`
+        </span></div>`
       }
     }
     html_str += `</div></div>`
