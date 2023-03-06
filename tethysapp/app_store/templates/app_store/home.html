@@ -107,43 +107,22 @@
     </div>
 
 
-<div class="card card-default main-app-list hidden">
-    <div class="card-header showHandIcon" data-bs-toggle="collapse" href="#mainApps">Available Tethys Applications</div>
-    <div class="collapse show" id="mainApps">
-        <div class="card-body">
-            <table id="mainAppsTable" data-search="true" data-show-search-clear-button="true" data-bs-toolbar="#toolbar" data-show-columns="true" data-show-toggle="true" data-pagination="true" data-detail-view="true" data-detail-formatter="detailFormatter">
-                <thead>
-                    <tr>
-                        <th data-field="name">Tethys App Name</th>
-                        <th data-field="latestVersion" data-formatter="fieldsFormatter">App Latest Version</th>
-                        <!--<th data-field="tethys_version">Tethys Portal Version</th>-->
-                        <th data-field="metadata" data-formatter="fieldsFormatter" >Developer</th>
-                        <th data-field="installed" data-formatter="operateFormatter" data-events="operateEvents">Actions</th>
-                    </tr>
-                </thead>
-            </table>
-            <div>An asterisk (*) in the 'App Latest Version' column indicates that the latest version is not compatible with your installed Tethys Platform Version.</div>
-        </div>
-        <div class="card-footer ">
-        </div>
-    </div>
-</div>
-
 <div class="card card-default installed-app-list hidden">
     <div class="card-header showHandIcon" data-bs-toggle="collapse" href="#incompatibleApps">Incompatible Applications</div>
     <div class="collapse " id="incompatibleApps">
         <div class="card-body">
-            <table id="incompatibleAppsTable" data-search="true" data-show-search-clear-button="true" data-bs-toolbar="#toolbar" data-show-columns="true" data-show-toggle="true" data-pagination="true"  data-detail-view="true">
-                <thead>
-                    <tr>
-                        <th data-field="name">Tethys App Name</th>
-                        <th data-field="latestVersion">App Latest Version</th>
-                        <!--<th data-field="tethys_version">Tethys Portal Version</th>-->
-                        <th data-field="metadata.author">Developer</th>
-                        <th data-field="operate" data-formatter="operateFormatter" data-events="operateEvents">Actions</th>
-                    </tr>
-                </thead>
-            </table>
+            {% ifchanged active_store %}
+                <table id="incompatibleAppsTable" data-search="true" data-show-search-clear-button="true" data-bs-toolbar="#toolbar" data-show-columns="true" data-show-toggle="true" data-pagination="true" data-detail-view="true" data-detail-formatter="mergedDetailFormatter">
+                    <thead>
+                        <tr>
+                            <th data-field="name">Tethys App Name</th>
+                            <th data-field="latestVersion" data-formatter="mergedFieldsFormatter">App Latest Version</th>
+                            <th data-field="author" data-formatter="mergedFieldsFormatter" >Developer</th>
+                            <th data-field="installed" data-formatter="mergedOperateFormatter" data-events="operateEvents">Actions</th>
+                        </tr>
+                    </thead>
+                </table>
+            {% endifchanged %}
         </div>
         <div class="card-footer ">
         </div>

@@ -166,19 +166,19 @@ def get_resources_multiple_stores(request, app_workspace):
 
     object_stores_formatted_by_label_and_channel['tethysVersion'] = '4.0.0'
     
-    pre_processing_dict = preprocess_single_store(conda_packages,require_refresh,app_workspace)
+    # pre_processing_dict = preprocess_single_store(conda_packages,require_refresh,app_workspace)
 
-    return_object = {
-        'availableApps': [],
-        'installedApps': [],
-        'incompatibleApps': [],
-        'tethysVersion': [],
-    }
-    # breakpoint()
-    return_object['availableApps'] = get_multi_store_obj_list(pre_processing_dict['availableApps'])
-    return_object['installedApps'] = get_multi_store_obj_list(pre_processing_dict['installedApps'])
-    return_object['incompatibleApps'] = get_multi_store_obj_list(pre_processing_dict['incompatibleApps'])
-    return_object['tethysVersion'] = pre_processing_dict['tethysVersion']
+    # return_object = {
+    #     'availableApps': [],
+    #     'installedApps': [],
+    #     'incompatibleApps': [],
+    #     'tethysVersion': [],
+    # }
+    # # breakpoint()
+    # return_object['availableApps'] = get_multi_store_obj_list(pre_processing_dict['availableApps'])
+    # return_object['installedApps'] = get_multi_store_obj_list(pre_processing_dict['installedApps'])
+    # return_object['incompatibleApps'] = get_multi_store_obj_list(pre_processing_dict['incompatibleApps'])
+    # return_object['tethysVersion'] = pre_processing_dict['tethysVersion']
 
     return JsonResponse(object_stores_formatted_by_label_and_channel)
 
