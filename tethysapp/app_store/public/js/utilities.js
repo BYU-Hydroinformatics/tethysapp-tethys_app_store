@@ -6,6 +6,54 @@ var notification_ws
 var notifCount = 0
 var inRestart = false
 
+
+const label_styles = (index) => {
+  var list_styles = [
+    "blue",
+    "indigo",
+    "pink",
+    "red",
+    "orange",
+    "yellow",
+    "green",
+    "teal",
+    "cyan",
+    "white",
+    "gray",
+    "gray-dark",
+    "primary",
+    "secondary",
+    "success",
+    "info",
+    "warning",
+    "danger",
+    "light",
+    "dark",
+    "purple"
+  ]
+  return list_styles[index]
+}
+
+const get_color_label_dict = (stores) => {
+  var color_store_dict = {}
+  var index_style = 0;
+  for (store in stores){
+    if (stores[store]['conda_channel'] in color_store_dict == false){
+      color_store_dict[stores[store]['conda_channel']] = label_styles(index_style)
+      index_style += 1;
+    }
+    for (label in stores[store]['conda_labels']){
+      if (stores[store]['conda_labels'][label] in color_store_dict == false){
+        color_store_dict[stores[store]['conda_labels'][label]] = label_styles(index_style)
+        index_style += 1;
+      }
+    }
+  }
+  return color_store_dict
+}
+
+
+
 const serviceLookup = {
   spatial: "spatialdatasetservice",
   dataset: "datasetservice",

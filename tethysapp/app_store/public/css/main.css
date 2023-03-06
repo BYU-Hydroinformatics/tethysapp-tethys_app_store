@@ -260,19 +260,9 @@
   gap: 10px;
 
 }
-.labels_container{
-  display: flex;
-  flex-direction: row;
-  /* gap: 10px; */
-  width: 100%;
-  justify-content: space-between;
 
-}
 
-.store_label{
-  text-align: center;
-  width: 80px;
-}
+
 .store_label_val{
   /* flex: 1 1 70%; */
   text-align: center;

@@ -1,17 +1,6 @@
 var $table = $("#mainAppsTable")
 
-function label_styles(index){
-  var list_styles = [
-    "success",
-    "danger",
-    "warning",
-    "primary",
-    "secondary",
-    "info",
-    "dark",
-  ]
-  return list_styles[index]
-}
+
 
 const keyLookup = {
   keywords: "Tags",
@@ -162,12 +151,68 @@ function operateFormatter2(value, row, index) {
 }
 
 function mergedFieldsFormatter(value, row, index){
-  
+  var html_str = '<div>';
+  for(channel in value){
+    // html_str += `<div class="multiple_stores_labels">`
+    html_str += `<div class="channels_container"> <span class="store_label btn label-outline-${labels_style_dict[channel]} label-outline-xs"> <i class="bi bi-shop"></i> ${channel} </span><span class="labels_container"> `;
+    for (label in value[channel]){
+      if (value[channel][label] !== null || value[channel][label] !== ""){
+        html_str += `<span class="custom-label label-outline-${labels_style_dict[label]} label-outline-xs"><i class="bi bi-tags"></i> ${label}</span><span>${value[channel][label]}</span>`
+      }
+    }
+    html_str += `</span></div>`
+  }
+  return html_str
 }
 function mergedOperateFormatter(value, row, index){
+
+
+  var html_str = '<div>';
+  var index_label_color = 0
+  for(channel in value){
+    // html_str += `<div class="multiple_stores_labels">`
+    html_str += `<div class="labels_container"> <span class="store_label btn btn-outline-${label_styles(index_label_color)} btn-xs"> #${channel} </span><div> `;
+    for (label in value[channel]){
+      if (value[channel][label] !== null || value[channel][label] !== ""){
+        html_str += `<span class="btn btn-outline-dark">${label}</span>
+        <span>
+          <p class="store_label_val">
+            <a class="install button-spaced" href="javascript:void(0)" title="Install">
+              <button type="button" class="btn btn-info btn-outline-secondary btn-xs">Install</button>
+            </a>
+            <a class="github_type button-spaced" href=" target="_blank" title="Github">
+              <button type="button" class="btn btn-primary btn-outline-secondary btn-xs">Github</button>
+            </a>
+          </p>
+        </span>`
+      }
+    }
+    html_str += `</div></div>`
+  }
+  return html_str
   
 }
 
+
+// implement this and all the others
+function mergedDetailFormatter(value, row, index){
+  var html = ""
+  // for (key in row){
+  //   if (key == 'license'){
+  //     for (channel in row[key]){
+  //       html += "<ul>"
+  //       for (label in row[key][channel]){
+  //         html.push(row[key][channel][label])
+          
+  //       }
+  //     }
+  //     // html.push(row[key][])
+  //   }
+  // }
+
+  // html.push("</ul>")
+  // return html.join("")
+}
 
 function fieldsFormatter(value, row, index){
   console.log(value)

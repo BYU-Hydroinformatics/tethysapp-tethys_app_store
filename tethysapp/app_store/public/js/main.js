@@ -415,6 +415,7 @@ $(document).ready(function() {
         console.log(data)
         storesDataList = data['stores']
         console.log(storesDataList)
+        labels_style_dict = get_color_label_dict(storesDataList)
         create_request_obj(storesDataList)
 
         let storessMenuHtml = createStoresMenusHtml(storesDataList)
