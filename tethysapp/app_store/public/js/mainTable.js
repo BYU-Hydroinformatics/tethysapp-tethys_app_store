@@ -161,6 +161,14 @@ function operateFormatter2(value, row, index) {
   return buttons.join("")
 }
 
+function mergedFieldsFormatter(value, row, index){
+  
+}
+function mergedOperateFormatter(value, row, index){
+  
+}
+
+
 function fieldsFormatter(value, row, index){
   console.log(value)
   console.log(row)
@@ -306,16 +314,16 @@ window.operateEvents = {
 
 function initMainTables() {
   $("#tethysPlatformVersionHeader").text("Tethys Platform Version " + tethysVersion)
-  $("#installedAppsTable").bootstrapTable("destroy")
+  // $("#installedAppsTable").bootstrapTable("destroy")
 
-  $("#installedAppsTable").bootstrapTable({ data: installedApps })
+  // $("#installedAppsTable").bootstrapTable({ data: installedApps })
   $("#mainAppsTable").bootstrapTable("destroy")
   $("#mainAppsTable").bootstrapTable({ data: availableApps })
-  $("#incompatibleAppsTable").bootstrapTable("destroy")
+  // $("#incompatibleAppsTable").bootstrapTable("destroy")
 
-  $("#incompatibleAppsTable").bootstrapTable({ data: incompatibleApps })
-  $("#incompatibleAppsTable").find(".install>button").removeClass("btn-info btn-outline-secondary")
-  $("#incompatibleAppsTable").find(".install>button").addClass("incompatible-app btn-danger")
+  // $("#incompatibleAppsTable").bootstrapTable({ data: incompatibleApps })
+  // $("#incompatibleAppsTable").find(".install>button").removeClass("btn-info btn-outline-secondary")
+  // $("#incompatibleAppsTable").find(".install>button").addClass("incompatible-app btn-danger")
   $(".main-app-list").removeClass("hidden")
-  $(".installed-app-list").removeClass("hidden")
+  // $(".installed-app-list").removeClass("hidden")
 }

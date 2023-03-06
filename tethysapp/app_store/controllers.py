@@ -161,8 +161,10 @@ def preprocess_single_store(conda_packages,require_refresh,app_workspace):
 def get_resources_multiple_stores(request, app_workspace):
     conda_packages = request.GET.getlist('conda_channels[]')
     require_refresh = request.GET.get('refresh', '') == "true"
-    object_stores_formatted_by_label = get_stores_reformatted(app_workspace, refresh=False)
-    breakpoint()
+    object_stores_formatted_by_label_and_channel = get_stores_reformatted(app_workspace, refresh=False)
+    # breakpoint()
+
+    object_stores_formatted_by_label_and_channel['tethysVersion'] = '4.0.0'
     
     pre_processing_dict = preprocess_single_store(conda_packages,require_refresh,app_workspace)
 
@@ -178,7 +180,7 @@ def get_resources_multiple_stores(request, app_workspace):
     return_object['incompatibleApps'] = get_multi_store_obj_list(pre_processing_dict['incompatibleApps'])
     return_object['tethysVersion'] = pre_processing_dict['tethysVersion']
 
-    return JsonResponse(return_object)
+    return JsonResponse(object_stores_formatted_by_label_and_channel)
 
         # return_merge_stores(conda_package,resources_single_store,pre_processing_dict,'tethysVersion')
 

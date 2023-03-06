@@ -51,14 +51,25 @@ def get_new_stores_reformated_by_labels(object_stores):
     return new_store_reformatted
 
 def get_stores_reformatted(app_workspace, refresh=False):
-    breakpoint()
+    # breakpoint()
     object_stores_raw = create_pre_multiple_stores_labels_obj(app_workspace, refresh)
     object_stores_formatted_by_label = get_new_stores_reformated_by_labels(object_stores_raw)
     ## reformat for stores now
     object_stores_formatted_by_channel = get_stores_reformated_by_channel(object_stores_formatted_by_label)
     # breakpoint()
-    return object_stores_formatted_by_channel
+    list_stores_formatted_by_channel = reduce_level_obj(object_stores_formatted_by_channel)
+    return list_stores_formatted_by_channel
 
+def object_to_list (obj_con):
+    new_list =[]
+    for key in obj_con:
+        new_list.append(obj_con[key])
+    return new_list
+def reduce_level_obj(complex_obj):
+    for key in complex_obj:
+        if type(complex_obj[key]) is dict:
+            complex_obj[key] = object_to_list(complex_obj[key])
+    return  complex_obj
 def get_stores_reformated_by_channel(stores):
     app_channel_obj = get_app_channel_for_stores(stores)
     merged_channels_app = merge_channels_of_apps(app_channel_obj,stores)
@@ -76,10 +87,13 @@ def merge_channels_of_apps(app_channel_obj,stores):
                 if app not in app_channel_obj[type_app]:
                     continue
                 for key in stores[channel][type_app][app]:
-                    if key not in merged_channels_app[type_app][app]:
-                        merged_channels_app[type_app][app][key] = {}
-                    if channel in app_channel_obj[type_app][app]:
-                         merged_channels_app[type_app][app][key][channel] = stores[channel][type_app][app][key][channel]
+                    if key != 'name':
+                        if key not in merged_channels_app[type_app][app]:
+                            merged_channels_app[type_app][app][key] = {}
+                        if channel in app_channel_obj[type_app][app]:
+                            merged_channels_app[type_app][app][key][channel] = stores[channel][type_app][app][key][channel]
+                    else:
+                        merged_channels_app[type_app][app][key] = stores[channel][type_app][app][key]
 
     return merged_channels_app
 
@@ -171,6 +185,8 @@ def merge_labels_for_app_in_store(apps_label,store,channel,type_apps):
                     # try:
                     for label_app in store[label][type_apps][app][key][channel]:
                         new_store_label_obj[app][key][channel][label_app] = store[label][type_apps][app][key][channel][label_app]
+                else:
+                    new_store_label_obj[app][key] = store[label][type_apps][app][key]
                     # except TypeError:
                     #     breakpoint()
                     #     x  = "hi error"
