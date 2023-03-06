@@ -152,15 +152,20 @@ function operateFormatter2(value, row, index) {
 
 function mergedFieldsFormatter(value, row, index){
   var html_str = '<div>';
+  var wasAdded = false;
   for(channel in value){
     // html_str += `<div class="multiple_stores_labels">`
-    html_str += `<div class="channels_container"> <span class="store_label btn label-outline-${labels_style_dict[channel]} label-outline-xs"> <i class="bi bi-shop"></i> ${channel} </span><span class="labels_container"> `;
     for (label in value[channel]){
-      if (value[channel][label] !== null || value[channel][label] !== ""){
+      if (value[channel][label] !== null && value[channel][label] !== ""){
+        if(!wasAdded){
+          html_str += `<div class="channels_container"> <span class="store_label btn label-outline-${labels_style_dict[channel]} label-outline-xs"> <i class="bi bi-shop"></i> ${channel} </span><span class="labels_container"> `;
+        }
         html_str += `<span class="custom-label label-outline-${labels_style_dict[label]} label-outline-xs"><i class="bi bi-tags"></i> ${label}</span><span>${value[channel][label]}</span>`
+        wasAdded = true
       }
     }
     html_str += `</span></div>`
+    wasAdded = false
   }
   return html_str
 }
