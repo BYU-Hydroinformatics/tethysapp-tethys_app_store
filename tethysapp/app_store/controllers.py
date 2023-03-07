@@ -163,8 +163,8 @@ def get_resources_multiple_stores(request, app_workspace):
     require_refresh = request.GET.get('refresh', '') == "true"
     object_stores_formatted_by_label_and_channel = get_stores_reformatted(app_workspace, refresh=False)
     # breakpoint()
-
-    object_stores_formatted_by_label_and_channel['tethysVersion'] = '4.0.0'
+    tethys_version_regex = re.search(r'([\d.]+[\d])', tethys_version).group(1)
+    object_stores_formatted_by_label_and_channel['tethysVersion'] = tethys_version_regex
     
     # pre_processing_dict = preprocess_single_store(conda_packages,require_refresh,app_workspace)
 

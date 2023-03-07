@@ -179,9 +179,23 @@ function mergedOperateFormatter(value, row, index){
         var github_url =  value[channel][label]
         if(github_url == ""){
           var normal_json = row['license'][channel][label];
-          var licenseChannnelLabel = JSON.parse(normal_json.replace(/'/g, '"'));
-          var github_url = licenseChannnelLabel['dev_url']
+          try{
+            var licenseChannnelLabel = JSON.parse(normal_json.replace(/'/g, '"'));
+            var github_url = licenseChannnelLabel['dev_url']
+          }
+          catch{
+            console.log("a")
+          }
+
         }
+        // check compatibility
+        var icon_warning = '';
+        var color_icon = 'primary';
+        if(Object. keys(row['compatibility'][channel][label]).length == 0 ){
+          icon_warning = `<i class="bi bi-exclamation-triangle"></i> `
+          color_icon = 'warning';
+        }
+
         html_str += `<div class="actions_label_container"><div><span class="label_label custom-label label-outline-${labels_style_dict[label]} label-outline-xs"><i class="bi bi-tags"></i>${label}</span></div>
         <span>
           <p class="store_label_val">
@@ -189,7 +203,7 @@ function mergedOperateFormatter(value, row, index){
               <button type="button" class="custom-label label-color-info label-outline-xs"><i class="bi bi-github"></i></button>
             </a>
             <a class="install button-spaced" href="javascript:void(0)" title="Install">
-              <button type="button" class="custom-label label-color-primary label-outline-xs">Install</button>
+              <button type="button" class="custom-label label-color-${color_icon} label-outline-xs">${icon_warning}Install</button>
             </a>
           </p>
         </span></div>`
@@ -261,11 +275,14 @@ function mergedDetailFormatter(value, row, index){
     table_body += `</tr>`
   }
   table_body += `</tbody>`
-
-  table_html += `${table_header}${table_body}</table>`
+  if(table_body !== "<tbody></tbody>"){
+    table_html += `${table_header}${table_body}</table>`
+  }
+  else{
+    table_html = `No Metadata Available`
+  }
 
   return table_html
-  // return html.join("")
 }
 
 function fieldsFormatter(value, row, index){
