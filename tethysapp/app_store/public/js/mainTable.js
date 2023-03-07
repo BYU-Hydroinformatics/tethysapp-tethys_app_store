@@ -150,6 +150,9 @@ function operateFormatter2(value, row, index) {
   return buttons.join("")
 }
 
+function mergedNameFormatter(value, row, index){
+  return`<span class="custom-label">${value}</span></div>`
+}
 function mergedFieldsFormatter(value, row, index){
   var html_str = '<div>';
   var wasAdded = false;
