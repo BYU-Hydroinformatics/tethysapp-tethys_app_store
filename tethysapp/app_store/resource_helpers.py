@@ -341,6 +341,8 @@ def fetch_resources_new(app_workspace, refresh=False, conda_package="tethysapp",
             for conda_version in conda_search_result[app_package]:
                 newPackage.get("versions").get(f"{conda_package}").get(f"{conda_label}").append(conda_version.get('version'))
                 newPackage.get("versionURLs").get(f"{conda_package}").get(f"{conda_label}").append(conda_version.get('url'))
+                newPackage.get("licenses").get(f"{conda_package}").get(f"{conda_label}").append(conda_version.get('license'))
+
                 # breakpoint()
 
                 if "license" in conda_version:
@@ -489,7 +491,7 @@ def process_resources_new(resources, app_workspace,conda_channel, conda_label):
             if "url" in license_metadata:
                 app['dev_url'] = {
                     conda_channel:{
-                        conda_label:{}
+                        conda_label:''
                     }
                 }
                 app['dev_url'][conda_channel][conda_label] = license_metadata["url"]
@@ -497,7 +499,7 @@ def process_resources_new(resources, app_workspace,conda_channel, conda_label):
             else:
                 app['dev_url'] = {
                     conda_channel:{
-                        conda_label:{}
+                        conda_label:''
                     }
                 }
                 app['dev_url'][conda_channel][conda_label] = ''
@@ -546,7 +548,7 @@ def process_resources_new(resources, app_workspace,conda_channel, conda_label):
                         if 'dev_url' not in app:
                             app['dev_url'] = {
                                 conda_channel:{
-                                    conda_label:{}
+                                    conda_label:''
                                 }
                             }
                             app['dev_url'][conda_channel][conda_label] = ''
