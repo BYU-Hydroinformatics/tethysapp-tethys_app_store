@@ -241,15 +241,13 @@ function mergedDetailFormatter(value, row, index){
   for(license_attr in object_for_table_body){
     table_body += `<tr><th>${license_attr}</th>`
     for(license_attr_index in object_for_table_body[license_attr]){
-      if (license_attr == 'dev_url'){
+      if (license_attr == 'dev_url' || license_attr == 'url'){
+        var icon_logo = (license_attr == 'dev_url') ? 'github' : 'box-arrow-right';
+
         table_body += `<td><a class="github_type button-spaced" href="${object_for_table_body[license_attr][license_attr_index]}" target="_blank" title="Github">
-        <button type="button" class="custom-label label-outline-xs label-color-gray"><i class="bi bi-github"></i></button>
+          <button type="button" class="custom-label label-outline-xs label-color-gray"><i class="bi bi-${icon_logo}"></i></button>
         </a></td>`
-      }
-      if(license_attr == 'url'){
-        table_body += `<td><a class="github_type button-spaced" href="${object_for_table_body[license_attr][license_attr_index]}" target="_blank" title="Github">
-        <button type="button" class="custom-label label-outline-xs label-color-gray"><i class="bi bi-box-arrow-right"></i></button>
-        </a></td>`
+
       }
       else{
         table_body += `<td><span class="custom-label label-outline-xs label-color-gray">${object_for_table_body[license_attr][license_attr_index]}</span></td>`
