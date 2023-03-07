@@ -200,16 +200,18 @@ function mergedOperateFormatter(value, row, index){
 // implement this and all the others
 function mergedDetailFormatter(value, row, index){
   var object_for_table_body = {}
-  var table_html = '<table>';
-  var table_header = '<thead><tr><th scope="col">metadata</th>'
+  var table_html = '<table class="table_small_font table table-light table-sm table-hover">';
+  var table_header = '<thead class="table-dark"><tr><th scope="col">Last Version metadata</th>'
   var table_body = "<tbody>"
   for (key in row){
     if (key == 'license'){
       for (channel in row[key]){
-        // html += `<div><p><span style="bold">Store: </span> ${channel}</p></div>`
         for (label in row[key][channel]){
-          table_header += `<th scope="col">${channel}-${label}</th>`
-          // html += `<div><p><span style="bold">Label: </span>${label}</p></div>`
+          // table_header += `<th scope="col">${channel}-${label}</th>`
+          table_header += `<th scope="col"><div style="display:flex;justify-content: center;">`;
+          table_header +=  `<span class="store_label custom-label label-outline-${labels_style_dict[channel]} label-outline-xs"><i class="bi bi-shop"></i>${channel}</span>`;
+          table_header +=  `<span class="label_label custom-label label-outline-${labels_style_dict[label]} label-outline-xs"><i class="bi bi-tags"></i>${label}</span>`;
+          table_header += `<div></th>`
           try{
             var normal_json = row[key][channel][label];
             var licenseChannnelLabel = JSON.parse(normal_json.replace(/'/g, '"'));
@@ -222,16 +224,7 @@ function mergedDetailFormatter(value, row, index){
               else{
                 object_for_table_body[license_attr].push(licenseChannnelLabel[license_attr])
               }
-              // if (!wasAdded){
-                // table_body += `<tr><th>${license_attr}</th>`
-                // wasAdded = true;
-              // }
-
-              // table_body += `<td>${licenseChannnelLabel[license_attr]}</td>`
-              // html += `<li><p>${license_attr}: ${licenseChannnelLabel[license_attr]}</li>`
             }
-            // table_body += `</tr>`
-
           }
           catch(e){
             console.log(e)
@@ -242,20 +235,30 @@ function mergedDetailFormatter(value, row, index){
       }
       table_header +=`</tr></thead>`
 
-      // html.push(row[key][])
     }
   }
 
   for(license_attr in object_for_table_body){
     table_body += `<tr><th>${license_attr}</th>`
     for(license_attr_index in object_for_table_body[license_attr]){
-      table_body += `<td>${object_for_table_body[license_attr][license_attr_index]}</td>`
+      if (license_attr == 'dev_url'){
+        table_body += `<td><a class="github_type button-spaced" href="${object_for_table_body[license_attr][license_attr_index]}" target="_blank" title="Github">
+        <button type="button" class="custom-label label-outline-xs label-color-gray"><i class="bi bi-github"></i></button>
+        </a></td>`
+      }
+      if(license_attr == 'url'){
+        table_body += `<td><a class="github_type button-spaced" href="${object_for_table_body[license_attr][license_attr_index]}" target="_blank" title="Github">
+        <button type="button" class="custom-label label-outline-xs label-color-gray"><i class="bi bi-box-arrow-right"></i></button>
+        </a></td>`
+      }
+      else{
+        table_body += `<td><span class="custom-label label-outline-xs label-color-gray">${object_for_table_body[license_attr][license_attr_index]}</span></td>`
+      }
     }
     table_body += `</tr>`
   }
   table_body += `</tbody>`
 
-  // table_html += `${table_header}${table_body}</table>`
   table_html += `${table_header}${table_body}</table>`
 
   return table_html

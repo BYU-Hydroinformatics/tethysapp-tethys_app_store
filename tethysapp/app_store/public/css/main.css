@@ -271,3 +271,7 @@
 .store_label_val a{
   text-decoration: none;
 }
+
+.table_small_font{
+  font-size:  12px;
+}

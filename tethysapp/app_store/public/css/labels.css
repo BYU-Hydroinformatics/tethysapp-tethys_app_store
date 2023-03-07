@@ -380,6 +380,20 @@
     border-color: var(--bs-gray-dark);
 }
 
+ /* dark color label */
+ .label-color-dark {
+    color: var(--bs-white);
+    background-color: var(--bs-dark);
+    border-color: var(--bs-dark);
+}
+
+.label-color-dark:hover {
+    color: var(--bs-white);
+    background-color: var(--bs-dark);
+    border-color: var(--bs-dark);
+}
+
+
 
 .label-color-info {
     color: var(--bs-white);
