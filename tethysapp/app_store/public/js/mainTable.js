@@ -173,20 +173,24 @@ function mergedOperateFormatter(value, row, index){
 
   var html_str = '<div class="actions_channel_container">';
   for(channel in value){
-    // html_str += `<div class="multiple_stores_labels">`
     html_str += `<div class="channels_container"> <div class="channels_centered"><span class="store_label custom-label label-outline-${labels_style_dict[channel]} label-outline-xs"> <i class="bi bi-shop"></i> ${channel} </span></div><div> `;
     for (label in value[channel]){
       if (value[channel][label] !== null || value[channel][label] !== ""){
+        var github_url =  value[channel][label]
+        if(github_url == ""){
+          var normal_json = row['license'][channel][label];
+          var licenseChannnelLabel = JSON.parse(normal_json.replace(/'/g, '"'));
+          var github_url = licenseChannnelLabel['dev_url']
+        }
         html_str += `<div class="actions_label_container"><div><span class="label_label custom-label label-outline-${labels_style_dict[label]} label-outline-xs"><i class="bi bi-tags"></i>${label}</span></div>
         <span>
           <p class="store_label_val">
-            <a class="github_type button-spaced" href=" target="_blank" title="Github">
+            <a class="github_type button-spaced" href="${github_url}" target="_blank" title="Github">
               <button type="button" class="custom-label label-color-info label-outline-xs"><i class="bi bi-github"></i></button>
             </a>
             <a class="install button-spaced" href="javascript:void(0)" title="Install">
               <button type="button" class="custom-label label-color-primary label-outline-xs">Install</button>
             </a>
-
           </p>
         </span></div>`
       }
