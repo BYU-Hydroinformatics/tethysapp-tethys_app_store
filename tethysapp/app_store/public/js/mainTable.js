@@ -199,21 +199,66 @@ function mergedOperateFormatter(value, row, index){
 
 // implement this and all the others
 function mergedDetailFormatter(value, row, index){
-  var html = ""
-  // for (key in row){
-  //   if (key == 'license'){
-  //     for (channel in row[key]){
-  //       html += "<ul>"
-  //       for (label in row[key][channel]){
-  //         html.push(row[key][channel][label])
-          
-  //       }
-  //     }
-  //     // html.push(row[key][])
-  //   }
-  // }
+  var object_for_table_body = {}
+  var table_html = '<table>';
+  var table_header = '<thead><tr><th scope="col">metadata</th>'
+  var table_body = "<tbody>"
+  for (key in row){
+    if (key == 'license'){
+      for (channel in row[key]){
+        // html += `<div><p><span style="bold">Store: </span> ${channel}</p></div>`
+        for (label in row[key][channel]){
+          table_header += `<th scope="col">${channel}-${label}</th>`
+          // html += `<div><p><span style="bold">Label: </span>${label}</p></div>`
+          try{
+            var normal_json = row[key][channel][label];
+            var licenseChannnelLabel = JSON.parse(normal_json.replace(/'/g, '"'));
+            // var wasAdded = false
+            for (license_attr in licenseChannnelLabel){
+              if(license_attr in object_for_table_body == false){
+                object_for_table_body[license_attr] = []
+                object_for_table_body[license_attr].push(licenseChannnelLabel[license_attr])
+              }
+              else{
+                object_for_table_body[license_attr].push(licenseChannnelLabel[license_attr])
+              }
+              // if (!wasAdded){
+                // table_body += `<tr><th>${license_attr}</th>`
+                // wasAdded = true;
+              // }
 
-  // html.push("</ul>")
+              // table_body += `<td>${licenseChannnelLabel[license_attr]}</td>`
+              // html += `<li><p>${license_attr}: ${licenseChannnelLabel[license_attr]}</li>`
+            }
+            // table_body += `</tr>`
+
+          }
+          catch(e){
+            console.log(e)
+            continue
+          }
+        }
+
+      }
+      table_header +=`</tr></thead>`
+
+      // html.push(row[key][])
+    }
+  }
+
+  for(license_attr in object_for_table_body){
+    table_body += `<tr><th>${license_attr}</th>`
+    for(license_attr_index in object_for_table_body[license_attr]){
+      table_body += `<td>${object_for_table_body[license_attr][license_attr_index]}</td>`
+    }
+    table_body += `</tr>`
+  }
+  table_body += `</tbody>`
+
+  // table_html += `${table_header}${table_body}</table>`
+  table_html += `${table_header}${table_body}</table>`
+
+  return table_html
   // return html.join("")
 }
 
