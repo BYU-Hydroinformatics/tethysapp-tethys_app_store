@@ -180,12 +180,13 @@ function mergedOperateFormatter(value, row, index){
         html_str += `<div class="actions_label_container"><div><span class="label_label custom-label label-outline-${labels_style_dict[label]} label-outline-xs"><i class="bi bi-tags"></i>${label}</span></div>
         <span>
           <p class="store_label_val">
+            <a class="github_type button-spaced" href=" target="_blank" title="Github">
+              <button type="button" class="custom-label label-color-info label-outline-xs"><i class="bi bi-github"></i></button>
+            </a>
             <a class="install button-spaced" href="javascript:void(0)" title="Install">
               <button type="button" class="custom-label label-color-primary label-outline-xs">Install</button>
             </a>
-            <a class="github_type button-spaced" href=" target="_blank" title="Github">
-              <button type="button" class="custom-label label-color-info label-outline-xs">Github</button>
-            </a>
+
           </p>
         </span></div>`
       }
