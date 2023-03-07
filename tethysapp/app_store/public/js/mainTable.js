@@ -175,19 +175,21 @@ function mergedOperateFormatter(value, row, index){
   for(channel in value){
     html_str += `<div class="channels_container"> <div class="channels_centered"><span class="store_label custom-label label-outline-${labels_style_dict[channel]} label-outline-xs"> <i class="bi bi-shop"></i> ${channel} </span></div><div> `;
     for (label in value[channel]){
-      if (value[channel][label] !== null || value[channel][label] !== ""){
-        var github_url =  value[channel][label]
+      var github_url =''
+      if (value[channel][label] !== null ){
+        github_url =  value[channel][label]
         if(github_url == ""){
           var normal_json = row['license'][channel][label];
           try{
             var licenseChannnelLabel = JSON.parse(normal_json.replace(/'/g, '"'));
             var github_url = licenseChannnelLabel['dev_url']
           }
-          catch{
-            console.log("a")
+          catch(e){
+            console.log(e)
           }
 
         }
+      }
         // check compatibility
         var icon_warning = '';
         var color_icon = 'primary';
@@ -207,7 +209,7 @@ function mergedOperateFormatter(value, row, index){
             </a>
           </p>
         </span></div>`
-      }
+      
     }
     html_str += `</div></div>`
   }
@@ -260,6 +262,9 @@ function mergedDetailFormatter(value, row, index){
   for(license_attr in object_for_table_body){
     table_body += `<tr><th>${license_attr}</th>`
     for(license_attr_index in object_for_table_body[license_attr]){
+      if(license_attr == 'name' && object_for_table_body[license_attr][license_attr_index] == 'release_package' ){
+        object_for_table_body[license_attr][license_attr_index] = row['name']
+      }
       if (license_attr == 'dev_url' || license_attr == 'url'){
         var icon_logo = (license_attr == 'dev_url') ? 'github' : 'box-arrow-right';
 

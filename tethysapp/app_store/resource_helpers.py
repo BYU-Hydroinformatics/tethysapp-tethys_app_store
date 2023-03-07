@@ -493,7 +493,14 @@ def process_resources_new(resources, app_workspace,conda_channel, conda_label):
                     }
                 }
                 app['dev_url'][conda_channel][conda_label] = license_metadata["url"]
-
+            
+            else:
+                app['dev_url'] = {
+                    conda_channel:{
+                        conda_label:{}
+                    }
+                }
+                app['dev_url'][conda_channel][conda_label] = ''
             # if "tethys_version" in license_metadata:
             #     # breakpoint()
             #     app.get("compatibility").get(f"{conda_channel}").get(f"{conda_label}")[license_metadata['version']] = license_metadata['tethys_version']  # noqa: E501
@@ -536,7 +543,13 @@ def process_resources_new(resources, app_workspace,conda_channel, conda_label):
 
                         app = add_if_exists_keys(meta_yaml.get('about'), app, attr_about, conda_channel,conda_label)
                         app = add_if_exists_keys(meta_yaml.get('extra'), app, attr_extra,conda_channel,conda_label)
-
+                        if 'dev_url' not in app:
+                            app['dev_url'] = {
+                                conda_channel:{
+                                    conda_label:{}
+                                }
+                            }
+                            app['dev_url'][conda_channel][conda_label] = ''
             except Exception as e:
                 logger.info("Error happened while downloading package for metadata")
                 logger.error(e)
