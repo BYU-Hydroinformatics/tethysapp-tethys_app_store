@@ -393,8 +393,6 @@
     border-color: var(--bs-dark);
 }
 
-
-
 .label-color-info {
     color: var(--bs-white);
     background-color: var(--bs-info);
@@ -419,6 +417,16 @@
     border-color: var(--bs-gray);
 }
 
+.label-color-danger {
+    color: var(--bs-white);
+    background-color: var(--bs-danger);
+    border-color: var(--bs-danger);
+}
 
+.label-color-danger:hover {
+    color: var(--bs-white);
+    background-color: var(--bs-gray);
+    border-color: var(--bs-gray);
+}
 
 

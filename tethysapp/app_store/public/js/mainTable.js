@@ -160,7 +160,7 @@ function mergedFieldsFormatter(value, row, index){
         if(!wasAdded){
           html_str += `<div class="channels_container"> <div><span class="store_label btn label-outline-${labels_style_dict[channel]} label-outline-xs"> <i class="bi bi-shop"></i> ${channel} </span></div><span class="labels_container"> `;
         }
-        html_str += `<div><span class="custom-label label-outline-${labels_style_dict[label]} label-outline-xs"><i class="bi bi-tags"></i> ${label}</span></div><div><span class="custom-label label-outline-xs label-color-gray">${value[channel][label]}</span></div>`
+        html_str += `<div><span class="custom-label label-outline-${labels_style_dict[label]} label-outline-xs"><i class="bi bi-tags"></i> ${label}</span></div><div><span class="label-outline-xs label-color-gray">${value[channel][label]}</span></div>`
         wasAdded = true
       }
     }
@@ -195,7 +195,7 @@ function mergedOperateFormatter(value, row, index){
         var color_icon = 'primary';
         if(Object. keys(row['compatibility'][channel][label]).length == 0 ){
           icon_warning = `<i class="bi bi-exclamation-triangle"></i> `
-          color_icon = 'warning';
+          color_icon = 'danger';
         }
 
         html_str += `<div class="actions_label_container"><div><span class="label_label custom-label label-outline-${labels_style_dict[label]} label-outline-xs"><i class="bi bi-tags"></i>${label}</span></div>
