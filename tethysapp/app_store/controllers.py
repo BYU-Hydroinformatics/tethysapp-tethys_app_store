@@ -139,19 +139,7 @@ def preprocess_single_store(conda_packages,require_refresh,app_workspace):
         pre_processing_dict['tethysVersion'].append({f'{conda_package}':resources_single_store['tethysVersion']})
     
     return pre_processing_dict
-# def return_merge_stores(store,resources_list, merged_list,type_list_resource):
-#     for available_app in resources_list[type_list_resource]:
-#         store_available_object = {}
-#         if any(x['name'] == available_app['name'] for x in merged_list[type_list_resource]):
-#             for key in available_app:
-#                 if 'name' != key:
-#                     # breakpoint()
-#                     index_app = next((i for i, d in enumerate(merged_list[type_list_resource]) if d['name'] == available_app['name']), None)
-#                     channel_name = merged_list[index_app]['channel']
-#                     last_channels_val  = {channel_name: merged_list[index_app]['key']}
-#                     obj_re = {f'{store}': available_app[key]}
-#                     breakpoint()
-#                     merged_list[type_list_resource][index_app][key].append(obj_re)
+
 @controller(
     name='get_merged_resources',
     url='app-store/get_merged_resources',
@@ -159,9 +147,10 @@ def preprocess_single_store(conda_packages,require_refresh,app_workspace):
     app_workspace=True,
 )
 def get_resources_multiple_stores(request, app_workspace):
-    conda_packages = request.GET.getlist('conda_channels[]')
+    # conda_packages = request.GET.getlist('conda_channels[]')
+    stores_active = request.GET.get('active_store')
     require_refresh = request.GET.get('refresh', '') == "true"
-    object_stores_formatted_by_label_and_channel = get_stores_reformatted(app_workspace, refresh=False)
+    object_stores_formatted_by_label_and_channel = get_stores_reformatted(app_workspace, refresh=False, stores=stores_active)
     # breakpoint()
     tethys_version_regex = re.search(r'([\d.]+[\d])', tethys_version).group(1)
     object_stores_formatted_by_label_and_channel['tethysVersion'] = tethys_version_regex
@@ -182,26 +171,6 @@ def get_resources_multiple_stores(request, app_workspace):
 
     return JsonResponse(object_stores_formatted_by_label_and_channel)
 
-        # return_merge_stores(conda_package,resources_single_store,pre_processing_dict,'tethysVersion')
-
-        # for available_app in resources_single_store['availableApps']:
-        #     store_available_object = {}
-        #     for key in available_app:
-        #         if key is not 'name':
-        #             if not any(x.name == available_app['name'] for x in pre_processing_dict['availableApps']):
-        #                 store_available_object[key]= []
-        #                 obj_re = {f'{conda_package}': available_app[key]}
-        #                 store_available_object[key].append(obj_re)
-        #                 pre_processing_dict['availableApps'].append(store_available_object)
-        #             else:
-        #                 index_app = next((i for i, d in enumerate(pre_processing_dict['availableApps']) if d['name'] == available_app['name']), None)
-        #                 obj_re = {f'{conda_package}': available_app[key]}
-        #                 pre_processing_dict['availableApps'][index_app].append(obj_re)
-        #         else:
-        #             store_available_object[key] = available_app[key]
-        #             pre_processing_dict['availableApps'].append(store_available_object)
-            
-    # return JsonResponse(pre_processing_dict)
 
  
 def get_resources_single_store(app_workspace, require_refresh, conda_package,cache_key):

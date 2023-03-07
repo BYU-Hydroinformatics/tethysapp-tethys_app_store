@@ -25,8 +25,8 @@ def clear_cache(data, channel_layer):
     cache.delete(CACHE_KEY)
 
 
-def create_pre_multiple_stores_labels_obj(app_workspace, refresh=False):
-    available_stores_data_dict = get_available_stores_values()
+def create_pre_multiple_stores_labels_obj(app_workspace, refresh=False, stores='all'):
+    available_stores_data_dict = get_available_stores_values(stores)
     object_stores = {}
     ## fetch resources for each store and label
     for store in available_stores_data_dict:
@@ -50,9 +50,9 @@ def get_new_stores_reformated_by_labels(object_stores):
                 new_store_reformatted[store][type_app] = merge_labels_single_store(object_stores[store],store,type_app)
     return new_store_reformatted
 
-def get_stores_reformatted(app_workspace, refresh=False):
+def get_stores_reformatted(app_workspace, refresh=False, stores='all'):
     # breakpoint()
-    object_stores_raw = create_pre_multiple_stores_labels_obj(app_workspace, refresh)
+    object_stores_raw = create_pre_multiple_stores_labels_obj(app_workspace, refresh,stores)
     object_stores_formatted_by_label = get_new_stores_reformated_by_labels(object_stores_raw)
     ## reformat for stores now
     object_stores_formatted_by_channel = get_stores_reformated_by_channel(object_stores_formatted_by_label)

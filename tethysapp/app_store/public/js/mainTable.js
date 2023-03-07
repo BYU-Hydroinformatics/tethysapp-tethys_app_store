@@ -208,7 +208,7 @@ function mergedOperateFormatter(value, row, index){
               <button type="button" class="custom-label label-color-info label-outline-xs"><i class="bi bi-github"></i></button>
             </a>
             <a class="install button-spaced" href="javascript:void(0)" title="Install">
-              <button type="button" class="custom-label label-color-${color_icon} label-outline-xs">${icon_warning}Install</button>
+              <button type="button" id="${channel}__${label}__install" class="custom-label label-color-${color_icon} label-outline-xs">Install</button>
             </a>
           </p>
         </span></div>`
@@ -351,30 +351,68 @@ function writeTethysPlatformCompatibility(e, row) {
   // Get the compatibility for that version
   let tethysCompatibility = updateTethysPlatformCompatibility(appName, selectedVersion, appList)
 }
+function writeTethysPlatformCompatibility_new(e, row,channel,label) {
+  // Get the currently selected version
+  let selectedVersion = $("#versions option:selected").val().split("__")[2];
+  // Get the compatibility for that version
+  let tethysCompatibility = updateTethysPlatformCompatibility_new(row, selectedVersion,channel,label)
+}
+
+
+function get_channel_label_from_id(e){
+  let channel_label = $(e.target).attr("id").split('__')
+  let channel = channel_label[0];
+  let label = channel_label[1];
+  return [channel,label]
+}
 
 window.operateEvents = {
   "click .install": function(e, value, row, index) {
+    
     $("#mainCancel").show()
-
     let n_div = $("#notification")
     let n_content = $("#notification .lead")
     let isUsingIncompatible = $(e.target).attr("class").includes("incompatible-app")
     let appList = isUsingIncompatible ? incompatibleApps : availableApps
-    //let appList = $(e.target).attr("class").includes("incompatible-app") ? incompatibleApps : availableApps
     n_content.empty()
     n_div.modal({ backdrop: "static", keyboard: false })
     n_div.modal('show')
     $("#goToAppButton").hide()
+
     notifCount = 0
     // Setup Versions
-    let appName = getResourceValueByName("name", row.name, appList)
+    let appName = row['name'];
+    // let appName = getResourceValueByName("name", row.name, appList)
     $("#installingAppName").text(appName)
     installData["name"] = appName
-    let versionHTML = getVersionsHTML(appName, appList)
+    let channel_and_label = get_channel_label_from_id(e)
+    let versionHTML = getVersionsHTML_new(row,channel_and_label[0],channel_and_label[1])
     n_content.append(htmlHelpers.versions(appName, isUsingIncompatible))
     n_content.find("#selectVersion").append(versionHTML)
-    $("#versions").select2()
-    writeTethysPlatformCompatibility(e, row)
+    $("#versions").select2();
+    writeTethysPlatformCompatibility_new(e, row, channel_and_label[0],channel_and_label[1])
+
+    // //let appList = $(e.target).attr("class").includes("incompatible-app") ? incompatibleApps : availableApps
+
+    // let n_div = $("#notification")
+    // let n_content = $("#notification .lead")
+    // let isUsingIncompatible = $(e.target).attr("class").includes("incompatible-app")
+    // let appList = isUsingIncompatible ? incompatibleApps : availableApps
+    // //let appList = $(e.target).attr("class").includes("incompatible-app") ? incompatibleApps : availableApps
+    // n_content.empty()
+    // n_div.modal({ backdrop: "static", keyboard: false })
+    // n_div.modal('show')
+    // $("#goToAppButton").hide()
+    // notifCount = 0
+    // // Setup Versions
+    // let appName = getResourceValueByName("name", row.name, appList)
+    // $("#installingAppName").text(appName)
+    // installData["name"] = appName
+    // let versionHTML = getVersionsHTML(appName, appList)
+    // n_content.append(htmlHelpers.versions(appName, isUsingIncompatible))
+    // n_content.find("#selectVersion").append(versionHTML)
+    // $("#versions").select2()
+    // writeTethysPlatformCompatibility(e, row)
   },
 
   //$('#versions').on('select2:select', function (e, _, row, _) {
@@ -382,11 +420,11 @@ window.operateEvents = {
   //  writeTethysPlatformCompatibility(e, row)
   //},
 
-  "click .github": function(e, value, row, index) {
+  // "click .github": function(e, value, row, index) {
     
-    let githubURL = getResourceValueByName("dev_url", row.name, availableApps)
-    if (githubURL) window.open(githubURL, "_blank")
-  },
+  //   let githubURL = getResourceValueByName("dev_url", row.name, availableApps)
+  //   if (githubURL) window.open(githubURL, "_blank")
+  // },
 
   "click .uninstall": function(e, value, row, index) {
     $("#uninstallingAppNotice").html(

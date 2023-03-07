@@ -220,6 +220,29 @@ const getVersionsHTML = (selectedApp, allResources) => {
     }
 }
 
+const getVersionsHTML_new = (app,channel,label) => {
+    // let app = allResources.filter((resource) => resource.name == selectedApp)
+    if (app.hasOwnProperty('name')) {
+        // let versions = app[versions].reverse()
+        let versions = app['versions'][channel][label].reverse();
+        let sel = document.createElement("select"),
+            options_str = ""
+
+        sel.name = "versions"
+        sel.id = "versions"
+
+        versions.forEach(function(version) {
+            options_str += `<option value='${channel}__${label}__${version}'>${version}</option>`
+        })
+
+        sel.innerHTML = options_str
+        return sel
+    } else {
+        console.log("No App found with that name. Check input params")
+    }
+}
+
+
 const updateTethysPlatformCompatibility = (selectedApp, selectedVersion, allResources) => {
     let app = allResources.filter((resource) => resource.name == selectedApp)
     let platform_compatibility = '<=3.4.4'
@@ -235,6 +258,21 @@ const updateTethysPlatformCompatibility = (selectedApp, selectedVersion, allReso
     
     $("#tethysPlatformVersion").text('Tethys Platform Compatibility: ' + platform_compatibility)
 }
+const updateTethysPlatformCompatibility_new = (app, selectedVersion,channel,label) => {
+    let platform_compatibility = '<=3.4.4'
+    if (app.hasOwnProperty('name')) {
+        let compatibility_channel_label_keys = Object.keys(app['compatibility'][channel][label])
+        if (compatibility_channel_label_keys.includes(selectedVersion)) {
+            platform_compatibility = app['compatibility'][channel][label][selectedVersion]
+        }
+        
+    } else {
+        console.log("No App found with that name, store, tag, and version. Check input params")
+    }
+    
+    $("#tethysPlatformVersion").text('Tethys Platform Compatibility: ' + platform_compatibility)
+}
+
 
 const startInstall = (appName) => {
     showLoader()
@@ -375,12 +413,12 @@ const get_resources_for_channel= (default_store) => {
 }
 
 
-const get_merged_resources = (stores) => {
+const get_merged_resources = (store) => {
 
     $.ajax({
         url: `${warehouseHomeUrl}get_merged_resources`,
         dataType: "json",
-        data: stores
+        data: store
     })
         .done(function(data) {
             
@@ -433,19 +471,24 @@ $(document).ready(function() {
             stores_list.push(store_single['conda_channel']);
             $(`#pills-${store_single['conda_channel']}-tab`).click(function(){
                 console.log(store_single)
-                get_resources_for_channel(store_single)
-                active_store = store_single['github_organization']
+                // active_store = store_single['github_organization']
+                active_store = store_single['conda_channel']
+
+                // get_resources_for_channel(store_single)
+                // get_merged_resources({'active_store': store_single['conda_channel']})
+                get_merged_resources({'active_store':active_store})
+
             })
         })
         
         $(`#pills-all-tab`).click(function(){
             active_store = "all"
-            get_merged_resources({"conda_channels":stores_list})
+            get_merged_resources(active_store)
         })
         console.log(stores_list)
         // get_resources_for_channel(default_store)
         active_store = "all"
-        get_merged_resources({"conda_channels":stores_list})
+        get_merged_resources({'active_store': active_store})
         // $.ajax({
         //     url: `${warehouseHomeUrl}get_resources`,
         //     dataType: "json",
