@@ -1,4 +1,5 @@
-version: 1.0.0
+version: 1.2.0
+tethys_version: ">=4.0.0"
 name: app_store
 
 requirements:
@@ -7,8 +8,9 @@ requirements:
       - conda-forge
     packages:
       - pygithub
-      - gitpython=3.1.18
+      - gitpython==3.1.18
       - requests
+      - semver
 
 post:
   - setup_tethys_channel.sh

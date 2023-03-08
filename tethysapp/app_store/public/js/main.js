@@ -9,7 +9,8 @@ var uninstallRunning = false
 var availableApps = {}
 var installedApps = {}
 var updateData = {}
-
+var tethysVersion = ""
+var storesDataList = []
 // End Vars
 const settingsHelper = {
     processCustomSettings: (settingsData, n_content, completeMessage, ws) => {
@@ -218,6 +219,22 @@ const getVersionsHTML = (selectedApp, allResources) => {
     }
 }
 
+const updateTethysPlatformCompatibility = (selectedApp, selectedVersion, allResources) => {
+    let app = allResources.filter((resource) => resource.name == selectedApp)
+    let platform_compatibility = '<=3.4.4'
+    if (app.length > 0) {
+        let keys = Object.keys(app[0].metadata.compatibility)
+        if (keys.includes(selectedVersion)) {
+            platform_compatibility = app[0].metadata.compatibility[selectedVersion]
+        }
+        
+    } else {
+        console.log("No App found with that name and version. Check input params")
+    }
+    
+    $("#tethysPlatformVersion").text('Tethys Platform Compatibility: ' + platform_compatibility)
+}
+
 const startInstall = (appName) => {
     showLoader()
     let version = $("#versions").select2("data")[0].text
@@ -233,6 +250,12 @@ const startInstall = (appName) => {
             type: `begin_install`
         })
     )
+}
+
+const updateTethysPlatformVersion = (appName, isUsingIncompatible) => {
+    let selectedVersion = $("#versions").select2("data")[0].text
+    let appList = isUsingIncompatible ? incompatibleApps : availableApps
+    updateTethysPlatformCompatibility(appName, selectedVersion, appList)
 }
 
 const createNewService = (settingType) => {
@@ -267,6 +290,15 @@ const getRepoForAdd = () => {
         $("#fetchRepoButton").prop("disabled", true)
         $("#githubURL").prop("disabled", true)
         $("#loadingTextAppSubmit").text("Please wait. Fetching GitHub Repo")
+
+        // notification_ws.send(
+        //     JSON.stringify({
+        //         data: {
+        //             url: githubURL
+        //         },
+        //         type: `validate_git_repo`
+        //     })
+        // )
 
         notification_ws.send(
             JSON.stringify({
@@ -314,25 +346,88 @@ const update = () => {
     )
 }
 
-$(document).ready(function() {
-    // Hide the nav
-    $("#app-content-wrapper").removeClass("show-nav")
+const get_resources_for_channel= (default_store) => {
 
-    // Get Main Data and load the table
     $.ajax({
         url: `${warehouseHomeUrl}get_resources`,
-        dataType: "json"
+        dataType: "json",
+        data: default_store
     })
         .done(function(data) {
             availableApps = data.availableApps
             installedApps = data.installedApps
+            incompatibleApps = data.incompatibleApps
+            tethysVersion = data.tethysVersion
+            // storesDataList = data.storesDataList
+            // console.log(storesData)
             $("#mainAppLoader").hide()
             initMainTables()
+            // create_content_for_channel(storesDataList)
         })
         .fail(function(err) {
             console.log(err)
             location.reload()
         })
+
+}
+
+
+
+$(document).ready(function() {
+    // Hide the nav
+    $("#app-content-wrapper").removeClass('show-nav');
+    $(".toggle-nav").removeClass('toggle-nav');
+    // create ajax function to get the stores now and call the get_resources for each one of the stores, you will need to send channel as a parameter :/
+    storesDataList = []
+    $.ajax({
+        url: `${warehouseHomeUrl}get_available_stores`,
+        dataType: "json"
+    }).done(function(data){
+        storesDataList = data['stores']
+        console.log(storesDataList)
+
+        var default_store = storesDataList.filter((x) => x.default == true)[0]
+        console.log(default_store)
+        // console.log("current_channel", default_conda_channel)
+        // Get Main Data and load the table
+        storesDataList.forEach(function(store_single){
+            $(`#pills-${store_single['conda_channel']}-tab`).click(function(){
+                console.log(store_single)
+                get_resources_for_channel(store_single)
+
+            })
+        })
+        
+        get_resources_for_channel(default_store)
+
+        // $.ajax({
+        //     url: `${warehouseHomeUrl}get_resources`,
+        //     dataType: "json",
+        //     data: default_store
+        // })
+        //     .done(function(data) {
+        //         availableApps = data.availableApps
+        //         installedApps = data.installedApps
+        //         incompatibleApps = data.incompatibleApps
+        //         tethysVersion = data.tethysVersion
+        //         // storesDataList = data.storesDataList
+        //         // console.log(storesData)
+        //         $("#mainAppLoader").hide()
+        //         initMainTables()
+        //         // create_content_for_channel(storesDataList)
+        //     })
+        //     .fail(function(err) {
+        //         console.log(err)
+        //         location.reload()
+        //     })
+
+
+    }).fail(function(err) {
+        storesDataList = []
+        console.log(err)
+    })
+    // console.log(storesDataList)
+
 
     let n_div = $("#notification")
     let n_content = $("#notification .lead")
@@ -342,8 +437,7 @@ $(document).ready(function() {
         protocol = "wss"
     }
     let ws_url = `${protocol}://${window.location.host}`
-    let app_path = warehouseHomeUrl.replace("/apps", "")
-    ws_url = `${ws_url}${app_path}install/notifications/ws/`
+    ws_url = `${ws_url}${warehouseHomeUrl}install/notifications/ws/`
     startWS(ws_url, n_content)
 
     $("#serverRefresh").click(function() {

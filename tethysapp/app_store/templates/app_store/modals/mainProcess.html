@@ -1,5 +1,5 @@
-{% load staticfiles %}
-<div class="modal fade" id="notification" name="notification" tabindex="-1" role="dialog" aria-labelledby="notification-label">
+{% load static %}
+<div class="modal" id="notification" name="notification" tabindex="-1" role="dialog" aria-labelledby="notification-label">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -17,7 +17,7 @@
                     <div></div>
                     <div></div>
                 </div>
-                <button class="btn btn-default" data-dismiss="modal" aria-hidden="true" id="mainCancel"> Cancel </button>
+                <button class="btn btn-outline-secondary" data-bs-dismiss="modal" aria-hidden="true" id="mainCancel"> Cancel </button>
                 <a id="doneInstallButton" class="btn btn-primary" aria-hidden="true" style="display:none;"> Done </a>
                 <a id="goToAppButton" target="_blank" class="btn btn-success" style="display:none;" href="{% url 'app_library' %}"> Visit App Library </a>
             </div>

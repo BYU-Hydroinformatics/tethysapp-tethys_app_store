@@ -52,7 +52,7 @@ def create_services(service, create_service, config):
         write_msg('Service with name "{0}" already exists. Skipping add.'.format(config['name']))
     except ObjectDoesNotExist:
         if not service:
-            write_error('Invalid Service Type : {0}.'.format(serviceKey))
+            write_error('Invalid Service Type : {0}.'.format(newService))
 
         serviceMethod = create_service
         tempNS = Namespace()
@@ -60,7 +60,7 @@ def create_services(service, create_service, config):
         for conf in config.keys():
             setattr(tempNS, conf, config[conf])
 
-        newService = serviceMethod(tempNS)
+        serviceMethod(tempNS)
 
 
 def get_service_from_id(id):
@@ -248,7 +248,7 @@ def run_portal_init(service_models, file_path, app_name):
             p.write('An unexpected error occurred reading the file. Please try again.')
             return False
 
-    if "apps" in portal_options and app_name in portal_options['apps'] and 'services' in portal_options['apps'][app_name]:
+    if "apps" in portal_options and app_name in portal_options['apps'] and 'services' in portal_options['apps'][app_name]: # noqa E501
         services = portal_options['apps'][app_name]['services']
         if services and len(services) > 0:
             for service_type in services:
@@ -261,7 +261,7 @@ def run_portal_init(service_models, file_path, app_name):
             write_msg("No app configuration found for app: {} in portal config file. ".format(app_name))
 
     else:
-        write_msg("No apps configuration found in portal config file. ".format(app_name))
+        write_msg("No apps configuration found in portal config file. ")
 
     return True
 
