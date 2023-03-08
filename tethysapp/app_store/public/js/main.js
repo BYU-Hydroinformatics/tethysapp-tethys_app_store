@@ -242,6 +242,58 @@ const getVersionsHTML_new = (app,channel,label) => {
     }
 }
 
+const getVersionsHTML_dropdown = (app) => {
+
+    // https://stackoverflow.com/questions/70098157/bootstrap-5-1-3-dropdown-data-bs-boundary-no-longer-works
+    // let app = allResources.filter((resource) => resource.name == selectedApp)
+    if (app.hasOwnProperty('name')) {
+        var icon_warning = '';
+        var color_icon = 'primary';
+        if(Object. keys(app['compatibility'][channel][label]).length == 0 ){
+          icon_warning = `<i class="bi bi-exclamation-triangle"></i> `
+          color_icon = 'danger';
+        }
+        // let versions = app[versions].reverse()
+        let string_dropdown = `<div class="dropdown">`
+        string_dropdown += `<a class="custom-label label-color-info label-outline-xs dropdown-toggle install2" href="#" role="button" id="dropdownMenuLink_${app['name']}" data-bs-toggle="dropdown" aria-expanded="false"> Install </a>`
+        string_dropdown += `<ul class="dropdown-menu position-fixed" aria-labelledby="dropdownMenuLink_${app['name']}">`
+        let versions_obj = app['versions'];
+
+        for (channel in versions_obj){
+            string_dropdown += `<li class="dropdown dropend">`;
+            string_dropdown +=`<a class="dropdown-item dropdown-toggle" href="#" id="${channel}_${app['name']}}" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">`
+            string_dropdown +=`<span class="store_label custom-label label-outline-${labels_style_dict[channel]} label-outline-xs"> <i class="bi bi-shop"></i> ${channel} </span>`;
+            string_dropdown += `</a>`
+            string_dropdown += `<ul class="dropdown-menu position-fixed" aria-labelledby="${channel}_${app['name']}}">`
+
+            for (label in versions_obj[channel]){
+                string_dropdown += `<li class="dropdown dropend">`;
+                string_dropdown +=`<a class="dropdown-item dropdown-toggle" href="#" id="${channel}_${label}_${app['name']}}" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">`
+                // string_dropdown +=`<span class="store_label custom-label label-outline-${labels_style_dict[channel]} label-outline-xs"> <i class="bi bi-shop"></i> ${channel} </span>`;
+                string_dropdown +=`<span class="label_label custom-label label-outline-${labels_style_dict[label]} label-outline-xs"><i class="bi bi-tags"></i>${label}</span>`
+                string_dropdown += `</a>`
+                string_dropdown += `<ul class="dropdown-menu position-fixed" aria-labelledby="${channel}_${label}_${app['name']}}">`
+                for (sinlge_version in versions_obj[channel][label]){
+                    // string_dropdown += `<li><a class="dropdown-item" href="#">${versions_obj[channel][label][sinlge_version]}</a></li>`
+                    string_dropdown +=`<li><a class="install button-spaced dropdown-item" href="javascript:void(0)" title="Install">
+                        <button type="button" id="${channel}__${label}__install" class="custom-label label-color-${color_icon} label-outline-xs">${versions_obj[channel][label][sinlge_version]}</button>
+                    </a></li>`
+                }
+                string_dropdown += `</ul></li>`;
+            }
+            string_dropdown += `</ul></li>`;
+
+        }
+
+            string_dropdown += `</ul></div>`;
+
+        return string_dropdown
+    } else {
+        console.log("No App found with that name. Check input params")
+    }
+}
+
+
 
 const updateTethysPlatformCompatibility = (selectedApp, selectedVersion, allResources) => {
     let app = allResources.filter((resource) => resource.name == selectedApp)
@@ -291,9 +343,9 @@ const updateTethysPlatformCompatibility_new = (app, selectedVersion,channel,labe
 //     )
 // }
 
-const startInstall = (appName,channel_app,label_app) => {
+const startInstall = (appName,channel_app,label_app,current_version) => {
     showLoader()
-    let current_version = $("#versions").select2("data")[0].text
+    // let current_version = $("#versions").select2("data")[0].text
     installRunning = true
     installData["version"] = current_version
 

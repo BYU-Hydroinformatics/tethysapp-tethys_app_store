@@ -173,7 +173,8 @@ function mergedFieldsFormatter(value, row, index){
   return html_str
 }
 function mergedOperateFormatter(value, row, index){
-
+  var html_str = getVersionsHTML_dropdown(row);
+  return html_str
   var html_str = '<div class="actions_channel_container">';
   for(channel in value){
     html_str += `<div class="channels_container"> <div class="channels_centered"><span class="store_label custom-label label-outline-${labels_style_dict[channel]} label-outline-xs"> <i class="bi bi-shop"></i> ${channel} </span></div><div> `;
@@ -353,7 +354,9 @@ function writeTethysPlatformCompatibility(e, row) {
 }
 function writeTethysPlatformCompatibility_new(e, row,channel,label) {
   // Get the currently selected version
-  let selectedVersion = $("#versions option:selected").val().split("__")[2];
+  // let selectedVersion = $("#versions option:selected").val().split("__")[2];
+  let selectedVersion = $(e.target).attr("innerText");
+
   // Get the compatibility for that version
   let tethysCompatibility = updateTethysPlatformCompatibility_new(row, selectedVersion,channel,label)
 }
@@ -367,14 +370,18 @@ function get_channel_label_from_id(e){
 }
 
 window.operateEvents = {
+  // "click .install2": function(e, value, row, index) {
+
+  // },
+
   "click .install": function(e, value, row, index) {
-    
+
     $("#mainCancel").show()
     let n_div = $("#notification")
     let n_content = $("#notification .lead")
     let isUsingIncompatible = $(e.target).attr("class").includes("incompatible-app")
     let appList = isUsingIncompatible ? incompatibleApps : availableApps
-    n_content.empty()
+    n_content.empty();
     n_div.modal({ backdrop: "static", keyboard: false })
     n_div.modal('show')
     $("#goToAppButton").hide()
@@ -385,34 +392,13 @@ window.operateEvents = {
     // let appName = getResourceValueByName("name", row.name, appList)
     $("#installingAppName").text(appName)
     installData["name"] = appName
-    let channel_and_label = get_channel_label_from_id(e)
-    let versionHTML = getVersionsHTML_new(row,channel_and_label[0],channel_and_label[1])
-    n_content.append(htmlHelpers.versions_new(appName,channel_and_label[0],channel_and_label[1], isUsingIncompatible))
-    n_content.find("#selectVersion").append(versionHTML)
-    $("#versions").select2();
-    writeTethysPlatformCompatibility_new(e, row, channel_and_label[0],channel_and_label[1])
-
-    // //let appList = $(e.target).attr("class").includes("incompatible-app") ? incompatibleApps : availableApps
-
-    // let n_div = $("#notification")
-    // let n_content = $("#notification .lead")
-    // let isUsingIncompatible = $(e.target).attr("class").includes("incompatible-app")
-    // let appList = isUsingIncompatible ? incompatibleApps : availableApps
-    // //let appList = $(e.target).attr("class").includes("incompatible-app") ? incompatibleApps : availableApps
-    // n_content.empty()
-    // n_div.modal({ backdrop: "static", keyboard: false })
-    // n_div.modal('show')
-    // $("#goToAppButton").hide()
-    // notifCount = 0
-    // // Setup Versions
-    // let appName = getResourceValueByName("name", row.name, appList)
-    // $("#installingAppName").text(appName)
-    // installData["name"] = appName
-    // let versionHTML = getVersionsHTML(appName, appList)
-    // n_content.append(htmlHelpers.versions(appName, isUsingIncompatible))
+    let channel_and_label = get_channel_label_from_id(e);
+    let selectedVersion = $(e.target).attr("innerText");
+    // let versionHTML = getVersionsHTML_new(row,channel_and_label[0],channel_and_label[1])
+    n_content.append(htmlHelpers.versions_new(appName,channel_and_label[0],channel_and_label[1],selectedVersion, isUsingIncompatible))
     // n_content.find("#selectVersion").append(versionHTML)
-    // $("#versions").select2()
-    // writeTethysPlatformCompatibility(e, row)
+    // $("#versions").select2();
+    writeTethysPlatformCompatibility_new(e, row, channel_and_label[0],channel_and_label[1])
   },
 
   //$('#versions').on('select2:select', function (e, _, row, _) {
@@ -488,4 +474,24 @@ function initMainTables() {
   $("#incompatibleAppsTable").find(".install>button").addClass("incompatible-app btn-danger")
   $(".main-app-list").removeClass("hidden")
   $(".installed-app-list").removeClass("hidden")
+
+  let dropdowns = document.querySelectorAll('.dropdown-toggle')
+  dropdowns.forEach((dd)=>{
+      dd.addEventListener('click', function (e) {
+          var el = this.nextElementSibling
+          el.style.display = el.style.display==='block'?'none':'block'
+      })
+      dd.addEventListener('show.bs.dropdown', function (e) {
+        // console.log(e)
+        // var el = this;
+        //make work here to make it dissapear
+        // el.style.display = el.style.display==='block'?'none':'block'
+
+     })
+
+     dd.addEventListener('hide.bs.dropdown', function (e) {
+        // const dropdownParent = dd.closest('.btn-group');
+        // dropdownParent.classList.remove('position-static')
+     })
+  })
 }
