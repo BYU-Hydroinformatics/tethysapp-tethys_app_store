@@ -51,7 +51,7 @@ def run_process(args):
 
 
 def check_if_app_installed(app_name):
-
+    return_obj = {}
     try:
         [resp, err, code] = conda_run(
             Commands.LIST, ["-f",  "--json", app_name])
@@ -62,9 +62,15 @@ def check_if_app_installed(app_name):
         else:
             conda_search_result = json.loads(resp)
             if len(conda_search_result) > 0:
-                return conda_search_result[0]["version"]
+                # return conda_search_result[0]["version"]
+                return_obj['isInstalled'] = True
+                return_obj['channel'] = conda_search_result[0]["channel"]
+                return_obj['version'] = conda_search_result[0]["version"]
+                return return_obj
+            
             else:
-                return False
+                return_obj['isInstalled'] = False
+                return return_obj
     except RuntimeError:
         err_string = str(err)
         if "Path not found" in err_string and "tethysapp_warehouse" in err_string:
@@ -78,6 +84,7 @@ def check_if_app_installed(app_name):
 
             logger.info("Cleaning up: " + err_path)
         return check_if_app_installed(app_name)
+
 
 
 def add_if_exists(a, b, keys):

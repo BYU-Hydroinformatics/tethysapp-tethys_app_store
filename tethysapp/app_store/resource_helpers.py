@@ -332,12 +332,13 @@ def fetch_resources_new(app_workspace, refresh=False, conda_package="tethysapp",
             if "license" in conda_search_result[app_package][-1]:
                 newPackage["license"][conda_package][conda_label] = conda_search_result[app_package][-1]["license"]
 
-            if installed_version:
-                newPackage["installed"][conda_package][conda_label] = True
-                newPackage["installedVersion"] = {
-                    conda_package:{}
-                }
-                newPackage["installedVersion"][conda_package][conda_label] = installed_version
+            if installed_version['isInstalled']:
+                if CHANNEL_NAME == installed_version['channel']:
+                    newPackage["installed"][conda_package][conda_label] = True
+                    newPackage["installedVersion"] = {
+                        conda_package:{}
+                    }
+                    newPackage["installedVersion"][conda_package][conda_label] = installed_version['version']
             for conda_version in conda_search_result[app_package]:
                 newPackage.get("versions").get(f"{conda_package}").get(f"{conda_label}").append(conda_version.get('version'))
                 newPackage.get("versionURLs").get(f"{conda_package}").get(f"{conda_label}").append(conda_version.get('url'))
@@ -663,7 +664,7 @@ def get_resource(resource_name, app_workspace):
 def get_resource_new(resource_name,channel,label, app_workspace):
     all_resources = fetch_resources_new(app_workspace= app_workspace,conda_package=channel, conda_label=label)
     # all_resources = fetch_resources(app_workspace)
-    
+
     resource = [x for x in all_resources if x['name'] == resource_name]
 
     if len(resource) > 0:
