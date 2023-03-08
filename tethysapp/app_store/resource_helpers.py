@@ -659,3 +659,14 @@ def get_resource(resource_name, app_workspace):
         return resource[0]
     else:
         return None
+
+def get_resource_new(resource_name,channel,label, app_workspace):
+    all_resources = fetch_resources_new(app_workspace= app_workspace,conda_package=channel, conda_label=label)
+    # all_resources = fetch_resources(app_workspace)
+    
+    resource = [x for x in all_resources if x['name'] == resource_name]
+
+    if len(resource) > 0:
+        return resource[0]
+    else:
+        return None

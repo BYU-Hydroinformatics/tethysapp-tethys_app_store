@@ -11,6 +11,16 @@ htmlHelpers.versions = (appName, isUsingIncompatible) => {
                     <div id="tethysPlatformVersion" style="min-width:100px"></div>
                 </div>`
 }
+htmlHelpers.versions_new = (appName,channel, label,isUsingIncompatible) => {
+    return `<div>Which version would you like to install: 
+                    <div id="selectVersion" style="display: inline-block; min-width:100px" onchange="updateTethysPlatformVersion('${appName}', '${isUsingIncompatible}')"></div>
+                    <a class="btn btn-primary" onclick="startInstall('${appName}','${channel}', '${label}')"> Go </a>
+                    <br>
+                    <br>
+                    <div id="tethysPlatformVersion" style="min-width:100px"></div>
+                </div>`
+}
+
 
 htmlHelpers.getServicesHTML = (options, service_name) => {
     let sel = document.createElement("select"),

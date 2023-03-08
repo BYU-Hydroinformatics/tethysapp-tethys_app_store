@@ -274,17 +274,36 @@ const updateTethysPlatformCompatibility_new = (app, selectedVersion,channel,labe
 }
 
 
-const startInstall = (appName) => {
+// const startInstall = (appName) => {
+//     showLoader()
+//     let version = $("#versions").select2("data")[0].text
+//     installRunning = true
+//     installData["version"] = version
+
+//     notification_ws.send(
+//         JSON.stringify({
+//             data: {
+//                 name: appName,
+//                 version
+//             },
+//             type: `begin_install`
+//         })
+//     )
+// }
+
+const startInstall = (appName,channel_app,label_app) => {
     showLoader()
-    let version = $("#versions").select2("data")[0].text
+    let current_version = $("#versions").select2("data")[0].text
     installRunning = true
-    installData["version"] = version
+    installData["version"] = current_version
 
     notification_ws.send(
         JSON.stringify({
             data: {
                 name: appName,
-                version
+                channel:channel_app,
+                label:label_app,
+                version: current_version
             },
             type: `begin_install`
         })
