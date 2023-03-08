@@ -435,6 +435,6 @@
     width: 100%;
 }
 .drop_down_scroll{
-    height: 100px;
+    /* height: 100px; */
     overflow-y: scroll;
 }
