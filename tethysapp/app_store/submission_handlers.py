@@ -35,12 +35,13 @@ CHANNEL_NAME = 'tethysapp'
 
 @api_view(['POST'])
 @permission_classes([AllowAny])
-@csrf_exempt
 @controller(
     name='scaffold_submit',
     url='app-store/scaffold_submit',
     app_workspace=True,
+    login_required=False
 )
+@csrf_exempt
 def run_submit_nursery_app(request, app_workspace):
     override_key = get_override_key()
     if(request.GET.get('custom_key') == override_key):
@@ -324,7 +325,7 @@ def repo_exists(repo_name, organization):
 
 
 
-## we may need to select the branches for each store 
+## we may need to select the branches for each store
 ### here  we need to make this function to be validate_git_repo_single to do it for one channel
 ### let the user know in the interface with a checkbox to which stores it want to push:
 ### let the user know in the interface which labels in the conda channel it wants (e.g.["main","develop","etc"])
@@ -334,7 +335,7 @@ def repo_exists(repo_name, organization):
 ### Let the user know which stores have fail and succeded
 
 
-## we might need to create multiple branches for each store 
+## we might need to create multiple branches for each store
 ## we might need to add multiple remotes
 
 ### we might just delete the repo in a loop
@@ -377,17 +378,17 @@ def validate_git_repo(install_data,channel_layer):
             if "license" in conda_search_result[conda_package][-1]:
 
                 conda_search_result_package = conda_search_result[conda_package]
-                
+
                 ### Check if it is a new version
                 get_data_json = validation_is_new_version(conda_search_result_package,version_setup,json_response)
-                
+
 
                 if bool(get_data_json):
                     send_notification(get_data_json, channel_layer)
-                
+
                 ### Check if if it the app_package name is already in the conda channel.
                 ### check if the submission url is the same as the dev url
-                ### check if the app_package name is the same as an already submitted application. This mean they are different apps with the same package name   
+                ### check if the app_package name is the same as an already submitted application. This mean they are different apps with the same package name
                 get_data_json = validation_is_new_app(github_url,app_package_name, json_response, channel_layer)
                 send_notification(get_data_json, channel_layer)
 
@@ -413,9 +414,9 @@ def validate_git_repo(install_data,channel_layer):
 
 
 def pull_git_repo(install_data, channel_layer, app_workspace):
-    
+
     # This function does the following:
-    # 1 Check if the the directory is a current repository or initialize, and then select or create the remote origin 
+    # 1 Check if the the directory is a current repository or initialize, and then select or create the remote origin
     # 2 Fetch the data from the origin remote
     # 3 Checkout the master/main branch depending on the repository
     # 4 Pull the changes if any
@@ -430,7 +431,7 @@ def pull_git_repo(install_data, channel_layer, app_workspace):
 
     app_github_dir = os.path.join(github_dir, app_name)
 
-    # 1 Check if the the directory is a current repository or initialize, and then select or create the remote origin 
+    # 1 Check if the the directory is a current repository or initialize, and then select or create the remote origin
     if os.path.exists(app_github_dir):
         # Check if it is a github dir
         # Do a pull and then continue with branch selection
@@ -452,7 +453,7 @@ def pull_git_repo(install_data, channel_layer, app_workspace):
     except git.exc.GitCommandError:
         logger.info("Couldn't check out master branch. Attempting to checkout main")
         repo.git.checkout("main", "-f")
-    
+
     # 4 Pull the changes if any
     origin.pull()
     # 5 Get the references to get the branches
@@ -476,7 +477,7 @@ def process_branch(install_data, channel_layer):
 
     # first create a new branch per tag,
     # second run the application without any change and see what might be the error
-    
+
     # This function does the following:
 
     # 1 select the git repo with the path github_dir
@@ -490,47 +491,47 @@ def process_branch(install_data, channel_layer):
         current_version = install_yml_file.get('version')
         today = time.strftime("%Y_%m_%d")
         ## change this to grab the version from the setup.py not the install.yml, because there is an override of the package in the conda channel
-        current_tag_name = "v" + str(current_version) + "_" + today 
+        current_tag_name = "v" + str(current_version) + "_" + today
     # 2 if the tethysapp_warehouse_release appears in the heads, delete the existing release branch why?
     # Delete head if exists
     # if 'tethysapp_warehouse_release' in repo.heads:
     #     logger.info("Deleting existing release branch")
     #     repo.delete_head('tethysapp_warehouse_release', '-D')
-    
+
     filename = os.path.join(install_data['github_dir'], 'setup.py')
-    
+
     # 8 Get the setup data into a dict
 
     setup_py_data = parse_setup_py(filename)
     current_version = setup_py_data["author_email"]
     current_tag_name = "v" + str(current_version) + "_" + today
 
-    # 3 from the origin remote checkout the selected branch and pull 
+    # 3 from the origin remote checkout the selected branch and pull
     origin = repo.remote(name='origin')
     repo.git.checkout(install_data['branch'])
     origin.pull()
 
 
     ## here create version/tag base on install.yml
-    ## 
+    ##
 
     # 4 create head tethysapp_warehouse_release and checkout the head
     # create
     # new_release_branch = repo.heads["tethysapp_warehouse_release"]
-    
+
     if 'tethysapp_warehouse_release' not in repo.heads:
          repo.create_head('tethysapp_warehouse_release')
     else:
         # merge the cu
-        
+
         # tethysapp_remote = repo.remotes.tethysapp
-        
+
         # organization = g.get_organization("tethysapp")
         # repo_name = install_data['github_dir'].split('/')[-1]
         # tethysapp_repo = organization.get_repo(repo_name)
         # remote_url = tethysapp_repo.git_url.replace("git://", "https://" + key + ":x-oauth-basic@")
         # tethysapp_remote.set_url(remote_url)
-        
+
         repo.git.checkout('tethysapp_warehouse_release')
         # tethysapp_remote.pull()
         repo.git.merge(install_data['branch'])
@@ -551,7 +552,7 @@ def process_branch(install_data, channel_layer):
 
     os.makedirs(workflows_path)
 
-    # 6 Delete conda.recipes directory if exits in the repo folder, and create the directory conda.recipes. 
+    # 6 Delete conda.recipes directory if exits in the repo folder, and create the directory conda.recipes.
     recipe_path = os.path.join(install_data['github_dir'], 'conda.recipes')
 
     if os.path.exists(recipe_path):
@@ -574,13 +575,13 @@ def process_branch(install_data, channel_layer):
     source = os.path.join(source_files_path, 'meta_template.yaml')
     destination = os.path.join(recipe_path, 'meta.yaml')
     # filename = os.path.join(install_data['github_dir'], 'setup.py')
-    
+
     # 8 Get the setup data into a dict
 
     # setup_py_data = parse_setup_py(filename)
     keywords = []
     email = ""
-    
+
     # 9 dropping Keywords if it exists as they are already present in the main.yaml file
     try:
         # Dropping Keywords if it exists as they are already present in the main.yaml file
@@ -596,7 +597,7 @@ def process_branch(install_data, channel_layer):
     except Exception as err:
         logger.error("Error ocurred while formatting keywords from setup.py")
         logger.error(err)
-    
+
     # 10 get the data from the install.yml and create a metadata dict
 
     install_yml = os.path.join(install_data['github_dir'], 'install.yml')
@@ -607,7 +608,7 @@ def process_branch(install_data, channel_layer):
     template_data = {
         'metadataObj': json.dumps(metadata_dict).replace('"', "'")
     }
-    # 11 Apply the metadata dict data to the meta_template.yml template to the meta.yaml file in the destination folder 
+    # 11 Apply the metadata dict data to the meta_template.yml template to the meta.yaml file in the destination folder
 
     apply_template(source, template_data, destination)
 
@@ -639,7 +640,7 @@ def process_branch(install_data, channel_layer):
 
             # elif "import find_resource_files" in line:
             #     print("from setup_helper import find_resource_files", end='\n')
-            
+
             elif ("setup(" in line):
                 # print(
                 #     "resource_files += find_resource_files('tethysapp/' + app_package + '/scripts', 'tethysapp/' + \
@@ -662,20 +663,20 @@ def process_branch(install_data, channel_layer):
             # elif "release_package" in line:
             #     # print(f'tethysapp-{rel_package}')
             #     print('', end='\n')
-            
+
             elif "TethysAppBase.package_namespace" in line:
                 new_replace_line = line.replace("TethysAppBase.package_namespace","namespace")
                 print(new_replace_line, end='\n')
 
             elif "resource_files = find_resource_files" in line:
                 print("resource_files = find_all_resource_files(app_package, namespace)", end='\n')
-            
+
             elif "resource_files += find_resource_files" in line:
                 print('', end='\n')
-            
+
             else:
                 print(line, end='')
-        
+
     update_dependencies(install_data['github_dir'], recipe_path, source_files_path, keywords, email)
 
     source = os.path.join(source_files_path, 'main_template.yaml')
@@ -714,8 +715,8 @@ def process_branch(install_data, channel_layer):
     # repo.index.commit(f'Merge {current_tag_name} branch into tethysapp_warehouse_release branch', parent_commits=(new_release_branch.commit,tethys_release_branch.commit))
     # # checkout new release branch to get the merge contents
     # new_release_branch.checkout(force=True)
-    
-    #come back to release branch 
+
+    #come back to release branch
     # repo.git.checkout('tethysapp_warehouse_release')
 
 
@@ -772,7 +773,7 @@ def process_branch(install_data, channel_layer):
     tethysapp_remote.push(new_release_branch)
 
     tag_name = current_tag_name + "_release"
-    # Create tag over the 
+    # Create tag over the
     new_tag = repo.create_tag(
         tag_name,
         ref=repo.heads["tethysapp_warehouse_release"],
@@ -781,7 +782,7 @@ def process_branch(install_data, channel_layer):
 
     tethysapp_remote.push(new_tag)
 
-    
+
     tethysapp_repo = organization.get_repo(repo_name)
 
     workflowFound = False
@@ -852,7 +853,7 @@ def validation_is_setup_complete(user,repo_name,branch,json_response):
     github_submit_repo = github_object_api.get_repo(f'{user}/{repo_name}')
     setup_content_object = github_submit_repo.get_contents('setup.py',ref=branch)
     setup_content = setup_content_object.decoded_content.decode()
-    
+
     prejson_string = setup_content.split("setup(")[-1].replace("\n","").replace(",    ",",").replace("dependencies,)","dependencies").strip().split(",")
     # json_dict = {}
     array_emptyness = []
@@ -869,7 +870,7 @@ def validation_is_setup_complete(user,repo_name,branch,json_response):
 
     string_fields += '</ul>'
     if array_emptyness:
-        mssge_string = f'<p>The setup.py of your repository contain the following fields empty: {string_fields}</p>'                    
+        mssge_string = f'<p>The setup.py of your repository contain the following fields empty: {string_fields}</p>'
         json_response['next_move'] = False
         get_data_json = {
             "data": {
@@ -888,7 +889,7 @@ def validation_is_a_fork(user,repo_name,json_response):
     github_submit_repo = github_object_api.get_repo(f'{user}/{repo_name}')
     if github_submit_repo.fork:
         parent_repo = github_submit_repo.parent.html_url
-        mssge_string = f'<p>Your repository is a fork, Please submit a pull request to the original app repository <a href="{parent_repo}">Here</a>, and ask the owner to submit the app to the app store later.</p>'                    
+        mssge_string = f'<p>Your repository is a fork, Please submit a pull request to the original app repository <a href="{parent_repo}">Here</a>, and ask the owner to submit the app to the app store later.</p>'
         json_response['next_move'] = False
         get_data_json = {
             "data": {
@@ -942,12 +943,12 @@ def validation_is_new_version(conda_search_result_package,version_setup,json_res
         # json_response.get("github_urls").append(ast.literal_eval(conda_version.get('license')).get('dev_url'))
         string_versions += f'<li>{conda_version.get("version")}</li>'
 
-    string_versions += '</ul>'    
+    string_versions += '</ul>'
     ## CHECK if it is a new version or not
     if version_setup in json_response["versions"]:
-        mssge_string = f'<p>The current version of your application is {version_setup}, and it was already submitted.</p><p>Current versions of your application are: {string_versions}</p> <p>Please use a new version in the <b>setup.py</b> and <b>install.yml</b> files</p>'                                            
+        mssge_string = f'<p>The current version of your application is {version_setup}, and it was already submitted.</p><p>Current versions of your application are: {string_versions}</p> <p>Please use a new version in the <b>setup.py</b> and <b>install.yml</b> files</p>'
         json_response['next_move'] = False
-        
+
         get_data_json = {
             "data": {
                 "mssge_string": mssge_string,
@@ -956,5 +957,5 @@ def validation_is_new_version(conda_search_result_package,version_setup,json_res
             "jsHelperFunction": "validationResults",
             "helper": "addModalHelper"
         }
-    
+
     return  get_data_json

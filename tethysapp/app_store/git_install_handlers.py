@@ -251,11 +251,12 @@ def get_status(request, app_workspace):
 
 
 @api_view(['GET'])
-@csrf_exempt
 @controller(
     name='git_get_status_override',
     url='app-store/install/git/status_override',
+    login_required=False
 )
+@csrf_exempt
 def get_status_override(request):
     # This method is an override to the get status method. It allows for installation
     # based on a custom key set in the custom settings.
@@ -294,11 +295,12 @@ def get_logs(request, app_workspace):
 
 
 @api_view(['GET'])
-@csrf_exempt
 @controller(
     name='git_get_logs_override',
     url='app-store/install/git/logs_override',
+    login_required=False
 )
+@csrf_exempt
 def get_logs_override(request):
     # This method is an override to the get status method. It allows for installation
     # based on a custom key set in the custom settings.
@@ -429,11 +431,12 @@ def run_git_install_main(request, app_workspace):
 
 @api_view(['POST'])
 @permission_classes([AllowAny])
-@csrf_exempt
 @controller(
     name='install_git_override',
     url='app-store/install/git_override',
+    login_required=False
 )
+@csrf_exempt
 def run_git_install_override(request):
     # This method is an override to the install method. It allows for installation
     # based on a custom key set in the custom settings. This allows app nursery to use the same code to process the
