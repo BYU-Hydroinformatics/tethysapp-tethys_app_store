@@ -18,6 +18,7 @@
 .modal-body {
   max-height: calc(100vh - 350px);
   overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .btn-info {
