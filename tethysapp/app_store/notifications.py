@@ -36,10 +36,10 @@ class notificationsConsumer(AsyncWebsocketConsumer):
         logger.info(f"print message {message} at {self.channel_name}")
         await self.send(text_data=json.dumps({'message': message, }))
         logger.info(f"Got message {event} at {self.channel_name}")
-
+        
     async def receive(self, text_data):
         logger.info(f"Received message {text_data} at {self.channel_name}")
-        breakpoint()
+        # breakpoint()
         text_data_json = json.loads(text_data)
         function_name = text_data_json['type']
         module_name = sys.modules[__name__]
