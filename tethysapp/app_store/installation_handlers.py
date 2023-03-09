@@ -17,7 +17,7 @@ from tethys_cli.services_commands import services_list_command
 from .app import AppStore as app
 from .begin_install import detect_app_dependencies
 from .helpers import get_app_instance_from_path, logger, run_process, send_notification
-
+from .model import * # noqa: F401
 
 def get_service_options(service_type):
     # # List existing services
@@ -67,7 +67,9 @@ def restart_server(data, channel_layer, app_workspace, run_collect_all=True):
         dir_path = os.path.dirname(os.path.realpath(__file__))
         file_path = os.path.join(dir_path, 'model.py')
         with open(file_path, "w") as f:
-            f.write("import os")
+            f.write(f'print("{data["name"]} installed in dev mode")')
+            f.write("\n")
+
 
     else:
         if run_collect_all and (data["restart_type"] == "install" or data["restart_type"] == "github_install" or
