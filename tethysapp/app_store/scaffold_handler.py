@@ -22,7 +22,7 @@ from tethys_sdk.routing import controller
 
 def install_app(app_path):
     logger.info("Running scaffolded application install....")
-    process = Popen(['python', 'setup.py', "develop"],
+    process = Popen(['tethys', 'install', "-d", "-q"],
                     cwd=app_path, stdout=PIPE, stderr=STDOUT)
     write_logs(logger, process.stdout, 'Python Install SubProcess: ')
     exitcode = process.wait()
