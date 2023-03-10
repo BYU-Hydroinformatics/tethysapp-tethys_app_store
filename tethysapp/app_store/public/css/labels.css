@@ -114,15 +114,16 @@
 
 }
 
+.label_label{
+    text-align: center;
+    width: 60px;
+  }
+
 /* blue outline label */
 .label-outline-blue {
     color:  var(--bs-orange);
     border-color:  var(--bs-orange);
 }
-.label_label{
-    text-align: center;
-    width: 60px;
-  }
 
 .label-outline-blue:hover {
     color: var(--bs-white);
@@ -428,6 +429,114 @@
     background-color: var(--bs-gray);
     border-color: var(--bs-gray);
 }
+
+/* blue color label */
+.label-color-blue {
+    color: var(--bs-white);
+    background-color: var(--bs-blue);
+    border-color: var(--bs-blue);
+}
+
+.label-color-blue:hover {
+    color: var(--bs-white);
+    background-color: var(--bs-gray);
+    border-color: var(--bs-gray);
+}
+
+/* indigo color label */
+.label-color-indigo {
+    color: var(--bs-white);
+    background-color: var(--bs-indigo);
+    border-color: var(--bs-indigo);
+}
+
+.label-color-indigo:hover {
+    color: var(--bs-white);
+    background-color: var(--bs-gray);
+    border-color: var(--bs-gray);
+}
+
+/* purple color label */
+.label-color-purple {
+    color: var(--bs-white);
+    background-color: var(--bs-purple);
+    border-color: var(--bs-purple);
+}
+
+.label-color-purple:hover {
+    color: var(--bs-white);
+    background-color: var(--bs-gray);
+    border-color: var(--bs-gray);
+}
+
+/* pink color label */
+.label-color-pink {
+    color: var(--bs-white);
+    background-color: var(--bs-pink);
+    border-color: var(--bs-pink);
+}
+.label-color-pink:hover {
+    color: var(--bs-white);
+    background-color: var(--bs-gray);
+    border-color: var(--bs-gray);
+}
+
+/* red color label */
+.label-color-red {
+    color: var(--bs-white);
+    background-color: var(--bs-red);
+    border-color: var(--bs-red);
+}
+
+.label-color-red:hover {
+    color: var(--bs-white);
+    background-color: var(--bs-gray);
+    border-color: var(--bs-gray);
+}
+
+ /* orange color label */
+ .label-color-orange {
+    color: var(--bs-white);
+    background-color: var(--bs-orange);
+    border-color: var(--bs-orange);
+}
+
+.label-color-orange:hover {
+    color: var(--bs-white);
+    background-color: var(--bs-gray);
+    border-color: var(--bs-gray);
+}
+
+ /* yellow color label */
+ .label-color-yellow {
+    color: var(--bs-white);
+    background-color: var(--bs-yellow);
+    border-color: var(--bs-yellow);
+}
+
+.label-color-yellow:hover {
+    color: var(--bs-white);
+    background-color: var(--bs-gray);
+    border-color: var(--bs-gray);
+}
+
+ /* green color label */
+ .label-color-green {
+    color: var(--bs-white);
+    background-color: var(--bs-green);
+    border-color: var(--bs-green);
+}
+
+.label-color-green:hover {
+    color: var(--bs-white);
+    background-color: var(--bs-gray);
+    border-color: var(--bs-gray);
+}
+
+
+
+
+
 
 
 .label_dropdown{

@@ -151,9 +151,44 @@ function operateFormatter2(value, row, index) {
 }
 
 function mergedNameFormatter(value, row, index){
-  return`<span class="custom-label">${value}</span></div>`
+  var htmlStr = checkInstalledInAvailable(row,value)
+  return htmlStr
+  // return`<span class="custom-label">${value}</span></div>`
 }
+function installedRowStyle(row){
+  if ('installedVersion' in row){
+    return {
+      classes: 'table-dark'
+    }
+  }
+  else{
+
+    return {
+      classes: 'table-light'
+    }
+  }
+}
+function checkInstalledInAvailable(row,value){
+  var htmlStr =`<span class="custom-label">${value}</span>`
+  if ('installedVersion' in row){ //check it is not a row from installed apps.
+    for(channel in row['installedVersion']){
+      for(label in row['installedVersion'][channel]){
+        htmlStr += `<span class="labels_container" style="display: inline-block;"> `
+        htmlStr += `<span class="custom-label label-color-${labels_style_dict[channel]} label-outline-xs"> <i class="bi bi-shop"></i> ${channel} </span>`
+        htmlStr += `<span class="custom-label label-color-${labels_style_dict[label]} label-outline-xs"><i class="bi bi-tags"></i> ${label}</span>`
+        htmlStr += `<span class="custom-label label-outline-xs label-color-gray">${row['installedVersion'][channel][label]}</span>`
+        htmlStr += `</span>`
+      }
+    }
+
+  }
+  return htmlStr
+}
+
+
 function mergedFieldsFormatter(value, row, index){
+  // console.log(incompatibleApps)
+
   var html_str = '<div>';
   var wasAdded = false;
   for(channel in value){
@@ -173,7 +208,21 @@ function mergedFieldsFormatter(value, row, index){
   return html_str
 }
 function mergedOperateFormatter(value, row, index){
-  var html_str = getVersionsHTML_dropdown(row);
+
+  var html_str = `<div class="store_label_val">`
+  html_str += getVersionsHTML_dropdown(row);
+  for( channel in value){
+    for (label in value[channel]){
+      if(value[channel][label]){
+        html_str += `<a class="uninstall button-spaced" href="javascript:void(0)" title="Uninstall">
+        <button type="button" id="${channel}__${label}__uninstall" class="custom-label label-color-danger label-outline-xs">Uninstall</button>
+        </a>`
+      }
+
+    }
+  }
+
+  html_str += `</div>`
   return html_str
   var html_str = '<div class="actions_channel_container">';
   for(channel in value){

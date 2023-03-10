@@ -1,1 +1,1 @@
-import os
+print("test1app installed in dev mode")
