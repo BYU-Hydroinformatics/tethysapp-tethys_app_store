@@ -207,6 +207,20 @@ function mergedFieldsFormatter(value, row, index){
   }
   return html_str
 }
+
+function addHtmlForUpdateApp(row){
+  var html_str = ``
+  if('updateAvailable' in row){
+    for(channel in row['updateAvailable']){
+      for(label in row['updateAvailable'][channel]){
+        if(row['updateAvailable'][channel][label]){
+          html_str +=`<a class="update button-spaced" href="javascript:void(0)" title="Update"><button type="button" id="${channel}__${label}__uninstall" class="custom-label label-color-primary label-outline-xs">Update</button></a>`  
+        }
+      }
+    }
+  }
+  return html_str
+}
 function mergedOperateFormatter(value, row, index){
 
   var html_str = `<div class="store_label_val">`
@@ -218,55 +232,54 @@ function mergedOperateFormatter(value, row, index){
         <button type="button" id="${channel}__${label}__uninstall" class="custom-label label-color-danger label-outline-xs">Uninstall</button>
         </a>`
       }
-
     }
   }
-
+  html_str+= addHtmlForUpdateApp(row);
   html_str += `</div>`
   return html_str
-  var html_str = '<div class="actions_channel_container">';
-  for(channel in value){
-    html_str += `<div class="channels_container"> <div class="channels_centered"><span class="store_label custom-label label-outline-${labels_style_dict[channel]} label-outline-xs"> <i class="bi bi-shop"></i> ${channel} </span></div><div> `;
-    for (label in value[channel]){
-      var github_url =''
-      if (value[channel][label] !== null ){
-        github_url =  value[channel][label]
-        if(github_url == ""){
-          var normal_json = row['license'][channel][label];
-          try{
-            var licenseChannnelLabel = JSON.parse(normal_json.replace(/'/g, '"'));
-            var github_url = licenseChannnelLabel['dev_url']
-          }
-          catch(e){
-            console.log(e)
-          }
+  // var html_str = '<div class="actions_channel_container">';
+  // for(channel in value){
+  //   html_str += `<div class="channels_container"> <div class="channels_centered"><span class="store_label custom-label label-outline-${labels_style_dict[channel]} label-outline-xs"> <i class="bi bi-shop"></i> ${channel} </span></div><div> `;
+  //   for (label in value[channel]){
+  //     var github_url =''
+  //     if (value[channel][label] !== null ){
+  //       github_url =  value[channel][label]
+  //       if(github_url == ""){
+  //         var normal_json = row['license'][channel][label];
+  //         try{
+  //           var licenseChannnelLabel = JSON.parse(normal_json.replace(/'/g, '"'));
+  //           var github_url = licenseChannnelLabel['dev_url']
+  //         }
+  //         catch(e){
+  //           console.log(e)
+  //         }
 
-        }
-      }
-        // check compatibility
-        var icon_warning = '';
-        var color_icon = 'primary';
-        if(Object. keys(row['compatibility'][channel][label]).length == 0 ){
-          icon_warning = `<i class="bi bi-exclamation-triangle"></i> `
-          color_icon = 'danger';
-        }
+  //       }
+  //     }
+  //       // check compatibility
+  //       var icon_warning = '';
+  //       var color_icon = 'primary';
+  //       if(Object. keys(row['compatibility'][channel][label]).length == 0 ){
+  //         icon_warning = `<i class="bi bi-exclamation-triangle"></i> `
+  //         color_icon = 'danger';
+  //       }
 
-        html_str += `<div class="actions_label_container"><div><span class="label_label custom-label label-outline-${labels_style_dict[label]} label-outline-xs"><i class="bi bi-tags"></i>${label}</span></div>
-        <span>
-          <p class="store_label_val">
-            <a class="github_type button-spaced" href="${github_url}" target="_blank" title="Github">
-              <button type="button" class="custom-label label-color-info label-outline-xs"><i class="bi bi-github"></i></button>
-            </a>
-            <a class="install button-spaced" href="javascript:void(0)" title="Install">
-              <button type="button" id="${channel}__${label}__install" class="custom-label label-color-${color_icon} label-outline-xs">Install</button>
-            </a>
-          </p>
-        </span></div>`
+  //       html_str += `<div class="actions_label_container"><div><span class="label_label custom-label label-outline-${labels_style_dict[label]} label-outline-xs"><i class="bi bi-tags"></i>${label}</span></div>
+  //       <span>
+  //         <p class="store_label_val">
+  //           <a class="github_type button-spaced" href="${github_url}" target="_blank" title="Github">
+  //             <button type="button" class="custom-label label-color-info label-outline-xs"><i class="bi bi-github"></i></button>
+  //           </a>
+  //           <a class="install button-spaced" href="javascript:void(0)" title="Install">
+  //             <button type="button" id="${channel}__${label}__install" class="custom-label label-color-${color_icon} label-outline-xs">Install</button>
+  //           </a>
+  //         </p>
+  //       </span></div>`
       
-    }
-    html_str += `</div></div>`
-  }
-  return html_str
+  //   }
+  //   html_str += `</div></div>`
+  // }
+  // return html_str
   
 }
 

@@ -246,7 +246,7 @@ const getVersionsHTML_dropdown = (app) => {
 
     // https://stackoverflow.com/questions/70098157/bootstrap-5-1-3-dropdown-data-bs-boundary-no-longer-works
     // let app = allResources.filter((resource) => resource.name == selectedApp)
-    if (app.hasOwnProperty('name')) {
+    if (app.hasOwnProperty('name') && app.hasOwnProperty('installedVersion') == false) {
         var icon_warning = '';
         var color_icon = 'primary';
         if(Object. keys(app['compatibility'][channel][label]).length == 0 ){
@@ -289,7 +289,9 @@ const getVersionsHTML_dropdown = (app) => {
 
         return string_dropdown
     } else {
-        console.log("No App found with that name. Check input params")
+        var string_dropdown = ''
+        return string_dropdown
+        // console.log("No App found with that name. Check input params")
     }
 }
 
