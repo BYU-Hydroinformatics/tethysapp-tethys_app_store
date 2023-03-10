@@ -224,7 +224,7 @@ function addHtmlForUpdateApp(row){
 function mergedOperateFormatter(value, row, index){
 
   var html_str = `<div class="store_label_val">`
-  html_str += getVersionsHTML_dropdown(row);
+  html_str += getVersionsHTML_dropdown(row,row.hasOwnProperty('installedVersion'),false);
   for( channel in value){
     for (label in value[channel]){
       if(value[channel][label]){
@@ -431,13 +431,30 @@ function get_channel_label_from_id(e){
   return [channel,label]
 }
 
+function chooseVersion(app_name,channel,label,version,div_element){
+  var htmlLatestVersion=''
+  htmlLatestVersion += `<span class="labels_container" style="display: inline-block;"> `
+  htmlLatestVersion += `<span class="custom-label label-color-${labels_style_dict[channel]} label-outline-xs"> <i class="bi bi-shop"></i> ${channel} </span>`
+  htmlLatestVersion += `<span class="custom-label label-color-${labels_style_dict[label]} label-outline-xs"><i class="bi bi-tags"></i> ${label}</span>`
+  htmlLatestVersion += `<span class="custom-label label-outline-xs label-color-gray">${version}</span>`
+  htmlLatestVersion += `</span>`
+
+  $(`#${div_element}`).html(
+    `Are you sure you would like to update the <strong>${
+      app_name
+    }</strong> app to version ${htmlLatestVersion}? `
+  )
+  console.log(channel,label,version)
+}
+
+
 window.operateEvents = {
   // "click .install2": function(e, value, row, index) {
 
   // },
 
   "click .install": function(e, value, row, index) {
-
+    
     $("#mainCancel").show()
     let n_div = $("#notification")
     let n_content = $("#notification .lead")
@@ -498,14 +515,62 @@ window.operateEvents = {
   "click .update": function(e, value, row, index) {
     let n_content = $("#update-notices .lead")
     // Find The installed App's version
-    let installedApp = installedApps.find((app) => app.name == row["name"])
-    $("#current-version-update").html(installedApp.installedVersion)
-    $("#latest-version-update").html(installedApp.latestVersion)
-    $("#update-app-notice").html(
-      `Are you sure you would like to update the <strong>${
-        row["name"]
-      }</strong> app to version ${installedApp.latestVersion}? `
-    )
+    let installedApp = row["name"]
+    for(channel in row['installedVersion']){
+      for(label in row['installedVersion'][channel]){
+        let htmlCurrentVersion = '';
+        htmlCurrentVersion += `<span class="labels_container" style="display: inline-block;"> `
+        htmlCurrentVersion += `<span class="custom-label label-color-${labels_style_dict[channel]} label-outline-xs"> <i class="bi bi-shop"></i> ${channel} </span>`
+        htmlCurrentVersion += `<span class="custom-label label-color-${labels_style_dict[label]} label-outline-xs"><i class="bi bi-tags"></i> ${label}</span>`
+        htmlCurrentVersion += `<span class="custom-label label-outline-xs label-color-gray">${row['installedVersion'][channel][label]}</span>`
+        htmlCurrentVersion += `</span>`
+
+        let htmlLatestVersion = '<span>';
+        htmlLatestVersion += `<span class="labels_container" style="display: inline-block;"> `
+        htmlLatestVersion += `<span class="custom-label label-color-${labels_style_dict[channel]} label-outline-xs"> <i class="bi bi-shop"></i> ${channel} </span>`
+        htmlLatestVersion += `<span class="custom-label label-color-${labels_style_dict[label]} label-outline-xs"><i class="bi bi-tags"></i> ${label}</span>`
+        htmlLatestVersion += `<span class="custom-label label-outline-xs label-color-gray">${row['latestVersion'][channel][label]}</span>`
+        htmlLatestVersion += `</span>`
+        htmlLatestVersion += `<button class="custom-label label-outline-xs label-outline-success pull-right" id="choose-version-update" onClick="chooseVersion('${row['name']}','${channel}','${label}','${row['latestVersion'][channel][label]}','update-app-notice')" >Choose Version</button>`
+        htmlLatestVersion += `</span>`
+        $("#current-version-update").html(htmlCurrentVersion);
+        $("#latest-version-update").html(htmlLatestVersion);
+        // $("#update-app-notice").html(
+        //   `Are you sure you would like to update the <strong>${
+        //     row["name"]
+        //   }</strong> app to version ${row['latestVersion'][channel][label]}? `
+        // )
+      }
+    }
+
+    var htmlNewInstall = `<div class="store_label_val">`
+    htmlNewInstall += getVersionsHTML_dropdown(row,false,true);
+    htmlNewInstall +=`</div>`
+    $("#install-dropdown-update").html(htmlNewInstall);
+    let dropdowns = document.querySelectorAll('.dropdown-toggle')
+    dropdowns.forEach((dd)=>{
+      
+      dd.removeEventListener('click',eventClickDropdown)
+      dd.addEventListener('click', eventClickDropdown)
+    })
+    let installDropdowns = document.querySelectorAll('.install-update')
+    installDropdowns.forEach((idd)=>{
+      
+      idd.removeEventListener('click',eventClickDropdownUpdate)
+      idd.addEventListener('click', eventClickDropdownUpdate)
+    })
+
+
+    // $(`#${ $("#install-dropdown-update")}`).on("click")
+
+    // let installedApp = installedApps.find((app) => app.name == row["name"])
+    // $("#current-version-update").html(installedApp.installedVersion)
+    // $("#latest-version-update").html(installedApp.latestVersion)
+    // $("#update-app-notice").html(
+    //   `Are you sure you would like to update the <strong>${
+    //     row["name"]
+    //   }</strong> app to version ${installedApp.latestVersion}? `
+    // )
     updateData = {
       name: row["name"],
       version: installedApp.latestVersion
@@ -539,21 +604,32 @@ function initMainTables() {
 
   let dropdowns = document.querySelectorAll('.dropdown-toggle')
   dropdowns.forEach((dd)=>{
-      dd.addEventListener('click', function (e) {
-          var el = this.nextElementSibling
-          el.style.display = el.style.display==='block'?'none':'block'
-      })
-      dd.addEventListener('show.bs.dropdown', function (e) {
-        // console.log(e)
-        // var el = this;
-        //make work here to make it dissapear
-        // el.style.display = el.style.display==='block'?'none':'block'
+      dd.removeEventListener('click',eventClickDropdown)
+      dd.addEventListener('click', eventClickDropdown)
 
-     })
+    //   dd.addEventListener('show.bs.dropdown', function (e) {
+    //     // console.log(e)
+    //     // var el = this;
+    //     //make work here to make it dissapear
+    //     // el.style.display = el.style.display==='block'?'none':'block'
 
-     dd.addEventListener('hide.bs.dropdown', function (e) {
-        // const dropdownParent = dd.closest('.btn-group');
-        // dropdownParent.classList.remove('position-static')
-     })
+    //  })
+
+    //  dd.addEventListener('hide.bs.dropdown', function (e) {
+    //     // const dropdownParent = dd.closest('.btn-group');
+    //     // dropdownParent.classList.remove('position-static')
+    //  })
   })
+}
+
+function eventClickDropdown(e) {
+  var el = this.nextElementSibling
+  el.style.display = el.style.display==='block'?'none':'block'
+}
+
+function eventClickDropdownUpdate(e) {
+  let app_channel_label_version = e.target.id
+  let app_channel_label_version_list = app_channel_label_version.split("__")
+  chooseVersion(app_channel_label_version_list[3], app_channel_label_version_list[0],app_channel_label_version_list[1],app_channel_label_version_list[2],'update-app-notice')
+  // app_channel_label_version
 }

@@ -242,11 +242,14 @@ const getVersionsHTML_new = (app,channel,label) => {
     }
 }
 
-const getVersionsHTML_dropdown = (app) => {
-
+const getVersionsHTML_dropdown = (app,checkIfNeeded,isUpdate) => {
+    var class_html = 'install';
+    if(isUpdate){
+        class_html = 'install-update';
+    }
     // https://stackoverflow.com/questions/70098157/bootstrap-5-1-3-dropdown-data-bs-boundary-no-longer-works
     // let app = allResources.filter((resource) => resource.name == selectedApp)
-    if (app.hasOwnProperty('name') && app.hasOwnProperty('installedVersion') == false) {
+    if (app.hasOwnProperty('name') && !checkIfNeeded) {
         var icon_warning = '';
         var color_icon = 'primary';
         if(Object. keys(app['compatibility'][channel][label]).length == 0 ){
@@ -275,8 +278,8 @@ const getVersionsHTML_dropdown = (app) => {
                 string_dropdown += `<ul class="dropdown-menu position-fixed drop_down_scroll" aria-labelledby="${channel}_${label}_${app['name']}}">`
                 for (sinlge_version in versions_obj[channel][label]){
                     // string_dropdown += `<li><a class="dropdown-item" href="#">${versions_obj[channel][label][sinlge_version]}</a></li>`
-                    string_dropdown +=`<li><a class="install button-spaced dropdown-item" href="javascript:void(0)" title="Install">
-                        <button type="button" id="${channel}__${label}__install" class="label_dropdown custom-label label-color-${color_icon} label-outline-xs">${versions_obj[channel][label][sinlge_version]}</button>
+                    string_dropdown +=`<li><a class="${class_html} button-spaced dropdown-item" href="javascript:void(0)" title="Install">
+                        <button type="button" id="${channel}__${label}__${versions_obj[channel][label][sinlge_version]}__${app['name']}__install" class="label_dropdown custom-label label-color-${color_icon} label-outline-xs">${versions_obj[channel][label][sinlge_version]}</button>
                     </a></li>`
                 }
                 string_dropdown += `</ul></li>`;
