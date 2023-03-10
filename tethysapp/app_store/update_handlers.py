@@ -27,14 +27,14 @@ def conda_update(app_name, app_version, app_channel,app_label, channel_layer):
 
 
     dir_path = os.path.dirname(os.path.realpath(__file__))
-    script_path = os.path.join(dir_path, "scripts", "conda_install.sh")
+    script_path = os.path.join(dir_path, "scripts", "mamba_update.sh")
 
     app_name_with_version = app_name + "=" + app_version
     label_channel = f'{app_channel}'
     
     if app_label != 'main':
         label_channel = f'{app_channel}/label/{app_label}'
-    breakpoint()
+    # breakpoint()
     install_command = [script_path, app_name_with_version, label_channel]
 
     # Running this sub process, in case the library isn't installed, triggers a restart.
@@ -45,8 +45,10 @@ def conda_update(app_name, app_version, app_channel,app_label, channel_layer):
         if output == '':
             break
         if output:
+            
             # Checkpoints for the output
             str_output = str(output.strip())
+            str_output = str(output.decode('utf-8'))
             logger.info(str_output)
             if(check_all_present(str_output, ['Collecting package metadata', 'done'])):
                 send_update_msg("Package Metadata Collection: Done", channel_layer)
@@ -57,9 +59,9 @@ def conda_update(app_name, app_version, app_channel,app_label, channel_layer):
             if(check_all_present(str_output, ['All requested packages already installed.'])):
                 send_update_msg("Application package is already installed in this conda environment.",
                                 channel_layer)
-            if(check_all_present(str_output, ['Mamba Install Complete'])):
+            if(check_all_present(str_output, ['Mamba Update Complete'])):
                 break
-            if(check_all_present(str_output, ['Found conflicts!'])):
+            if(check_all_present(str_output, ['Found conflicts!','conflicting requests'])):
                 send_update_msg("Mamba install found conflicts."
                                 "Please try running the following command in your terminal's"
                                 "conda environment to attempt a manual installation : "
