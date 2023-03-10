@@ -452,7 +452,7 @@ const update = () => {
     $("#pre-update-notice").hide()
     $("#update-loader").show()
     $("#update-processing-label").text(
-        `Updating: ${updateData.name} to version ${updateData.version}`
+        `Updating: ${updateData.name} to version ${updateData.version} in channel ${updateData.channel} with label ${updateData.label}`
     )
     notification_ws.send(
         JSON.stringify({

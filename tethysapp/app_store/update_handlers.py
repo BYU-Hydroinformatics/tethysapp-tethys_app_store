@@ -15,7 +15,7 @@ def send_update_msg(msg, channel_layer):
     send_notification(data_json, channel_layer)
 
 
-def conda_update(app_name, app_version, app_channel, channel_layer):
+def conda_update(app_name, app_version, app_channel,app_label, channel_layer):
 
     start_time = time.time()
     start_msg = ("Updating the Conda environment may take a "
@@ -25,11 +25,17 @@ def conda_update(app_name, app_version, app_channel, channel_layer):
 
     send_update_msg(start_msg, channel_layer)
 
+
     dir_path = os.path.dirname(os.path.realpath(__file__))
     script_path = os.path.join(dir_path, "scripts", "conda_install.sh")
 
     app_name_with_version = app_name + "=" + app_version
-    install_command = [script_path, app_name_with_version, app_channel]
+    label_channel = f'{app_channel}'
+    
+    if app_label != 'main':
+        label_channel = f'{app_channel}/label/{app_label}'
+    breakpoint()
+    install_command = [script_path, app_name_with_version, label_channel]
 
     # Running this sub process, in case the library isn't installed, triggers a restart.
     p = subprocess.Popen(install_command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
@@ -51,20 +57,20 @@ def conda_update(app_name, app_version, app_channel, channel_layer):
             if(check_all_present(str_output, ['All requested packages already installed.'])):
                 send_update_msg("Application package is already installed in this conda environment.",
                                 channel_layer)
-            if(check_all_present(str_output, ['Conda Install Complete'])):
+            if(check_all_present(str_output, ['Mamba Install Complete'])):
                 break
             if(check_all_present(str_output, ['Found conflicts!'])):
-                send_update_msg("Conda install found conflicts."
+                send_update_msg("Mamba install found conflicts."
                                 "Please try running the following command in your terminal's"
                                 "conda environment to attempt a manual installation : "
-                                "conda install -c " + app_channel + " " + app_name,
+                                "mamba install -c " + app_channel + " " + app_name,
                                 channel_layer)
 
     send_update_msg("Conda update completed in %.2f seconds." % (time.time() - start_time), channel_layer)
 
 
 def update_app(data, channel_layer, app_workspace):
-    resource = get_resource(data["name"], app_workspace)
+    # resource = get_resource(data["name"], app_workspace)
 
     # Commenting out back up settings code for now, since only updating the conda package seems to preserve the original
     # settings
@@ -77,7 +83,8 @@ def update_app(data, channel_layer, app_workspace):
     #     app_settings_backup = copy.deepcopy(app_settings['linked_settings'])
 
     try:
-        conda_update(data["name"], data["version"], resource["metadata"]["channel"], channel_layer)
+        conda_update(data["name"], data["version"],data["channel"],data["label"], channel_layer)
+
     except Exception as e:
         logger.error("Error while running conda install during the update process")
         logger.error(e)
@@ -85,5 +92,7 @@ def update_app(data, channel_layer, app_workspace):
         return
 
     # Since all settings are preserved, continue to standard cleanup/restart command
+    restart_server(data={"restart_type": "update", "name": data["name"]}, channel_layer= channel_layer, app_workspace=app_workspace)
 
-    restart_server({"restart_type": "update", "name": data["name"]}, app_workspace)
+    # restart_server({"restart_type": "update", "name": data["name"]}, app_workspace)
+# data, channel_layer, app_workspace, run_collect_all=True

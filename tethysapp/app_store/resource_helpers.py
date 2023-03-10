@@ -10,6 +10,7 @@ import os
 import json
 import urllib
 import shutil
+from pkg_resources import parse_version
 import yaml
 import subprocess
 from .utilities import get_available_stores_values
@@ -207,37 +208,37 @@ def get_resources_single_store(app_workspace, require_refresh, conda_package,con
     for resource in all_resources:
         if resource["installed"][conda_package][conda_label]:
             installed_apps[resource['name']] = resource
-        else:
-            # tethys_version_regex = '4.0.0'
-            tethys_version_regex = re.search(r'([\d.]+[\d])', tethys_version).group(1)
+        # else:
+        # tethys_version_regex = '4.0.0'
+        tethys_version_regex = re.search(r'([\d.]+[\d])', tethys_version).group(1)
+        # breakpoint()
+        add_compatible = False
+        add_incompatible = False
+        new_compatible_app = copy.deepcopy(resource)
+        new_compatible_app['versions'][conda_package][conda_label] = []
+        new_incompatible_app = copy.deepcopy(new_compatible_app)
+        for version in resource['versions'][conda_package][conda_label]:
+            # debugging
+            # if resource['name'] == 'test1app' and conda_label == 'dev':
+            #     breakpoint()
+            #     x = 'hola'
+
+            # Assume if not found, that it is compatible with Tethys Platform 3.4.4
+            compatible_tethys_version = "<=3.4.4"
+            if version in resource['compatibility'][conda_package][conda_label]:
+                compatible_tethys_version = resource['compatibility'][conda_package][conda_label][version]
+            if semver.match(tethys_version_regex, compatible_tethys_version):
+                add_compatible = True
+                new_compatible_app['versions'][conda_package][conda_label].append(version)
+            else:
+                add_incompatible = True
+                new_incompatible_app['versions'][conda_package][conda_label].append(version)
+
+        if add_compatible:
+            available_apps[resource['name']] = new_compatible_app
+        if add_incompatible:
             # breakpoint()
-            add_compatible = False
-            add_incompatible = False
-            new_compatible_app = copy.deepcopy(resource)
-            new_compatible_app['versions'][conda_package][conda_label] = []
-            new_incompatible_app = copy.deepcopy(new_compatible_app)
-            for version in resource['versions'][conda_package][conda_label]:
-                # debugging
-                # if resource['name'] == 'test1app' and conda_label == 'dev':
-                #     breakpoint()
-                #     x = 'hola'
-
-                # Assume if not found, that it is compatible with Tethys Platform 3.4.4
-                compatible_tethys_version = "<=3.4.4"
-                if version in resource['compatibility'][conda_package][conda_label]:
-                    compatible_tethys_version = resource['compatibility'][conda_package][conda_label][version]
-                if semver.match(tethys_version_regex, compatible_tethys_version):
-                    add_compatible = True
-                    new_compatible_app['versions'][conda_package][conda_label].append(version)
-                else:
-                    add_incompatible = True
-                    new_incompatible_app['versions'][conda_package][conda_label].append(version)
-
-            if add_compatible:
-                available_apps[resource['name']] = new_compatible_app
-            if add_incompatible:
-                # breakpoint()
-                incompatible_apps[resource['name']] = new_incompatible_app
+            incompatible_apps[resource['name']] = new_incompatible_app
 
     # Get any apps installed via GitHub install process
     # github_apps = get_github_install_metadata(app_workspace)
@@ -465,13 +466,25 @@ def process_resources_new(resources, app_workspace,conda_channel, conda_label):
         # FOR Debugging only. @TODO: Remove
         if(app['installed']):
             # app["updateAvailable"][conda_channel][conda_label] = True
-            app["updateAvailable"] = {
-                conda_channel: {
-                    conda_label: True
+            # breakpoint()
+            # if app['name'] == 'test1app':
+                # breakpoint()
+                # print("hola")
+
+            if 'installedVersion' in app:
+                # breakpoint()
+                if parse_version(app["latestVersion"][conda_channel][conda_label]) > parse_version(app["installedVersion"][conda_channel][conda_label]):
+                    app["updateAvailable"] = {
+                        conda_channel: {
+                            conda_label: True
+                        }
+                    }
+            else:
+                app["updateAvailable"] = {
+                    conda_channel: {
+                        conda_label: False
+                    }
                 }
-            }
-
-
         latest_version_url = app.get("versionURLs").get(f"{conda_channel}").get(f"{conda_label}")[-1]
         file_name = latest_version_url.split('/')
         folder_name = app.get("name")

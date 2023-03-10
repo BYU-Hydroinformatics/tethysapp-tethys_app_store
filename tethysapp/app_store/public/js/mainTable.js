@@ -444,7 +444,13 @@ function chooseVersion(app_name,channel,label,version,div_element){
       app_name
     }</strong> app to version ${htmlLatestVersion}? `
   )
-  console.log(channel,label,version)
+  // console.log(channel,label,version)
+  updateData = {
+    name: app_name,
+    channel:channel,
+    label: label,
+    version: version
+  }
 }
 
 
@@ -555,10 +561,11 @@ window.operateEvents = {
     })
     let installDropdowns = document.querySelectorAll('.install-update')
     installDropdowns.forEach((idd)=>{
-      
       idd.removeEventListener('click',eventClickDropdownUpdate)
       idd.addEventListener('click', eventClickDropdownUpdate)
     })
+
+
 
 
     // $(`#${ $("#install-dropdown-update")}`).on("click")
@@ -571,10 +578,10 @@ window.operateEvents = {
     //     row["name"]
     //   }</strong> app to version ${installedApp.latestVersion}? `
     // )
-    updateData = {
-      name: row["name"],
-      version: installedApp.latestVersion
-    }
+    // updateData = {
+    //   name: row["name"],
+    //   version: installedApp.latestVersion
+    // }
     $("#update-app-notice").show()
     $("#done-update-button").hide()
 
@@ -632,4 +639,5 @@ function eventClickDropdownUpdate(e) {
   let app_channel_label_version_list = app_channel_label_version.split("__")
   chooseVersion(app_channel_label_version_list[3], app_channel_label_version_list[0],app_channel_label_version_list[1],app_channel_label_version_list[2],'update-app-notice')
   // app_channel_label_version
+
 }
