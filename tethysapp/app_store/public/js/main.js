@@ -258,7 +258,7 @@ const getVersionsHTML_dropdown = (app,checkIfNeeded,isUpdate) => {
         }
         // let versions = app[versions].reverse()
         let string_dropdown = `<div class="dropdown">`
-        string_dropdown += `<a class="custom-label label-color-info label-outline-xs dropdown-toggle install2" href="#" role="button" id="dropdownMenuLink_${app['name']}" data-bs-toggle="dropdown" aria-expanded="false"> Install </a>`
+        string_dropdown += `<a class="custom-label label-color-info label-outline-xs dropdown-toggle install2" href="#" role="button" id="dropdownMenuLink_${app['name']}" data-bs-toggle="dropdown" aria-expanded="false"> <i class="bi bi-plus-lg"></i> Install </a>`
         string_dropdown += `<ul class="dropdown-menu position-fixed" aria-labelledby="dropdownMenuLink_${app['name']}">`
         let versions_obj = app['versions'];
 
@@ -451,8 +451,18 @@ const update = () => {
     $("#no-update").hide()
     $("#pre-update-notice").hide()
     $("#update-loader").show()
-    $("#update-processing-label").text(
-        `Updating: ${updateData.name} to version ${updateData.version} in channel ${updateData.channel} with label ${updateData.label}`
+
+    var htmlStr = `<span>`
+    htmlStr += `<span class="labels_container" style="display: inline-block;"> `
+    htmlStr += `<span class="custom-label label-color-${labels_style_dict[updateData.channel]} label-outline-xs"> <i class="bi bi-shop"></i> ${updateData.channel} </span>`
+    htmlStr += `<span class="custom-label label-color-${labels_style_dict[updateData.label]} label-outline-xs"><i class="bi bi-tags"></i> ${updateData.label}</span>`
+    htmlStr += `<span class="custom-label label-outline-xs label-color-gray">${updateData.version}</span>`
+    htmlStr += `</span>`
+
+
+    $("#update-processing-label").html(
+
+        `Updating to: ${htmlStr}`
     )
     notification_ws.send(
         JSON.stringify({
@@ -559,7 +569,7 @@ $(document).ready(function() {
         
         $(`#pills-all-tab`).click(function(){
             active_store = "all"
-            get_merged_resources(active_store)
+            get_merged_resources({'active_store': active_store})
         })
         console.log(stores_list)
         // get_resources_for_channel(default_store)

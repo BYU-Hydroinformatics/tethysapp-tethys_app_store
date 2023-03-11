@@ -214,7 +214,7 @@ function addHtmlForUpdateApp(row){
     for(channel in row['updateAvailable']){
       for(label in row['updateAvailable'][channel]){
         if(row['updateAvailable'][channel][label]){
-          html_str +=`<a class="update button-spaced" href="javascript:void(0)" title="Update"><button type="button" id="${channel}__${label}__uninstall" class="custom-label label-color-primary label-outline-xs">Update</button></a>`  
+          html_str +=`<a class="update button-spaced" href="javascript:void(0)" title="Rebase"><button type="button" id="${channel}__${label}__update" class="custom-label label-color-primary label-outline-xs">Rebase</button></a>`  
         }
       }
     }
@@ -229,12 +229,14 @@ function mergedOperateFormatter(value, row, index){
     for (label in value[channel]){
       if(value[channel][label]){
         html_str += `<a class="uninstall button-spaced" href="javascript:void(0)" title="Uninstall">
-        <button type="button" id="${channel}__${label}__uninstall" class="custom-label label-color-danger label-outline-xs">Uninstall</button>
+        <button type="button" id="${channel}__${label}__uninstall" class="custom-label label-color-danger label-outline-xs"><i class="bi bi-dash-lg"></i> Uninstall</button>
         </a>`
+        html_str +=`<a class="update button-spaced" href="javascript:void(0)" title="Rebase"><button type="button" id="${channel}__${label}__update" class="custom-label label-color-primary label-outline-xs"><i class="bi bi-stack"></i> Rebase </button></a>`  
+
       }
     }
   }
-  html_str+= addHtmlForUpdateApp(row);
+  // html_str+= addHtmlForUpdateApp(row);
   html_str += `</div>`
   return html_str
   // var html_str = '<div class="actions_channel_container">';

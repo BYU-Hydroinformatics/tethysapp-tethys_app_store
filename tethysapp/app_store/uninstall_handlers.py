@@ -90,7 +90,7 @@ def uninstall_app(data, channel_layer, app_workspace):
         while should_not_stop:
             output = p.stdout.readline()
             if output.decode('utf-8')== 'Mamba Remove Complete\n':
-                breakpoint()
+                # breakpoint()
                 break
             if output:
                 # Checkpoints for the output
