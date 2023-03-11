@@ -354,7 +354,7 @@
 }
 
 .class-row-installed:hover{
-	filter: opacity(0.8);
+	/* filter: opacity(0.8); */
 	/* border-width: 2px; */
 	--bs-table-hover-bg: rgba(0, 0, 0, 0.0);
 }
@@ -366,6 +366,6 @@
 .class-row-uninstalled:hover{
 
 	/* border-width: 2px; */
-	filter: opacity(0.8);
+	/* filter: opacity(0.8); */
 	--bs-table-hover-bg: rgba(0, 0, 0, 0.0);
 }

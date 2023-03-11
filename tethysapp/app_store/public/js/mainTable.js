@@ -610,11 +610,11 @@ function initMainTables() {
   $("#incompatibleAppsTable").find(".install>button").addClass("incompatible-app btn-danger")
   $(".main-app-list").removeClass("hidden")
   $(".installed-app-list").removeClass("hidden")
-
-  let dropdowns = document.querySelectorAll('.dropdown-toggle')
-  dropdowns.forEach((dd)=>{
-      dd.removeEventListener('click',eventClickDropdown)
-      dd.addEventListener('click', eventClickDropdown)
+  create_destroy_events_table()
+  // let dropdowns = document.querySelectorAll('.dropdown-toggle')
+  // dropdowns.forEach((dd)=>{
+  //     dd.removeEventListener('click',eventClickDropdown)
+  //     dd.addEventListener('click', eventClickDropdown)
 
     //   dd.addEventListener('show.bs.dropdown', function (e) {
     //     // console.log(e)
@@ -628,10 +628,30 @@ function initMainTables() {
     //     // const dropdownParent = dd.closest('.btn-group');
     //     // dropdownParent.classList.remove('position-static')
     //  })
+  // })
+
+  $('#incompatibleAppsTable').on('post-body.bs.table', function (data) {
+      create_destroy_events_table();
+  
+  })
+  // $("#incompatibleAppsTable").bootstrapTable({
+  //   onPageChange: function (number, size) {
+
+  //   }
+  // })
+
+}
+
+function create_destroy_events_table(){
+  let dropdowns = document.querySelectorAll('.dropdown-toggle')
+  dropdowns.forEach((dd)=>{
+      dd.removeEventListener('click',eventClickDropdown)
+      dd.addEventListener('click', eventClickDropdown)
   })
 }
 
 function eventClickDropdown(e) {
+
   var el = this.nextElementSibling
   el.style.display = el.style.display==='block'?'none':'block'
 }

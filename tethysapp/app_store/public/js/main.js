@@ -555,15 +555,7 @@ $(document).ready(function() {
         storesDataList.forEach(function(store_single){
             stores_list.push(store_single['conda_channel']);
             $(`#pills-${store_single['conda_channel']}-tab`).click(function(){
-                // document.getElementById(`label-color-id-${stores[store]['conda_channel']}`).classList.add(`label-color-${label_styles(index_style)}`);
-                // const active_tab = document.querySelectorAll(".nav-pills .nav-link.active");
-                // active_tab.forEach((tab) => {
-                //     tab.style.backgroundColor = "pink";
-                //   });
 
-                // $(this).addClass(`label-color-${store_single['conda_style']}`)
-                console.log(store_single)
-                // active_store = store_single['github_organization']
                 active_store = store_single['conda_channel']
 
                 // get_resources_for_channel(store_single)
