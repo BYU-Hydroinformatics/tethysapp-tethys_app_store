@@ -41,15 +41,17 @@ const get_color_label_dict = (stores) => {
     if (stores[store]['conda_channel'] in color_store_dict == false){
       color_store_dict[stores[store]['conda_channel']] = label_styles(index_style)
       stores[store]['conda_style'] = label_styles(index_style)
-
-      document.getElementById(`label-color-id-${stores[store]['conda_channel']}`).classList.add(`label-color-${label_styles(index_style)}`);
       index_style += 1;
     }
+    document.getElementById(`label-color-id-${stores[store]['conda_channel']}`).classList.add(`label-outline-${color_store_dict[stores[store]['conda_channel']]}`);
+
     for (label in stores[store]['conda_labels']){
       if (stores[store]['conda_labels'][label] in color_store_dict == false){
         color_store_dict[stores[store]['conda_labels'][label]] = label_styles(index_style)
         index_style += 1;
       }
+      document.getElementById(`label-color-id-${stores[store]['conda_channel']}-${stores[store]['conda_labels'][label]}`).classList.add(`label-color-${color_store_dict[stores[store]['conda_labels'][label]]}`);
+
     }
   }
   return color_store_dict

@@ -124,14 +124,14 @@
 
 /* blue outline label */
 .label-outline-blue {
-    color:  var(--bs-orange);
-    border-color:  var(--bs-orange);
+    color:  var(--bs-blue);
+    border-color:  var(--bs-blue);
 }
 
 .label-outline-blue:hover {
     color: var(--bs-white);
-    background-color: var(--bs-orange);
-    border-color: var(--bs-orange);
+    background-color: var(--bs-blue);
+    border-color: var(--bs-blue);
 }
 
 /* indigo outline label */
