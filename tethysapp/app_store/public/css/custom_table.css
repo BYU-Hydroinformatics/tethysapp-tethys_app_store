@@ -52,7 +52,7 @@
 	
 	.table-hover tbody tr:hover {
 	color: #212529;
-	background-color: rgba(0, 0, 0, 0.075);
+	border-color: rgba(0, 0, 0, 0.075);
 	}
 	
 	.table-primary,
@@ -347,3 +347,25 @@
 	.table-responsive > .table-bordered {
 	border: 0;
 	}
+
+
+.class-row-installed{
+	background-color: #ddd
+}
+
+.class-row-installed:hover{
+	filter: opacity(0.8);
+	/* border-width: 2px; */
+	--bs-table-hover-bg: rgba(0, 0, 0, 0.0);
+}
+
+.class-row-uninstalled{
+	background-color: #fdfdfe
+}
+
+.class-row-uninstalled:hover{
+
+	/* border-width: 2px; */
+	filter: opacity(0.8);
+	--bs-table-hover-bg: rgba(0, 0, 0, 0.0);
+}

@@ -30,6 +30,7 @@ def conda_update(app_name, app_version, app_channel,app_label, channel_layer):
     script_path = os.path.join(dir_path, "scripts", "mamba_update.sh")
 
     app_name_with_version = app_name + "=" + app_version
+    # breakpoint()
     label_channel = f'{app_channel}'
     
     if app_label != 'main':

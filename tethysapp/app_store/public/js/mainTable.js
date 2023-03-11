@@ -158,13 +158,13 @@ function mergedNameFormatter(value, row, index){
 function installedRowStyle(row){
   if ('installedVersion' in row){
     return {
-      classes: 'table-dark'
+      classes: 'class-row-installed'
     }
   }
   else{
 
     return {
-      classes: 'table-light'
+      classes: 'class-row-uninstalled'
     }
   }
 }
