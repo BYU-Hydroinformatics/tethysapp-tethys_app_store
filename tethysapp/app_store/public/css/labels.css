@@ -46,6 +46,9 @@
     border: 1px solid transparent;
     border-radius: 4px;
 }
+.label-header{
+    font-size: 16px;
+}
 
 .custom-label:focus,
 .custom-label:active:focus {
@@ -484,13 +487,13 @@
 /* red color label */
 .label-color-red {
     color: var(--bs-white);
-    background-color: var(--bs-red);
+    background-color: var(--bs-red) !important;
     border-color: var(--bs-red);
 }
 
 .label-color-red:hover {
     color: var(--bs-white);
-    background-color: var(--bs-gray);
+    background-color: var(--bs-gray) !important;
     border-color: var(--bs-gray);
 }
 

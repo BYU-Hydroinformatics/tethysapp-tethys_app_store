@@ -29,7 +29,6 @@ def home(request,app_workspace):
     encryption_key = app.get_custom_setting("encryption_key")
     for store in available_stores_data_dict:
         store['github_token'] = decrypt(store['github_token'],encryption_key)
-
     # available_stores_json_path = os.path.join(app_workspace.path, 'stores.json')
     # available_stores_data_dict = {}
     # with open(available_stores_json_path) as available_stores_json_file:

@@ -276,3 +276,9 @@
 .table_small_font{
   font-size:  12px;
 }
+
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+  color: #fff;
+  background-color: transparent !important;
+  filter: drop-shadow(2px 4px 6px black);
+}
