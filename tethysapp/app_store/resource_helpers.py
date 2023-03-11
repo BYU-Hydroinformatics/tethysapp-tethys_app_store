@@ -473,10 +473,17 @@ def process_resources_new(resources, app_workspace,conda_channel, conda_label):
 
             if 'installedVersion' in app:
                 # breakpoint()
-                if parse_version(app["latestVersion"][conda_channel][conda_label]) > parse_version(app["installedVersion"][conda_channel][conda_label]):
+                if(app["latestVersion"][conda_channel][conda_label].find("*") == False):
+                    if parse_version(app["latestVersion"][conda_channel][conda_label]) > parse_version(app["installedVersion"][conda_channel][conda_label]):
+                        app["updateAvailable"] = {
+                            conda_channel: {
+                                conda_label: True
+                            }
+                        }
+                else:
                     app["updateAvailable"] = {
                         conda_channel: {
-                            conda_label: True
+                            conda_label: False
                         }
                     }
             else:

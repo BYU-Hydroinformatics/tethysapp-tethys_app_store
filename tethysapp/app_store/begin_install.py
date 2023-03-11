@@ -24,7 +24,7 @@ def process_post_install_scripts(path):
         # Currently only processing the pip install script, but need to add ability to process post scripts as well
 
 
-def detect_app_dependencies(app_name, app_channel, app_label, app_version, channel_layer, notification_method=send_notification):
+def detect_app_dependencies(app_name, channel_layer, notification_method=send_notification):
     """
     Method goes through the app.py and determines the following:
     1.) Any services required
@@ -187,7 +187,7 @@ def begin_install(installData, channel_layer, app_workspace):
         return
 
     try:
-        detect_app_dependencies(resource['name'],installData['channel'],installData['label'], installData["version"], channel_layer)
+        detect_app_dependencies(resource['name'], channel_layer)
     except Exception as e:
         logger.error(e)
         send_notification("Error while checking package for services", channel_layer)
