@@ -1,10 +1,10 @@
-{% load staticfiles %}
-<div class="modal fade" id="add-app-modal" style="z-index:2000; margin-top:10%;" tabindex="-1" role="dialog" aria-labelledby="add-app-modal-label">
+{% load static %}
+<div class="modal" id="add-app-modal" style="z-index:2000;" tabindex="-1" role="dialog" aria-labelledby="add-app-modal-label">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h5 class="modal-title" id="add-app-modal-label">Submit your application to the Tethys App Store</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body" id="add-app-container">
                 <div>
@@ -20,12 +20,15 @@
                     <label for="githubURL">GitHub URL</label>
                     <input type="text" class="form-control" id="githubURL" placeholder="GitHub Repository URL">
                 </div>
-                <button class="btn btn-primary pull-right" id="fetchRepoButton" onClick="getRepoForAdd()"> Fetch Repository </button>
+                <button class="btn btn-primary pull-right mt-3" id="fetchRepoButton" onClick="getRepoForAdd()"> Fetch Repository </button>
                 <div id="branchesList"></div>
                 <button class="btn btn-primary pull-right" style="display:none;" id="processBranchButton"> Submit </button>
                 <div id="successMessage" style="display:none;margin-top:10px;" class="p-3 mb-2 bg-success text-white">
                     <p>Your Tethys Application has been successfully queued for processing.You will be notified via email when you application is available on the Tethys App Store. <span id="SuccessLinkMessage">Click <span id="addSuccessLink">here</span> to follow the processing logs and inspect it for errors.</span>
                 </p>
+                </div>
+                <div id="failMessage" style="display:none;margin-top:10px;" class="p-3 mb-2 bg-info text-white">
+                    
                 </div>
             </div>
             <div class="modal-footer">
@@ -36,8 +39,8 @@
                     <div></div>
                     <div></div>
                 </div>
-                <button class="btn btn-danger pull-left" style="margin-top:10px;" data-dismiss="modal" aria-hidden="true" id="cancelAddButton"> Cancel </button>
-                <button class="btn btn-success pull-right" style="margin-top:10px;display:none;" data-dismiss="modal" aria-hidden="true" id="doneAddButton"> Done </button>
+                <button class="btn btn-danger pull-left" style="margin-top:10px;" data-bs-dismiss="modal" aria-hidden="true" id="cancelAddButton"> Cancel </button>
+                <button class="btn btn-success pull-right" style="margin-top:10px;display:none;" data-bs-dismiss="modal" aria-hidden="true" id="doneAddButton"> Done </button>
             </div>
         </div>
     </div>

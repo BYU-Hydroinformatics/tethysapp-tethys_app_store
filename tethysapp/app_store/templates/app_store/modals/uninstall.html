@@ -1,5 +1,5 @@
-{% load staticfiles %}
-<div class="modal fade" id="uninstall-app-modal" style="z-index:2000; margin-top:10%;" tabindex="-1" role="dialog" aria-labelledby="uninstall-app-modal-label">
+{% load static %}
+<div class="modal" id="uninstall-app-modal" style="z-index:2000;" tabindex="-1" role="dialog" aria-labelledby="uninstall-app-modal-label">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -27,8 +27,8 @@
                 </div>
                 <br />
                 <button class="btn btn-danger pull-left" id="yesUninstall" onClick="uninstall()">Yes</button>
-                <button class="btn btn-primary pull-right" id="noUninstall" data-dismiss="modal">No</button>
-                <!--  <button class="btn btn-danger pull-right" style="margin-top:10px;" data-dismiss="modal" aria-hidden="true" id="cancelAddButton"> Cancel </button> -->
+                <button class="btn btn-primary pull-right" id="noUninstall" data-bs-dismiss="modal">No</button>
+                <!--  <button class="btn btn-danger pull-right" style="margin-top:10px;" data-bs-dismiss="modal" aria-hidden="true" id="cancelAddButton"> Cancel </button> -->
                 <button class="btn btn-success pull-right" style="margin-top:10px;display:none;" aria-hidden="true" id="doneUninstallButton"> Done </button>
             </div>
         </div>

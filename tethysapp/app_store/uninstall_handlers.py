@@ -18,7 +18,7 @@ def send_uninstall_messages(msg, channel_layer):
     send_notification(data_json, channel_layer)
 
 
-def uninstall_app(data, channel_layer):
+def uninstall_app(data, channel_layer, app_workspace):
 
     manage_path = get_manage_path({})
     app_name = data['name']
@@ -75,7 +75,7 @@ def uninstall_app(data, channel_layer):
             logger.error(err)
     except PackagesNotFoundError:
         # This was installed using GitHub. Try to clean out
-        github_installed = get_github_install_metadata()
+        github_installed = get_github_install_metadata(app_workspace)
         for app in github_installed:
             if app['name'] == data['name']:
                 # remove App Directory

@@ -1,5 +1,9 @@
 from django.core.cache import cache
-from packaging import version
+
+import ast
+import re
+import semver
+from tethys_portal import __version__ as tethys_version
 
 import os
 import json
@@ -8,18 +12,21 @@ import shutil
 import yaml
 import subprocess
 
-from .helpers import *
+from .helpers import add_if_exists, check_if_app_installed, logger
 
-CACHE_KEY = "warehouse_app_resources"
-CHANNEL_NAME = 'tethysapp'
+CACHE_KEY = ""
+# CACHE_KEY = "warehouse_app_resources"
+
+# CHANNEL_NAME = 'tethysapp'
 
 
 def clear_cache(data, channel_layer):
     cache.delete(CACHE_KEY)
 
 
-def fetch_resources(app_workspace, refresh=False):
-
+def fetch_resources(app_workspace, refresh=False, conda_package="tethysapp", cache_key=None):
+    CHANNEL_NAME = conda_package
+    CACHE_KEY = cache_key
     # Fields that are required
     # resource_metadata_template = {
     #     'name': "App Name",
@@ -31,7 +38,7 @@ def fetch_resources(app_workspace, refresh=False):
     #     }
     # }
 
-    all_resources = cache.get(CACHE_KEY)
+    cache.get(CACHE_KEY)
     if (cache.get(CACHE_KEY) is None) or refresh:
 
         # Look for packages:
@@ -52,7 +59,8 @@ def fetch_resources(app_workspace, refresh=False):
                     'versions': [],
                     'versionURLs': [],
                     'channel': CHANNEL_NAME,
-                    'timestamp': conda_search_result[conda_package][-1]["timestamp"]
+                    'timestamp': conda_search_result[conda_package][-1]["timestamp"],
+                    'compatibility': {}
                 }
             }
 
@@ -82,8 +90,26 @@ def process_resources(resources, app_workspace):
         if not os.path.exists(workspace_folder):
             os.makedirs(workspace_folder)
 
+        tethys_version_regex = re.search(r'([\d.]+[\d])', tethys_version).group(1)
         # Set Latest Version
         app["latestVersion"] = app.get("metadata").get("versions")[-1]
+
+        # Check if latest version is compatible. If not, append an asterisk
+        license = app.get("metadata").get("license")
+        comp_dict = None
+        compatible = None
+        try:
+            comp_dict = ast.literal_eval(license)
+        except Exception:
+            pass
+        if comp_dict and 'tethys_version' in comp_dict:
+            compatible = comp_dict['tethys_version']
+
+        if compatible is None:
+            compatible = "<=3.4.4"
+
+        if not semver.match(tethys_version_regex, compatible):
+            app["latestVersion"] = app["latestVersion"] + "*"
 
         # if(app['installed']):
         #     app["updateAvailable"] = version.parse(app['installedVersion']) < version.parse(app['latestVersion'])
@@ -108,11 +134,13 @@ def process_resources(resources, app_workspace):
                 'author', 'description', 'license', 'author_email', 'keywords'])
             if "url" in license_metadata:
                 app['metadata']['dev_url'] = license_metadata["url"]
+            if "tethys_version" in license_metadata:
+                app.get("metadata").get("compatibility")[license_metadata['version']] = license_metadata['tethys_version']  # noqa: E501
 
-        except (ValueError, TypeError) as e:
+        except (ValueError, TypeError):
             # There wasn't json found in license. Get Metadata from downloading the file
             download_path = os.path.join(workspace_folder, file_name[-1])
-            extract_path = os.path.join(workspace_folder, file_name[-1])
+            # extract_path = os.path.join(workspace_folder, file_name[-1])
             output_path = os.path.join(workspace_folder, folder_name)
             if not os.path.exists(download_path):
                 logger.info("License field metadata not found. Downloading: " + file_name[-1])

@@ -9,7 +9,7 @@ about:
   author: {{ data.get('author')}}
   description: {{ data.get('description')}}
   license: "$metadataObj"
-  dev_url: {{ data.get('url') }}
+  dev_url: {{ data.get('dev_url') }}
 
 outputs:
   - name: {{ name }}

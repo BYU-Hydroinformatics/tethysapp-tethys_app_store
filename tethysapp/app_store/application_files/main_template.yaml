@@ -1,7 +1,10 @@
 name: Publish
 
-on: push
-
+# on: push
+on:
+  push:
+    branches:
+      - 'tethysapp_warehouse_release'
 jobs:
   publish:
     runs-on: ubuntu-latest
@@ -10,16 +13,16 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
-          python-version: "3.x"
+          python-version: '3.x'
       - name: Install dependencies
         run: python -m pip install --upgrade pyyaml
       - name: Gen Build Command
         run: |
           python ./conda.recipes/getChannels.py > build_command.txt
       - name: publish-to-conda
-        uses: rfun/conda-package-publish-action@master
+        uses: tethysapp/conda-package-publish-action@master
         with:
-          subDir: "conda.recipes"
+          subDir: 'conda.recipes'
           AnacondaToken: $${{ secrets.ANACONDA_TOKEN }}
       - name: Send mail
         uses: dawidd6/action-send-mail@v2
@@ -28,8 +31,21 @@ jobs:
           server_port: 465
           username: $${{secrets.EMAIL_USERNAME}}
           password: $${{secrets.EMAIL_PASSWORD}}
-          subject: "$subject"
+          subject: '$subject'
           # Literal body:
-          body: "$buildMsg"
+          body: '$buildMsg'
+          to: $email
+          from: Tethys App Warehouse
+      - name: Send mail for failure
+        uses: dawidd6/action-send-mail@v2
+        if: failure()
+        with:
+          server_address: smtp.gmail.com
+          server_port: 465
+          username: $${{secrets.EMAIL_USERNAME}}
+          password: $${{secrets.EMAIL_PASSWORD}}
+          subject: 'Tethys App Store: Build Failed for test_app_store_aquaveo'
+          # Literal body:
+          body: $${{ github.workflow }} of the application at github repository $${{ github.repository }} has failed. Check the logs of the publish job at $${{ github.server_url }}/$${{ github.repository }}/actions/runs/$${{ github.run_id }}
           to: $email
           from: Tethys App Warehouse

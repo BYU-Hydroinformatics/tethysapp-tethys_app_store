@@ -1,5 +1,5 @@
-{% load staticfiles %}
-<div class="modal fade" id="update-app-modal" style="z-index:2000; margin-top:10%;" tabindex="-1" role="dialog" aria-labelledby="update-app-modal-label">
+{% load static %}
+<div class="modal" id="update-app-modal" style="z-index:2000;" tabindex="-1" role="dialog" aria-labelledby="update-app-modal-label">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -31,7 +31,7 @@
                 </div>
                 <br />
                 <button class="btn btn-success pull-right" id="yes-update" onClick="update()">Yes</button>
-                <button class="btn btn-danger pull-left" id="no-update" data-dismiss="modal">No</button>
+                <button class="btn btn-danger pull-left" id="no-update" data-bs-dismiss="modal">No</button>
   
                 <button class="btn btn-success pull-right" style="margin-top:10px;display:none;" aria-hidden="true" id="done-update-button"> Done </button>
             </div>

@@ -4,11 +4,11 @@ import json
 import shutil
 
 from jinja2 import Template
-from subprocess import (call, Popen, PIPE, STDOUT)
+from subprocess import (Popen, PIPE, STDOUT)
 from pathlib import Path
 
 from .git_install_handlers import write_logs
-from .helpers import logger, get_override_key
+from .helpers import logger, get_override_key, run_process
 from tethys_cli.scaffold_commands import APP_PATH, APP_PREFIX, get_random_color, render_path, TEMPLATE_SUFFIX
 from tethys_cli.cli_helpers import get_manage_path
 
@@ -17,12 +17,12 @@ from rest_framework.permissions import AllowAny
 
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse, HttpResponse
-from .app import AppStore as app
+from tethys_sdk.routing import controller
 
 
 def install_app(app_path):
     logger.info("Running scaffolded application install....")
-    process = Popen(['python', 'setup.py', "develop"],
+    process = Popen(['tethys', 'install', "-d", "-q"],
                     cwd=app_path, stdout=PIPE, stderr=STDOUT)
     write_logs(logger, process.stdout, 'Python Install SubProcess: ')
     exitcode = process.wait()
@@ -40,8 +40,7 @@ def install_app(app_path):
     run_process(intermediate_process)
 
 
-def get_develop_dir():
-    app_workspace = app.get_app_workspace()
+def get_develop_dir(app_workspace):
     workspace_directory = app_workspace.path
     dev_dir = os.path.join(workspace_directory, 'develop')
     if not os.path.exists(dev_dir):
@@ -65,7 +64,6 @@ def proper_name_validator(value, default):
     if not proper_name_error_regex.match(value):
         # If offending characters are dashes, underscores or quotes, replace and notify user
         if proper_name_warn_regex.match(value):
-            before = value
             value = value.replace('_', ' ')
             value = value.replace('-', ' ')
             value = value.replace('"', '')
@@ -76,10 +74,16 @@ def proper_name_validator(value, default):
     return True, value
 
 
-@ api_view(['POST'])
-@permission_classes([AllowAny])
+@api_view(['POST'])
+@permission_classes((AllowAny,))
+@controller(
+    name='scaffold_app',
+    url='app-store/scaffold',
+    app_workspace=True,
+    login_required=False
+)
 @csrf_exempt
-def scaffold_command(request):
+def scaffold_command(request, app_workspace):
     """
     Create a new Tethys app projects in the workspace dir. based on an API Call to the app store
     Need to have the custom GitHub API Key present
@@ -104,7 +108,6 @@ def scaffold_command(request):
         return HttpResponse('Unauthorized', status=401)
 
     # Set ScaffoldRunning file to prevent auto restart from the filewatchers
-    app_workspace = app.get_app_workspace()
     workspace_directory = app_workspace.path
 
     install_status_dir = os.path.join(workspace_directory, 'install_status')
@@ -125,7 +128,8 @@ def scaffold_command(request):
 
     # Validate template
     if not os.path.isdir(template_root):
-        return JsonResponse({'status': 'false', 'message': 'Error: "{}" is not a valid template.'.format(template_name)}, status=400)
+        return JsonResponse({'status': 'false', 'message': 'Error: "{}" is not a valid template.'.format(
+            template_name)}, status=400)
 
     # Validate project name
     project_name = received_json_data.get('name')
@@ -138,7 +142,6 @@ def scaffold_command(request):
             break
 
     if contains_uppers:
-        before = project_name
         project_name = project_name.lower()
 
     # Check for valid characters name
@@ -149,12 +152,10 @@ def scaffold_command(request):
     if not project_error_regex.match(project_name):
         # If the only offending character is a dash, replace dashes with underscores and notify user
         if project_warning_regex.match(project_name):
-            before = project_name
             project_name = project_name.replace('-', '_')
         # Otherwise, throw error
         else:
-            error_msg = 'Error: Invalid characters in project name "{0}".Only letters, numbers, and underscores.'.format(
-                project_name)
+            error_msg = 'Error: Invalid characters in project name "{0}".Only letters, numbers, and underscores.'.format(project_name) # noqa E501
             return JsonResponse({'status': 'false', 'message': error_msg}, status=400)
 
     # Project name derivatives
@@ -192,7 +193,7 @@ def scaffold_command(request):
     logger.debug('Template context: {}'.format(context))
 
     # Create root directory
-    dev_dir = get_develop_dir()
+    dev_dir = get_develop_dir(app_workspace)
     project_root = os.path.join(dev_dir, project_dir)
     logger.debug('Project root path: {}'.format(project_root))
 
@@ -208,7 +209,8 @@ def scaffold_command(request):
                 return JsonResponse({'status': 'false', 'message': error_msg}, status=400)
         else:
             error_msg = ('Error: App directory exists "{}". '
-                         'and Overwrite was not permitted. Please remove the directory and try again.'.format(project_root))
+                         'and Overwrite was not permitted. Please remove the directory and try again.'.format(
+                             project_root))
             return JsonResponse({'status': 'false', 'message': error_msg}, status=400)
 
     # Walk the template directory, creating the templates and directories in the new project as we go
