@@ -1,5 +1,5 @@
 from channels.generic.websocket import AsyncWebsocketConsumer
-from .installation_handlers import logger, continueAfterInstall, restart_server, set_custom_settings # noqa: F401
+from .installation_handlers import logger, continueAfterInstall, restart_server, set_custom_settings,configure_services # noqa: F401
 from .uninstall_handlers import uninstall_app # noqa: F401
 from .git_install_handlers import get_log_file # noqa: F401
 from .update_handlers import update_app # noqa: F401
@@ -23,6 +23,7 @@ from .app import AppStore as app
 )
 class notificationsConsumer(AsyncWebsocketConsumer):
     async def connect(self):
+        # breakpoint()
         await self.accept()
         await self.channel_layer.group_add("notifications", self.channel_name)
         logger.info(f"Added {self.channel_name} channel to notifications")

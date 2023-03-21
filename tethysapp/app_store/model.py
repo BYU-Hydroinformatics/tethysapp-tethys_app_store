@@ -1,1 +1,1 @@
-print("test1app installed in dev mode")
+print("water_data_explorer installed in dev mode")
