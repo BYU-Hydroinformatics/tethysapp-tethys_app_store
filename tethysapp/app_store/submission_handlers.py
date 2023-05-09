@@ -414,7 +414,7 @@ def pull_git_repo(github_url,active_store, channel_layer, app_workspace):
     app_name = github_url.split("/")[-1].replace(".git", "")
     github_dir = os.path.join(app_workspace.path, 'gitsubmission',active_store['conda_channel'])
 
-
+    
     # create if github Dir does not exist
     if not os.path.exists(github_dir):
         os.makedirs(github_dir)
@@ -423,15 +423,16 @@ def pull_git_repo(github_url,active_store, channel_layer, app_workspace):
 
     # 1 Check if the the directory is a current repository or initialize, and then select or create the remote origin 
     if os.path.exists(app_github_dir):
+        shutil.rmtree(app_github_dir)
         # Check if it is a github dir
         # Do a pull and then continue with branch selection
-        repo = git.Repo(app_github_dir)
-        origin = repo.remote(name='origin')
+        # repo = git.Repo(app_github_dir)
+        # origin = repo.remote(name='origin')
 
     else:
         os.mkdir(app_github_dir)
-        repo = git.Repo.init(app_github_dir)
-        origin = repo.create_remote('origin', github_url)
+    repo = git.Repo.init(app_github_dir)
+    origin = repo.create_remote('origin', github_url)
 
     # 2 Fetch the data from the origin remote
     origin.fetch()
