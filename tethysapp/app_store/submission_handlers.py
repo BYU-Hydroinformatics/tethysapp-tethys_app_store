@@ -531,20 +531,21 @@ def process_branch(install_data, channel_layer):
     
     if 'tethysapp_warehouse_release' not in repo.heads:
          repo.create_head('tethysapp_warehouse_release')
-    else:
-        # merge the cu
+    # # possible delete lines 535 thrpugh 550     
+    # else:
+    #     # merge the cu
         
-        # tethysapp_remote = repo.remotes.tethysapp
+    #     # tethysapp_remote = repo.remotes.tethysapp
         
-        # organization = g.get_organization("tethysapp")
-        # repo_name = install_data['github_dir'].split('/')[-1]
-        # tethysapp_repo = organization.get_repo(repo_name)
-        # remote_url = tethysapp_repo.git_url.replace("git://", "https://" + key + ":x-oauth-basic@")
-        # tethysapp_remote.set_url(remote_url)
+    #     # organization = g.get_organization("tethysapp")
+    #     # repo_name = install_data['github_dir'].split('/')[-1]
+    #     # tethysapp_repo = organization.get_repo(repo_name)
+    #     # remote_url = tethysapp_repo.git_url.replace("git://", "https://" + key + ":x-oauth-basic@")
+    #     # tethysapp_remote.set_url(remote_url)
         
-        repo.git.checkout('tethysapp_warehouse_release')
-        # tethysapp_remote.pull()
-        repo.git.merge(install_data['branch'])
+    #     repo.git.checkout('tethysapp_warehouse_release')
+    #     # tethysapp_remote.pull()
+    #     repo.git.merge(install_data['branch'])
 
     # breakpoint()
 
@@ -813,7 +814,7 @@ def process_branch(install_data, channel_layer):
     # repo.config_writer().set_value('push', 'followTags', 'true').release()
     # breakpoint()
     # update the tethys release branch in remote
-    tethysapp_remote.push('tethysapp_warehouse_release')
+    tethysapp_remote.push('tethysapp_warehouse_release', force=True)
 
     # create new head with the new version
     # heads_names_list = []
@@ -896,6 +897,9 @@ def process_branch(install_data, channel_layer):
         "jsHelperFunction": "addComplete",
         "helper": "addModalHelper"
     }
+    ## we do not need to keep the data locally. I think this will help to avoid git merge mistakes
+    if os.path.exists(install_data['github_dir']):
+        shutil.rmtree(install_data['github_dir'])
     send_notification(get_data_json, channel_layer)
 
 
