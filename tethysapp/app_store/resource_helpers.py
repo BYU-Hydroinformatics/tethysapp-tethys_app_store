@@ -205,6 +205,7 @@ def get_resources_single_store(app_workspace, require_refresh, conda_package,con
     available_apps = {}
     incompatible_apps = {}
     all_resources = fetch_resources_new(app_workspace, require_refresh, conda_package, conda_label,cache_key)
+    tethys_version_regex = re.search(r'([\d.]+[\d])', tethys_version).group(1)
     for resource in all_resources:
         if resource["installed"][conda_package][conda_label]:
             installed_apps[resource['name']] = resource
@@ -275,12 +276,18 @@ def fetch_resources_new(app_workspace, refresh=False, conda_package="tethysapp",
 
         conda_search_result = subprocess.run(['conda', 'search', "-c", CHANNEL_NAME, "--override-channels",
                                               "-i", "--json"], stdout=subprocess.PIPE)
-        
+
         conda_search_result = json.loads(conda_search_result.stdout)
+
         resource_metadata = []
         logger.info("Total Apps Found:" + str(len(conda_search_result)))
+        if 'error' in conda_search_result and 'The following packages are not available from current channels' in conda_search_result['error']:
+            logger.info(f'no packages found with the label {conda_label} in channel {CHANNEL_NAME}')    
+            return resource_metadata
         for app_package in conda_search_result:
+
             installed_version = check_if_app_installed(app_package)
+
             newPackage = {
                 'name': app_package,
                 'installed': 
