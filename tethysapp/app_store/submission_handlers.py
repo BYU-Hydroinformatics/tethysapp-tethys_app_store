@@ -468,6 +468,36 @@ def pull_git_repo(github_url,active_store, channel_layer, app_workspace):
     send_notification(get_data_json, channel_layer)
 
 
+def apply_setup_template(template_path,setup_path, setup_data):
+    #reading from file1 and writing to file2
+    # breakpoint()
+    # open the file using read only mode
+    handle = open(template_path, "r")
+
+    # reading the file and storing the data in content
+    content = handle.read()
+    # replacing the data using replace()
+    for key in setup_data.keys():
+        if f'replace_{key}' in content:
+            content = content.replace(f'replace_{key}',setup_data[key])
+    # content = content.replace("File", "Data")
+
+    # close the file
+    handle.close()
+
+    handle = open(setup_path, "w")
+    handle.write(content)
+    handle.close()
+
+
+    # with open(template_path, "w") as template_file:
+    #     for line in template_file:
+    #         for key in setup_data.keys():
+    #             if f'replace_{key}' in line:
+    #                 line.replace(f'replace_{key}',setup_data['key'])
+    #     with open(setup_path, "w") as file2:
+    #         file2.write(file1.read())
+
 def process_branch(install_data, channel_layer):
 
     # 3 from the origin remote checkout the selected branch and pull
@@ -517,6 +547,7 @@ def process_branch(install_data, channel_layer):
     today = time.strftime("%Y_%m_%d")
 
     setup_py_data = parse_setup_py(filename)
+    # breakpoint()
     current_version = setup_py_data["version"]
     
     # current_tag_name = "v" + str(current_version) + "_" + today
@@ -633,6 +664,7 @@ def process_branch(install_data, channel_layer):
     install_yml = os.path.join(install_data['github_dir'], 'install.yml')
     with open(install_yml) as f:
         install_yml_file = yaml.safe_load(f)
+        setup_py_data['app_package'] = install_yml_file.get('name')
         metadata_dict = {**setup_py_data, "tethys_version": install_yml_file.get('tethys_version', '<=3.4.4'),"dev_url": f'{install_data["dev_url"]}' }
 
     # breakpoint()
@@ -654,68 +686,66 @@ def process_branch(install_data, channel_layer):
 
     if not os.path.exists(destination):
         files_changed = True
-        # breakpoint()
-
         shutil.copyfile(source, destination)
+
+    source = os.path.join(source_files_path, 'setup_template.py')
+    destination = os.path.join(install_data['github_dir'], 'setup_template.py')
+
+    if not os.path.exists(destination):
+        files_changed = True
+        shutil.copyfile(source, destination)
+
+
+    apply_setup_template(os.path.join(install_data['github_dir'], 'setup_template.py'),os.path.join(install_data['github_dir'], 'setup.py'),  setup_py_data)
+    os.remove(os.path.join(install_data['github_dir'], 'setup_template.py'))
 
     # Fix setup.py file to remove dependency on tethys
 
-    # breakpoint()
-    rel_package = ""
-    with fileinput.FileInput(filename, inplace=True) as f:
-        for line in f:
-            # logger.info(line)
+    # rel_package = ""
+    # with fileinput.FileInput(filename, inplace=True) as f:
+    #     for line in f:
 
-            if "import find_all_resource_files" in line or "import find_resource_files" in line:
-                print("from setup_helper import find_all_resource_files", end='\n')
+    #         if "import find_all_resource_files" in line or "import find_resource_files" in line:
+    #             print("from setup_helper import find_all_resource_files", end='\n')
 
-            # elif "import find_resource_files" in line:
-            #     print("from setup_helper import find_resource_files", end='\n')
             
-            elif ("setup(" in line):
-                # print(
-                #     "resource_files += find_resource_files('tethysapp/' + app_package + '/scripts', 'tethysapp/' + \
-                #     app_package)", end='\n')
-                # print("resource_files = find_all_resource_files(app_package,'tethysapp')", end='\n')
-                print(line, end='')
-                # logger.info("here")
-                # logger.info(line)
-            elif "namespace =" in line:
-                print('', end='\n')
+    #         elif ("setup(" in line):
 
-            elif ("app_package = " in line):
-                rel_package = line
-                print("namespace = 'tethysapp'")
-                print(line, end='')
+    #             print(line, end='')
 
-            elif "from tethys_apps.base.app_base import TethysAppBase" in line:
-                print('', end='\n')
+    #         elif "namespace =" in line:
+    #             print('', end='\n')
 
-            # elif "release_package" in line:
-            #     # print(f'tethysapp-{rel_package}')
-            #     print('', end='\n')
+    #         elif ("app_package = " in line):
+    #             rel_package = line
+    #             print("namespace = 'tethysapp'")
+    #             print(line, end='')
+
+    #         elif "from tethys_apps.base.app_base import TethysAppBase" in line:
+    #             print('', end='\n')
             
-            elif "TethysAppBase.package_namespace" in line:
-                new_replace_line = line.replace("TethysAppBase.package_namespace","namespace")
-                print(new_replace_line, end='\n')
+    #         elif "TethysAppBase.package_namespace" in line:
+    #             new_replace_line = line.replace("TethysAppBase.package_namespace","namespace")
+    #             print(new_replace_line, end='\n')
 
-            elif "resource_files = find_resource_files" in line:
-                print("resource_files = find_all_resource_files(app_package, namespace)", end='\n')
+    #         elif "resource_files = find_resource_files" in line:
+    #             print("resource_files = find_all_resource_files(app_package, namespace)", end='\n')
             
-            elif "resource_files += find_resource_files" in line:
-                print('', end='\n')
+    #         elif "resource_files += find_resource_files" in line:
+    #             print('', end='\n')
             
-            else:
-                print(line, end='')
-        
+    #         else:
+    #             print(line, end='')
     update_dependencies(install_data['github_dir'], recipe_path, source_files_path, keywords, email)
 
     source = os.path.join(source_files_path, 'main_template.yaml')
     destination = os.path.join(workflows_path, 'main.yaml')
-    app_name = rel_package.replace("app_package", '').replace("=", '').replace("'", "").strip()
+    # app_name
+    # app_name = rel_package.replace("app_package", '').replace("=", '').replace("'", "").strip()
 
     template_data = {
-        'subject': "Tethys App Store: Build complete for " + app_name,
+        # 'subject': "Tethys App Store: Build complete for " + app_name,
+        'subject': "Tethys App Store: Build complete for " + setup_py_data['app_package'],
         'email': install_data['email'],
         'buildMsg': """
         Your Tethys App has been successfully built and is now available on the Tethys App Store.
