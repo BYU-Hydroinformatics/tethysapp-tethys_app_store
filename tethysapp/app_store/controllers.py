@@ -38,7 +38,7 @@ def home(request,app_workspace):
     
     context = {
         'storesData':available_stores_data_dict,
-        'show_stores': True if len(available_stores_data_dict) > 1 else False
+        'show_stores': True if len(available_stores_data_dict) > 0 else False
     }
 
     return render(request, 'app_store/home.html', context)
