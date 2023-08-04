@@ -610,6 +610,9 @@ $(document).ready(function() {
         protocol = "wss"
     }
     let ws_url = `${protocol}://${window.location.host}`
+    // let new_temp = '/apps/app-store/'
+    // ws_url = `${ws_url}${new_temp}install/notifications/ws/`
+
     ws_url = `${ws_url}${warehouseHomeUrl}install/notifications/ws/`
     startWS(ws_url, n_content)
 
