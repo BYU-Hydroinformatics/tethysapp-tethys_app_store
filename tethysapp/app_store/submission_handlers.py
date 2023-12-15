@@ -686,15 +686,6 @@ def process_branch(install_data, channel_layer):
 
     if not os.path.exists(destination):
         files_changed = True
-        # breakpoint()
-
-        shutil.copyfile(source, destination)
-
-    source = os.path.join(source_files_path, 'setup_template.py')
-    destination = os.path.join(install_data['github_dir'], 'setup_template.py')
-
-    if not os.path.exists(destination):
-        files_changed = True
         shutil.copyfile(source, destination)
 
     source = os.path.join(source_files_path, 'setup_template.py')
@@ -846,6 +837,102 @@ def process_branch(install_data, channel_layer):
         # tethysapp_remote = repo.create_remote('tethysapp', remote_url)
         tethysapp_remote = repo.create_remote(github_organization, remote_url)
 
+    if files_changed:
+        repo.git.add(A=True)
+        # repo.git.commit(m="Warehouse_Commit")
+        repo.git.commit(m=f'tag version {current_tag_name}')
+
+    # repo.config_writer().set_value('push', 'followTags', 'true').release()
+    # breakpoint()
+    # update the tethys release branch in remote
+    tethysapp_remote.push('tethysapp_warehouse_release', force=True)
+
+    # create new head with the new version
+    # heads_names_list = []
+    # for ref in repo.references:
+    #     heads_names_list.append(ref.name)
+
+
+    if current_tag_name not in heads_names_list:
+        new_release_branch = repo.create_head(current_tag_name)
+        repo.git.checkout(current_tag_name)
+        # push the new branch in remote
+        tethysapp_remote.push(new_release_branch)
+    else:
+        repo.git.checkout(current_tag_name)
+        # push the new branch in remote
+        tethysapp_remote.push(current_tag_name)
+
+
+    tag_name = current_tag_name + "_release"
+    if tag_name not in heads_names_list:
+
+        # Create tag over the 
+        new_tag = repo.create_tag(
+            tag_name,
+            ref=repo.heads["tethysapp_warehouse_release"],
+            message=f'This is a tag-object pointing to tethysapp_warehouse_release branch with release version {current_tag_name}',
+        )
+        tethysapp_remote.push(new_tag)
+
+    else:
+        repo.git.tag('-d', tag_name)  # remove locally
+        tethysapp_remote.push(refspec=(':%s' % (tag_name)))  # remove from remote
+        new_tag = repo.create_tag(
+            tag_name,
+            ref=repo.heads["tethysapp_warehouse_release"],
+            message=f'This is a tag-object pointing to tethysapp_warehouse_release branch with release version {current_tag_name}',
+        )
+        tethysapp_remote.push(new_tag)
+    
+    tethysapp_repo = organization.get_repo(repo_name)
+
+    workflowFound = False
+
+    # Sometimes due to weird conda versioning issues the get_workflow_runs is not found
+    # In that case return no value for the job_url and handle it in JS
+
+    try:
+        while not workflowFound:
+            time.sleep(4)
+            if tethysapp_repo.get_workflow_runs().totalCount > 0:
+                logger.info("Obtained Workflow for Submission. Getting Job URL")
+
+                try:
+                    # response = requests.get(tethysapp_repo.get_workflow_runs()[0].jobs_url, auth=('tethysapp', key))
+                    response = requests.get(tethysapp_repo.get_workflow_runs()[0].jobs_url, auth=(github_organization, key))
+
+                    response.raise_for_status()
+                    jsonResponse = response.json()
+                    workflowFound = jsonResponse["total_count"] > 0
+
+                except HTTPError as http_err:
+                    logger.error(f'HTTP error occurred while getting Jobs from GITHUB API: {http_err}')
+                except Exception as err:
+                    logger.error(f'Other error occurred while getting jobs from GITHUB API: {err}')
+
+            if workflowFound:
+                job_url = jsonResponse["jobs"][0]["html_url"]
+
+        logger.info("Obtained Job URL: " + job_url)
+    except AttributeError:
+        logger.info("Unable to obtain Workflow Run")
+        job_url = None
+    # breakpoint()
+    get_data_json = {
+        "data": {
+            "githubURL": tethysapp_repo.git_url.replace("git:", "https:"),
+            "job_url": job_url,
+            "conda_channel": install_data['conda_channel']
+        },
+        "jsHelperFunction": "addComplete",
+        "helper": "addModalHelper"
+    }
+    ## we do not need to keep the data locally. I think this will help to avoid git merge mistakes
+    if os.path.exists(install_data['github_dir']):
+        shutil.rmtree(install_data['github_dir'])
+    send_notification(get_data_json, channel_layer)
+    
 def add_and_commit_if_files_changed(repo,files_changed,current_tag_name):
     if files_changed:
         repo.git.add(A=True)
