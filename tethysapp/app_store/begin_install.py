@@ -69,6 +69,7 @@ def detect_app_dependencies(app_name, channel_layer, notification_method=send_no
 
     if os.path.exists(pip_install_script_path):
         logger.info("PIP dependencies found. Running Pip install script")
+        # breakpoint()
         notification_method("Running PIP install....", channel_layer)
         p = subprocess.Popen(['sh', pip_install_script_path], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         while True:

@@ -127,7 +127,9 @@ def continueAfterInstall(installData, channel_layer):
         for package in conda_search_result:
             if package["version"] == installData['version']:
                 send_notification("Resuming processing...", channel_layer)
-                detect_app_dependencies(installData['name'], installData['version'], channel_layer)
+                # detect_app_dependencies(installData['name'], installData['version'], channel_layer)
+                detect_app_dependencies(installData['name'], channel_layer)
+
                 break
             else:
                 send_notification(

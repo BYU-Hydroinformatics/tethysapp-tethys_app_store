@@ -429,11 +429,6 @@ def run_git_install_main(request, app_workspace):
 
 @api_view(['POST'])
 @permission_classes([AllowAny])
-@controller(
-    name='install_git_override',
-    url='app-store/install/git_override',
-    login_required=False
-)
 @csrf_exempt
 @controller(
     name='install_git_override',

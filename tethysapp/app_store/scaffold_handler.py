@@ -76,12 +76,6 @@ def proper_name_validator(value, default):
 
 @api_view(['POST'])
 @permission_classes((AllowAny,))
-@controller(
-    name='scaffold_app',
-    url='app-store/scaffold',
-    app_workspace=True,
-    login_required=False
-)
 @csrf_exempt
 @controller(
     name='scaffold_app',

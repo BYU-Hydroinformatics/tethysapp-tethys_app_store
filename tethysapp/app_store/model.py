@@ -1,1 +1,1 @@
-print("swe installed in dev mode")
+print("geoglows_hydroviewer installed in dev mode")
