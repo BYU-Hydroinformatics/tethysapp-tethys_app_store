@@ -8,7 +8,7 @@ from django.core.cache import cache
 from subprocess import call
 
 from .helpers import check_all_present, get_app_instance_from_path, logger, send_notification
-from .resource_helpers import get_resource
+from .resource_helpers import get_resource, get_resource_new
 
 
 def handle_property_not_present(prop):
@@ -24,7 +24,7 @@ def process_post_install_scripts(path):
         # Currently only processing the pip install script, but need to add ability to process post scripts as well
 
 
-def detect_app_dependencies(app_name, app_version, channel_layer, notification_method=send_notification):
+def detect_app_dependencies(app_name, channel_layer, notification_method=send_notification):
     """
     Method goes through the app.py and determines the following:
     1.) Any services required
@@ -38,19 +38,24 @@ def detect_app_dependencies(app_name, app_version, channel_layer, notification_m
     # Best method is to import the module and try and get the location from that path
     # @TODO : Ensure that this works through multiple runs
     import tethysapp
+    # store_pkg = importlib.import_module(app_channel)
 
     call(['tethys', 'db', 'sync'])
     cache.clear()
     # clear_url_caches()
     # After install we need to update the sys.path variable so we can see the new apps that are installed.
-    # We need to do a reload here of the sys.path and then reload the the tethysapp
+    # We need to do a reload here of the sys.path and then reload the tethysapp
     # https://stackoverflow.com/questions/25384922/how-to-refresh-sys-path
     import site
     importlib.reload(site)
     importlib.reload(tethysapp)
+    # importlib.reload(store_pkg)
 
     # paths = list()
+    # paths = list(filter(lambda x: app_name in x, store_pkg.__path__))
+    # breakpoint()
     paths = list(filter(lambda x: app_name in x, tethysapp.__path__))
+
 
     if len(paths) < 1:
         logger.error("Can't find the installed app location.")
@@ -105,22 +110,29 @@ def detect_app_dependencies(app_name, app_version, channel_layer, notification_m
     return
 
 
-def conda_install(app_metadata, app_version, channel_layer):
+def conda_install(app_metadata, app_channel,app_label,app_version, channel_layer):
 
     start_time = time.time()
     send_notification("Mamba install may take a couple minutes to complete depending on how complicated the "
                       "environment is. Please wait....", channel_layer)
 
-    latest_version = app_metadata['metadata']['versions'][-1]
+    latest_version = app_metadata['latestVersion'][app_channel][app_label]
     if not app_version:
         app_version = latest_version
 
     # Running the conda install as a subprocess to get more visibility into the running process
     dir_path = os.path.dirname(os.path.realpath(__file__))
+    # breakpoint()
     script_path = os.path.join(dir_path, "scripts", "conda_install.sh")
 
     app_name = app_metadata['name'] + "=" + app_version
-    install_command = [script_path, app_name, app_metadata['metadata']['channel']]
+
+    label_channel = f'{app_channel}'
+    
+    if app_label != 'main':
+        label_channel = f'{app_channel}/label/{app_label}'
+
+    install_command = [script_path, app_name, label_channel]
 
     # Running this sub process, in case the library isn't installed, triggers a restart.
 
@@ -149,7 +161,7 @@ def conda_install(app_metadata, app_version, channel_layer):
                 send_notification("Mamba install found conflicts."
                                   "Please try running the following command in your terminal's"
                                   "conda environment to attempt a manual installation : "
-                                  "mamba install -c " + app_metadata['metadata']['channel'] + " " + app_name,
+                                  "mamba install -c " + label_channel + " " + app_name,
                                   channel_layer)
 
     send_notification("Mamba install completed in %.2f seconds." % (time.time() - start_time), channel_layer)
@@ -157,13 +169,17 @@ def conda_install(app_metadata, app_version, channel_layer):
 
 def begin_install(installData, channel_layer, app_workspace):
 
-    resource = get_resource(installData["name"], app_workspace)
+    # resource = get_resource(installData["name"], app_workspace)
+    # breakpoint()
 
-    send_notification("Starting installation of app: " + resource['name'], channel_layer)
+    resource = get_resource_new(installData["name"],installData['channel'],installData['label'], app_workspace)
+    
+    send_notification("Starting installation of app: " + resource['name'] + " from store "+ installData['channel'] + " with label "+ installData['label'] , channel_layer)
     send_notification("Installing Version: " + installData["version"], channel_layer)
 
+
     try:
-        conda_install(resource, installData["version"], channel_layer)
+        conda_install(resource,installData['channel'],installData['label'], installData["version"], channel_layer)
     except Exception as e:
         logger.error("Error while running conda install")
         logger.error(e)
@@ -171,7 +187,7 @@ def begin_install(installData, channel_layer, app_workspace):
         return
 
     try:
-        detect_app_dependencies(resource['name'], installData["version"], channel_layer)
+        detect_app_dependencies(resource['name'], channel_layer)
     except Exception as e:
         logger.error(e)
         send_notification("Error while checking package for services", channel_layer)

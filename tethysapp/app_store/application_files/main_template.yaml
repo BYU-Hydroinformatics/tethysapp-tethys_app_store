@@ -20,7 +20,7 @@ jobs:
         run: |
           python ./conda.recipes/getChannels.py > build_command.txt
       - name: publish-to-conda
-        uses: tethysapp/conda-package-publish-action@master
+        uses: romer8/conda-package-publish-action@master
         with:
           subDir: 'conda.recipes'
           AnacondaToken: $${{ secrets.ANACONDA_TOKEN }}

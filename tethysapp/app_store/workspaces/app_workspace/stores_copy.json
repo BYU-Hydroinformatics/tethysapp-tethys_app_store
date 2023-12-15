@@ -1,0 +1,35 @@
+{
+   "stores": [
+     {
+       "default": true,
+       "conda_labels": [
+         "main",
+         "dev"
+       ],
+       "github_token": "gAAAAABj-CqGQzM2cZga_ISIPgyOFcR-uxHxtfqnqSs96XN210wAP4dPgKHWueKphMu3cXqMaIOpx49VzEblsJVkwhgUbphZ9WaSIKqEmqk2Bi_mf_hLgDX4EnvIpKqs5iDxOqo25vXi",
+       "conda_channel": "tethysapp",
+       "github_organization": "tethysapp"
+     },
+     {
+       "default": false,
+       "conda_labels": [
+         "main",
+         "dev"
+       ],
+       "github_token": "gAAAAABj_jTAaNDK1OAxfswFwQwpoYDd4NZzVgpV1H4ol2Zh2zrg9hPXtGHkKPfjHBRayw9wEkb3ByJwbOgk3Xj7iPJl_QC_VPxtoRuPIESl_jYuohoGlBbIdaU9tEH347Wqp9-7fg4i",
+       "conda_channel": "elkingio",
+       "github_organization": "lost-melancholic-tribe"
+     },
+     {
+      "default": false,
+      "conda_labels": [
+        "main",
+        "dev",
+        "test"
+      ],
+      "github_token": "gAAAAABkWrCzDnvIxtM2aWqvZTW7pKLbJuaEmci75hwiTllom58AvvbIKBE5mKz85mTcJ3hLd6YY45EmHm2cmjeZ_3ZFbubKZ5GJZbIvbTbBryvMxIA_M09ek7C7ZZG_8j3BFAZuTYLT",
+      "conda_channel": "NOAA-CIROH",
+      "github_organization": "NOAA-CIROH"
+    }
+   ]
+ }

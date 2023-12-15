@@ -1,0 +1,145 @@
+:root {
+    --white: #e8e9ed;
+    --gray: #434257;
+    --blue: #18172c;
+    --green: #00d084;
+    --pink: #ff4b77;
+  }
+  
+  .dropdown-check-list {
+    display: inline-block;
+    width: 100%;
+  
+  }
+  
+  .dropdown-check-list .anchor {
+    position: relative;
+    cursor: pointer;
+    display: inline-block;
+    padding: 5px 50px 5px 10px;
+    border: 1px solid #ccc;
+    width: 100%;
+  }
+  
+  .dropdown-check-list .anchor:after {
+    position: absolute;
+    content: "";
+    border-left: 2px solid black;
+    border-top: 2px solid black;
+    padding: 5px;
+    right: 10px;
+    top: 20%;
+    -moz-transform: rotate(-135deg);
+    -ms-transform: rotate(-135deg);
+    -o-transform: rotate(-135deg);
+    -webkit-transform: rotate(-135deg);
+    transform: rotate(-135deg);
+  }
+  
+  .dropdown-check-list .anchor:active:after {
+    right: 8px;
+    top: 21%;
+  }
+  
+  .dropdown-check-list ul.items {
+    padding: 2px;
+    display: none;
+    margin: 0;
+    border: 1px solid #ccc;
+    border-top: none;
+    max-width: 500px;
+    width: 95%;
+    /* margin: 50px auto 0; */
+  }
+  
+  .dropdown-check-list ul.items li {
+    list-style: none;
+  }
+  
+  .dropdown-check-list ul.items li [type="checkbox"] {
+    position: absolute;
+    left: -9999px;
+    position: relative;
+    counter-increment: switchCounter;
+  }
+  
+  .dropdown-check-list ul.items li::before {
+    content: counter(switchCounter);
+    position: absolute;
+    top: 50%;
+    left: -30px;
+    transform: translateY(-50%);
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--pink);
+  }
+  @media screen and (max-width: 600px) {
+    .dropdown-check-list ul.items li::before {
+      display: none;
+    }
+  }
+  
+  .dropdown-check-list ul.items li label {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .dropdown-check-list ul.items li label span:last-child {
+    position: relative;
+    width: 50px;
+    height: 26px;
+    border-radius: 15px;
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.4);
+    background: var(--gray);
+    transition: all 0.3s;
+  }
+  .dropdown-check-list ul.items li label span:last-child::before,
+  .dropdown-check-list ul.items li label span:last-child::after {
+    content: "";
+    position: absolute;
+  }
+  .dropdown-check-list ul.items li label span:last-child::before {
+    left: 1px;
+    top: 1px;
+    width: 24px;
+    height: 24px;
+    background: var(--white);
+    border-radius: 50%;
+    z-index: 1;
+    transition: transform 0.3s;
+  }
+  .dropdown-check-list ul.items li label span:last-child::after {
+    top: 50%;
+    right: 8px;
+    width: 12px;
+    height: 12px;
+    transform: translateY(-50%);
+    background: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/162656/uncheck-switcher.svg);
+    background-size: 12px 12px;
+  }
+  
+  /*CUSTOM VARIABLES HERE*/
+  .dropdown-check-list ul.items li [type="checkbox"]:checked + label span:last-child {
+    background: var(--green);
+  }
+  .dropdown-check-list ul.items li [type="checkbox"]:checked + label span:last-child::before {
+    transform: translateX(24px);
+  }
+  .dropdown-check-list ul.items li [type="checkbox"]:checked + label span:last-child::after {
+    width: 14px;
+    height: 14px;
+    left: 8px;
+    background-image: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/162656/checkmark-switcher.svg);
+    background-size: 14px 14px;
+  }
+  
+  
+  .dropdown-check-list.visible .anchor {
+    color: var(--blue);
+  }
+  
+  .dropdown-check-list.visible .items {
+    width: 100%;
+    display: block;
+  }

@@ -1,1 +1,1 @@
-import os
+print("swe installed in dev mode")

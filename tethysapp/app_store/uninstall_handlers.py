@@ -5,7 +5,7 @@ from tethys_apps.exceptions import TethysAppSettingNotAssigned
 
 import subprocess
 import shutil
-
+import os
 from .helpers import logger, send_notification, get_github_install_metadata
 from .git_install_handlers import clear_github_cache_list
 
@@ -19,7 +19,6 @@ def send_uninstall_messages(msg, channel_layer):
 
 
 def uninstall_app(data, channel_layer, app_workspace):
-
     manage_path = get_manage_path({})
     app_name = data['name']
 
@@ -68,11 +67,38 @@ def uninstall_app(data, channel_layer, app_workspace):
         'Tethys App Uninstalled. Running Conda/GitHub Cleanup...', channel_layer)
 
     try:
-        [resp, err, code] = conda_run(Commands.REMOVE, ["--force", "-c", "tethysplatform",
-                                                        "--override-channels", data['name']])
-        logger.info(resp)
-        if err:
-            logger.error(err)
+        # [resp, err, code] = conda_run(Commands.REMOVE, ["--force", "-c", "tethysplatform",
+        #                                                 "--override-channels", data['name']])
+        # logger.info(resp)
+        # if err:
+        #     logger.error(err)
+
+        # Running the conda install as a subprocess to get more visibility into the running process
+        dir_path = os.path.dirname(os.path.realpath(__file__))
+        # breakpoint()
+        script_path = os.path.join(dir_path, "scripts", "mamba_uninstall.sh")
+
+        
+        # breakpoint()
+
+        uninstall_command = [script_path, app_name]
+
+        # Running this sub process, in case the library isn't installed, triggers a restart.
+
+        p = subprocess.Popen(uninstall_command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        should_not_stop = True
+        while should_not_stop:
+            output = p.stdout.readline()
+            if output.decode('utf-8')== 'Mamba Remove Complete\n':
+                # breakpoint()
+                break
+            if output:
+                # Checkpoints for the output
+                str_output = output.decode('utf-8')
+
+                send_uninstall_messages(str_output, channel_layer)
+                logger.info(str_output)                                                                                           
+
     except PackagesNotFoundError:
         # This was installed using GitHub. Try to clean out
         github_installed = get_github_install_metadata(app_workspace)
@@ -82,6 +108,7 @@ def uninstall_app(data, channel_layer, app_workspace):
                 shutil.rmtree(app['path'])
 
         clear_github_cache_list()
+
 
     send_uninstall_messages(
         'Uninstall completed. Restarting server...', channel_layer)

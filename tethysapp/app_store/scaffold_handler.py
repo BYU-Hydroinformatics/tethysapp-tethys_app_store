@@ -83,6 +83,11 @@ def proper_name_validator(value, default):
     login_required=False
 )
 @csrf_exempt
+@controller(
+    name='scaffold_app',
+    url='app-store/scaffold',
+    app_workspace=True,
+)
 def scaffold_command(request, app_workspace):
     """
     Create a new Tethys app projects in the workspace dir. based on an API Call to the app store

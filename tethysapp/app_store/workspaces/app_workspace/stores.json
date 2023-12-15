@@ -3,11 +3,22 @@
       {
          "conda_channel":"tethysapp",
          "conda_labels":[
-            "main"
+            "main",
+            "dev"
          ],
          "github_organization":"tethysapp",
          "github_token":"#45c0#a820f85aa11d727#f02c382#c91d63be83",
          "default": true
+      },
+      {
+         "conda_channel":"elkingio",
+         "conda_labels":[
+            "main",
+            "dev"
+         ],
+         "github_organization":"lost-melancholic-tribe",
+         "github_token":"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",
+         "default": false
       }
    ]
 }

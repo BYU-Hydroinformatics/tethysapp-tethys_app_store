@@ -4,13 +4,16 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="update-label">Application Update Status</h5>
-                <h6 id="update-processing-label"></h6>
             </div>
             <div class="modal-body" id="add-app-container">
+                <h6 id="update-processing-label"></h6>
+
                 <div>
                     <div id="pre-update-notice">
                     <p>Installed Version: <span id="current-version-update"></span></p>
                     <p>Latest Available Version: <span id="latest-version-update"></span></p>
+                    <p style="display: flex;gap:10px;">Change Installed version: <span id="install-dropdown-update"></span></p>
+                    
                 </div>
                     <p id="update-app-notice"></p>
                     <p class="lead" id="update-notices">

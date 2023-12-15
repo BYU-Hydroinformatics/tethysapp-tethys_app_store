@@ -58,17 +58,46 @@
     <div class="card-body" id="table_header_alike">
         <ul class="nav nav-pills nav-fill" id="pills-tab" role="tablist">
             {% if storesData %}
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="pills-all-tab" data-bs-toggle="pill" data-bs-target="#pills-all" type="button" role="tab" aria-controls="pills-all" aria-selected="true">
+                      <span class="custom-label label-header label-outline-info">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-houses" viewBox="0 0 16 16">
+                            <path d="M5.793 1a1 1 0 0 1 1.414 0l.647.646a.5.5 0 1 1-.708.708L6.5 1.707 2 6.207V12.5a.5.5 0 0 0 .5.5.5.5 0 0 1 0 1A1.5 1.5 0 0 1 1 12.5V7.207l-.146.147a.5.5 0 0 1-.708-.708L5.793 1Zm3 1a1 1 0 0 1 1.414 0L12 3.793V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v3.293l1.854 1.853a.5.5 0 0 1-.708.708L15 8.207V13.5a1.5 1.5 0 0 1-1.5 1.5h-8A1.5 1.5 0 0 1 4 13.5V8.207l-.146.147a.5.5 0 1 1-.708-.708L8.793 2Zm.707.707L5 7.207V13.5a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5V7.207l-4.5-4.5Z"/>
+                        </svg>
+                        <span>Stores</span>
+                      </span>
+
+                    </button>
+                </li>
                 {% for store in storesData %}
-                    {% if store.default %}
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link active" id="pills-{{ store.conda_channel }}-tab" data-bs-toggle="pill" data-bs-target="#pills-{{ store.conda_channel }}" type="button" role="tab" aria-controls="pills-{{ store.conda_channel }}" aria-selected="true">{{ store.conda_channel }}</button>
-                        </li>
-                    {% else %}
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="pills-{{ store.conda_channel }}-tab" data-bs-toggle="pill" data-bs-target="#pills-{{ store.conda_channel }}" type="button" role="tab" aria-controls="pills-{{ store.conda_channel }}" aria-selected="true">{{ store.conda_channel }}</button>
-                    </li>
-                    {% endif %}
-                {% empty %}
+
+                        {% if store.default %}
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="pills-{{ store.conda_channel }}-tab" data-bs-toggle="pill" data-bs-target="#pills-{{ store.conda_channel }}" type="button" role="tab" aria-controls="pills-{{ store.conda_channel }}" aria-selected="true">
+                                    <span id= "label-color-id-{{ store.conda_channel }}" class="custom-label label-header"> 
+                                    <i class="bi bi-shop"></i>
+                                    <span>{{ store.conda_channel }} </span>
+                                    {% for label in store.conda_labels %}
+                                        <span id= "label-color-id-{{ store.conda_channel }}-{{ label }}" class="custom-label label-outline-xs" ><i class="bi bi-tags"></i> {{ label }}</span>
+                                    {% endfor %}
+                                    
+                                </span></button>
+                            </li>
+                        {% else %}
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="pills-{{ store.conda_channel }}-tab" data-bs-toggle="pill" data-bs-target="#pills-{{ store.conda_channel }}" type="button" role="tab" aria-controls="pills-{{ store.conda_channel }}" aria-selected="true">
+                                    <span id= "label-color-id-{{ store.conda_channel }}" class="custom-label label-header"> 
+                                        <i class="bi bi-shop"></i>
+                                        <span>{{ store.conda_channel }}</span>
+                                        {% for label in store.conda_labels %}
+                                            <span id= "label-color-id-{{ store.conda_channel }}-{{ label }}" class="custom-label label-outline-xs" ><i class="bi bi-tags"></i> {{ label }}</span>
+                                        {% endfor %}
+                                    </span>
+                                </button>
+                            </li>
+                        {% endif %}
+                
+                    {% empty %}
                 {% endfor %}
             {% endif %}
 
@@ -79,43 +108,47 @@
 </div>
 {% endif %}
 
+    <div class="card card-default main-app-list hidden">
+        <div class="card-header showHandIcon" data-bs-toggle="collapse" href="#mainApps">Compatible Tethys Applications</div>
+        <div class="collapse show" id="mainApps">
+            <div class="card-body">
+            {% ifchanged active_store %}
+                <table id="mainAppsTable" data-search="true" data-show-search-clear-button="true" data-bs-toolbar="#toolbar" data-show-columns="true" data-show-toggle="true" data-pagination="true" data-detail-view="true" data-detail-formatter="mergedDetailFormatter" data-row-style="installedRowStyle">
+                    <thead>
+                        <tr>
+                            <th data-field="name" data-formatter="mergedNameFormatter">App Names</th>
+                            <th data-field="latestVersion" data-formatter="mergedFieldsFormatter">App Latest Versions</th>
+                            
+                            <th data-field="installed" data-formatter="mergedOperateFormatter" data-events="operateEvents">Actions</th>
+                        </tr>
+                    </thead>
+                </table>
+                <div>An asterisk (*) in the 'App Latest Version' column indicates that the latest version is not compatible with your installed Tethys Platform Version.</div>
 
-<div class="card card-default main-app-list hidden">
-    <div class="card-header showHandIcon" data-bs-toggle="collapse" href="#mainApps">Available Tethys Applications</div>
-    <div class="collapse show" id="mainApps">
-        <div class="card-body">
-            <table id="mainAppsTable" data-search="true" data-show-search-clear-button="true" data-bs-toolbar="#toolbar" data-show-columns="true" data-show-toggle="true" data-pagination="true" data-detail-view="true" data-detail-formatter="detailFormatter">
-                <thead>
-                    <tr>
-                        <th data-field="name">Tethys App Name</th>
-                        <th data-field="latestVersion">App Latest Version</th>
-                        <!--<th data-field="tethys_version">Tethys Portal Version</th>-->
-                        <th data-field="metadata.author">Developer</th>
-                        <th data-field="operate" data-formatter="operateFormatter" data-events="operateEvents">Actions</th>
-                    </tr>
-                </thead>
-            </table>
-        </div>
-        <div class="card-footer ">
+            {% endifchanged %}
+            </div>
+            <div class="card-footer ">
+            </div>
         </div>
     </div>
-</div>
+
 
 <div class="card card-default installed-app-list hidden">
     <div class="card-header showHandIcon" data-bs-toggle="collapse" href="#incompatibleApps">Incompatible Applications</div>
     <div class="collapse " id="incompatibleApps">
         <div class="card-body">
-            <table id="incompatibleAppsTable" data-search="true" data-show-search-clear-button="true" data-bs-toolbar="#toolbar" data-show-columns="true" data-show-toggle="true" data-pagination="true"  data-detail-view="true">
-                <thead>
-                    <tr>
-                        <th data-field="name">Tethys App Name</th>
-                        <th data-field="latestVersion">App Latest Version</th>
-                        <!--<th data-field="tethys_version">Tethys Portal Version</th>-->
-                        <th data-field="metadata.author">Developer</th>
-                        <th data-field="operate" data-formatter="operateFormatter" data-events="operateEvents">Actions</th>
-                    </tr>
-                </thead>
-            </table>
+            {% ifchanged active_store %}
+                <table id="incompatibleAppsTable" data-search="true" data-show-search-clear-button="true" data-bs-toolbar="#toolbar" data-show-columns="true" data-show-toggle="true" data-pagination="true" data-detail-view="true" data-detail-formatter="mergedDetailFormatter" data-row-style="installedRowStyle">
+                    <thead>
+                        <tr>
+                            <th data-field="name" data-formatter="mergedNameFormatter">Tethys App Name</th>
+                            <th data-field="latestVersion" data-formatter="mergedFieldsFormatter">App Latest Version</th>
+                            <!-- <th data-field="author" data-formatter="mergedFieldsFormatter" >Developer</th> -->
+                            <th data-field="installed" data-formatter="mergedOperateFormatter" data-events="operateEvents">Actions</th>
+                        </tr>
+                    </thead>
+                </table>
+            {% endifchanged %}
         </div>
         <div class="card-footer ">
         </div>
@@ -126,16 +159,19 @@
     <div class="card-header showHandIcon" data-bs-toggle="collapse" href="#installedApps">Installed Tethys Applications</div>
     <div class="collapse show" id="installedApps">
         <div class="card-body">
-            <table data-search="true" data-show-search-clear-button="true" data-bs-toolbar="#toolbar" data-show-columns="true" id="installedAppsTable" data-show-toggle="true" data-pagination="true"  data-detail-view="true" data-detail-formatter="detailFormatterInstalledApps">
-                <thead>
-                    <tr>
-                        <th data-field="name">Tethys App Name</th>
-                        <th data-field="installedVersion">Installed Version</th>
-                        <th data-field="latestVersion">Latest Version</th>
-                        <th data-field="operate" data-formatter="operateFormatter2" data-events="operateEvents">Actions</th>
-                    </tr>
-                </thead>
-            </table>
+            {% ifchanged active_store %}
+                <table data-search="true" data-show-search-clear-button="true" data-bs-toolbar="#toolbar" data-show-columns="true" id="installedAppsTable" data-show-toggle="true" data-pagination="true"  data-detail-view="true" data-detail-formatter="mergedDetailFormatter">
+                    <thead>
+                        <tr>
+                            <th data-field="name" data-formatter="mergedNameFormatter">Tethys App Name</th>
+                            <th data-field="installedVersion" data-formatter="mergedFieldsFormatter">Installed Version</th>
+                            <th data-field="latestVersion" data-formatter="mergedFieldsFormatter">Latest Version</th>
+                            <th data-field="installed" data-formatter="mergedOperateFormatter" data-events="operateEvents">Actions</th>
+                        </tr>
+                    </thead>
+                </table>
+            {% endifchanged %}
+
         </div>
         <div class="card-footer ">
         </div>
@@ -168,5 +204,6 @@
 
 {% block scripts %}
 {{ block.super }}
+
 <script src="https://unpkg.com/bootstrap-table@1.20.2/dist/bootstrap-table.min.js"></script>
 {% endblock %}

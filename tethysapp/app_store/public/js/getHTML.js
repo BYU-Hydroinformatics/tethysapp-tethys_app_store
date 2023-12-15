@@ -11,6 +11,17 @@ htmlHelpers.versions = (appName, isUsingIncompatible) => {
                     <div id="tethysPlatformVersion" style="min-width:100px"></div>
                 </div>`
 }
+htmlHelpers.versions_new = (appName,channel, label,version,isUsingIncompatible) => {
+    // <div id="selectVersion" style="display: inline-block; min-width:100px" onchange="updateTethysPlatformVersion('${appName}', '${isUsingIncompatible}')"></div>
+
+    return `<div>Start installation: 
+                    <a class="btn btn-primary" onclick="startInstall('${appName}','${channel}', '${label}','${version}')"> Start </a>
+                    <br>
+                    <br>
+                    <div id="tethysPlatformVersion" style="min-width:100px"></div>
+                </div>`
+}
+
 
 htmlHelpers.getServicesHTML = (options, service_name) => {
     let sel = document.createElement("select"),
@@ -71,8 +82,10 @@ htmlHelpers.getServiceCard = (settingName, service) => {
             </div>`
 }
 
-htmlHelpers.getBranches = (branches) => {
-    let sel = `<select  class="form-control"  name="add_branch" id="add_branch">`
+htmlHelpers.getBranches = (conda_channel,branches) => {
+    let sel = `<select  class="form-control add_branch"  name="add_branch" id="${conda_channel}_add_branch">`
+    // let sel = `<select  class="form-control add_branch"  name="add_branch" >`
+
     let options_str = ""
 
     branches.forEach(
@@ -81,6 +94,20 @@ htmlHelpers.getBranches = (branches) => {
 
     sel = `${sel}${options_str}</select>`
 
-    return `<div class="form-group">
+    return `<div class="form-group branches-form">
     <label for="add_branch">Please select the branch you would like to use:</label>${sel}</div>`
+}
+
+htmlHelpers.getLabels = (labels) => {
+    let sel = `<select  class="form-control"  name="add_label" id="add_label">`
+    let options_str = ""
+
+    labels.forEach(
+        (label) => (options_str += `<option value='${label}'>${label}</option>`)
+    )
+
+    sel = `${sel}${options_str}</select>`
+
+    return `<div class="form-group">
+    <label for="add_label">Please select the label you would like to use:</label>${sel}</div>`
 }

@@ -18,6 +18,7 @@
 .modal-body {
   max-height: calc(100vh - 350px);
   overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .btn-info {
@@ -228,4 +229,56 @@
   75% {
     content: "Fetching Tethys Applications...";
   }
+}
+
+.title-class{
+  margin-bottom: 0px;
+  margin-top: 10px;
+}
+
+/* .row_store_submission{
+  display: flex;
+  align-content: center;
+  align-items: center;
+} */
+
+.loader_and_title{
+  display: flex;
+  gap:10px;
+}
+
+.branches-form{
+  padding-top: 10px;
+}
+
+#processBranchButton{
+  margin-top: 10px;
+}
+
+.multiple_stores_labels{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+}
+
+
+
+.store_label_val{
+  /* flex: 1 1 70%; */
+  text-align: center;
+}
+
+.store_label_val a{
+  text-decoration: none;
+}
+
+.table_small_font{
+  font-size:  12px;
+}
+
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+  color: #fff;
+  background-color: transparent !important;
+  filter: drop-shadow(2px 4px 6px black);
 }

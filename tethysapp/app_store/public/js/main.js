@@ -219,6 +219,86 @@ const getVersionsHTML = (selectedApp, allResources) => {
     }
 }
 
+const getVersionsHTML_new = (app,channel,label) => {
+    // let app = allResources.filter((resource) => resource.name == selectedApp)
+    if (app.hasOwnProperty('name')) {
+        // let versions = app[versions].reverse()
+        let versions = app['versions'][channel][label].reverse();
+        let sel = document.createElement("select"),
+            options_str = ""
+
+        sel.name = "versions"
+        sel.id = "versions"
+
+        versions.forEach(function(version) {
+            options_str += `<option value='${channel}__${label}__${version}'>${version}</option>`
+        })
+
+        sel.innerHTML = options_str
+        return sel
+    } else {
+        console.log("No App found with that name. Check input params")
+    }
+}
+
+const getVersionsHTML_dropdown = (app,checkIfNeeded,isUpdate) => {
+    var class_html = 'install';
+    if(isUpdate){
+        class_html = 'install-update';
+    }
+    // https://stackoverflow.com/questions/70098157/bootstrap-5-1-3-dropdown-data-bs-boundary-no-longer-works
+    // let app = allResources.filter((resource) => resource.name == selectedApp)
+    if (app.hasOwnProperty('name') && !checkIfNeeded) {
+        var icon_warning = '';
+        var color_icon = 'primary';
+        if(Object. keys(app['compatibility'][channel][label]).length == 0 ){
+          icon_warning = `<i class="bi bi-exclamation-triangle"></i> `
+          color_icon = 'danger';
+        }
+        // let versions = app[versions].reverse()
+        let string_dropdown = `<div class="dropdown">`
+        string_dropdown += `<a class="custom-label label-color-info label-outline-xs dropdown-toggle install2" href="#" role="button" id="dropdownMenuLink_${app['name']}" data-bs-toggle="dropdown" aria-expanded="false"> <i class="bi bi-plus-lg"></i> Install </a>`
+        string_dropdown += `<ul class="dropdown-menu position-fixed" aria-labelledby="dropdownMenuLink_${app['name']}">`
+        let versions_obj = app['versions'];
+
+        for (channel in versions_obj){
+            string_dropdown += `<li class="dropdown dropend">`;
+            string_dropdown +=`<a class="dropdown-item dropdown-toggle" href="#" id="${channel}_${app['name']}}" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">`
+            string_dropdown +=`<span class="label_dropdown custom-label label-outline-${labels_style_dict[channel]} label-outline-xs"> <i class="bi bi-shop"></i> ${channel} </span>`;
+            string_dropdown += `</a>`
+            string_dropdown += `<ul class="dropdown-menu position-fixed" aria-labelledby="${channel}_${app['name']}}">`
+
+            for (label in versions_obj[channel]){
+                string_dropdown += `<li class="dropdown dropend">`;
+                string_dropdown +=`<a class="dropdown-item dropdown-toggle" href="#" id="${channel}_${label}_${app['name']}}" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">`
+                // string_dropdown +=`<span class="store_label custom-label label-outline-${labels_style_dict[channel]} label-outline-xs"> <i class="bi bi-shop"></i> ${channel} </span>`;
+                string_dropdown +=`<span class="label_dropdown custom-label label-outline-${labels_style_dict[label]} label-outline-xs"><i class="bi bi-tags"></i>${label}</span>`
+                string_dropdown += `</a>`
+                string_dropdown += `<ul class="dropdown-menu position-fixed drop_down_scroll" aria-labelledby="${channel}_${label}_${app['name']}}">`
+                for (sinlge_version in versions_obj[channel][label]){
+                    // string_dropdown += `<li><a class="dropdown-item" href="#">${versions_obj[channel][label][sinlge_version]}</a></li>`
+                    string_dropdown +=`<li><a class="${class_html} button-spaced dropdown-item" href="javascript:void(0)" title="Install">
+                        <button type="button" id="${channel}__${label}__${versions_obj[channel][label][sinlge_version]}__${app['name']}__install" class="label_dropdown custom-label label-color-${color_icon} label-outline-xs">${versions_obj[channel][label][sinlge_version]}</button>
+                    </a></li>`
+                }
+                string_dropdown += `</ul></li>`;
+            }
+            string_dropdown += `</ul></li>`;
+
+        }
+
+            string_dropdown += `</ul></div>`;
+
+        return string_dropdown
+    } else {
+        var string_dropdown = ''
+        return string_dropdown
+        // console.log("No App found with that name. Check input params")
+    }
+}
+
+
+
 const updateTethysPlatformCompatibility = (selectedApp, selectedVersion, allResources) => {
     let app = allResources.filter((resource) => resource.name == selectedApp)
     let platform_compatibility = '<=3.4.4'
@@ -234,18 +314,52 @@ const updateTethysPlatformCompatibility = (selectedApp, selectedVersion, allReso
     
     $("#tethysPlatformVersion").text('Tethys Platform Compatibility: ' + platform_compatibility)
 }
+const updateTethysPlatformCompatibility_new = (app, selectedVersion,channel,label) => {
+    let platform_compatibility = '<=3.4.4'
+    if (app.hasOwnProperty('name')) {
+        let compatibility_channel_label_keys = Object.keys(app['compatibility'][channel][label])
+        if (compatibility_channel_label_keys.includes(selectedVersion)) {
+            platform_compatibility = app['compatibility'][channel][label][selectedVersion]
+        }
+        
+    } else {
+        console.log("No App found with that name, store, tag, and version. Check input params")
+    }
+    
+    $("#tethysPlatformVersion").text('Tethys Platform Compatibility: ' + platform_compatibility)
+}
 
-const startInstall = (appName) => {
+
+// const startInstall = (appName) => {
+//     showLoader()
+//     let version = $("#versions").select2("data")[0].text
+//     installRunning = true
+//     installData["version"] = version
+
+//     notification_ws.send(
+//         JSON.stringify({
+//             data: {
+//                 name: appName,
+//                 version
+//             },
+//             type: `begin_install`
+//         })
+//     )
+// }
+
+const startInstall = (appName,channel_app,label_app,current_version) => {
     showLoader()
-    let version = $("#versions").select2("data")[0].text
+    // let current_version = $("#versions").select2("data")[0].text
     installRunning = true
-    installData["version"] = version
+    installData["version"] = current_version
 
     notification_ws.send(
         JSON.stringify({
             data: {
                 name: appName,
-                version
+                channel:channel_app,
+                label:label_app,
+                version: current_version
             },
             type: `begin_install`
         })
@@ -303,9 +417,10 @@ const getRepoForAdd = () => {
         notification_ws.send(
             JSON.stringify({
                 data: {
-                    url: githubURL
+                    url: githubURL,
+                    stores: active_stores
                 },
-                type: `pull_git_repo`
+                type: `pull_git_repo_all`
             })
         )
     } else {
@@ -335,8 +450,18 @@ const update = () => {
     $("#no-update").hide()
     $("#pre-update-notice").hide()
     $("#update-loader").show()
-    $("#update-processing-label").text(
-        `Updating: ${updateData.name} to version ${updateData.version}`
+
+    var htmlStr = `<span>`
+    htmlStr += `<span class="labels_container" style="display: inline-block;"> `
+    htmlStr += `<span class="custom-label label-color-${labels_style_dict[updateData.channel]} label-outline-xs"> <i class="bi bi-shop"></i> ${updateData.channel} </span>`
+    htmlStr += `<span class="custom-label label-color-${labels_style_dict[updateData.label]} label-outline-xs"><i class="bi bi-tags"></i> ${updateData.label}</span>`
+    htmlStr += `<span class="custom-label label-outline-xs label-color-gray">${updateData.version}</span>`
+    htmlStr += `</span>`
+
+
+    $("#update-processing-label").html(
+
+        `Updating to: ${htmlStr}`
     )
     notification_ws.send(
         JSON.stringify({
@@ -354,6 +479,7 @@ const get_resources_for_channel= (default_store) => {
         data: default_store
     })
         .done(function(data) {
+            console.log(data)
             availableApps = data.availableApps
             installedApps = data.installedApps
             incompatibleApps = data.incompatibleApps
@@ -372,6 +498,30 @@ const get_resources_for_channel= (default_store) => {
 }
 
 
+const get_merged_resources = (store) => {
+
+    $.ajax({
+        url: `${warehouseHomeUrl}get_merged_resources`,
+        dataType: "json",
+        data: store
+    })
+        .done(function(data) {
+            
+            availableApps = data.availableApps
+            installedApps = data.installedApps
+            incompatibleApps = data.incompatibleApps
+            tethysVersion = data.tethysVersion
+            $("#mainAppLoader").hide()
+            console.log(data)
+            initMainTables()
+        })
+        .fail(function(err) {
+            console.log(err)
+            location.reload()
+        })
+
+}
+
 
 $(document).ready(function() {
     // Hide the nav
@@ -383,23 +533,44 @@ $(document).ready(function() {
         url: `${warehouseHomeUrl}get_available_stores`,
         dataType: "json"
     }).done(function(data){
+        console.log(data)
         storesDataList = data['stores']
         console.log(storesDataList)
+        labels_style_dict = get_color_label_dict(storesDataList)
+        create_request_obj(storesDataList)
+
+        let storessMenuHtml = createStoresMenusHtml(storesDataList)
+        $("#storeList").html(storessMenuHtml)
+
+        addFunctionalityStores(storesDataList)
 
         var default_store = storesDataList.filter((x) => x.default == true)[0]
         console.log(default_store)
+        active_store = default_store['github_organization']
+        var stores_list = []
         // console.log("current_channel", default_conda_channel)
         // Get Main Data and load the table
         storesDataList.forEach(function(store_single){
+            stores_list.push(store_single['conda_channel']);
             $(`#pills-${store_single['conda_channel']}-tab`).click(function(){
-                console.log(store_single)
-                get_resources_for_channel(store_single)
+
+                active_store = store_single['conda_channel']
+
+                // get_resources_for_channel(store_single)
+                // get_merged_resources({'active_store': store_single['conda_channel']})
+                get_merged_resources({'active_store':active_store})
 
             })
         })
         
-        get_resources_for_channel(default_store)
-
+        $(`#pills-all-tab`).click(function(){
+            active_store = "all"
+            get_merged_resources({'active_store': active_store})
+        })
+        console.log(stores_list)
+        // get_resources_for_channel(default_store)
+        active_store = "all"
+        get_merged_resources({'active_store': active_store})
         // $.ajax({
         //     url: `${warehouseHomeUrl}get_resources`,
         //     dataType: "json",
@@ -437,6 +608,9 @@ $(document).ready(function() {
         protocol = "wss"
     }
     let ws_url = `${protocol}://${window.location.host}`
+    // let new_temp = '/apps/app-store/'
+    // ws_url = `${ws_url}${new_temp}install/notifications/ws/`
+
     ws_url = `${ws_url}${warehouseHomeUrl}install/notifications/ws/`
     startWS(ws_url, n_content)
 
