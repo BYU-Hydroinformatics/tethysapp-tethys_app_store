@@ -1,1 +1,1 @@
-print("water_data_explorer installed in dev mode")
+print("swe installed in dev mode")
